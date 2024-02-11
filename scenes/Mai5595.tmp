@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://d0ihq2xdamwv4"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_ycgh7"]
+[ext_resource type="Texture2D" uid="uid://vfe2gmn1q0y3" path="res://sprites/BackGround.png" id="3_vdtt6"]
+
+[sub_resource type="Curve2D" id="Curve2D_0m5xy"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -140, -115, 0, 0, 0, 0, 3982, -142, 0, 0, 0, 0, 3998, 2255, 0, 0, 0, 0, -129, 2261, 0, 0, 0, 0, -140, -83)
+}
+point_count = 5
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ycgh7")
+initial_special_ammo_time = 1.5
+max_lvl_for_special_generator = 15
+special_ammo_max_decrease = 1.4
+initial_reload_time = 0.5
+max_lvl_for_reload_decrease = 15
+reload_max_decrease = 0.3
+lvls_needed_for_mag_increase = 5
+initial_enemy_spawn_time = 1.0
+max_lvl_for_enemy_spawner = 12
+enemy_spawn_max_decrease = 0.9
+
+[node name="BackGround" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(1920, 1080)
+texture = ExtResource("3_vdtt6")
+
+[node name="SpecialModeTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ModeBackgroundEdge" type="ColorRect" parent="."]
+visible = false
+z_index = -5
+custom_minimum_size = Vector2(3840, 2160)
+offset_right = 3840.0
+offset_bottom = 2160.0
+
+[node name="ModeBackground" type="ColorRect" parent="ModeBackgroundEdge"]
+custom_minimum_size = Vector2(3740, 2060)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 3790.0
+offset_bottom = 2110.0
+color = Color(0, 0, 0, 1)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="SpecialAmmoTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="StartPoint" type="Marker2D" parent="."]
+position = Vector2(1920, 1080)
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_0m5xy")
+
+[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(-140, -115)
+rotation = -0.00655012
+
+[connection signal="timeout" from="SpecialModeTimer" to="." method="mode_timeout"]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="spawn_enemy"]
+[connection signal="timeout" from="SpecialAmmoTimer" to="." method="generate_special_ammo"]

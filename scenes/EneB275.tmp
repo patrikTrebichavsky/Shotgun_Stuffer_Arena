@@ -1,0 +1,77 @@
+[gd_scene load_steps=9 format=3 uid="uid://dir5j135wrl6q"]
+
+[ext_resource type="Script" path="res://scripts/EnemyRB.gd" id="1_jfgch"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/EnemyDying.png" id="2_gmsxs"]
+[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/EnemyRunning.png" id="3_t4mjt"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_lx7r7"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="5_0468r"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="6_ppktf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucegb"]
+size = Vector2(57.1955, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eti3m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_gmsxs")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_t4mjt")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_jfgch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(653.5, 314)
+rotation = -3.14159
+scale = Vector2(1.31129, -4.4996)
+shape = SubResource("RectangleShape2D_ucegb")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+position = Vector2(654, 314)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("4_lx7r7")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(654, 314)
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_0468r")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(654, 314)
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_ppktf")
+volume_db = -10.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_eti3m")
+animation = &"running"
+
+[connection signal="body_entered" from="." to="." method="body_entered"]

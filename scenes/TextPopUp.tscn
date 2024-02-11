@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://cpyam4d0uygjv"]
+
+[ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="1_mrn0j"]
+
+[sub_resource type="GDScript" id="GDScript_3nx57"]
+script/source = "extends Marker2D
+
+func set_display_time(display_time):
+	$Timer.wait_time = display_time
+
+func _display_message(message = \"default Message\", color = \"#ffffff\", font_size = 25):
+	$Label.text = message
+	$Label.add_theme_color_override(\"font_color\",Color(color))
+	$Label.add_theme_font_size_override(\"font_size\", font_size)
+	$AnimationPlayer.play(\"pop_up\")
+	$Timer.start()
+
+func _on_timer_timeout():
+	queue_free()
+	
+"
+
+[sub_resource type="Animation" id="Animation_c4rlq"]
+resource_name = "pop_up"
+length = 2.0
+step = 0.04
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Label:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.080508),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(1.2, 1.2)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Label:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0966318, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-60, -20), Vector2(-60, -80), Vector2(-60, -110)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0a7ek"]
+_data = {
+"pop_up": SubResource("Animation_c4rlq")
+}
+
+[node name="TextPopUp" type="Marker2D"]
+script = SubResource("GDScript_3nx57")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0a7ek")
+}
+
+[node name="Label" type="Label" parent="."]
+z_index = 5
+offset_left = -60.0
+offset_top = -20.0
+offset_right = 60.0
+offset_bottom = 56.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(60, 37)
+theme_override_colors/font_color = Color(0.643137, 0.647059, 0.682353, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_mrn0j")
+theme_override_font_sizes/font_size = 35
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

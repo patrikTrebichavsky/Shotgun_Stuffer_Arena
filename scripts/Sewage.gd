@@ -1,0 +1,28 @@
+extends Area2D
+
+signal player_entered(player)
+
+var can_be_used = true
+
+func _on_area_entered(area):
+	
+	if can_be_used == true:
+		emit_signal("player_entered", area.get_parent())
+		can_be_used = false
+		$AnimatedSprite2D.play("closing")
+	$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+
+func _on_animated_sprite_2d_animation_finished():
+	can_be_used = true
+	$AnimatedSprite2D.play("closed")
+	$StaticBody2D/CollisionShape2D.set_deferred("disabled", false)
+
+
+func transport_player(player):
+	
+	player.position = $ExitMarker.global_position
+	can_be_used = false
+	$AnimatedSprite2D.play("closing")
+	$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+
+

@@ -1,0 +1,80 @@
+[gd_scene load_steps=10 format=3 uid="uid://dir5j135wrl6q"]
+
+[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_jfgch"]
+[ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_onilt"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_lx7r7"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="5_0468r"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="6_ppktf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
+size = Vector2(74.5, 90)
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[node name="Enemy" type="RigidBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 3
+gravity_scale = 0.0
+script = ExtResource("1_jfgch")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = ExtResource("2_onilt")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.250031, 0)
+shape = SubResource("RectangleShape2D_tqr5j")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("4_lx7r7")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_0468r")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_ppktf")
+volume_db = -10.0
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+one_shot = true
+
+[connection signal="body_shape_entered" from="." to="." method="body_shape_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]

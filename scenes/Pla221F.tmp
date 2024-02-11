@@ -1,0 +1,191 @@
+[gd_scene load_steps=21 format=3 uid="uid://drphqi8eilyr3"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_0llxv"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
+[ext_resource type="Texture2D" uid="uid://d1cypkqirrmcm" path="res://sprites/PlayerRunning.png" id="6_8xcwp"]
+[ext_resource type="AudioStream" uid="uid://do4mntj75vly0" path="res://sounds/Reload.mp3" id="6_tg73s"]
+[ext_resource type="Texture2D" uid="uid://hlcrtosoegi6" path="res://sprites/PlayerShooting.png" id="7_1gcj0"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="7_k1wic"]
+[ext_resource type="Texture2D" uid="uid://b2qcu7ds40vrg" path="res://sprites/Player_shooting_UndertaleMode_1.png" id="8_78hkm"]
+[ext_resource type="Texture2D" uid="uid://dgvs4axvxx1jq" path="res://sprites/Player_Standing_UndertaleMode.png" id="8_ofqnr"]
+[ext_resource type="Texture2D" uid="uid://buo1cofsft8c8" path="res://sprites/Player_shooting_UndertaleMode_2.png" id="9_ssl11"]
+[ext_resource type="AudioStream" uid="uid://b7riu5s7x3n4u" path="res://sounds/Shooting.mp3" id="10_l3jwu"]
+[ext_resource type="Texture2D" uid="uid://b04c3op722pe3" path="res://sprites/Player_shooting_UndertaleMode_4.png" id="10_ng4qd"]
+[ext_resource type="Texture2D" uid="uid://db1q7huakmrwj" path="res://sprites/Player_shooting_UndertaleMode_3.png" id="11_fubxn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_edg2r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_8xcwp")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1gcj0")
+}],
+"loop": true,
+"name": &"standing_shooting",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_78hkm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ssl11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ng4qd")
+}],
+"loop": false,
+"name": &"undertale_mode_charging",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_fubxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ssl11")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_78hkm")
+}],
+"loop": false,
+"name": &"undertale_mode_decharging",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ofqnr")
+}],
+"loop": true,
+"name": &"undertale_mode_running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_fubxn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_ng4qd")
+}],
+"loop": true,
+"name": &"undertale_mode_shooting",
+"speed": 24.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_5ymhf"]
+offsets = PackedFloat32Array(0.631148, 0.92623)
+colors = PackedColorArray(1, 0.454902, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_l153x"]
+gradient = SubResource("Gradient_5ymhf")
+
+[sub_resource type="Curve" id="Curve_igvoq"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.933333, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_46txb"]
+curve = SubResource("Curve_igvoq")
+
+[sub_resource type="Curve" id="Curve_0n77v"]
+_data = [Vector2(0.0333333, 1), 0.0, 0.0, 0, 0, Vector2(0.98, 0.131868), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_rmsrc"]
+curve = SubResource("Curve_0n77v")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q63i6"]
+particle_flag_disable_z = true
+spread = 36.972
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 0, 0)
+scale_min = 12.0
+scale_max = 12.0
+scale_curve = SubResource("CurveTexture_rmsrc")
+color_ramp = SubResource("GradientTexture1D_l153x")
+emission_curve = SubResource("CurveTexture_46txb")
+
+[node name="Player" type="CharacterBody2D" groups=["enemy"]]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_0llxv")
+bullet_dictionary = null
+bullet_name = null
+shooting_sounds_dictionary = null
+speed = null
+magazine_size = null
+screen_adjusment = null
+player_level = null
+undertale_mode = null
+metadata/_edit_group_ = true
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+position = Vector2(-5.33333, -4.66667)
+polygon = PackedVector2Array(-23.3333, 12, -18, 26.6667, -13.3333, 31.3333, 12, 31.3333, 22, 26.6667, 22, 21.3333, 22, -24, 12, -28.6667, -13.3333, -28.6667, -18.6667, -23.3333, -23.3333, -8.66666)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
+position = Vector2(-28.6667, -34)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_edg2r")
+animation = &"running"
+centered = false
+
+[node name="ShootingPoint" type="Marker2D" parent="Area2D/AnimatedSprite2D"]
+position = Vector2(145.333, 101.333)
+
+[node name="ShootgunParticles" type="GPUParticles2D" parent="."]
+position = Vector2(38.6667, 18)
+scale = Vector2(0.5, 0.5)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_q63i6")
+lifetime = 0.1
+one_shot = true
+explosiveness = 1.0
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+process_material = ExtResource("4_r38ej")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+
+[node name="ReloadTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="RunningAnimTimer" type="Timer" parent="."]
+wait_time = 0.4
+one_shot = true
+
+[node name="ShootingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_l3jwu")
+volume_db = -5.0
+
+[node name="ReloadingSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_tg73s")
+pitch_scale = 2.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_k1wic")
+volume_db = -10.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+limit_left = 0
+limit_top = 0
+limit_right = 3840
+limit_bottom = 2160
+
+[connection signal="body_entered" from="Area2D" to="." method="death"]
+[connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="ReloadTimer" to="." method="reloading"]
+[connection signal="timeout" from="RunningAnimTimer" to="." method="running_delay"]

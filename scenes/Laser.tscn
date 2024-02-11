@@ -1,0 +1,117 @@
+[gd_scene load_steps=23 format=3 uid="uid://b6qo8ol4yn8ex"]
+
+[ext_resource type="Texture2D" uid="uid://bo2virofh1fac" path="res://sprites/Bullets/Laser/Laser_17.png" id="1_fywh6"]
+[ext_resource type="Texture2D" uid="uid://cwa7070oxvve4" path="res://sprites/Bullets/Laser/Laser_1.png" id="2_qwle5"]
+[ext_resource type="Texture2D" uid="uid://diou618e1u4vb" path="res://sprites/Bullets/Laser/Laser_2.png" id="3_udygf"]
+[ext_resource type="Texture2D" uid="uid://7er1f0omkhuk" path="res://sprites/Bullets/Laser/Laser_3.png" id="4_ivnce"]
+[ext_resource type="Texture2D" uid="uid://ddxqbkkwievic" path="res://sprites/Bullets/Laser/Laser_4.png" id="5_gry6b"]
+[ext_resource type="Texture2D" uid="uid://cd6eskh25g2mc" path="res://sprites/Bullets/Laser/Laser_5.png" id="6_6d1ml"]
+[ext_resource type="Texture2D" uid="uid://cucl7onusamkh" path="res://sprites/Bullets/Laser/Laser_6.png" id="7_018ir"]
+[ext_resource type="Texture2D" uid="uid://ijwwcd53h621" path="res://sprites/Bullets/Laser/Laser_7.png" id="8_j3gor"]
+[ext_resource type="Texture2D" uid="uid://bmc85cv58pfhq" path="res://sprites/Bullets/Laser/Laser_8.png" id="9_msies"]
+[ext_resource type="Texture2D" uid="uid://cr4gyvhjj5w7j" path="res://sprites/Bullets/Laser/Laser_9.png" id="10_vh34j"]
+[ext_resource type="Texture2D" uid="uid://cn13f1l4vd4v7" path="res://sprites/Bullets/Laser/Laser_10.png" id="11_arp47"]
+[ext_resource type="Texture2D" uid="uid://qrio4gla5kva" path="res://sprites/Bullets/Laser/Laser_11.png" id="12_rrwh4"]
+[ext_resource type="Texture2D" uid="uid://bjolyi8q04qf7" path="res://sprites/Bullets/Laser/Laser_12.png" id="13_c1rsw"]
+[ext_resource type="Texture2D" uid="uid://gcwserucvdme" path="res://sprites/Bullets/Laser/Laser_13.png" id="14_qvjbs"]
+[ext_resource type="Texture2D" uid="uid://ccismd518erng" path="res://sprites/Bullets/Laser/Laser_14.png" id="15_vjua3"]
+[ext_resource type="Texture2D" uid="uid://11wbyeqxja42" path="res://sprites/Bullets/Laser/Laser_15.png" id="16_n1noi"]
+[ext_resource type="Texture2D" uid="uid://bcqlrh2rj2jfa" path="res://sprites/Bullets/Laser/Laser_16.png" id="17_5678w"]
+[ext_resource type="Texture2D" uid="uid://cocpxleleqgaa" path="res://sprites/Bullets/Laser/Laser_Shooting.png" id="18_g0l0d"]
+[ext_resource type="Script" path="res://scripts/Laser.gd" id="18_yoxtc"]
+[ext_resource type="Texture2D" uid="uid://b8fsapq8giodg" path="res://sprites/Bullets/Laser/Laser_Shooting_2.png" id="19_l35d4"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8r4ou"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qwle5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_udygf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ivnce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gry6b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_6d1ml")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_018ir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_j3gor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_msies")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vh34j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_arp47")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_rrwh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_c1rsw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_qvjbs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_vjua3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_n1noi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_5678w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_fywh6")
+}],
+"loop": false,
+"name": &"charging",
+"speed": 120.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_g0l0d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_l35d4")
+}],
+"loop": true,
+"name": &"shooting",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlqhk"]
+size = Vector2(876, 56)
+
+[node name="Laser" type="AnimatedSprite2D"]
+z_index = 1
+position = Vector2(440, 0)
+scale = Vector2(1, 0.5)
+sprite_frames = SubResource("SpriteFrames_8r4ou")
+animation = &"shooting"
+autoplay = "charging"
+script = ExtResource("18_yoxtc")
+damage = 10
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(8, 0)
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
+shape = SubResource("RectangleShape2D_wlqhk")
+
+[connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_laser_hitbox_body_entered"]

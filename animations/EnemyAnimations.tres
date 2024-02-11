@@ -1,0 +1,50 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://cl1h3fuaoj8mq"]
+
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="1_j1a63"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="2_mb0fx"]
+[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/EnemyRunning.png" id="3_5tm8g"]
+[ext_resource type="Texture2D" uid="uid://bf635hbr47kfr" path="res://sprites/Enemies/Basic/EnemyStandingUndertaleMode.png" id="4_akb58"]
+[ext_resource type="Texture2D" uid="uid://dsq8r243bblx3" path="res://sprites/Enemies/Basic/EnemyChasingUndertaleMode.png" id="5_lw2pp"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_j1a63")
+}],
+"loop": true,
+"name": &"crushed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_mb0fx")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5tm8g")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_akb58")
+}],
+"loop": true,
+"name": &"undertale_mode_death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lw2pp")
+}],
+"loop": true,
+"name": &"undertale_mode_running",
+"speed": 5.0
+}]

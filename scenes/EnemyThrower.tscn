@@ -1,0 +1,196 @@
+[gd_scene load_steps=21 format=3 uid="uid://l7apy6iqnhyi"]
+
+[ext_resource type="Script" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="2_3itsn"]
+[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/EnemyThrowerStanding.png" id="3_km6br"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_u6dp4"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="4_tq8wl"]
+[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/EnemyThrowerStandingHeadless.png" id="4_urvu5"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="5_gksv8"]
+[ext_resource type="Texture2D" uid="uid://d0h4vd8x0ihhk" path="res://sprites/Enemies/Thrower/EnemyThrowerRunning.png" id="5_i0efk"]
+[ext_resource type="Texture2D" uid="uid://dv3201vnrmmum" path="res://sprites/Enemies/Thrower/EnemyThrowerRunningHeadless.png" id="6_2573s"]
+[ext_resource type="Texture2D" uid="uid://pd77ec6lvxo0" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerStanding.png" id="7_nf3c8"]
+[ext_resource type="Texture2D" uid="uid://b6aedfuioy3dp" path="res://sprites/Enemies/Thrower/EnemyThrowerThrowingHead.png" id="7_qq27b"]
+[ext_resource type="Texture2D" uid="uid://c6lkto12o7hsp" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerStandingHeadLess.png" id="8_1y0hp"]
+[ext_resource type="Texture2D" uid="uid://mw8iy8ujpot0" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerRunning.png" id="9_bj8wq"]
+[ext_resource type="Texture2D" uid="uid://25bbqj3wge23" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerRunningHeadLEss.png" id="10_bskgb"]
+[ext_resource type="Texture2D" uid="uid://bbjno580j44i3" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerThrowingHead.png" id="12_b3152"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_duxj0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3itsn")
+}],
+"loop": true,
+"name": &"crushed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_km6br")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_urvu5")
+}],
+"loop": true,
+"name": &"death_headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_i0efk")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2573s")
+}],
+"loop": true,
+"name": &"running_headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("5_i0efk")
+}, {
+"duration": 2.0,
+"texture": ExtResource("7_qq27b")
+}],
+"loop": false,
+"name": &"throwing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_nf3c8")
+}],
+"loop": true,
+"name": &"undertale_mode_death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_1y0hp")
+}],
+"loop": true,
+"name": &"undertale_mode_death_headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_bj8wq")
+}],
+"loop": true,
+"name": &"undertale_mode_running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_bskgb")
+}],
+"loop": true,
+"name": &"undertale_mode_running_headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("9_bj8wq")
+}, {
+"duration": 2.0,
+"texture": ExtResource("12_b3152")
+}],
+"loop": false,
+"name": &"undertale_mode_throwing",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
+size = Vector2(74.5, 90)
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[node name="EnemyThrower" type="RigidBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 14
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_ieumm")
+throw_distance = 700
+speed_max = 200
+id = 3
+xp = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_duxj0")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.250031, 0)
+shape = SubResource("RectangleShape2D_tqr5j")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("3_u6dp4")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("4_tq8wl")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_gksv8")
+volume_db = -10.0
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw"]
+[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]

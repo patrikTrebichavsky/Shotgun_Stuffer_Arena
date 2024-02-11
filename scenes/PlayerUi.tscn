@@ -1,0 +1,195 @@
+[gd_scene load_steps=9 format=3 uid="uid://bjv3ojhnmrymb"]
+
+[ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/IngameUIBackgroundBottom.png" id="1_3b84t"]
+[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
+[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUIBackgroundAsembled2.png" id="2_tillq"]
+[ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="2_w0dvj"]
+[ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/EnemyKillCount.png" id="3_8wmgf"]
+[ext_resource type="PackedScene" uid="uid://bceh2j3u3e5b3" path="res://scenes/AmmoSpriteContainer.tscn" id="4_bwgcm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0uphs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_76gam")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("1_76gam")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_tillq")
+}],
+"loop": false,
+"name": &"reload",
+"speed": 7.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_4tcm2"]
+script/source = "extends AnimatedSprite2D
+
+
+
+func _on_animation_finished():
+	animation = \"default\"
+"
+
+[node name="PlayerUi" type="CanvasLayer"]
+offset = Vector2(-20, -20)
+transform = Transform2D(1, 0, 0, 1, -20, -20)
+
+[node name="StatsUI" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+offset_left = 1468.0
+offset_top = 873.0
+offset_right = 2468.0
+offset_bottom = 1393.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_3b84t")
+expand_mode = 1
+
+[node name="Kills" type="Label" parent="StatsUI"]
+layout_mode = 0
+offset_left = 228.0
+offset_top = 344.0
+offset_right = 478.0
+offset_bottom = 419.0
+theme_override_colors/font_color = Color(1, 0.0627451, 0.121569, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_w0dvj")
+theme_override_font_sizes/font_size = 60
+text = "1000X"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="StatsUI/Kills"]
+layout_mode = 0
+offset_left = -78.0
+offset_top = -20.0
+offset_right = 22.0
+offset_bottom = 100.0
+texture = ExtResource("3_8wmgf")
+
+[node name="ColorRect" type="ColorRect" parent="StatsUI/Kills/TextureRect"]
+show_behind_parent = true
+z_index = -1
+layout_mode = 0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 36.0
+offset_bottom = 36.0
+scale = Vector2(8.23536, 3.16)
+color = Color(0.419608, 0, 0, 1)
+
+[node name="Level" type="Label" parent="StatsUI"]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 338.0
+offset_right = 886.0
+offset_bottom = 438.0
+theme_override_colors/font_color = Color(0.541176, 0.309804, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_w0dvj")
+theme_override_font_sizes/font_size = 80
+text = "Level : 0"
+
+[node name="ColorRect2" type="ColorRect" parent="StatsUI/Level"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = -8.0
+offset_top = 16.0
+offset_right = 32.0
+offset_bottom = 56.0
+scale = Vector2(9.05097, 2.00208)
+color = Color(0.2, 0.239216, 0.282353, 0.501961)
+
+[node name="Experience" type="Label" parent="StatsUI"]
+z_index = 1
+layout_mode = 0
+offset_left = 522.0
+offset_top = 214.0
+offset_right = 894.0
+offset_bottom = 289.0
+theme_override_colors/font_color = Color(0, 0.882353, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_w0dvj")
+theme_override_font_sizes/font_size = 60
+text = "Exp:"
+horizontal_alignment = 1
+
+[node name="ColorRect3" type="ColorRect" parent="StatsUI/Experience"]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 42.0
+offset_bottom = 38.0
+scale = Vector2(9.21241, 2.00208)
+color = Color(0.129412, 0.435294, 0.129412, 0.392157)
+
+[node name="AmmoInGunUI" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+z_index = 1
+offset_left = 170.0
+offset_top = 42.0
+offset_right = 206.0
+offset_bottom = 61.0
+scale = Vector2(1.25, 1.25)
+color = Color(0.141176, 0.164706, 0.176471, 1)
+metadata/_edit_group_ = true
+
+[node name="Border" type="ColorRect" parent="AmmoInGunUI"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(37, 21)
+color = Color(0.180392, 0.203922, 0.219608, 1)
+
+[node name="ShotgunStorage" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+position = Vector2(251, 135)
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_0uphs")
+script = SubResource("GDScript_4tcm2")
+
+[node name="AmmoSpriteContainer" parent="." instance=ExtResource("4_bwgcm")]
+z_index = 2
+offset_left = 179.0
+offset_top = 43.0
+offset_right = 198.0
+offset_bottom = 62.0
+scale = Vector2(1.25, 1.25)
+first_in_row = true
+
+[node name="AmmoSpriteContainer2" parent="." instance=ExtResource("4_bwgcm")]
+offset_left = 198.0
+offset_top = 130.0
+offset_right = 217.0
+offset_bottom = 149.0
+scale = Vector2(1.25, 1.25)
+
+[node name="AmmoSpriteContainer3" parent="." instance=ExtResource("4_bwgcm")]
+offset_left = 107.0
+offset_top = 168.0
+offset_right = 126.0
+offset_bottom = 187.0
+scale = Vector2(1.25, 1.25)
+
+[connection signal="animation_finished" from="ShotgunStorage" to="ShotgunStorage" method="_on_animation_finished"]
+[connection signal="empty" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="move_ammo_up"]
+[connection signal="send_to_next" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="set_ammo"]
+[connection signal="empty" from="AmmoSpriteContainer2" to="AmmoSpriteContainer3" method="move_ammo_up"]
+[connection signal="send_to_next" from="AmmoSpriteContainer2" to="AmmoSpriteContainer3" method="set_ammo"]
+[connection signal="send_to_previous" from="AmmoSpriteContainer2" to="AmmoSpriteContainer" method="set_ammo"]
+[connection signal="send_to_previous" from="AmmoSpriteContainer3" to="AmmoSpriteContainer2" method="set_ammo"]

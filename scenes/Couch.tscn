@@ -1,0 +1,88 @@
+[gd_scene load_steps=9 format=3 uid="uid://cuc8yrpfftkqr"]
+
+[ext_resource type="Script" path="res://scripts/Couch.gd" id="1_r2gt5"]
+[ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="2_aqbxc"]
+[ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_a40t0"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_aqbxc")
+}],
+"loop": true,
+"name": &"base",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_oocmj"]
+offsets = PackedFloat32Array(0.577982)
+colors = PackedColorArray(0.788235, 0.537255, 0.282353, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_82be6"]
+gradient = SubResource("Gradient_oocmj")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m3meo"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 150.0
+initial_velocity_max = 150.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_82be6")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ma7h"]
+size = Vector2(90.0363, 90.0045)
+
+[node name="Couch" type="RigidBody2D" groups=["bullets"]]
+visibility_layer = 2
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_r2gt5")
+steer_force = 400.0
+damage = 7
+tracking = true
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_nh842")
+animation = &"base"
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_a40t0")
+volume_db = 5.0
+pitch_scale = 2.0
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+visibility_layer = 2
+z_index = 1
+y_sort_enabled = true
+rotation = -0.00635898
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_m3meo")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+
+[node name="DeletionTimer" type="Timer" parent="."]
+wait_time = 3.5
+one_shot = true
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visibility_layer = 7
+position = Vector2(1.886e-06, 0.00954076)
+shape = SubResource("RectangleShape2D_1ma7h")
+
+[connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
+[connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

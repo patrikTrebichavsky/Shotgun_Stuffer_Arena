@@ -1,0 +1,46 @@
+Shotgun Stuffer Arena
+
+
+-Simple Movement
+
+	WASD- Move around
+	Player turn around with mouse cursor
+
+
+-Shooting mechanic
+	 
+	bullet generation Time
+	5 types of bullets which are tied to a leveling system
+
+
+-Enemies spawning infinitely around the player (System similar to Godot 2d project)
+
+
+-Enemies Chase down the player and kill him (Simple path finding in future )
+
+
+-Ui Similar to godot first 2D game
+
+	display next bullet in shotgun chamber 
+
+
+-Progresion system:
+	
+	Leveling which add new types of bullets
+	Adding more and more enemies
+
+
+-Particles
+	
+	Enemies dying
+	Bullets 
+	Shotgun Muzzle Flash
+
+
+-Audio
+
+	Music
+	Shooting sound
+	Bullet generation sound
+
+

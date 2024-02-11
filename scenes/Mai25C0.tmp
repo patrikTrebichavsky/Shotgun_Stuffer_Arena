@@ -1,0 +1,83 @@
+[gd_scene load_steps=5 format=3 uid="uid://d0ihq2xdamwv4"]
+
+[ext_resource type="PackedScene" uid="uid://drphqi8eilyr3" path="res://scenes/Player.tscn" id="1_u6wxb"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_ycgh7"]
+[ext_resource type="PackedScene" uid="uid://dir5j135wrl6q" path="res://scenes/Enemy.tscn" id="2_nndqp"]
+[ext_resource type="Texture2D" uid="uid://vfe2gmn1q0y3" path="res://sprites/BackGround.png" id="3_vdtt6"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_ycgh7")
+player_level = 5
+initial_special_ammo_time = 2.0
+max_lvl_for_special_generator = 40
+special_ammo_max_decrease = 1.7
+initial_reload_time = 1.0
+max_lvl_for_reload_decrease = 20
+reload_max_decrease = 0.8
+lvls_needed_for_mag_increase = 10
+initial_enemy_spawn_time = 2.0
+max_lvl_for_enemy_spawner = 25
+enemy_spawn_max_decrease = 1.9
+
+[node name="Player" parent="." instance=ExtResource("1_u6wxb")]
+position = Vector2(573, 1030)
+
+[node name="Enemy" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(1276, 1581)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(1535, 1602)
+
+[node name="Enemy3" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(1357, 1704)
+
+[node name="Enemy5" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(1357, 1945)
+
+[node name="Enemy6" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(1357, 1945)
+
+[node name="Enemy7" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(988, 1920)
+
+[node name="Enemy8" parent="." instance=ExtResource("2_nndqp")]
+position = Vector2(988, 1920)
+
+[node name="BackGround" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(1920, 1080)
+texture = ExtResource("3_vdtt6")
+
+[node name="SpecialModeTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="ModeBackgroundEdge" type="ColorRect" parent="."]
+visible = false
+z_index = -5
+custom_minimum_size = Vector2(3840, 2160)
+offset_right = 3840.0
+offset_bottom = 2160.0
+
+[node name="ModeBackground" type="ColorRect" parent="ModeBackgroundEdge"]
+custom_minimum_size = Vector2(3740, 2060)
+layout_mode = 0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = 3790.0
+offset_bottom = 2110.0
+color = Color(0, 0, 0, 1)
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="SpecialAmmoTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[connection signal="generated_special_ammo" from="." to="Player" method="store_ammo"]
+[connection signal="set_mag_size" from="." to="Player" method="increase_magizin_size"]
+[connection signal="set_reload_time" from="." to="Player" method="set_reload_time"]
+[connection signal="magazine_state_changed" from="Player" to="." method="special_magazin_state_change"]
+[connection signal="timeout" from="SpecialModeTimer" to="." method="mode_timeout"]
+[connection signal="timeout" from="SpecialAmmoTimer" to="." method="generate_special_ammo"]

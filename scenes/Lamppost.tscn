@@ -1,0 +1,149 @@
+[gd_scene load_steps=13 format=3 uid="uid://dtccf58xuw842"]
+
+[ext_resource type="Script" path="res://scripts/Lamppost.gd" id="1_0a3k4"]
+[ext_resource type="Texture2D" uid="uid://vke4rlgh0qf1" path="res://sprites/Bullets/LampPost.png" id="2_ncc3p"]
+[ext_resource type="AudioStream" uid="uid://bsr5lygbxh8r4" path="res://sounds/Bullets/LampStab.mp3" id="3_qpfkk"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_33wpf"]
+[ext_resource type="AudioStream" uid="uid://dya4lr4bkorjb" path="res://sounds/Bullets/LampHit.mp3" id="4_jnmlt"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="4_shry8"]
+[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/EnemyJumperStanding.png" id="7_vs5he"]
+[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/EnemyThrowerStanding.png" id="8_0dlen"]
+[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/EnemyThrowerStandingHeadless.png" id="9_1h7lo"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ncc3p")
+}],
+"loop": true,
+"name": &"base",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1ma7h"]
+size = Vector2(28, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x3sgm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_shry8")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"empty",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_vs5he")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_0dlen")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_1h7lo")
+}],
+"loop": true,
+"name": &"thrower_headless",
+"speed": 5.0
+}]
+
+[node name="Lamppost" type="RigidBody2D" groups=["bullets"]]
+visibility_layer = 2
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+script = ExtResource("1_0a3k4")
+pierce_damage_threshold = 9
+damage = 2
+push_back_multiplier = 100
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 2
+position = Vector2(120, 0)
+rotation = 4.71239
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_nh842")
+animation = &"base"
+
+[node name="StabSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_qpfkk")
+volume_db = 5.0
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_jnmlt")
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+visibility_layer = 2
+z_index = 1
+y_sort_enabled = true
+position = Vector2(229, 0)
+rotation = -0.00635898
+emitting = false
+amount = 32
+process_material = ExtResource("4_33wpf")
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+
+[node name="DeletionTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Edge" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Edge"]
+visibility_layer = 7
+position = Vector2(222, 0)
+shape = SubResource("RectangleShape2D_1ma7h")
+
+[node name="Body" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Body"]
+visibility_layer = 7
+position = Vector2(5, 0)
+scale = Vector2(0.96, 0.64)
+polygon = PackedVector2Array(0, 26.5625, 22.9167, 59.375, 26.0417, 59.375, 28.125, 45.3125, 46.875, 43.75, 72.9167, 35.9375, 79.1667, 26.5625, 109.375, 18.75, 122, 13, 211.458, 12.5, 211.458, -12.5, 121.875, -12.5, 109.375, -20.3125, 78.125, -28.125, 72.9167, -35.9375, 46.875, -43.75, 27.0833, -43.75, 26.0417, -59.375, 20.8333, -59.375, 0, -25)
+
+[node name="ImpaledEnemySprite1" type="AnimatedSprite2D" parent="."]
+position = Vector2(108, 0)
+scale = Vector2(0.748327, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
+
+[node name="ImpaledEnemySprite2" type="AnimatedSprite2D" parent="."]
+position = Vector2(165, 0)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
+
+[node name="ImpaledEnemySprite3" type="AnimatedSprite2D" parent="."]
+position = Vector2(227, 0)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
+
+[connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
+[connection signal="body_entered" from="Edge" to="." method="_on_edge_hit"]
+[connection signal="body_entered" from="Body" to="." method="_on_body_hit"]

@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://djcca17u7fsi1"]
+
+[ext_resource type="Script" path="res://scripts/Sewage.gd" id="1_4np7v"]
+[ext_resource type="Texture2D" uid="uid://btidnvpdv8iar" path="res://sprites/SewageClosed.png" id="2_v0f7q"]
+[ext_resource type="Texture2D" uid="uid://byh4jt0y6mgic" path="res://sprites/SewageOpen.png" id="3_00jia"]
+[ext_resource type="Texture2D" uid="uid://do4ckc22e7xi1" path="res://sprites/SewageClosing.png" id="4_ii1tm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_acs36"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_v0f7q")
+}],
+"loop": true,
+"name": &"closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 25.0,
+"texture": ExtResource("3_00jia")
+}, {
+"duration": 25.0,
+"texture": ExtResource("4_ii1tm")
+}],
+"loop": false,
+"name": &"closing",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4c42w"]
+radius = 67.1863
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1xuwx"]
+radius = 67.0075
+
+[node name="Sewage" type="Area2D"]
+script = ExtResource("1_4np7v")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_acs36")
+animation = &"closed"
+centered = false
+offset = Vector2(-80, -80)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4c42w")
+
+[node name="ExitMarker" type="Marker2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("CircleShape2D_1xuwx")
+debug_color = Color(0.627451, 0.529412, 0, 0.419608)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

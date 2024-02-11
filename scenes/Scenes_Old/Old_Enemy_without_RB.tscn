@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://blkly143yoirp"]
+
+[ext_resource type="Script" path="res://scripts/old_scripts/Old_Enemy.gd" id="1_agpfe"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="2_0i803"]
+[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/EnemyRunning.png" id="3_vlcbc"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_o03a0"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="5_alt0y"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="6_usfip"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eti3m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0i803")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_vlcbc")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucegb"]
+size = Vector2(57.1955, 20)
+
+[node name="Enemy" type="CharacterBody2D"]
+position = Vector2(654, 314)
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_agpfe")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_eti3m")
+animation = &"running"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-0.333313, 0)
+rotation = -3.14159
+scale = Vector2(0.874194, -2.99973)
+shape = SubResource("RectangleShape2D_ucegb")
+
+[node name="Particles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+process_material = ExtResource("4_o03a0")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_alt0y")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_usfip")
+volume_db = -10.0
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="GruntTimer" to="." method="_on_grunt_timer_timeout"]

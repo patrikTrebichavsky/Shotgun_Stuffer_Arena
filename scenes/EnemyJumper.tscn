@@ -1,0 +1,322 @@
+[gd_scene load_steps=25 format=3 uid="uid://dqvmhhhcsl0j5"]
+
+[ext_resource type="Script" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="2_ckm8h"]
+[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/EnemyJumperStanding.png" id="3_3kitq"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_jpx1l"]
+[ext_resource type="Texture2D" uid="uid://i7df7sgnbqd" path="res://sprites/Enemies/Jumper/EnemyJumperChasing.png" id="4_6fy0n"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="4_26lkp"]
+[ext_resource type="Texture2D" uid="uid://kvuurcfskduw" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperStanding.png" id="5_gyyd0"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="5_so8b1"]
+[ext_resource type="Texture2D" uid="uid://breqmsqqxfjdg" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperChasing.png" id="6_w12ua"]
+[ext_resource type="AudioStream" uid="uid://f2lgsy1hcnxb" path="res://sounds/EnemyJump.mp3" id="9_bfju6"]
+[ext_resource type="AudioStream" uid="uid://cdmd3iebmvl3u" path="res://sounds/EnemyDrop.wav" id="10_7bcbx"]
+[ext_resource type="Texture2D" uid="uid://cgteklutre1r" path="res://sprites/Enemies/Jumper/EnemyJumperDropMark.png" id="10_tijb4"]
+[ext_resource type="Texture2D" uid="uid://bsot7cong8342" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperDropMark.png" id="13_1y6b5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_aaasd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ckm8h")
+}],
+"loop": true,
+"name": &"crushed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_3kitq")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_6fy0n")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_gyyd0")
+}],
+"loop": true,
+"name": &"undertale_mode_death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_w12ua")
+}],
+"loop": true,
+"name": &"undertale_mode_running",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
+size = Vector2(74.5, 90)
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[sub_resource type="Gradient" id="Gradient_xobry"]
+offsets = PackedFloat32Array(0.712121)
+colors = PackedColorArray(0.498929, 0.349866, 0.212872, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_00urn"]
+gradient = SubResource("Gradient_xobry")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_imt42"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 200.0
+initial_velocity_max = 200.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 8.81
+color_ramp = SubResource("GradientTexture1D_00urn")
+
+[sub_resource type="Animation" id="Animation_txhfg"]
+resource_name = "Jump_animation"
+length = 2.0
+step = 0.0416667
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JumpSound")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("FallSound")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DropParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DropMarker:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("AnimatedSprite2D:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.958333, 2),
+"transitions": PackedFloat32Array(0.5, 2, 2),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(1.5, 1.5), Vector2(0.75, 0.75)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:just_jumped")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("JumpTimeout")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [-1],
+"method": &"start"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eb2wl"]
+_data = {
+"Jump_animation": SubResource("Animation_txhfg")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5eyyl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_tijb4")
+}],
+"loop": true,
+"name": &"drop_marker",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_1y6b5")
+}],
+"loop": true,
+"name": &"undertale_mode_drop_marker",
+"speed": 5.0
+}]
+
+[node name="EnemyJumper" type="RigidBody2D" groups=["enemy"]]
+collision_layer = 2
+collision_mask = 14
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_8vh6h")
+jump_distance = 600
+speed_min = 400.0
+id = 2
+hp = 6
+xp = 2
+player_position = Vector2(1400, 500)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_aaasd")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.250031, 0)
+shape = SubResource("RectangleShape2D_tqr5j")
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("4_26lkp")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_so8b1")
+volume_db = -10.0
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_bfju6")
+
+[node name="FallSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("10_7bcbx")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("3_jpx1l")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+one_shot = true
+
+[node name="DropParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 34
+process_material = SubResource("ParticleProcessMaterial_imt42")
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eb2wl")
+}
+speed_scale = 2.0
+
+[node name="DropMarker" type="AnimatedSprite2D" parent="."]
+visible = false
+z_index = -1
+sprite_frames = SubResource("SpriteFrames_5eyyl")
+animation = &"drop_marker"
+
+[node name="JumpTimeout" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+debug_enabled = true
+
+[connection signal="body_shape_entered" from="." to="." method="body_shape_entered"]
+[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="JumpTimeout" to="." method="_on_jump_timeout_timeout"]

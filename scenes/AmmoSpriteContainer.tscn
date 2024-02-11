@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bceh2j3u3e5b3"]
+
+[ext_resource type="Script" path="res://scripts/TextureRect.gd" id="1_40rmj"]
+
+[node name="AmmoSpriteContainer" type="TextureRect" groups=["player_ui"]]
+offset_right = 21.0
+offset_bottom = 21.0
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("1_40rmj")
