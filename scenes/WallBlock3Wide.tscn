@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://80gyke6i8npv"]
+
+[ext_resource type="Script" path="res://scripts/Wall.gd" id="1_4khf0"]
+[ext_resource type="Texture2D" uid="uid://bec7i6tnct58l" path="res://sprites/Arena/Wall1.png" id="1_wqes1"]
+[ext_resource type="Texture2D" uid="uid://17qy7ulv66us" path="res://sprites/Arena/Wall2.png" id="2_2f2ag"]
+[ext_resource type="Texture2D" uid="uid://8io6pt0jyp8i" path="res://sprites/Arena/Wall3.png" id="3_dxo0g"]
+[ext_resource type="Texture2D" uid="uid://cea087c7u6htp" path="res://sprites/Arena/WallChared.png" id="5_hjr1k"]
+[ext_resource type="Texture2D" uid="uid://b0kgcn1g3gykw" path="res://sprites/Arena/WallCracked.png" id="5_v5edy"]
+[ext_resource type="Texture2D" uid="uid://wvobsphe0ntn" path="res://sprites/Arena/WallCrackedChared.png" id="7_ls82k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sf2sc"]
+size = Vector2(480, 160)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uht7r"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_wqes1")
+}],
+"loop": true,
+"name": &"type_1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2f2ag")
+}],
+"loop": true,
+"name": &"type_2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_dxo0g")
+}],
+"loop": true,
+"name": &"type_3",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_hjr1k")
+}],
+"loop": true,
+"name": &"type_chared",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_v5edy")
+}],
+"loop": true,
+"name": &"type_cracked",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_ls82k")
+}],
+"loop": true,
+"name": &"type_cracked_chared",
+"speed": 5.0
+}]
+
+[node name="WallBlock3Wide" type="StaticBody2D" groups=["paths", "walls"]]
+z_index = -2
+collision_layer = 63
+collision_mask = 63
+script = ExtResource("1_4khf0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 7
+visibility_layer = 7
+shape = SubResource("RectangleShape2D_sf2sc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_uht7r")
+animation = &"type_1"
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="."]
+position = Vector2(160, 0)
+sprite_frames = SubResource("SpriteFrames_uht7r")
+animation = &"type_2"
+
+[node name="AnimatedSprite2D3" type="AnimatedSprite2D" parent="."]
+position = Vector2(-160, 0)
+sprite_frames = SubResource("SpriteFrames_uht7r")
+animation = &"type_3"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+show_behind_parent = true
+offset_left = -248.0
+offset_top = -88.0
+offset_right = 248.0
+offset_bottom = 88.0
+color = Color(0, 0, 0, 0.258824)

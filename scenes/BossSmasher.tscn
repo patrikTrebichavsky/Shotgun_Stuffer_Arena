@@ -1,0 +1,236 @@
+[gd_scene load_steps=25 format=3 uid="uid://dmkxymqoate61"]
+
+[ext_resource type="Script" path="res://scripts/Smasher.gd" id="1_0xh7w"]
+[ext_resource type="Texture2D" uid="uid://cnwpq05ci1a2s" path="res://sprites/Enemies/Boss/Smasher/ChasingPrey.png" id="2_onlsp"]
+[ext_resource type="Texture2D" uid="uid://bgphchwm1x4p8" path="res://sprites/Enemies/Boss/Smasher/Basic.png" id="3_g3h6p"]
+[ext_resource type="Texture2D" uid="uid://c5rd0it7703l3" path="res://sprites/Enemies/Boss/Smasher/Feasting.png" id="4_u4tpe"]
+[ext_resource type="Texture2D" uid="uid://cwi2av8wqiueg" path="res://sprites/Enemies/Boss/Smasher/Feasting2.png" id="5_2qhl8"]
+[ext_resource type="Texture2D" uid="uid://cy3lbb8d87t2w" path="res://sprites/Enemies/Boss/Smasher/Feasting3.png" id="6_lsv0e"]
+[ext_resource type="Texture2D" uid="uid://bmff1ihp5xlj6" path="res://sprites/Enemies/Boss/Smasher/Feasted.png" id="7_3q6wc"]
+[ext_resource type="Texture2D" uid="uid://bkrkv1sobugl" path="res://sprites/Enemies/Boss/Smasher/Death.png" id="8_d2ayg"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="9_cn446"]
+[ext_resource type="AudioStream" uid="uid://u2f78dmqbx37" path="res://sounds/DashStartSmasher.wav" id="10_8uvsl"]
+[ext_resource type="AudioStream" uid="uid://dc20wnceph4de" path="res://sounds/Smasher'/Crash.wav" id="11_bdnml"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="11_c6uuo"]
+[ext_resource type="AudioStream" uid="uid://d3shmfwro3x7j" path="res://sounds/Smasher'/EatingSoundEffect.mp3" id="13_yfwo8"]
+[ext_resource type="AudioStream" uid="uid://ribmfp3x1ink" path="res://sounds/Smasher'/HealingUp.wav" id="14_fftpt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l7jcl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_onlsp")
+}],
+"loop": true,
+"name": &"chasing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_d2ayg")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 2.0,
+"texture": ExtResource("4_u4tpe")
+}, {
+"duration": 2.0,
+"texture": ExtResource("5_2qhl8")
+}, {
+"duration": 2.0,
+"texture": ExtResource("6_lsv0e")
+}, {
+"duration": 2.0,
+"texture": ExtResource("7_3q6wc")
+}],
+"loop": false,
+"name": &"feast",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g3h6p")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
+radius = 57.75
+height = 144.0
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u0x2m"]
+size = Vector2(1280, 720)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_328xn"]
+radius = 111.0
+
+[sub_resource type="Gradient" id="Gradient_88r83"]
+offsets = PackedFloat32Array(0.464419)
+colors = PackedColorArray(0.831373, 0.615686, 0.407843, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_as3m1"]
+gradient = SubResource("Gradient_88r83")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6kop4"]
+particle_flag_disable_z = true
+spread = 90.0
+initial_velocity_min = -1500.0
+initial_velocity_max = -1250.0
+gravity = Vector3(0, 0, 0)
+damping_min = 3000.0
+damping_max = 3000.0
+scale_max = 16.15
+color_ramp = SubResource("GradientTexture1D_as3m1")
+
+[node name="SmasherEnemy" type="RigidBody2D" groups=["enemy", "smasher"]]
+z_index = 12
+collision_layer = 512
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+max_contacts_reported = 1
+contact_monitor = true
+script = ExtResource("1_0xh7w")
+dash_speed_min = 800
+dash_speed_max = 1600
+dash_speed_increase = 35.0
+hp_max = 200
+xp = 0
+player_position = Vector2(1000, 1000)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_l7jcl")
+animation = &"running"
+
+[node name="DashAfterImage1" type="Sprite2D" parent="AnimatedSprite2D"]
+modulate = Color(1, 1, 1, 0.4)
+show_behind_parent = true
+texture = ExtResource("3_g3h6p")
+
+[node name="DashAfterImage2" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
+modulate = Color(1, 1, 1, 0.2)
+show_behind_parent = true
+texture = ExtResource("3_g3h6p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("9_cn446")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="AimingTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="CrashRecoveryTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("10_8uvsl")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="CrashSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("11_bdnml")
+volume_db = 5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("11_c6uuo")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 32
+hit_from_inside = true
+
+[node name="HuntingArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HuntingArea"]
+shape = SubResource("RectangleShape2D_u0x2m")
+
+[node name="DashArea" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DashArea"]
+shape = SubResource("CircleShape2D_328xn")
+
+[node name="CrashWallParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 25
+process_material = SubResource("ParticleProcessMaterial_6kop4")
+lifetime = 0.45
+one_shot = true
+explosiveness = 0.81
+randomness = 0.17
+
+[node name="EatingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_yfwo8")
+
+[node name="HealingSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_fftpt")
+
+[node name="SpawnAddsTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+autostart = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
+[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="AimingTimer" to="." method="dash"]
+[connection signal="timeout" from="CrashRecoveryTimer" to="." method="crash_recovery"]
+[connection signal="timeout" from="StuckTimer" to="." method="stuck_timeout"]
+[connection signal="timeout" from="SpawnAddsTimer" to="." method="_spawn_adds"]

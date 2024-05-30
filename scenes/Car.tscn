@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://ceujxjmtlnr4j"]
+[gd_scene load_steps=10 format=3 uid="uid://ceujxjmtlnr4j"]
 
 [ext_resource type="Script" path="res://scripts/Car.gd" id="1_xgi3c"]
 [ext_resource type="Texture2D" uid="uid://dngn5l0visv6t" path="res://sprites/Bullets/Car.png" id="2_1lp18"]
 [ext_resource type="Texture2D" uid="uid://c8svu6htyicfo" path="res://sprites/Bullets/Explosion1.png" id="3_1v5hs"]
 [ext_resource type="Texture2D" uid="uid://sw83laykexnj" path="res://sprites/Bullets/Explosion2.png" id="4_rrvra"]
 [ext_resource type="AudioStream" uid="uid://2ugwqkgu8s8b" path="res://sounds/Bullets/CarExplosion.mp3" id="5_7nbmq"]
+[ext_resource type="AudioStream" uid="uid://dxesm3hmvuqtc" path="res://sounds/RunOverSoundEffect.mp3" id="6_xt418"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -38,27 +39,25 @@ scale_min = 3.0
 scale_max = 15.0
 color = Color(0.788235, 0.537255, 0.282353, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0galf"]
-size = Vector2(324, 308)
+[sub_resource type="CircleShape2D" id="CircleShape2D_hgg71"]
+radius = 223.009
 
 [node name="Car" type="RigidBody2D" groups=["bullets"]]
-position = Vector2(40, -11)
 collision_layer = 4
 collision_mask = 2
 gravity_scale = 0.0
 script = ExtResource("1_xgi3c")
 explo_push_back = 1000.0
 explo_dmg = 12
-burn_damage = 3
-explosion_max_size = Vector2(1, 1)
-explosion_size_increase = Vector2(0.05, 0.05)
+burn_damage = 1
+explosion_max_size = Vector2(1.5, 1.5)
+explosion_size_increase = 1.25
 damage = 10
 push_back_multiplier = 1000
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = -1
-position = Vector2(120, 14)
 rotation = 1.5708
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_nh842")
@@ -68,6 +67,11 @@ autoplay = "base"
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_7nbmq")
 volume_db = 5.0
+bus = &"SFX"
+
+[node name="RunOverSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_xt418")
+bus = &"SFX"
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -82,49 +86,51 @@ one_shot = true
 explosiveness = 1.0
 
 [node name="DeletionTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 2.5
 autostart = true
 
 [node name="ExplosionDeletionTimer" type="Timer" parent="."]
+wait_time = 2.5
 
-[node name="CollisionArea" type="Area2D" parent="."]
-position = Vector2(121, 15)
+[node name="BurnTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="CarArea" type="Area2D" parent="."]
 rotation = 1.5708
-collision_layer = 0
-collision_mask = 6
+collision_layer = 32768
+collision_mask = 22
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CollisionArea"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CarArea"]
 polygon = PackedVector2Array(-5.99941, 162, 59.0006, 161, 75.0005, 144, 82.0004, 122, 82.0002, 60.9997, 74.0002, 59.9997, 75, -11.0003, 90, -10.0003, 97.9999, -21.0004, 97.9999, -35.0004, 89.9998, -45.0003, 80.9998, -45.0003, 81.9997, -92.0003, 73.9997, -92.0003, 74.9995, -135, 49.9994, -159, -52.0006, -159, -80.0005, -126, -80.0003, -89.9997, -87.0003, -88.9997, -87.0002, -43.9997, -94.0002, -44.9997, -99.0001, -36.9996, -100, -17.9996, -91, -9.99966, -78, -9.99971, -75.9998, 58.0003, -85.9998, 61.0003, -84.9996, 123, -74.9995, 145, -60.9994, 161)
 
-[node name="ExplosionArea" type="Area2D" parent="."]
-position = Vector2(108, 9)
-collision_layer = 0
-collision_mask = 6
+[node name="CarExplosionArea" type="Area2D" parent="."]
+position = Vector2(-9, -2)
+scale = Vector2(0.075, 0.075)
+collision_layer = 32768
+collision_mask = 22
 monitoring = false
+monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ExplosionArea"]
-position = Vector2(16, -6)
-shape = SubResource("RectangleShape2D_0galf")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CarExplosionArea"]
+position = Vector2(17, -6)
+shape = SubResource("CircleShape2D_hgg71")
 
-[node name="ExplosionCenter" type="Marker2D" parent="ExplosionArea"]
+[node name="ExplosionCenter" type="Marker2D" parent="CarExplosionArea"]
 
 [node name="WheelMarker1" type="Marker2D" parent="."]
-position = Vector2(29, -65)
 rotation = 0.785398
 
 [node name="WheelMarker2" type="Marker2D" parent="."]
-position = Vector2(186, -66)
 rotation = 2.35619
 
 [node name="WheelMarker3" type="Marker2D" parent="."]
-position = Vector2(31, 91)
 rotation = -0.785398
 
 [node name="WheelMarker4" type="Marker2D" parent="."]
-position = Vector2(182, 91)
 rotation = -2.35619
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
 [connection signal="timeout" from="ExplosionDeletionTimer" to="." method="delete_bullet"]
-[connection signal="body_entered" from="CollisionArea" to="." method="_enemy_hit"]
-[connection signal="body_entered" from="ExplosionArea" to="." method="_explosion_hit"]
+[connection signal="timeout" from="BurnTimer" to="." method="burning_tick"]
+[connection signal="body_entered" from="CarArea" to="." method="_enemy_hit"]
+[connection signal="body_entered" from="CarExplosionArea" to="." method="_explosion_hit"]

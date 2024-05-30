@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cuc8yrpfftkqr"]
+[gd_scene load_steps=10 format=3 uid="uid://cuc8yrpfftkqr"]
 
 [ext_resource type="Script" path="res://scripts/Couch.gd" id="1_r2gt5"]
 [ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="2_aqbxc"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_a40t0"]
+[ext_resource type="Texture2D" uid="uid://etej2jvshkph" path="res://sprites/Bullets/ArmchairTarget.png" id="4_dxse5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -56,6 +57,7 @@ animation = &"base"
 stream = ExtResource("3_a40t0")
 volume_db = 5.0
 pitch_scale = 2.0
+bus = &"SFX"
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -77,12 +79,16 @@ autostart = true
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visibility_layer = 7
 position = Vector2(1.886e-06, 0.00954076)
 shape = SubResource("RectangleShape2D_1ma7h")
+
+[node name="MarkerSprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_dxse5")
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
 [connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

@@ -8,3 +8,11 @@ offset_bottom = 21.0
 expand_mode = 3
 stretch_mode = 5
 script = ExtResource("1_40rmj")
+
+[node name="highlightRect" type="ColorRect" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 0
+offset_right = 19.0
+offset_bottom = 19.0
+color = Color(1, 1, 0, 1)

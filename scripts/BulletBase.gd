@@ -23,7 +23,9 @@ func _enemy_hit(body):
 		$AnimatedSprite2D.visible = false
 		
 		var push_back = linear_velocity.normalized() * push_back_multiplier
-		body.got_shot(damage, push_back)
+		
+		if !"Wall" in body.name:
+			body.got_shot(damage, push_back)
 
 	
 func delete_bullet():

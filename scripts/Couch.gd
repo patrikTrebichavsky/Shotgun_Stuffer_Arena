@@ -14,20 +14,20 @@ func _ready():
 	
 	mouse_placement = get_global_mouse_position()
 	vel = transform.x * speed
-	
-	if array_of_bodies.size() > 0: 
-		linear_velocity = Vector2.ZERO
 
-		for body in array_of_bodies:
-			
-			if target == null:
-				target = body
-				
-			elif (target.global_position-mouse_placement).length() > (body.global_position-mouse_placement).length():
-				target = body
-				
-		no_target = false
+	for body in array_of_bodies:
+	
+		if body.name.contains("Wall"):
+			continue			
+		if target == null:
+			target = body
+			no_target = false
+			$MarkerSprite2D.visible = true
+			linear_velocity = Vector2.ZERO
+		elif (target.global_position-mouse_placement).length() > (body.global_position-mouse_placement).length():
+			target = body
 		
+		body.stop_homming.connect(target_died)
 		
 func seek():
 	var steer = Vector2.ZERO
@@ -37,27 +37,32 @@ func seek():
 	return steer
 	
 func _process(delta):
-	
-	
-	if !no_target:
-		#position = destination
-		acceleration += seek()
-		vel += acceleration * delta
-		vel = vel.limit_length(speed)
-		rotation = vel.angle()
-		position += vel * delta
-	
-	
+		
+	if !no_target and hitcount == 0:
+			$MarkerSprite2D.global_position = target.global_position
+			acceleration += seek()
+			vel += acceleration * delta
+			vel = vel.limit_length(speed)
+			rotation = vel.angle()
+			position += vel * delta
+			
 func _enemy_hit(body):
 	
 	if no_target or body == target:
 		if hitcount == 0:
-			
+
+			$MarkerSprite2D.visible = false
 			hitcount += 1
 			$CollisionSound.play()
 			$CollisionParticles.emitting = true
 			$AnimatedSprite2D.visible = false
 			
 			var push_back = linear_velocity.normalized() * push_back_multiplier
-			body.got_shot(damage, push_back)
-		
+			if !"Wall" in body.name:
+				body.got_shot(damage, push_back)
+			
+			
+func target_died():
+	no_target = true
+	apply_central_impulse(Vector2.RIGHT.rotated(rotation)*speed)
+	$MarkerSprite2D.visible = false

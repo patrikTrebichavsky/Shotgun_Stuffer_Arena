@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/House.gd" id="1_k1080"]
 [ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="2_waqes"]
-[ext_resource type="AudioStream" uid="uid://cld3iduk4xj3s" path="res://sounds/Bullets/HouseCollision.mp3" id="3_aux2j"]
+[ext_resource type="AudioStream" uid="uid://bcs2wcwdbfnjr" path="res://sounds/Bullets/HouseCollision.wav" id="3_l0ogn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -73,8 +73,9 @@ sprite_frames = SubResource("SpriteFrames_nh842")
 animation = &"base"
 
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("3_aux2j")
-volume_db = 10.0
+stream = ExtResource("3_l0ogn")
+volume_db = 9.576
+bus = &"SFX"
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -93,11 +94,11 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 2
-collision_mask = 6
+[node name="HouseArea" type="Area2D" parent="."]
+collision_layer = 32770
+collision_mask = 22
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HouseArea"]
 position = Vector2(225, 0)
 rotation = 1.5708
 polygon = PackedVector2Array(-170, -14, -168, 226, 147, 226, 175, 195, 178, -14, 178, -23, 184, -23, 185, -29, 192, -29, 194, -58, 56, -197, -51, -194, -93, -158, -93, -175, -177, -175, -192, -154, -192, -125, -178, -125, -178, -47, -198, -43, -198, -14)
@@ -108,4 +109,4 @@ libraries = {
 }
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
-[connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]
+[connection signal="body_entered" from="HouseArea" to="." method="_enemy_hit"]

@@ -15,16 +15,20 @@ func _ready():
 	player.player_position.connect(update_player_position)
 	
 	main_node.switch_mode.connect(_switch_mode)
-	
+	nav.velocity_computed.connect(move)
 	if undertale_mode:
 		$AnimatedSprite2D.animation = "undertale_mode_running" 
 		
+
 
 func _physics_process(_delta):
 	
 	var player_enemy_distance = abs((player_position-position).length())
 	
-	if has_head && player_enemy_distance <= throw_distance:
+	#
+	#var temp_pos = nav.get_next_path_position().length() - player_position.length()
+	$RayCast2D.look_at(player_position)
+	if has_head && player_enemy_distance <= throw_distance && !$RayCast2D.is_colliding() && in_arena:
 		freeze = true
 		has_head = false
 		aiming = true
@@ -43,14 +47,21 @@ func _physics_process(_delta):
 		$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
 		
 	elif has_head:
-
-		target_position = (player_position-global_position).normalized()
-		linear_velocity = target_position * speed
-		$AnimatedSprite2D.look_at(player_position)
-		$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
 		
+		nav.target_position = player_position
+		target_position = (nav.get_next_path_position()-global_position).normalized()
+		current_velocity = target_position * speed
+		nav.set_velocity(current_velocity)
+		$AnimatedSprite2D.look_at(nav.get_next_path_position())
+		$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
+
 	else:
 		linear_velocity = Vector2.ZERO
+
+func move(velocity: Vector2):
+	if has_head:
+		linear_velocity = velocity
+	
 
 func delete_enemy():
 	get_parent().decrease_special_enemy_counter()
@@ -103,6 +114,26 @@ func got_shot(damage, push_back, custom_death_sprite=false):
 		
 		await get_tree().create_timer(0.2).timeout
 		set_physics_process(true)
+
+func got_conditioned(damage, _condition,custom_death_sprite):
+	
+	hp -= damage
+	
+	
+	if hp <= 0:
+		_death(custom_death_sprite)
+		if has_head:
+			$AnimatedSprite2D.animation = "burned"
+		else:
+			$AnimatedSprite2D. animation = "burned_headless"
+			
+	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
+	add_child(instance)
+	instance._display_message(str(damage*10), "#e86a17", 35)
+
+	$ConditionParticles.emitting = true 
+	
+	
 
 func throw():
 	
@@ -158,3 +189,25 @@ func _switch_mode(_name):
 			$AnimatedSprite2D.animation = "running" 
 		else:
 			$AnimatedSprite2D.animation = "running_headless" 
+
+
+#func falling_down_from_wall():
+	#var tween = get_tree().create_tween()
+	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.8,0.8), 0.03625)
+	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.75,0.75), 0.03625)
+	#await  tween.finished
+	#
+	#set_collision_mask_value(10,false)
+	#set_collision_layer_value(10,false)
+	#
+	#set_collision_mask_value(2,true)
+	#set_collision_mask_value(3,true)
+	#set_collision_layer_value(2,true)
+	#set_collision_layer_value(3,true)
+	#set_collision_layer_value(4,true)
+	#z_index = 0
+	#in_arena = true
+	
+func _enemy_fell_off_map():
+	get_parent().decrease_special_enemy_counter()
+	queue_free()

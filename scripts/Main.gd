@@ -10,6 +10,7 @@ signal generated_special_ammo(ammo_id)
 
 signal player_level_changed(level)
 
+var player_instance
 
 var mode_running = false
 
@@ -18,6 +19,16 @@ var kill_counter : int
 var basic_enemy_counter : int
 
 var target_amount_of_basic_enemies : int
+
+var current_bullet : int
+
+var starting_game = false
+
+var game_running = false
+
+var game_force_ended = false
+#stores windows size before cursor change
+var cursor_windows_size : Vector2i
 
 @export var target_amount_of_basic_enemies_dic= {
 	"player level" : "amount of enemies",
@@ -104,38 +115,107 @@ var special_ammo_range = 0
 @export var special_enemy_start_value : int
 @export var levels_needed_for_special_increase : int
 
+@export_category("Second Chance")
+var first_game = true
+var second_chance_counter = 0;
+var previous_attempt = 0;
+var current_attempt = 0;
+var regen_gained = false
+@export var second_chance_fail_mark : int
+@export var second_chance_regen_fail_mark : int
+
 var enemy_spawn_point
 var special_enemy_counter : int
 var enemy_initial_spawn_storage
 
+
+
+
 var cursor_dict = {
 	"id" : "path",
-	 1 : "res://sprites/UI/Cursor.png",
-	 2 : "res://sprites/UI/CursorUndertaleMode.png"
+	 1 : "res://sprites/UI/Cursors/720p/CursorUndertaleMode.png",
+	 2 : "res://sprites/UI/Cursors/720p/Cursor.png",
+	 3 : "res://sprites/UI/Cursors/720p/CursorCouch.png",
+	 4 : "res://sprites/UI/Cursors/720p/CursorPiano.png",
+	 5 : "res://sprites/UI/Cursors/720p/CursorLamp.png",
+	 6 : "res://sprites/UI/Cursors/720p/CursorCar.png",
+	 7 : "res://sprites/UI/Cursors/720p/CursorHouse.png",	
+	 11 : "res://sprites/UI/Cursors/1080p/CursorUndertaleMode.png",
+	 12 : "res://sprites/UI/Cursors/1080p/Cursor.png",
+	 13 : "res://sprites/UI/Cursors/1080p/CursorCouch.png",
+	 14 : "res://sprites/UI/Cursors/1080p/CursoPiano.png",
+	 15 : "res://sprites/UI/Cursors/1080p/CursoLamp.png",
+	 16 : "res://sprites/UI/Cursors/1080p/CursorCar.png",
+	 17 : "res://sprites/UI/Cursors/1080p/CursoHouse.png",
+	 21 : "res://sprites/UI/Cursors/1440p/CursorUndertaleMode.png",
+	 22 : "res://sprites/UI/Cursors/1440p/Cursor.png",
+	 23 : "res://sprites/UI/Cursors/1440p/CursorCouch.png",
+	 24 : "res://sprites/UI/Cursors/1440p/CursorPiano.png",
+	 25 : "res://sprites/UI/Cursors/1440p/CursorLamp.png",
+	 26 : "res://sprites/UI/Cursors/1440p/CursorCar.png",
+	 27 : "res://sprites/UI/Cursors/1440p/CursorHouse.png"
 }
 
+var boss_should_spawn = false
+var boss_is_active = false
+var which_boss = 0
+
 func _ready():
-	$Control/Button.pressed.connect(start_game)
+	$StartMenu/Button.pressed.connect(start_game)
+	$StartMenu/ExitButton.pressed.connect(_exit_game)
+	$StartMenu/ControlsButton.pressed.connect(_show_controls)
 	enemy_initial_spawn_storage = size_of_enemy_group
+	cursor_windows_size = DisplayServer.window_get_size()
+	set_cursor(0)
+	
+func _process(delta):
+	
+	
+	var current_window_size = DisplayServer.window_get_size()
+	if current_window_size == cursor_windows_size:
+		set_cursor(current_bullet)
+	if Input.is_action_just_pressed("force_menu") && game_running:
+		force_menu()
+	if Input.is_action_just_pressed("force_level_up") && game_running:
+		leveled_up()
 	
 func _switch_mode(_name):
+
+	var cursor_size = DisplayServer.window_get_size()
 	
 	if !mode_running:
 		$SpecialModeTimer.start()
 		mode_running = true
-		Input.set_custom_mouse_cursor(load(cursor_dict[2]))
+		
+		set_cursor(-1)
+
+		$EdgeWalls.animation = "undertale_wall"
+		get_tree().call_group("sewage","change_sewage_state",false)
 	else:
 		mode_running = false
-		Input.set_custom_mouse_cursor(load(cursor_dict[1]))
+		
+		if player_instance.use_special:
+			player_instance.emit_signal("bullet_cursor",player_instance.stored_ammo[player_instance.special_slot_chosen])
+		else:
+			set_cursor(0)
+			
+		$EdgeWalls.animation = "wall"
+		get_tree().call_group("sewage","change_sewage_state",true)
 		
 	$ModeBackgroundEdge.visible = !$ModeBackgroundEdge.visible
 	get_tree().call_group("bullets", "delete_bullet")
+	get_tree().call_group("portals","dissapear")
 	emit_signal("switch_mode", name)
+	
+	get_tree().call_group("walls","_switch_visibility_collision")
+	
+	await get_tree().create_timer(0.1).timeout
+	
+	$NavigationRegion2D.bake_navigation_polygon()
 	
 	
 func mode_timeout():
 	_switch_mode("reset")
-
 
 func recieved_xp(amount):
 	
@@ -155,7 +235,7 @@ func generate_special_ammo():
 		var ammo_id = 0
 		if player_level < 20:
 			ammo_id = randi_range(1, special_ammo_range)
-		elif player_level <  40:
+		else:
 			ammo_id = randi_range(2, special_ammo_range)
 		emit_signal("generated_special_ammo" , ammo_id )
 
@@ -172,6 +252,7 @@ func leveled_up():
 	var temp_lvl = player_level + 1
 	
 	
+	
 	#Xp formula
 	xp_needed = round(pow(0.20*temp_lvl,3) + pow(0.15*temp_lvl,2) + 7)
 	current_xp = xp_needed
@@ -181,7 +262,9 @@ func leveled_up():
 	#Adds new special amunition id to range
 	if special_ammo_range < 5:
 		special_ammo_range = player_level/3
-		
+		if special_ammo_range > 5:
+			special_ammo_range = 5
+			
 	if $SpecialAmmoTimer.is_stopped() and player_level > 2:
 			$SpecialAmmoTimer.start()
 
@@ -209,15 +292,18 @@ func leveled_up():
 		
 		emit_signal("set_reload_time", temp_reload_time)
 		
+	if player_level == 5:
+		boss_should_spawn = true
+		which_boss = 1
 
-	if player_level <= max_lvl_for_enemy_spawner:
-		$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
-	
-	else:
-		$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time/55 * 54
-	
-	#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*(float(basic_enemy_counter)+1/float(target_amount_of_basic_enemies))
-	
+	#if player_level <= max_lvl_for_enemy_spawner:
+		#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
+	#
+	#else:
+		#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time/55 * 54
+	#
+	##$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*(float(basic_enemy_counter)+1/float(target_amount_of_basic_enemies))
+	#
 #Not used because it kept breaking
 func special_magazine_state_changed():
 	if !$SpecialAmmoTimer.is_stopped():
@@ -229,25 +315,61 @@ func special_magazine_state_changed():
 
 func player_died():
 	
+	current_attempt = player_level
+	game_running = false
 	
-	$EnemySpawnTimer.stop()
+	$SoundTrack.stop()
+	$GameOverSound.play()
+	
+	$MeshBakerTimer.stop()
+	
+	#$EnemySpawnTimer.stop()
 	$SpecialAmmoTimer.stop()
 	
 	get_tree().call_group("enemy","player_is_dead")
+	get_tree().call_group("bullets","queue_free")
 	
 	await get_tree().create_timer(1.0).timeout
 	$PlayerUi.visible = false
-	$Control.visible = true
+	$StartMenu.visible = true
+	if mode_running:
+		_switch_mode("reset")
+	
+
+func force_menu():
+	
+	$SoundTrack.stop()
+	$MeshBakerTimer.stop()
+	$SpecialAmmoTimer.stop()
+	get_tree().call_group("enemy","queue_free")
+	get_tree().call_group("bullets","queue_free")
+	game_running = false
+	$PlayerUi.visible = false
+	$StartMenu.visible = true
+	game_force_ended = true
+	if mode_running:
+		_switch_mode("reset")
 		
 func start_game():
 	
-	$Control.visible = false
+	
+	if starting_game:
+		return
+		
+	starting_game = true 
+	
+	$SoundTrack.play()
+	
 	
 	get_tree().call_group("player_ui","reset")
 	
 	get_tree().call_group("enemy","queue_free")
+	
+	var cursor_size = DisplayServer.window_get_size()
+	
+	set_cursor(0)
 		
-	player_level = 0
+	player_level = 4
 		
 	kill_counter = 0
 	
@@ -263,86 +385,240 @@ func start_game():
 	
 	target_amount_of_basic_enemies = target_amount_of_basic_enemies_dic[player_level]
 	
-	print(target_amount_of_basic_enemies)
-	
 	xp_needed = round(pow(0.1,3) + pow(0.15,2) + 4)
 	
 	current_xp = xp_needed
 	
+	get_tree().call_group("walls","reset")
+		
 	$PlayerUi.visible = true
 	$PlayerUi/StatsUI/Kills.text = "O"
 	$PlayerUi/StatsUI/Level.text = "Level: 0"
 	$PlayerUi/StatsUI/Experience.text = "Exp: " + "0/" + str(current_xp)
 	
-	
-	var player_instance = load("res://scenes/Player.tscn").instantiate()
-	enemy_spawn_point = player_instance.get_node("EnemySpawnPath/EnemySpawnPoint")
+	await get_tree().create_timer(0.5).timeout
+
+	player_instance = load("res://scenes/Player.tscn").instantiate()
+	enemy_spawn_point = $EnemySpawnPath/EnemySpawnPoint
 	add_child(player_instance)
+	
 		
 	player_instance.position = $StartPoint.position
 	player_instance.player_died.connect(player_died)
 	
 	player_instance.shot_special.connect($PlayerUi/AmmoSpriteContainer.move_ammo_up)
+	player_instance.shot_special2.connect($PlayerUi/AmmoSpriteContainer2.move_ammo_up)
+	player_instance.shot_special3.connect($PlayerUi/AmmoSpriteContainer3.move_ammo_up)
+		
+	player_instance.is_first_special_activated.connect($PlayerUi/AmmoSpriteContainer.is_slot_active)
+	player_instance.is_second_special_activated.connect($PlayerUi/AmmoSpriteContainer2.is_slot_active)
+	player_instance.is_third_special_activated.connect($PlayerUi/AmmoSpriteContainer3.is_slot_active)
+	
 	player_instance.next_ammo.connect($PlayerUi/AmmoSpriteContainer.set_ammo)
+	player_instance.bullet_cursor.connect(set_cursor)
 	
-	$SpecialAmmoTimer.wait_time = initial_special_ammo_time
-	$EnemySpawnTimer.wait_time = initial_enemy_spawn_time
+	$PlayerUi/AmmoSpriteContainer.is_slot_active(false)
+	$PlayerUi/AmmoSpriteContainer2.is_slot_active(false)
+	$PlayerUi/AmmoSpriteContainer3.is_slot_active(false)
 	
+	if boss_is_active:
+		boss_is_active = false
+		$PlayerUi/TextureProgressBar.visible = false
+	
+	if !game_force_ended:
+		if regen_gained:
+			player_instance.second_chance_on(true)	
+		else:
+			if first_game:
+				first_game = false
+			elif current_attempt <= previous_attempt:
+				second_chance_counter += 1
+			elif second_chance_counter > 2:
+				second_chance_counter = 2
+			elif second_chance_counter > 0:
+				second_chance_counter -= 1
+				
+			if second_chance_counter >= second_chance_regen_fail_mark:
+				regen_gained = true
+				player_instance.second_chance_on(true)
+			elif second_chance_counter >= second_chance_fail_mark:
+				player_instance.second_chance_on()
+			
+			if previous_attempt < current_attempt:
+				previous_attempt = current_attempt
+		
+		player_instance.previous_best_level = previous_attempt
+		
+	$SpecialAmmoTimer.wait_time = initial_special_ammo_time	
 	#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*((float(basic_enemy_counter)+1)/float(target_amount_of_basic_enemies))
 
 	emit_signal("set_reload_time", initial_reload_time)
 	
-	$EnemySpawnTimer.start()
+	await get_tree().create_timer(0.1).timeout
+	
+	$StartMenu.visible = false
+	
+	starting_game = false
+	
+	game_running = true
+	
 
+	await get_tree().create_timer(3).timeout
+
+	
+	$MeshBakerTimer.start()
+	
 	if player_level > 0:
 		leveled_up()
+
 	
-	
+	spawn_enemy()
+
 	
 func spawn_enemy():
 	
+	if !game_running :
+		return
+		
+	if boss_should_spawn:
+		spawn_boss()
+		return
+		
+	while basic_enemy_counter < target_amount_of_basic_enemies:
+		
+		enemy_spawn_point.progress_ratio = randf()
+		var spawned_special = false
+	
+		
+		for x in size_of_enemy_group:
+			await get_tree().create_timer(0.0025).timeout
+			
+			var enemy_instance
+			
+			if special_enemy_counter < special_enemy_start_value:
+				match randi_range(1,2):
+					1:
+						enemy_instance = load("res://scenes/EnemyJumper.tscn").instantiate()
+					2:
+						enemy_instance = load("res://scenes/EnemyThrower.tscn").instantiate()
+				special_enemy_counter +=1
+				spawned_special = true
+			else:			
+				enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
+				if player_level < 8:
+					enemy_instance.hp = 3
+				basic_enemy_counter += 1
+				
+			call_deferred("add_child",enemy_instance)
+			var position_adjusment = Vector2(randi_range(-250,250),randi_range(-250,250))
+			enemy_instance.position = enemy_spawn_point.global_position + position_adjusment
+			enemy_instance.enemy_killed.connect(recieved_xp)
+			
+			if mode_running:
+				enemy_instance._switch_mode("undertale")		
+
+		if basic_enemy_counter >= target_amount_of_basic_enemies+player_level/3:
+			$EnemySpawnTimer.stop()
+
+func spawn_boss():
+	
+	$PlayerUi/TextureProgressBar.visible = true
+	
+	var enemy_instance
+	
+	match which_boss:
+		1:
+			enemy_instance = load("res://scenes/BossSmasher.tscn").instantiate()
+		2:
+			enemy_instance = null
+		3:
+			enemy_instance = null
+
+	call_deferred("add_child",enemy_instance)
 	enemy_spawn_point.progress_ratio = randf()
+
+	enemy_instance.position = enemy_spawn_point.global_position
+	boss_should_spawn = false
+	boss_is_active = true
+	$PlayerUi/TextureProgressBar.max_value = enemy_instance.hp_max
+	$PlayerUi/TextureProgressBar.value = enemy_instance.hp_max
 	
-	var spawned_special = false
+func spawn_smasher_adds():
 	
-	for x in size_of_enemy_group:
-		
-		var enemy_instance
-		
-		enemy_instance = load("res://scenes/EnemyThrower.tscn").instantiate()
-		
-		if special_enemy_counter < special_enemy_start_value:
-			match randi_range(1,2):
-				1:
-					enemy_instance = load("res://scenes/EnemyJumper.tscn").instantiate()
-				2:
-					enemy_instance = load("res://scenes/EnemyThrower.tscn").instantiate()
-			special_enemy_counter +=1
-			spawned_special = true
-		else:			
-			enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
-			if player_level < 8:
-				enemy_instance.hp = 3
-			basic_enemy_counter += 1
-			
-		add_child(enemy_instance)
-		var position_adjusment = Vector2(randi_range(-250,250),randi_range(-250,250))
-		enemy_instance.position = enemy_spawn_point.global_position + position_adjusment
-		enemy_instance.enemy_killed.connect(recieved_xp)
-		
-		if mode_running:
-			enemy_instance._switch_mode("undertale")		
-		
-	#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
-	#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*(float(basic_enemy_counter+1)/float(target_amount_of_basic_enemies))
-	#
-	if basic_enemy_counter >= target_amount_of_basic_enemies+player_level/3:
-		$EnemySpawnTimer.stop()
-			
+	var enemy_instance
+	for x in 4:
+		enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
+		call_deferred("add_child",enemy_instance)
+		enemy_spawn_point.progress_ratio = 0.25*(x+1)
+		enemy_instance.position = enemy_spawn_point.global_position
+		enemy_instance.speed = 400
+		enemy_instance.hp = 1
+		basic_enemy_counter += 1
+
+func boss_killed():
+	boss_is_active = false
+	$PlayerUi/TextureProgressBar.visible = false
+	spawn_enemy()
+	
 func decrease_basic_enemy_counter():
 	basic_enemy_counter -= 1
-	if basic_enemy_counter < target_amount_of_basic_enemies-player_level/3:
-		$EnemySpawnTimer.start()
+	if boss_is_active:
+		if basic_enemy_counter <= 0:
+			get_tree().call_group("smasher","start_add_timer")
+		return
+
+	special_enemy_counter -= 1	
+	
+	if special_enemy_counter < 0:
+		special_enemy_counter = 0
+	if basic_enemy_counter < 0:
+		basic_enemy_counter = 0
+
+	if basic_enemy_counter == 0 && special_enemy_counter == 0:
+		if boss_should_spawn:
+			spawn_boss()
+		else:
+			spawn_enemy()
 	
 func decrease_special_enemy_counter():
-	special_enemy_counter -= 1
+	special_enemy_counter -= 1	
+	
+	if special_enemy_counter < 0:
+		special_enemy_counter = 0
+	if basic_enemy_counter < 0:
+		basic_enemy_counter = 0
+	
+	
+	if boss_is_active:
+		return
+		
+	if basic_enemy_counter == 0 && special_enemy_counter == 0:
+		if boss_should_spawn:
+			spawn_boss()
+		else:
+			spawn_enemy()
+
+func set_cursor(bullet_id):
+	var cursor_size = DisplayServer.window_get_size()
+	
+	if cursor_size.y < 900:
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+2]),0,Vector2(18,18))
+	elif cursor_size.y < 1340:
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+12]),0,Vector2(36,36))
+	else:
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+22]),0,Vector2(54,54))
+	
+	current_bullet = bullet_id
+
+func _bake_mesh():
+	$NavigationRegion2D.bake_navigation_polygon(true)
+
+
+func _entering_arena(body):
+	body.falling_down_from_wall()
+
+func _exit_game():
+	get_tree().quit()
+
+func _show_controls():
+	$Controls.visible = true

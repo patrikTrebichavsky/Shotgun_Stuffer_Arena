@@ -1,20 +1,117 @@
-[gd_scene load_steps=8 format=3 uid="uid://d0ihq2xdamwv4"]
+[gd_scene load_steps=22 format=3 uid="uid://r3ij7lyaw6lm"]
 
-[ext_resource type="Script" path="res://scripts/Main.gd" id="1_ycgh7"]
-[ext_resource type="PackedScene" uid="uid://ek81wl4oxhi4" path="res://scenes/UI.tscn" id="2_l2ur1"]
-[ext_resource type="Texture2D" uid="uid://vfe2gmn1q0y3" path="res://sprites/UI/BackGround.png" id="3_vdtt6"]
-[ext_resource type="PackedScene" uid="uid://djcca17u7fsi1" path="res://scenes/Sewage.tscn" id="4_v57i7"]
-[ext_resource type="PackedScene" uid="uid://bjv3ojhnmrymb" path="res://scenes/PlayerUi.tscn" id="5_7w6kl"]
-[ext_resource type="AudioStream" uid="uid://dia38kg2u76e8" path="res://sounds/SoundTrack.wav" id="6_b2crl"]
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://bjv3ojhnmrymb" path="res://scenes/PlayerUi.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/Controls.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://ek81wl4oxhi4" path="res://scenes/Start Button.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://vfe2gmn1q0y3" path="res://sprites/UI/BackGround.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://bxn78bgalbogw" path="res://sprites/Arena/BackgroudScaled.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://bq0ot1ppqth34" path="res://sprites/Arena/BackgroudUndertaleScaled.png" id="7"]
+[ext_resource type="PackedScene" uid="uid://rdiauru45hv7" path="res://scenes/CornerProtectionPortal.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://chh7wc88yg6jf" path="res://scenes/ProtectionPortal.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://bdoq30lhabww8" path="res://scenes/EdgeProtectionPortal.tscn" id="10"]
+[ext_resource type="AudioStream" uid="uid://dia38kg2u76e8" path="res://sounds/SoundTrack.wav" id="11"]
+[ext_resource type="AudioStream" uid="uid://duha3vwfktipl" path="res://sounds/GameOverSound.wav" id="12"]
+[ext_resource type="PackedScene" uid="uid://80gyke6i8npv" path="res://scenes/WallBlock3Wide.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://bveylkc8yvegg" path="res://scenes/WallBlock5Wide.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://djcca17u7fsi1" path="res://scenes/Sewage.tscn" id="15"]
+[ext_resource type="Script" path="res://scripts/EnemiesOffArenaDeleter.gd" id="16_dpdwt"]
 
-[sub_resource type="NavigationPolygon" id="NavigationPolygon_fmmmj"]
-vertices = PackedVector2Array(3277, 1699, 4251, -311, 4308, 2455, 3269, 1729, 3277, 377, 3269, 1668, 3269, 407, 3245, 430, 3245, 1646, 3269, 347, 3213, 1638, 3213, 437, 3181, 430, 3181, 1646, 3245, 324, 3245, 1751, 500, 1699, 3157, 1668, 3149, 1699, 492, 1729, 492, 407, 3157, 407, 492, 1668, 468, 430, 3157, 1729, 468, 1751, 500, 377, 3157, 347, 3149, 377, 492, 347, 3213, 1759, -565, 2508, 3181, 1751, 436, 1759, 468, 1646, 436, 1638, 436, 437, 404, 430, 404, 1646, 380, 407, 380, 1668, 3213, 317, -547, -216, 3181, 324, 468, 324, 436, 317, 404, 324, 380, 347, 372, 377, 372, 1699, 380, 1729, 404, 1751)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 1, 0, 5, 6), PackedInt32Array(7, 6, 5, 8), PackedInt32Array(1, 4, 9), PackedInt32Array(7, 8, 10, 11), PackedInt32Array(12, 11, 10, 13), PackedInt32Array(1, 9, 14), PackedInt32Array(15, 3, 2), PackedInt32Array(16, 17, 18, 19), PackedInt32Array(20, 21, 12, 13, 17, 16, 22, 23), PackedInt32Array(19, 18, 24, 25), PackedInt32Array(26, 27, 28, 20), PackedInt32Array(27, 26, 29), PackedInt32Array(20, 28, 21), PackedInt32Array(30, 15, 2), PackedInt32Array(30, 2, 31, 32), PackedInt32Array(24, 32, 31, 33, 25), PackedInt32Array(23, 22, 34), PackedInt32Array(23, 34, 35, 36), PackedInt32Array(37, 36, 35, 38), PackedInt32Array(39, 37, 38, 40, 31), PackedInt32Array(1, 14, 41), PackedInt32Array(42, 1, 41, 43), PackedInt32Array(42, 43, 27, 44, 45), PackedInt32Array(27, 29, 44), PackedInt32Array(42, 45, 46), PackedInt32Array(42, 46, 47), PackedInt32Array(31, 42, 47, 48), PackedInt32Array(31, 48, 39), PackedInt32Array(31, 40, 49), PackedInt32Array(31, 49, 50), PackedInt32Array(31, 50, 51), PackedInt32Array(31, 51, 33)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-557.04, -226.029, -576.415, 2519.36, 4319.08, 2465.29, 4260.95, -322.147)])
-source_geometry_group_name = &"navigation_polygon_source_group"
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7")
+}],
+"loop": true,
+"name": &"undertale_wall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6")
+}],
+"loop": true,
+"name": &"wall",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(4241, 201)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(2159, 201)
+
+[sub_resource type="NavigationPolygon" id="4"]
+vertices = PackedVector2Array(2957, 1150, 2998, 1124, 2453, 1631, 2004, 1776, 2634, 1800, -833, 2848, 2004, 1536, 2190, 1150, 2998, 923, 3178, 754, 4845, -455, 4905, 2815, 3180, 1292, 2957, 907, 2451, 416, 2191, 907, 2004, 547, 2004, 307, 1496, 1536, 1311, 1150, 1310, 907, 1496, 547, 1496, 1776, 1054, 1627, 543, 1150, 509, 1120, 544, 907, 503, 924, 1496, 307, 1048, 416, 867, 248, 873, 1796, 2634, 248, -692, -505, 327, 1289, 322, 754)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 7, 0, 2, 3), PackedInt32Array(8, 9, 10, 11, 12, 1), PackedInt32Array(1, 0, 13, 8), PackedInt32Array(14, 8, 13), PackedInt32Array(14, 13, 15, 16, 17), PackedInt32Array(16, 15, 7, 6, 18, 19, 20, 21), PackedInt32Array(19, 18, 22, 23, 24), PackedInt32Array(24, 23, 25), PackedInt32Array(26, 24, 25, 27), PackedInt32Array(28, 21, 29, 30), PackedInt32Array(29, 21, 20, 26), PackedInt32Array(27, 29, 26), PackedInt32Array(4, 12, 11), PackedInt32Array(4, 11, 5), PackedInt32Array(22, 3, 5, 31), PackedInt32Array(10, 9, 32), PackedInt32Array(33, 10, 32), PackedInt32Array(33, 32, 14, 17), PackedInt32Array(33, 17, 28, 30), PackedInt32Array(31, 23, 22), PackedInt32Array(34, 31, 5), PackedInt32Array(34, 5, 33), PackedInt32Array(25, 34, 33, 35), PackedInt32Array(33, 30, 35), PackedInt32Array(25, 35, 27)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-749.986, -566.198, 4903.57, -515.135, 4967.34, 2874.54, -896.108, 2909.09)])
+source_geometry_mode = 2
+source_geometry_group_name = &"paths"
+agent_radius = 60.0
+
+[sub_resource type="Curve2D" id="5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -459, -491, 0, 0, 0, 0, -450, 2616, 0, 0, 0, 0, -322, 2624, 0, 0, 0, 0, 4353, 2612, 0, 0, 0, 0, 4352, -520, 0, 0, 0, 0, -441, -501)
+}
+point_count = 6
 
 [node name="Main" type="Node"]
-script = ExtResource("1_ycgh7")
+script = ExtResource("1")
+target_amount_of_basic_enemies_dic = {
+0: 6,
+1: 8,
+2: 8,
+3: 10,
+4: 11,
+5: 12,
+6: 14,
+7: 16,
+8: 16,
+9: 18,
+10: 19,
+11: 19,
+12: 25,
+13: 26,
+14: 27,
+15: 28,
+16: 30,
+17: 33,
+18: 33,
+19: 33,
+20: 35,
+21: 35,
+22: 36,
+23: 36,
+24: 36,
+25: 38,
+26: 40,
+27: 41,
+28: 42,
+29: 43,
+30: 44,
+31: 45,
+32: 46,
+33: 47,
+34: 48,
+35: 49,
+36: 50,
+37: 51,
+38: 52,
+39: 53,
+40: 54,
+41: 55,
+42: 56,
+43: 57,
+44: 58,
+45: 59,
+46: 60,
+47: 70,
+48: 80,
+49: 90,
+50: 100,
+"player level": "amount of enemies"
+}
 initial_special_ammo_time = 3.0
 max_lvl_for_special_generator = 30
 special_ammo_max_decrease = 2.8
@@ -28,17 +125,161 @@ initial_enemy_spawn_time = 0.3
 max_lvl_for_enemy_spawner = 25
 enemy_spawn_max_decrease = 2.0
 levels_needed_for_special_increase = 3
+second_chance_fail_mark = 3
+second_chance_regen_fail_mark = 8
 
-[node name="PlayerUi" parent="." instance=ExtResource("5_7w6kl")]
+[node name="PlayerUi" parent="." instance=ExtResource("2")]
 visible = false
 
-[node name="Control" parent="." instance=ExtResource("2_l2ur1")]
+[node name="Controls" parent="." instance=ExtResource("3")]
+layer = 2
+visible = false
+
+[node name="StartMenu" parent="." instance=ExtResource("4")]
 
 [node name="BackGround" type="Sprite2D" parent="."]
 z_index = -5
 position = Vector2(1920, 1080)
-texture = ExtResource("3_vdtt6")
+texture = ExtResource("5")
 metadata/_edit_lock_ = true
+
+[node name="EdgeWalls2" type="Sprite2D" parent="."]
+z_index = 11
+position = Vector2(1920, 1080)
+texture = ExtResource("6")
+
+[node name="EdgeWalls" type="AnimatedSprite2D" parent="."]
+z_index = 11
+position = Vector2(1920, 1080)
+sprite_frames = SubResource("1")
+animation = &"wall"
+
+[node name="Area2D" type="Area2D" parent="EdgeWalls"]
+visible = false
+position = Vector2(-1920, -1080)
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EdgeWalls/Area2D"]
+polygon = PackedVector2Array(-201, -201, -201, 2361, 4041, 2361, 4044, -200, -199, -201, -67, -66, 3905, -66, 3908, 2230, -65, 2231, -67, -66)
+
+[node name="OuterWallTop" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(0, -1181)
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallTop"]
+shape = SubResource("2")
+
+[node name="OuterWallBottom" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(0, 1180)
+rotation = 3.14159
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallBottom"]
+shape = SubResource("2")
+
+[node name="OuterWallLeft" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(-2020, 0)
+rotation = 4.71239
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallLeft"]
+shape = SubResource("3")
+
+[node name="OuterWallLeft2" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(2020, 0)
+rotation = 1.5708
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallLeft2"]
+shape = SubResource("3")
+
+[node name="ProtectionPortalS" type="Node" parent="EdgeWalls"]
+
+[node name="TopLeftCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(-30, -30)
+previous_portal = NodePath("../Left")
+next_portal = NodePath("../TopFirst")
+
+[node name="TopFirst" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1020, -15)
+previous_portal = NodePath("../TopLeftCorner")
+next_portal = NodePath("../TopSecond")
+
+[node name="TopSecond" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1930, -15)
+previous_portal = NodePath("../TopFirst")
+next_portal = NodePath("../TopThird")
+
+[node name="TopThird" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(2840, -15)
+previous_portal = NodePath("../TopSecond")
+next_portal = NodePath("../TopRightCorner")
+
+[node name="TopRightCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(3870, -30)
+rotation = 1.5708
+previous_portal = NodePath("../TopThird")
+next_portal = NodePath("../Right")
+
+[node name="Right" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("10")]
+position = Vector2(3855, 1080)
+rotation = 1.5708
+previous_portal = NodePath("../TopRightCorner")
+next_portal = NodePath("../BottomRightCorner")
+
+[node name="ResetTimer2" type="Timer" parent="EdgeWalls/ProtectionPortalS/Right"]
+wait_time = 0.05
+
+[node name="BottomRightCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(3870, 2190)
+rotation = 3.14159
+previous_portal = NodePath("../Right")
+next_portal = NodePath("../BottomFirst")
+
+[node name="BottomFirst" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(2820, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomRightCorner")
+next_portal = NodePath("../BottomSecond")
+
+[node name="BottomSecond" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1910, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomFirst")
+next_portal = NodePath("../BottomThird")
+
+[node name="BottomThird" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1000, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomSecond")
+next_portal = NodePath("../BottomLeftCorner")
+
+[node name="BottomLeftCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+position = Vector2(-30, 2190)
+rotation = -1.5708
+previous_portal = NodePath("../BottomThird")
+next_portal = NodePath("../Left")
+
+[node name="Left" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("10")]
+position = Vector2(-15, 1080)
+rotation = -1.5708
+previous_portal = NodePath("../BottomLeftCorner")
+next_portal = NodePath("../TopLeftCorner")
+
+[node name="ResetTimer2" type="Timer" parent="EdgeWalls/ProtectionPortalS/Left"]
+wait_time = 0.05
 
 [node name="ModeBackgroundEdge" type="ColorRect" parent="."]
 visible = false
@@ -46,14 +287,6 @@ z_index = -5
 custom_minimum_size = Vector2(3840, 2160)
 offset_right = 3840.0
 offset_bottom = 2160.0
-
-[node name="ModeBackground" type="ColorRect" parent="ModeBackgroundEdge"]
-custom_minimum_size = Vector2(3740, 2060)
-layout_mode = 0
-offset_left = 50.0
-offset_top = 50.0
-offset_right = 3790.0
-offset_bottom = 2110.0
 color = Color(0, 0, 0, 1)
 
 [node name="SpecialModeTimer" type="Timer" parent="."]
@@ -65,39 +298,104 @@ one_shot = true
 [node name="SpecialAmmoTimer" type="Timer" parent="."]
 wait_time = 2.0
 
+[node name="MeshBakerTimer" type="Timer" parent="."]
+
 [node name="StartPoint" type="Marker2D" parent="."]
 position = Vector2(1920, 1080)
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(-340, -302)
+position = Vector2(-273, -273)
 scale = Vector2(1.23869, 1.33169)
-navigation_polygon = SubResource("NavigationPolygon_fmmmj")
-
-[node name="SewageTopLeft" parent="NavigationRegion2D" instance=ExtResource("4_v57i7")]
-position = Vector2(435.944, 376.965)
-scale = Vector2(0.807305, 0.750926)
-
-[node name="SewageBottomRight" parent="NavigationRegion2D" instance=ExtResource("4_v57i7")]
-position = Vector2(3213.07, 1698.59)
-rotation = 3.14159
-scale = Vector2(0.807305, 0.750926)
-
-[node name="SewageTopRight" parent="NavigationRegion2D" instance=ExtResource("4_v57i7")]
-position = Vector2(3213.07, 376.965)
-rotation = 3.14159
-scale = Vector2(0.807305, 0.750926)
-
-[node name="SewageBottomLeft" parent="NavigationRegion2D" instance=ExtResource("4_v57i7")]
-position = Vector2(435.944, 1698.59)
-scale = Vector2(0.807305, 0.750926)
+navigation_polygon = SubResource("4")
+use_edge_connections = false
+constrain_avoidance = true
 
 [node name="SoundTrack" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_b2crl")
+stream = ExtResource("11")
+bus = &"Music"
 
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12")
+bus = &"SFX"
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+position = Vector2(-21, -7)
+curve = SubResource("5")
+
+[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(-459, -491)
+rotation = 1.5679
+
+[node name="WallBlock3Wide2" parent="." instance=ExtResource("13")]
+position = Vector2(1893, 295)
+
+[node name="WallBlock3Wide3" parent="." instance=ExtResource("13")]
+position = Vector2(1893, 1931.01)
+
+[node name="WallBlock5Wide" parent="." instance=ExtResource("14")]
+position = Vector2(573, 505)
+rotation = -0.785399
+
+[node name="WallBlock5Wide2" parent="." instance=ExtResource("14")]
+position = Vector2(873, 1095.01)
+
+[node name="WallBlock5Wide3" parent="." instance=ExtResource("14")]
+position = Vector2(581, 1667)
+rotation = 0.785399
+
+[node name="WallBlock5Wide4" parent="." instance=ExtResource("14")]
+position = Vector2(3213, 505)
+rotation = 0.785399
+
+[node name="WallBlock5Wide5" parent="." instance=ExtResource("14")]
+position = Vector2(2913, 1095.01)
+
+[node name="WallBlock5Wide6" parent="." instance=ExtResource("14")]
+position = Vector2(3213, 1672.01)
+rotation = -0.785399
+
+[node name="SewageTopLeft" parent="." instance=ExtResource("15")]
+position = Vector2(258, 230)
+
+[node name="SewageBottomRight" parent="." instance=ExtResource("15")]
+position = Vector2(3698, 1990)
+rotation = 3.14159
+
+[node name="SewageTopRight" parent="." instance=ExtResource("15")]
+position = Vector2(3698, 230)
+rotation = 3.14159
+
+[node name="SewageBottomLeft" parent="." instance=ExtResource("15")]
+position = Vector2(258, 1990)
+
+[node name="EnemiesOffArenaDeleter" type="Area2D" parent="."]
+collision_layer = 6
+collision_mask = 6
+script = ExtResource("16_dpdwt")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemiesOffArenaDeleter"]
+polygon = PackedVector2Array(-201, -200, -201, 2364, 4039, 2360, 4043, -204, -201, -200, -581, -570, 4417, -607, 4412, 2704, -618, 2678, -582, -570)
+
+[connection signal="body_exited" from="EdgeWalls/Area2D" to="." method="_entering_arena"]
 [connection signal="timeout" from="SpecialModeTimer" to="." method="mode_timeout"]
 [connection signal="timeout" from="EnemySpawnTimer" to="." method="spawn_enemy"]
 [connection signal="timeout" from="SpecialAmmoTimer" to="." method="generate_special_ammo"]
-[connection signal="player_entered" from="NavigationRegion2D/SewageTopLeft" to="NavigationRegion2D/SewageBottomRight" method="transport_player"]
-[connection signal="player_entered" from="NavigationRegion2D/SewageBottomRight" to="NavigationRegion2D/SewageTopLeft" method="transport_player"]
-[connection signal="player_entered" from="NavigationRegion2D/SewageTopRight" to="NavigationRegion2D/SewageBottomLeft" method="transport_player"]
-[connection signal="player_entered" from="NavigationRegion2D/SewageBottomLeft" to="NavigationRegion2D/SewageTopRight" method="transport_player"]
+[connection signal="timeout" from="MeshBakerTimer" to="." method="_bake_mesh"]
+[connection signal="player_entered" from="SewageTopLeft" to="SewageBottomRight" method="transport_player"]
+[connection signal="player_entered" from="SewageBottomRight" to="SewageTopLeft" method="transport_player"]
+[connection signal="player_entered" from="SewageTopRight" to="SewageBottomLeft" method="transport_player"]
+[connection signal="player_entered" from="SewageBottomLeft" to="SewageTopRight" method="transport_player"]
+[connection signal="body_entered" from="EnemiesOffArenaDeleter" to="EnemiesOffArenaDeleter" method="_on_body_entered"]
+
+[editable path="EdgeWalls/ProtectionPortalS/TopLeftCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/TopFirst"]
+[editable path="EdgeWalls/ProtectionPortalS/TopSecond"]
+[editable path="EdgeWalls/ProtectionPortalS/TopThird"]
+[editable path="EdgeWalls/ProtectionPortalS/TopRightCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/Right"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomRightCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomFirst"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomSecond"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomThird"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomLeftCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/Left"]

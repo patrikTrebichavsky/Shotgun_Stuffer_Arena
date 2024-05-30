@@ -1,8 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://l7apy6iqnhyi"]
+[gd_scene load_steps=23 format=3 uid="uid://l7apy6iqnhyi"]
 
 [ext_resource type="Script" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
+[ext_resource type="Texture2D" uid="uid://cno7dctoyi35c" path="res://sprites/Enemies/Thrower/EnemyThrowerDeathBurned.png" id="2_0wpru"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="2_3itsn"]
 [ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/EnemyThrowerStanding.png" id="3_km6br"]
+[ext_resource type="Texture2D" uid="uid://bc38c14sedq62" path="res://sprites/Enemies/Thrower/EnemyThrowerDeathBurnedHeadless.png" id="3_qdox0"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_u6dp4"]
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="4_tq8wl"]
 [ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/EnemyThrowerStandingHeadless.png" id="4_urvu5"]
@@ -18,6 +20,22 @@
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_duxj0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0wpru")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qdox0")
+}],
+"loop": true,
+"name": &"burned_headless",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_3itsn")
@@ -113,9 +131,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
-size = Vector2(74.5, 90)
-
 [sub_resource type="Gradient" id="Gradient_4hypc"]
 offsets = PackedFloat32Array(0, 0.518349, 1)
 colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
@@ -134,9 +149,14 @@ scale_max = 30.0
 color = Color(1, 0.92549, 0.14902, 1)
 color_ramp = SubResource("GradientTexture1D_khebe")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgfa6"]
+radius = 39.75
+height = 92.0
+
 [node name="EnemyThrower" type="RigidBody2D" groups=["enemy"]]
-collision_layer = 2
-collision_mask = 14
+z_index = 12
+collision_layer = 512
+collision_mask = 512
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_ieumm")
@@ -146,13 +166,8 @@ id = 3
 xp = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_duxj0")
 animation = &"running"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.250031, 0)
-shape = SubResource("RectangleShape2D_tqr5j")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -181,6 +196,7 @@ pitch_scale = 0.5
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("5_gksv8")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
@@ -189,8 +205,22 @@ process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 700.0
 avoidance_enabled = true
-debug_enabled = true
+radius = 50.0
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jgfa6")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1, 15)
+target_position = Vector2(700, 0)
+collision_mask = 32
+hit_from_inside = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw"]
 [connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bvopopcwn8xkl"]
+[gd_scene load_steps=20 format=3 uid="uid://bvopopcwn8xkl"]
 
 [ext_resource type="Script" path="res://scripts/Piano.gd" id="1_d3j6f"]
 [ext_resource type="Texture2D" uid="uid://bwge3o55hycnu" path="res://sprites/Bullets/Piano.png" id="2_vywv1"]
@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://dd6b1yuxsjfaa" path="res://sounds/Bullets/PianoCollision/PianoCollision_8.mp3" id="10_e8e5v"]
 [ext_resource type="AudioStream" uid="uid://cc02ornd0k68m" path="res://sounds/Bullets/PianoCollision/PianoCollision_9.mp3" id="11_eavr3"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="12_4rynb"]
+[ext_resource type="AudioStream" uid="uid://c72rkpnp1tqwp" path="res://sounds/Bullets/PianoWallCollision.wav" id="13_3poct"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -61,7 +62,8 @@ collision_mask = 2
 gravity_scale = 0.0
 script = ExtResource("1_d3j6f")
 turn = 0.786
-num_of_notes = 9
+num_of_notes = 18
+max_wall_bounces = 4
 damage = 4
 push_back_multiplier = 200
 metadata/_edit_group_ = true
@@ -76,46 +78,55 @@ animation = &"base"
 stream = ExtResource("3_uc2ra")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound2" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_vi53y")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound3" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_bef8t")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound4" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_s3fgp")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound5" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_8j541")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound6" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_vw3jn")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound7" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_lcdwe")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound8" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_e8e5v")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionSound9" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_eavr3")
 volume_db = 10.0
 max_distance = 3840.0
+bus = &"SFX"
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -137,7 +148,7 @@ autostart = true
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visibility_layer = 7
@@ -160,6 +171,11 @@ explosiveness = 1.0
 stream = ExtResource("12_4rynb")
 volume_db = 5.0
 pitch_scale = 3.0
+bus = &"SFX"
+
+[node name="WallCollisionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_3poct")
+bus = &"SFX"
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
 [connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

@@ -55,6 +55,7 @@ _data = {
 }
 
 [node name="TextPopUp" type="Marker2D"]
+z_index = 15
 script = SubResource("GDScript_3nx57")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

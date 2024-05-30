@@ -6,8 +6,9 @@
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="5_0468r"]
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="6_ppktf"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
-size = Vector2(74.5, 90)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
+radius = 37.75
+height = 90.0
 
 [sub_resource type="Gradient" id="Gradient_4hypc"]
 offsets = PackedFloat32Array(0, 0.518349, 1)
@@ -28,8 +29,9 @@ color = Color(1, 0.92549, 0.14902, 1)
 color_ramp = SubResource("GradientTexture1D_khebe")
 
 [node name="Enemy" type="RigidBody2D" groups=["enemy"]]
-collision_layer = 2
-collision_mask = 14
+z_index = 12
+collision_layer = 512
+collision_mask = 512
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_jfgch")
@@ -38,13 +40,12 @@ speed_max = 275
 hp = 5
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.75, 0.75)
 sprite_frames = ExtResource("2_onilt")
 animation = &"running"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.250031, 0)
-shape = SubResource("RectangleShape2D_tqr5j")
+shape = SubResource("CapsuleShape2D_fcclg")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -73,6 +74,7 @@ pitch_scale = 0.5
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("6_ppktf")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
@@ -80,9 +82,14 @@ emitting = false
 process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
 avoidance_enabled = true
-radius = 200.0
-debug_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="StuckTimer" to="." method="stuck_timeout"]

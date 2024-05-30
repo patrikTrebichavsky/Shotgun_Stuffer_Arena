@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://drphqi8eilyr3"]
+[gd_scene load_steps=42 format=3 uid="uid://drphqi8eilyr3"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
@@ -13,8 +13,87 @@
 [ext_resource type="Texture2D" uid="uid://b04c3op722pe3" path="res://sprites/Player/Player_shooting_UndertaleMode_4.png" id="10_ng4qd"]
 [ext_resource type="Texture2D" uid="uid://db1q7huakmrwj" path="res://sprites/Player/Player_shooting_UndertaleMode_3.png" id="11_fubxn"]
 [ext_resource type="AudioStream" uid="uid://g5cvt304rnph" path="res://sounds/PowerUp.mp3" id="13_pra5w"]
-[ext_resource type="AudioStream" uid="uid://6ckykfhsjdoa" path="res://sounds/Dash.wav" id="14_aj0jc"]
-[ext_resource type="AudioStream" uid="uid://ybtkfnovjt4n" path="res://sounds/DashReady.wav" id="14_emxna"]
+[ext_resource type="AudioStream" uid="uid://6ckykfhsjdoa" path="res://sounds/DashPlayer.wav" id="14_aj0jc"]
+[ext_resource type="AudioStream" uid="uid://ybtkfnovjt4n" path="res://sounds/DashReadyPlayer.wav" id="14_emxna"]
+[ext_resource type="AudioStream" uid="uid://cq7xi18hyox4l" path="res://sounds/SpecialModeOn.wav" id="16_8ce60"]
+[ext_resource type="Texture2D" uid="uid://h57pnvbpmhyx" path="res://sprites/Player/SecondChance.png" id="17_bnnwt"]
+[ext_resource type="AudioStream" uid="uid://djntad7sbeox7" path="res://sounds/SecondChanceExplo.wav" id="18_23wb8"]
+[ext_resource type="AudioStream" uid="uid://bql2osmsmuf1a" path="res://sounds/SecondChanceAquired.wav" id="19_vdo5c"]
+[ext_resource type="Script" path="res://scripts/CamereShake.gd" id="20_sffyf"]
+
+[sub_resource type="Animation" id="Animation_aw3x3"]
+resource_name = "SecondChance"
+length = 2.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.6, 0.6), Vector2(0.65, 0.65), Vector2(0.6, 0.6)]
+}
+
+[sub_resource type="Animation" id="Animation_dx1tr"]
+resource_name = "Second_Chance_Hit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../AnimatedSprite2D:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:monitoring")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kxhu0"]
+_data = {
+"SecondChance": SubResource("Animation_aw3x3"),
+"Second_Chance_Hit": SubResource("Animation_dx1tr")
+}
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_edg2r"]
 animations = [{
@@ -140,6 +219,24 @@ scale_max = 25.0
 color_ramp = SubResource("GradientTexture1D_aqovr")
 emission_curve = SubResource("CurveTexture_52fv7")
 
+[sub_resource type="Gradient" id="Gradient_bbpau"]
+offsets = PackedFloat32Array(0, 0.538462, 1)
+colors = PackedColorArray(1, 0.815686, 0, 1, 1, 0.815686, 0, 1, 1, 0.815686, 0, 0.160784)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5xksw"]
+gradient = SubResource("Gradient_bbpau")
+use_hdr = true
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_korv0"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 80.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 5.0
+color_ramp = SubResource("GradientTexture1D_5xksw")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fjnf3"]
 radius = 167.863
 
@@ -150,10 +247,17 @@ _data = {
 point_count = 6
 
 [node name="Player" type="CharacterBody2D" groups=["enemy"]]
-position = Vector2(960, 540)
 scale = Vector2(1.5, 1.5)
+collision_layer = 0
+collision_mask = 16
 script = ExtResource("1_0llxv")
-dash_distance = 500
+dash_distance = 400
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Area2D/SecondChance")
+libraries = {
+"": SubResource("AnimationLibrary_kxhu0")
+}
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 3
@@ -167,17 +271,17 @@ one_shot = true
 explosiveness = 1.0
 
 [node name="ShootingPoint" type="Marker2D" parent="Area2D"]
-position = Vector2(34.6667, 14.6667)
+position = Vector2(38.6667, 20)
 scale = Vector2(0.5, 0.5)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(-23.3333, 12, -18, 26.6667, -13.3333, 31.3333, 12, 31.3333, 22, 26.6667, 22, 21.3333, 22, -24, 12, -28.6667, -13.3333, -28.6667, -18.6667, -23.3333, -23.3333, -8.66666)
+polygon = PackedVector2Array(-28, 12, -22.6667, 29.3333, -13.3333, 33.3333, 12, 32.6667, 22, 26.6667, 24, 21.3333, 22.6667, -24.6667, 10.6667, -30, -18, -29.3333, -24, -25.3333, -30, -8.66667)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 position = Vector2(-27.3333, -28)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_edg2r")
-animation = &"running"
+animation = &"standing_shooting"
 centered = false
 
 [node name="ShootgunParticles" type="GPUParticles2D" parent="Area2D"]
@@ -202,8 +306,28 @@ one_shot = true
 explosiveness = 1.0
 randomness = 1.0
 
+[node name="SecondChance" type="Sprite2D" parent="Area2D"]
+visible = false
+position = Vector2(-12, 1.33333)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("17_bnnwt")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Area2D"]
+position = Vector2(-12, 1.33334)
+scale = Vector2(0.649, 0.649)
+emitting = false
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_korv0")
+lifetime = 0.8
+one_shot = true
+explosiveness = 1.0
+
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
+
+[node name="SecChanceRegenTimer" type="Timer" parent="."]
+wait_time = 60.0
 one_shot = true
 
 [node name="RunningAnimTimer" type="Timer" parent="."]
@@ -217,30 +341,50 @@ one_shot = true
 [node name="ShootingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("10_l3jwu")
 volume_db = -5.0
+bus = &"SFX"
 
 [node name="ReloadingSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_tg73s")
 pitch_scale = 2.5
+bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("7_k1wic")
 volume_db = -10.0
+bus = &"SFX"
 
 [node name="DashSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_aj0jc")
+bus = &"SFX"
 
 [node name="DashReadySound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_emxna")
+bus = &"SFX"
 
 [node name="LevelUpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_pra5w")
 volume_db = 15.0
+bus = &"SFX"
 
-[node name="Camera2D" type="Camera2D" parent="."]
-limit_left = 0
-limit_top = 0
-limit_right = 3840
-limit_bottom = 2160
+[node name="SpecialModeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_8ce60")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="SecondChanceExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("18_23wb8")
+bus = &"SFX"
+
+[node name="SecondChanceAquired" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_vdo5c")
+bus = &"SFX"
+
+[node name="Camera2D" type="Camera2D" parent="." groups=["camera"]]
+limit_left = -200
+limit_top = -200
+limit_right = 4040
+limit_bottom = 2360
+script = ExtResource("20_sffyf")
 
 [node name="MouseCollider" type="Area2D" parent="."]
 visible = false
@@ -256,12 +400,25 @@ scale = Vector2(1.07223, 1.15713)
 curve = SubResource("Curve2D_48d6q")
 
 [node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
-position = Vector2(-604.778, -462.076)
+position = Vector2(-604.776, -462.076)
 rotation = 3.14159
 progress = 5050.37
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-27.3333, 11.3333, -22, 27.3333, -17.3333, 31.3333, 6.66669, 31.3333, 22.6667, 22, 22.6667, -22, 8, -28, -17.3333, -28, -22.6666, -22.6667, -28, -8)
+
+[node name="DashCollisonChecker" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 8
+
+[node name="Tip" type="RayCast2D" parent="DashCollisonChecker"]
+target_position = Vector2(10, 10)
+collision_mask = 8
+hit_from_inside = true
 
 [connection signal="body_entered" from="Area2D" to="." method="death"]
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="ReloadTimer" to="." method="reloading"]
+[connection signal="timeout" from="SecChanceRegenTimer" to="." method="second_chance_on"]
 [connection signal="timeout" from="RunningAnimTimer" to="." method="running_delay"]
 [connection signal="timeout" from="DashTimer" to="." method="dash_reset"]

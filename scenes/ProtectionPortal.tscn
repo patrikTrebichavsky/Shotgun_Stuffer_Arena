@@ -1,0 +1,115 @@
+[gd_scene load_steps=11 format=3 uid="uid://chh7wc88yg6jf"]
+
+[ext_resource type="Texture2D" uid="uid://ce7jggnug5sej" path="res://sprites/Arena/Portal/ClosedProtectionPortal.png" id="1_jf7jx"]
+[ext_resource type="AudioStream" uid="uid://bw3amb57qyy5y" path="res://sounds/PortalApearing.wav" id="2_0fn14"]
+[ext_resource type="Texture2D" uid="uid://bbmgqhgxp8cea" path="res://sprites/Arena/Portal/NextClosedProtectionPortal.png" id="2_rbpyq"]
+[ext_resource type="Texture2D" uid="uid://cva3pt602vevy" path="res://sprites/Arena/Portal/OpenProtectionPortal.png" id="3_10ifw"]
+[ext_resource type="Texture2D" uid="uid://c0phyn7iwdhqx" path="res://sprites/Arena/Portal/PreviousClosedProtectionPortal.png" id="4_5q536"]
+[ext_resource type="Script" path="res://scripts/Portal.gd" id="5_ltfdq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uor8w"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jf7jx")
+}],
+"loop": true,
+"name": &"Closed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_rbpyq")
+}],
+"loop": true,
+"name": &"NextClosed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_10ifw")
+}],
+"loop": true,
+"name": &"Open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_5q536")
+}],
+"loop": true,
+"name": &"PreviousClosed",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_yqsui"]
+resource_name = "Appear"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0.01, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_lpsxc"]
+resource_name = "Dissappear"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.01, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3yq80"]
+_data = {
+"Appear": SubResource("Animation_yqsui"),
+"Dissappear": SubResource("Animation_lpsxc")
+}
+
+[node name="ProtectionPortal" type="Node2D" groups=["portals"]]
+script = ExtResource("5_ltfdq")
+
+[node name="AppearingAudio" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(-53, 96)
+scale = Vector2(0.01, 1)
+stream = ExtResource("2_0fn14")
+bus = &"SFX"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 11
+sprite_frames = SubResource("SpriteFrames_uor8w")
+animation = &"Open"
+frame_progress = 0.658592
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_3yq80")
+}
+
+[node name="Timer" type="Timer" parent="AnimatedSprite2D"]
+wait_time = 0.5
+one_shot = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-460, 15)
+target_position = Vector2(920, 0)
+collision_mask = 32768
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[connection signal="timeout" from="AnimatedSprite2D/Timer" to="." method="disapear"]

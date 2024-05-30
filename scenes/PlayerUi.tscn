@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjv3ojhnmrymb"]
+[gd_scene load_steps=12 format=3 uid="uid://bjv3ojhnmrymb"]
 
 [ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/IngameUIBackgroundBottom.png" id="1_3b84t"]
 [ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
@@ -6,6 +6,9 @@
 [ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="2_w0dvj"]
 [ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/EnemyKillCount.png" id="3_8wmgf"]
 [ext_resource type="PackedScene" uid="uid://bceh2j3u3e5b3" path="res://scenes/AmmoSpriteContainer.tscn" id="4_bwgcm"]
+[ext_resource type="Texture2D" uid="uid://iph7fdk1b6cx" path="res://sprites/UI/Boss/HealthBar/Under.png" id="7_76og7"]
+[ext_resource type="Texture2D" uid="uid://cq5otuy00juk5" path="res://sprites/UI/Boss/HealthBar/Progress.png" id="8_usjog"]
+[ext_resource type="Script" path="res://scripts/BossHpBar.gd" id="9_uf2sd"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0uphs"]
 animations = [{
@@ -51,6 +54,7 @@ offset_bottom = 1393.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_3b84t")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Kills" type="Label" parent="StatsUI"]
 layout_mode = 0
@@ -64,6 +68,7 @@ theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 60
 text = "1000X"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="StatsUI/Kills"]
 layout_mode = 0
@@ -95,6 +100,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 80
 text = "Level : 0"
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="StatsUI/Level"]
 show_behind_parent = true
@@ -105,6 +111,7 @@ offset_right = 32.0
 offset_bottom = 56.0
 scale = Vector2(9.05097, 2.00208)
 color = Color(0.2, 0.239216, 0.282353, 0.501961)
+metadata/_edit_use_anchors_ = true
 
 [node name="Experience" type="Label" parent="StatsUI"]
 z_index = 1
@@ -119,6 +126,7 @@ theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 60
 text = "Exp:"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect3" type="ColorRect" parent="StatsUI/Experience"]
 show_behind_parent = true
@@ -129,6 +137,7 @@ offset_right = 42.0
 offset_bottom = 38.0
 scale = Vector2(9.21241, 2.00208)
 color = Color(0.129412, 0.435294, 0.129412, 0.392157)
+metadata/_edit_use_anchors_ = true
 
 [node name="AmmoInGunUI" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0.784314)
@@ -140,6 +149,7 @@ offset_bottom = 61.0
 scale = Vector2(1.25, 1.25)
 color = Color(0.141176, 0.164706, 0.176471, 1)
 metadata/_edit_group_ = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Border" type="ColorRect" parent="AmmoInGunUI"]
 show_behind_parent = true
@@ -165,12 +175,13 @@ script = SubResource("GDScript_4tcm2")
 
 [node name="AmmoSpriteContainer" parent="." instance=ExtResource("4_bwgcm")]
 z_index = 2
-offset_left = 179.0
-offset_top = 43.0
-offset_right = 198.0
-offset_bottom = 62.0
+offset_left = 180.0
+offset_top = 42.0
+offset_right = 199.0
+offset_bottom = 61.0
 scale = Vector2(1.25, 1.25)
 first_in_row = true
+metadata/_edit_use_anchors_ = true
 
 [node name="AmmoSpriteContainer2" parent="." instance=ExtResource("4_bwgcm")]
 offset_left = 198.0
@@ -178,6 +189,7 @@ offset_top = 130.0
 offset_right = 217.0
 offset_bottom = 149.0
 scale = Vector2(1.25, 1.25)
+metadata/_edit_use_anchors_ = true
 
 [node name="AmmoSpriteContainer3" parent="." instance=ExtResource("4_bwgcm")]
 offset_left = 107.0
@@ -185,6 +197,28 @@ offset_top = 168.0
 offset_right = 126.0
 offset_bottom = 187.0
 scale = Vector2(1.25, 1.25)
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." groups=["hp_bar"]]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = 340.0
+offset_right = 310.0
+offset_bottom = 420.0
+grow_horizontal = 2
+grow_vertical = 2
+value = 100.0
+rounded = true
+texture_under = ExtResource("7_76og7")
+texture_progress = ExtResource("8_usjog")
+texture_progress_offset = Vector2(20, 20)
+script = ExtResource("9_uf2sd")
 
 [connection signal="animation_finished" from="ShotgunStorage" to="ShotgunStorage" method="_on_animation_finished"]
 [connection signal="empty" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="move_ammo_up"]

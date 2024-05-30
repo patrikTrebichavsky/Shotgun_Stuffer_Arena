@@ -6,69 +6,103 @@ class_name Car
 @export var explo_dmg : int
 @export var burn_damage : int
 @export var explosion_max_size : Vector2
-@export var explosion_size_increase : Vector2
+@export var explosion_size_increase : float
 
 var sprite : AnimatedSprite2D
 var explo_collider : Area2D
+var wheels_not_shot = true
+var exploaded = false
 
 
 func  _ready():
 	
 	sprite = get_node("AnimatedSprite2D")
-	explo_collider = get_node("ExplosionArea")
-	
+	explo_collider = get_node("CarExplosionArea")
+
 func _process(delta):
-	
-	if hitcount > 0 && explosion_max_size >= sprite.scale:
-		sprite.scale += explosion_size_increase
-		explo_collider.scale += explosion_size_increase
+
+
+	if exploaded && explosion_max_size >= sprite.scale:
+		sprite.scale *= explosion_size_increase
+		explo_collider.scale *= explosion_size_increase
 		
+		if explo_collider.monitoring:
+			for body in $CarExplosionArea.get_overlapping_bodies():
+				if !body.name.contains("Wall"):
+					var push_back = (body.global_position - $CarExplosionArea/ExplosionCenter.global_position).normalized() * explo_push_back
+					body.got_shot(explo_dmg, push_back)
 		
-func _enemy_hit(body):
+		if sprite.scale > explosion_max_size/2 and wheels_not_shot :
+			
+			for i in range(4):
+				
+				var temp_marker = get_node("WheelMarker"+str(i+1))
+				bullet_instatiation("res://scenes/CarWheel.tscn",temp_marker.rotation,temp_marker.global_position)
+				wheels_not_shot = false
+			
+			$BurnTimer.start()
+				
+func _enemy_hit(body):	
 	
-	
-	if hitcount == 0:
+	if body.name.contains("Outer"):
+		return
+	if hitcount < 3 && !body.name.contains("Wall"):
+		$RunOverSound.play()
+		var push_back = linear_velocity.normalized() * push_back_multiplier
+		body.got_shot(damage, push_back)
 		
 		hitcount += 1
+		
+	if hitcount >= 3 || body.name.contains("Wall"):
+		
+		linear_velocity = Vector2.ZERO
+		set_deferred("freeze",true)
 
 		$CollisionSound.play()
 		$CollisionParticles.emitting = true
-		$CollisionArea.set_deferred("monitoring", false)
+		$CarArea.set_deferred("monitoring", false)
 		$ExplosionDeletionTimer.start()
-		
-		for i in range(4):
-			var temp_marker = get_node("WheelMarker"+str(i+1))
-			bullet_instatiation("res://scenes/CarWheel.tscn",temp_marker.rotation,temp_marker.global_position)
-		
+		exploaded = true
+
 		
 		sprite.animation = "explosion"
 		explo_collider.set_deferred("monitoring", true)
+		explo_collider.set_deferred("monitorable", true)
+		#explo_collider.scale = explo_collider.scale * 0.075
+		sprite.scale = sprite.scale * 0.075
 		
-		sprite.global_position = body.position
-		explo_collider.global_position = body.position
+		hitcount += 1
 		
-		explo_collider.scale = explo_collider.scale * 0.01 
-		sprite.scale = sprite.scale * 0.01
+		if body.name.contains("Wall"):
+			return
 		
 		var push_back = linear_velocity.normalized() * push_back_multiplier
 		body.got_shot(damage, push_back)
 		
-		linear_velocity = Vector2.ZERO
-
+		
+			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _explosion_hit(body):
 	
-	if(explosion_max_size >= sprite.scale):
-		var push_back = (body.global_position - $ExplosionArea/ExplosionCenter.global_position).normalized() * explo_push_back
-		body.got_shot(explo_dmg, push_back)
-	else:
-		body.got_conditioned(1, "burning")
+	if body.name.contains("Outer"):
+		return
+	elif body.name.contains("Wall"):
+		body.chared()
+		return
+		
 
+func burning_tick():
+	if explo_collider.monitoring:
+		for body in $CarExplosionArea.get_overlapping_bodies():
+			if !body.name.contains("Wall"):
+				body.got_conditioned(burn_damage, "burning",true)
 
 func delete_bullet():
 	
-	$CollisionArea.set_deferred("monitoring",false)
-	$ExplosionArea.set_deferred("monitoring",false)
+	$CarArea.set_deferred("monitoring",false)
+	$CarArea.set_deferred("monitorable",false)
+	$CarExplosionArea.set_deferred("monitoring",false)
+	$CarExplosionArea.set_deferred("monitorable",false)
 	$AnimatedSprite2D.visible = false
 	await get_tree().create_timer(1.0).timeout
 	queue_free()

@@ -25,4 +25,7 @@ func transport_player(player):
 	$AnimatedSprite2D.play("closing")
 	$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
 
-
+func change_sewage_state(state: bool):
+	visible = state
+	set_deferred("monitoring",state)
+	$StaticBody2D/CollisionShape2D.set_deferred("disabled",state)
