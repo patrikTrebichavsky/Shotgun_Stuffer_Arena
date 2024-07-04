@@ -8,3 +8,7 @@ func heal_to_full(use_tween = true,time = 0.5):
 	
 func update_hp(amount: int):
 	value = amount
+	
+func smasher_spawned():
+	$"../AnimationPlayer".play("SpawnHealthBar")
+	visible = true

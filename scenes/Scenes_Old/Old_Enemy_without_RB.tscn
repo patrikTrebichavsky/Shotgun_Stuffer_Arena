@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://blkly143yoirp"]
 
 [ext_resource type="Script" path="res://scripts/old_scripts/Old_Enemy.gd" id="1_agpfe"]
-[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="2_0i803"]
-[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/EnemyRunning.png" id="3_vlcbc"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/Dying.png" id="2_0i803"]
+[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/Running.png" id="3_vlcbc"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_o03a0"]
-[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="5_alt0y"]
-[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="6_usfip"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_alt0y"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_usfip"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_eti3m"]
 animations = [{

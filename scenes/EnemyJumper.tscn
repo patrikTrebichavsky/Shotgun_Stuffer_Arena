@@ -1,19 +1,19 @@
 [gd_scene load_steps=26 format=3 uid="uid://dqvmhhhcsl0j5"]
 
 [ext_resource type="Script" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
-[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="2_ckm8h"]
-[ext_resource type="Texture2D" uid="uid://bgeide4j1avlr" path="res://sprites/Enemies/Jumper/EnemyJumperDeathBurned.png" id="2_qs00d"]
-[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/EnemyJumperStanding.png" id="3_3kitq"]
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_ckm8h"]
+[ext_resource type="Texture2D" uid="uid://bgeide4j1avlr" path="res://sprites/Enemies/Jumper/Chared.png" id="2_qs00d"]
+[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/Dying.png" id="3_3kitq"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_jpx1l"]
-[ext_resource type="Texture2D" uid="uid://i7df7sgnbqd" path="res://sprites/Enemies/Jumper/EnemyJumperChasing.png" id="4_6fy0n"]
-[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="4_26lkp"]
-[ext_resource type="Texture2D" uid="uid://kvuurcfskduw" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperStanding.png" id="5_gyyd0"]
-[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="5_so8b1"]
-[ext_resource type="Texture2D" uid="uid://breqmsqqxfjdg" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperChasing.png" id="6_w12ua"]
-[ext_resource type="AudioStream" uid="uid://f2lgsy1hcnxb" path="res://sounds/EnemyJump.mp3" id="9_bfju6"]
-[ext_resource type="AudioStream" uid="uid://cdmd3iebmvl3u" path="res://sounds/EnemyDrop.wav" id="10_7bcbx"]
-[ext_resource type="Texture2D" uid="uid://cgteklutre1r" path="res://sprites/Enemies/Jumper/EnemyJumperDropMark.png" id="10_tijb4"]
-[ext_resource type="Texture2D" uid="uid://bsot7cong8342" path="res://sprites/Enemies/Jumper/UndertaleEnemyJumperDropMark.png" id="13_1y6b5"]
+[ext_resource type="Texture2D" uid="uid://i7df7sgnbqd" path="res://sprites/Enemies/Jumper/Running.png" id="4_6fy0n"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="4_26lkp"]
+[ext_resource type="Texture2D" uid="uid://kvuurcfskduw" path="res://sprites/Enemies/Jumper/Undertale_Dying.png" id="5_gyyd0"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="5_so8b1"]
+[ext_resource type="Texture2D" uid="uid://breqmsqqxfjdg" path="res://sprites/Enemies/Jumper/Undertale_Running.png" id="6_w12ua"]
+[ext_resource type="AudioStream" uid="uid://f2lgsy1hcnxb" path="res://sounds/Enemy/Jump.mp3" id="9_bfju6"]
+[ext_resource type="AudioStream" uid="uid://cdmd3iebmvl3u" path="res://sounds/Enemy/Drop.wav" id="10_7bcbx"]
+[ext_resource type="Texture2D" uid="uid://cgteklutre1r" path="res://sprites/Enemies/Jumper/Marker.png" id="10_tijb4"]
+[ext_resource type="Texture2D" uid="uid://bsot7cong8342" path="res://sprites/Enemies/Jumper/Undertale_Marker.png" id="13_1y6b5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_aaasd"]
 animations = [{
@@ -238,7 +238,7 @@ animations = [{
 
 [node name="EnemyJumper" type="RigidBody2D" groups=["enemy"]]
 z_index = 12
-collision_layer = 512
+collision_layer = 524800
 collision_mask = 512
 gravity_scale = 0.0
 lock_rotation = true
@@ -331,6 +331,8 @@ autostart = true
 avoidance_enabled = true
 radius = 50.0
 max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="body_shape_entered" from="." to="." method="body_shape_entered"]
 [connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]

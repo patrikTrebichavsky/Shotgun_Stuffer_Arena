@@ -24,13 +24,13 @@ func _process(delta):
 
 	if exploaded && explosion_max_size >= sprite.scale:
 		sprite.scale *= explosion_size_increase
-		explo_collider.scale *= explosion_size_increase
+		explo_collider.scale = sprite.scale
 		
 		if explo_collider.monitoring:
 			for body in $CarExplosionArea.get_overlapping_bodies():
 				if !body.name.contains("Wall"):
 					var push_back = (body.global_position - $CarExplosionArea/ExplosionCenter.global_position).normalized() * explo_push_back
-					body.got_shot(explo_dmg, push_back)
+					body.got_conditioned(explo_dmg, "burning",true)
 		
 		if sprite.scale > explosion_max_size/2 and wheels_not_shot :
 			
@@ -68,8 +68,9 @@ func _enemy_hit(body):
 		sprite.animation = "explosion"
 		explo_collider.set_deferred("monitoring", true)
 		explo_collider.set_deferred("monitorable", true)
-		#explo_collider.scale = explo_collider.scale * 0.075
+		
 		sprite.scale = sprite.scale * 0.075
+		explo_collider.scale = sprite.scale
 		
 		hitcount += 1
 		

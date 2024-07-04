@@ -80,7 +80,7 @@ func player_is_dead():
 	set_physics_process(false)
 
 
-func delete_enemy():
+func _delete_enemy():
 	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	queue_free()
@@ -152,6 +152,7 @@ func stuck_timeout():
 		set_collision_mask_value(3,false)
 		set_collision_layer_value(2,false)
 
+
 func falling_down_from_wall():
 	var tween = get_tree().create_tween()
 	tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.8,0.8), 0.03625)
@@ -169,6 +170,7 @@ func falling_down_from_wall():
 	z_index = 0
 	in_arena = true
 
+
 func _death(custom_death_sprite=false):
 		$CollisionShape2D.set_deferred("disabled", true)
 		$DeathParticles.emitting = true
@@ -184,11 +186,13 @@ func _death(custom_death_sprite=false):
 		$DeathSound.play()
 		
 		emit_signal("enemy_killed", xp)
-		
+		set_collision_mask_value(20,false)
+
 		linear_velocity = Vector2.ZERO
 		set_deferred("freeze",true)
 		
 		set_physics_process(false)
+
 
 func _enemy_fell_off_map():
 	get_parent().decrease_basic_enemy_counter()

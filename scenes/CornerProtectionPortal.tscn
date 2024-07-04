@@ -1,9 +1,9 @@
 [gd_scene load_steps=11 format=3 uid="uid://rdiauru45hv7"]
 
-[ext_resource type="Texture2D" uid="uid://dsecg5cl3hkfl" path="res://sprites/Arena/SidePortal/SideClosedProtectionPortal.png" id="1_k83dv"]
-[ext_resource type="Texture2D" uid="uid://gt1aksdo587b" path="res://sprites/Arena/SidePortal/SideNextClosedProtectionPortal.png" id="2_828lu"]
-[ext_resource type="Texture2D" uid="uid://dq4fsb4x061r8" path="res://sprites/Arena/SidePortal/SideOpenProtectionPortal.png" id="3_6o8pb"]
-[ext_resource type="Texture2D" uid="uid://kx46ubycuool" path="res://sprites/Arena/SidePortal/SidePreviousClosedProtectionPortal.png" id="4_70nho"]
+[ext_resource type="Texture2D" uid="uid://dsecg5cl3hkfl" path="res://sprites/Arena/CornerPortal/CornerClosedProtectionPortal.png" id="1_k83dv"]
+[ext_resource type="Texture2D" uid="uid://gt1aksdo587b" path="res://sprites/Arena/CornerPortal/CornerNextClosedProtectionPortal.png" id="2_828lu"]
+[ext_resource type="Texture2D" uid="uid://dq4fsb4x061r8" path="res://sprites/Arena/CornerPortal/CornerOpenProtectionPortal.png" id="3_6o8pb"]
+[ext_resource type="Texture2D" uid="uid://kx46ubycuool" path="res://sprites/Arena/CornerPortal/CornerPreviousClosedProtectionPortal.png" id="4_70nho"]
 [ext_resource type="Script" path="res://scripts/CornerPortal.gd" id="5_yplsd"]
 [ext_resource type="AudioStream" uid="uid://bw3amb57qyy5y" path="res://sounds/PortalApearing.wav" id="6_k2oqm"]
 

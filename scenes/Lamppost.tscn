@@ -5,10 +5,10 @@
 [ext_resource type="AudioStream" uid="uid://bsr5lygbxh8r4" path="res://sounds/Bullets/LampStab.mp3" id="3_qpfkk"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_33wpf"]
 [ext_resource type="AudioStream" uid="uid://dya4lr4bkorjb" path="res://sounds/Bullets/LampHit.mp3" id="4_jnmlt"]
-[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="4_shry8"]
-[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/EnemyJumperStanding.png" id="7_vs5he"]
-[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/EnemyThrowerStanding.png" id="8_0dlen"]
-[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/EnemyThrowerStandingHeadless.png" id="9_1h7lo"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/Dying.png" id="4_shry8"]
+[ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/Dying.png" id="7_vs5he"]
+[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/Dying.png" id="8_0dlen"]
+[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/DyingHeadless.png" id="9_1h7lo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{

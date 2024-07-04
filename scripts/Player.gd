@@ -76,7 +76,10 @@ var regenrate_sec_chance = false
 
 var second_chance_usable = false
 
+var switch_special_ready = true
+
 var main_node
+
 
 @export var undertale_mode : bool
 
@@ -104,52 +107,59 @@ func _physics_process(delta):
 	$MouseCollider.global_position = get_global_mouse_position()
 	
 	
-	if !undertale_mode && (!use_special || special_slot_chosen != 0) && (Input.is_action_just_pressed("special_first") && stored_ammo.size() > 0) :
-		special_slot_chosen = 0
-		can_switch_back = true
-		use_special = true
-		mode_switch_visuals()
-		emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
-		
-		
-		emit_signal("is_first_special_activated",true)
-		emit_signal("is_second_special_activated",false)
-		emit_signal("is_third_special_activated",false)
-		
-	elif !undertale_mode && (!use_special || special_slot_chosen != 1) && (Input.is_action_just_pressed("special_second") && stored_ammo.size() > 1): 
-		special_slot_chosen = 1
-		can_switch_back = true
-		use_special = true
-		mode_switch_visuals()
-		emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
-		
-		
-		emit_signal("is_first_special_activated",false)
-		emit_signal("is_second_special_activated",true)
-		emit_signal("is_third_special_activated",false)
-		
-	elif !undertale_mode && (!use_special || special_slot_chosen != 2) && (Input.is_action_just_pressed("special_third") && stored_ammo.size() > 2):
-		special_slot_chosen = 2
-		can_switch_back = true
-		use_special = true
-		mode_switch_visuals()
-		emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
-		
-		
-		emit_signal("is_first_special_activated",false)
-		emit_signal("is_second_special_activated",false)
-		emit_signal("is_third_special_activated",true)
+	if switch_special_ready:
+		if !undertale_mode && (!use_special || special_slot_chosen != 0) && ((Input.is_action_just_pressed("special_first") || (Input.is_action_just_pressed("special_scroll_up") && (!use_special || special_slot_chosen == 1 )) || (Input.is_action_just_pressed("special_scroll_down") && !use_special)) && stored_ammo.size() > 0) :
+			special_slot_chosen = 0
+			can_switch_back = true
+			use_special = true
+			switch_special_ready = false
+			$SpecialResetTimer.start()
+			mode_switch_visuals()
+			emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
 			
-	elif !undertale_mode && use_special && (Input.is_action_just_pressed("special_first") || Input.is_action_just_pressed("special_second") || Input.is_action_just_pressed("special_third")):
-		can_switch_back = false
-		use_special = false
-		mode_switch_visuals()
-		emit_signal("bullet_cursor",0)
-		
-		emit_signal("is_first_special_activated",false)
-		emit_signal("is_second_special_activated",false)
-		emit_signal("is_third_special_activated",false)
-		
+			
+			emit_signal("is_first_special_activated",true)
+			emit_signal("is_second_special_activated",false)
+			emit_signal("is_third_special_activated",false)
+			
+		elif !undertale_mode && (!use_special || special_slot_chosen != 1) && ((Input.is_action_just_pressed("special_second") || (Input.is_action_just_pressed("special_scroll_down") && special_slot_chosen == 0) || (Input.is_action_just_pressed("special_scroll_up") && special_slot_chosen == 2)  ) && stored_ammo.size() > 1): 
+			special_slot_chosen = 1
+			can_switch_back = true
+			use_special = true
+			switch_special_ready = false
+			$SpecialResetTimer.start()
+			mode_switch_visuals()
+			emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
+			
+			
+			emit_signal("is_first_special_activated",false)
+			emit_signal("is_second_special_activated",true)
+			emit_signal("is_third_special_activated",false)
+			
+		elif !undertale_mode && (!use_special || special_slot_chosen != 2) && ((Input.is_action_just_pressed("special_third") || (Input.is_action_just_pressed("special_scroll_down") && special_slot_chosen == 1)) && stored_ammo.size() > 2):
+			special_slot_chosen = 2
+			can_switch_back = true
+			use_special = true
+			switch_special_ready = false
+			$SpecialResetTimer.start()
+			mode_switch_visuals()
+			emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
+			
+			
+			emit_signal("is_first_special_activated",false)
+			emit_signal("is_second_special_activated",false)
+			emit_signal("is_third_special_activated",true)
+				
+		elif !undertale_mode && use_special && (Input.is_action_just_pressed("special_first") || Input.is_action_just_pressed("special_second") || Input.is_action_just_pressed("special_third") || Input.is_action_just_pressed("turn_off_special")):
+			can_switch_back = false
+			use_special = false
+			mode_switch_visuals()
+			emit_signal("bullet_cursor",0)
+			
+			emit_signal("is_first_special_activated",false)
+			emit_signal("is_second_special_activated",false)
+			emit_signal("is_third_special_activated",false )
+			
 			
 	#dash takes keyboard input and check if there are any walls in the way  with raycast. Then dashes maximum distance acordintly
 	if Input.is_action_just_pressed("dash") && can_dash && player_level > 0:
@@ -501,13 +511,13 @@ func player_level_changed(level):
 		
 func mode_switch_visuals():
 	if use_special:
-		$SpecialModeSound.stream = load("res://sounds/SpecialModeOn.wav")
+		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOff.wav")
 		$SpecialModeSound.play()
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
 		instance._display_message(str(special_slot_chosen+1) + "  Slot", "#8A4FFF", 25)
 	else:
-		$SpecialModeSound.stream = load("res://sounds/SpecialModeOff.wav")
+		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOn.wav")
 		$SpecialModeSound.play()
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
@@ -533,3 +543,6 @@ func second_chance_on(regen = regenrate_sec_chance):
 	$Area2D/SecondChance.visible = true
 	$AnimationPlayer.play("SecondChance")	
 	$SecondChanceAquired.play()
+	
+func reset_special_switch():
+	switch_special_ready = true

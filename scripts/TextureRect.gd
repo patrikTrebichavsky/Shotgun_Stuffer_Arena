@@ -9,11 +9,11 @@ var is_active : bool
 
 @export var ammo_sprite_dictionary = {
 	"id" : "path",
-	1 : "res://sprites/UI/CouchUI.png",
-	2 : "res://sprites/UI/PianoUI.png",
-	3 : "res://sprites/UI/LampUI.png",
-	4 : "res://sprites/UI/CarUI.png",
-	5 : "res://sprites/UI/HouseUI.png",
+	1 : "res://sprites/UI/SpecialUI/CouchUI.png",
+	2 : "res://sprites/UI/SpecialUI/PianoUI.png",
+	3 : "res://sprites/UI/SpecialUI/LampUI.png",
+	4 : "res://sprites/UI/SpecialUI/CarUI.png",
+	5 : "res://sprites/UI/SpecialUI/HouseUI.png",
 }
 
 var current_value = 0

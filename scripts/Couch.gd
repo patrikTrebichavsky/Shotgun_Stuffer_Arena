@@ -66,3 +66,4 @@ func target_died():
 	no_target = true
 	apply_central_impulse(Vector2.RIGHT.rotated(rotation)*speed)
 	$MarkerSprite2D.visible = false
+ 

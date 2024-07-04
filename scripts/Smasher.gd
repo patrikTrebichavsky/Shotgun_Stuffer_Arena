@@ -11,13 +11,13 @@ var dash_speed_current  = 0.0
 @export var dash_speed_min = 400
 @export var dash_speed_max = 1000
 @export var dash_speed_increase = 1.0
-@export var id = 1
-@export var hp_max = 100
+@export var id = 10
 @export var xp = 1
 
 var shadow_prev_position
 
 var hp_current : int
+@export var hp_max = 100
 var current_velocity = 0
 var prev_position : Vector2
 var dash_direction : Vector2
@@ -40,6 +40,8 @@ var feast_targets_array : Array
 
 @export var undertale_mode : bool
 
+func _init():
+	visible = false
 
 func _ready():
 	
@@ -69,6 +71,8 @@ func _ready():
 	
 func _physics_process(_delta):
 	
+	if !in_arena:
+		return
 	
 	$RayCast2D.target_position = player_position-position
 	
@@ -215,7 +219,6 @@ func player_is_dead():
 
 
 func delete_enemy():
-	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	get_parent().boss_killed()
 	queue_free()
@@ -288,21 +291,20 @@ func stuck_timeout():
 		set_collision_mask_value(3,false)
 		set_collision_layer_value(2,false)
 
-func falling_down_from_wall():
+func fallen_down():
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.8,0.8), 0.03625)
-	tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.75,0.75), 0.03625)
-	await  tween.finished
-	
-	set_collision_mask_value(10,false)
-	set_collision_layer_value(10,false)
+	get_tree().call_group("camera","apply_shake")
+	$FallParticles.emitting = true
 	
 	set_collision_mask_value(2,true)
 	set_collision_mask_value(3,true)
 	set_collision_layer_value(2,true)
 	set_collision_layer_value(3,true)
 	set_collision_layer_value(4,true)
+	
+	await get_tree().create_timer(1.0).timeout
+	
+
 	z_index = 0
 	in_arena = true
 
@@ -362,5 +364,3 @@ func start_add_timer():
 
 func _spawn_adds():
 	get_parent().spawn_smasher_adds()
-	
-

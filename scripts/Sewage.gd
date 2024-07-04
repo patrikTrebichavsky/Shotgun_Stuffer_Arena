@@ -12,7 +12,7 @@ func _on_area_entered(area):
 		$AnimatedSprite2D.play("closing")
 	$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
 
-func _on_animated_sprite_2d_animation_finished():
+func _reset():
 	can_be_used = true
 	$AnimatedSprite2D.play("closed")
 	$StaticBody2D/CollisionShape2D.set_deferred("disabled", false)

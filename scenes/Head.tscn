@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://4shloqflan0l"]
 
-[ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/EnemyThrowerHead.png" id="1_7lub3"]
-[ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/UndertaleEnemyThrowerHead.png" id="2_7eop7"]
+[ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/Head.png" id="1_7lub3"]
+[ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/Undertale_Head.png" id="2_7eop7"]
 [ext_resource type="Script" path="res://scripts/Head.gd" id="3_a5mon"]
 
 [sub_resource type="Animation" id="Animation_xjxls"]
@@ -52,9 +52,9 @@ radius = 41.4367
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("3_a5mon")
-speed_initial = 1000.0
-speed_min = 200.0
-speed_frame_change = 650.0
+speed_initial = 2000.0
+speed_min = 1000.0
+speed_frame_change = 1500.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../..")
@@ -63,6 +63,7 @@ libraries = {
 }
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+rotation = 2.49576
 sprite_frames = SubResource("SpriteFrames_i5jc3")
 animation = &"head_default"
 

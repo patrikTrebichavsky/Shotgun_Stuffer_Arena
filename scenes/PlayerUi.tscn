@@ -1,14 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjv3ojhnmrymb"]
+[gd_scene load_steps=15 format=3 uid="uid://bjv3ojhnmrymb"]
 
-[ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/IngameUIBackgroundBottom.png" id="1_3b84t"]
-[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
-[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUIBackgroundAsembled2.png" id="2_tillq"]
+[ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/ScoreTracker/Background.png" id="1_3b84t"]
+[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
+[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUI/SpecialUIBackgroundAsembled2.png" id="2_tillq"]
 [ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="2_w0dvj"]
-[ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/EnemyKillCount.png" id="3_8wmgf"]
+[ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/ScoreTracker/EnemyKillCount.png" id="3_8wmgf"]
 [ext_resource type="PackedScene" uid="uid://bceh2j3u3e5b3" path="res://scenes/AmmoSpriteContainer.tscn" id="4_bwgcm"]
 [ext_resource type="Texture2D" uid="uid://iph7fdk1b6cx" path="res://sprites/UI/Boss/HealthBar/Under.png" id="7_76og7"]
 [ext_resource type="Texture2D" uid="uid://cq5otuy00juk5" path="res://sprites/UI/Boss/HealthBar/Progress.png" id="8_usjog"]
 [ext_resource type="Script" path="res://scripts/BossHpBar.gd" id="9_uf2sd"]
+[ext_resource type="AudioStream" uid="uid://xqwixpqknyfb" path="res://sounds/Enemy/Smasher'/Anoucement.wav" id="10_quuqq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0uphs"]
 animations = [{
@@ -40,6 +41,39 @@ script/source = "extends AnimatedSprite2D
 func _on_animation_finished():
 	animation = \"default\"
 "
+
+[sub_resource type="Animation" id="Animation_rkmw7"]
+resource_name = "SpawnHealthBar"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.784314)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gufw6"]
+_data = {
+"SpawnHealthBar": SubResource("Animation_rkmw7")
+}
 
 [node name="PlayerUi" type="CanvasLayer"]
 offset = Vector2(-20, -20)
@@ -200,7 +234,6 @@ scale = Vector2(1.25, 1.25)
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." groups=["hp_bar"]]
-visible = false
 modulate = Color(1, 1, 1, 0.784314)
 anchors_preset = 8
 anchor_left = 0.5
@@ -219,6 +252,15 @@ texture_under = ExtResource("7_76og7")
 texture_progress = ExtResource("8_usjog")
 texture_progress_offset = Vector2(20, 20)
 script = ExtResource("9_uf2sd")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_quuqq")
+bus = &"SFX"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_gufw6")
+}
 
 [connection signal="animation_finished" from="ShotgunStorage" to="ShotgunStorage" method="_on_animation_finished"]
 [connection signal="empty" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="move_ammo_up"]

@@ -54,7 +54,24 @@ func _physics_process(_delta):
 		nav.set_velocity(current_velocity)
 		$AnimatedSprite2D.look_at(nav.get_next_path_position())
 		$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
-
+	
+		var frame_pos_dif = (prev_position-position).abs().length()
+			
+			
+		if frame_pos_dif < (speed_min-10)*_delta:
+			stuck_counter += 1* _delta
+			if stuck_counter > 2:
+				stuck_counter = 0
+				set_collision_mask_value(2,false)
+				set_collision_mask_value(3,false)
+				set_collision_layer_value(2,false)
+				$StuckTimer.start()
+		else:
+			stuck_counter = 0
+			
+		prev_position = position
+		
+		
 	else:
 		linear_velocity = Vector2.ZERO
 
@@ -64,7 +81,9 @@ func move(velocity: Vector2):
 	
 
 func delete_enemy():
-	get_parent().decrease_special_enemy_counter()
+	set_collision_mask_value(20,false)
+	get_parent().decrease_basic_enemy_counter()
+	emit_signal("stop_homming")
 	queue_free()
 
 

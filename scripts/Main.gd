@@ -116,7 +116,7 @@ var special_ammo_range = 0
 @export var levels_needed_for_special_increase : int
 
 @export_category("Second Chance")
-var first_game = true
+var first_game = true    
 var second_chance_counter = 0;
 var previous_attempt = 0;
 var current_attempt = 0;
@@ -128,6 +128,9 @@ var enemy_spawn_point
 var special_enemy_counter : int
 var enemy_initial_spawn_storage
 
+var boss_should_spawn = false
+var boss_is_active = false
+var which_boss = 0
 
 
 
@@ -155,10 +158,6 @@ var cursor_dict = {
 	 26 : "res://sprites/UI/Cursors/1440p/CursorCar.png",
 	 27 : "res://sprites/UI/Cursors/1440p/CursorHouse.png"
 }
-
-var boss_should_spawn = false
-var boss_is_active = false
-var which_boss = 0
 
 func _ready():
 	$StartMenu/Button.pressed.connect(start_game)
@@ -295,6 +294,10 @@ func leveled_up():
 	if player_level == 5:
 		boss_should_spawn = true
 		which_boss = 1
+	
+	if player_level == 10:
+		boss_should_spawn = true
+		which_boss = 2
 
 	#if player_level <= max_lvl_for_enemy_spawner:
 		#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
@@ -319,6 +322,7 @@ func player_died():
 	game_running = false
 	
 	$SoundTrack.stop()
+	$SoundTrack.volume_db = 0
 	$GameOverSound.play()
 	
 	$MeshBakerTimer.stop()
@@ -326,19 +330,30 @@ func player_died():
 	#$EnemySpawnTimer.stop()
 	$SpecialAmmoTimer.stop()
 	
+	set_cursor(0)
+	
 	get_tree().call_group("enemy","player_is_dead")
 	get_tree().call_group("bullets","queue_free")
 	
 	await get_tree().create_timer(1.0).timeout
+	$IntroTrack.volume_db = 0
+	$IntroTrack.play()
+	
 	$PlayerUi.visible = false
 	$StartMenu.visible = true
 	if mode_running:
 		_switch_mode("reset")
 	
+	get_tree().call_group("sewage","_reset")
+	
 
 func force_menu():
+
 	
 	$SoundTrack.stop()
+	$SoundTrack.volume_db = 0
+	$IntroTrack.volume_db = 0
+	$IntroTrack.play()
 	$MeshBakerTimer.stop()
 	$SpecialAmmoTimer.stop()
 	get_tree().call_group("enemy","queue_free")
@@ -358,18 +373,13 @@ func start_game():
 		
 	starting_game = true 
 	
-	$SoundTrack.play()
-	
-	
 	get_tree().call_group("player_ui","reset")
 	
 	get_tree().call_group("enemy","queue_free")
 	
 	var cursor_size = DisplayServer.window_get_size()
-	
-	set_cursor(0)
 		
-	player_level = 4
+	player_level = 9
 		
 	kill_counter = 0
 	
@@ -388,6 +398,8 @@ func start_game():
 	xp_needed = round(pow(0.1,3) + pow(0.15,2) + 4)
 	
 	current_xp = xp_needed
+	
+	boss_should_spawn = false
 	
 	get_tree().call_group("walls","reset")
 		
@@ -462,15 +474,19 @@ func start_game():
 	
 	game_running = true
 	
+	var tween = get_tree().create_tween()
+	tween.tween_property($IntroTrack,"volume_db",-20,2)
+	tween.tween_property($SoundTrack,"volume_db",0,1)
 
-	await get_tree().create_timer(3).timeout
+	$IntroTrack.stop()
+	$SoundTrack.play()
 
-	
 	$MeshBakerTimer.start()
 	
 	if player_level > 0:
 		leveled_up()
 
+	await get_tree().create_timer(3.0).timeout
 	
 	spawn_enemy()
 
@@ -519,18 +535,21 @@ func spawn_enemy():
 
 		if basic_enemy_counter >= target_amount_of_basic_enemies+player_level/3:
 			$EnemySpawnTimer.stop()
-
+		
+	
 func spawn_boss():
 	
-	$PlayerUi/TextureProgressBar.visible = true
+	$PlayerUi/TextureProgressBar.smasher_spawned() 
 	
 	var enemy_instance
 	
 	match which_boss:
 		1:
 			enemy_instance = load("res://scenes/BossSmasher.tscn").instantiate()
+			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/Progress.png")
 		2:
-			enemy_instance = null
+			enemy_instance = load("res://scenes/BossDoubleThrower.tscn").instantiate()
+			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/DoubleThrowerProgess.png")
 		3:
 			enemy_instance = null
 
@@ -543,56 +562,45 @@ func spawn_boss():
 	$PlayerUi/TextureProgressBar.max_value = enemy_instance.hp_max
 	$PlayerUi/TextureProgressBar.value = enemy_instance.hp_max
 	
+	
 func spawn_smasher_adds():
 	
 	var enemy_instance
 	for x in 4:
 		enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
 		call_deferred("add_child",enemy_instance)
+		
 		enemy_spawn_point.progress_ratio = 0.25*(x+1)
 		enemy_instance.position = enemy_spawn_point.global_position
 		enemy_instance.speed = 400
 		enemy_instance.hp = 1
 		basic_enemy_counter += 1
 
+
 func boss_killed():
 	boss_is_active = false
 	$PlayerUi/TextureProgressBar.visible = false
 	spawn_enemy()
 	
-func decrease_basic_enemy_counter():
-	basic_enemy_counter -= 1
-	if boss_is_active:
-		if basic_enemy_counter <= 0:
-			get_tree().call_group("smasher","start_add_timer")
-		return
-
-	special_enemy_counter -= 1	
 	
-	if special_enemy_counter < 0:
+func decrease_basic_enemy_counter():
+	if !$EnemiesInArea.has_overlapping_bodies():
 		special_enemy_counter = 0
-	if basic_enemy_counter < 0:
 		basic_enemy_counter = 0
-
-	if basic_enemy_counter == 0 && special_enemy_counter == 0:
+		if boss_is_active:
+			get_tree().call_group("smasher","start_add_timer")
+			return
+			
 		if boss_should_spawn:
 			spawn_boss()
 		else:
 			spawn_enemy()
+
 	
 func decrease_special_enemy_counter():
-	special_enemy_counter -= 1	
-	
-	if special_enemy_counter < 0:
+	if !$EnemiesInArea.has_overlapping_bodies():
 		special_enemy_counter = 0
-	if basic_enemy_counter < 0:
 		basic_enemy_counter = 0
-	
-	
-	if boss_is_active:
-		return
-		
-	if basic_enemy_counter == 0 && special_enemy_counter == 0:
 		if boss_should_spawn:
 			spawn_boss()
 		else:

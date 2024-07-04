@@ -55,8 +55,7 @@ func _physics_process(_delta):
 			stuck_counter = 0
 		
 		prev_position = position
-		
-	#Rozrobenne enemy ma vypnute niektore funkcie v ready
+
 	
 func move(velocity: Vector2):
 	if !just_jumped:
@@ -100,7 +99,9 @@ func _on_jump_timeout_timeout():
 
 
 func delete_enemy():
-	get_parent().decrease_special_enemy_counter()
+	set_collision_mask_value(20,false)
+	get_parent().decrease_basic_enemy_counter()
+	emit_signal("stop_homming")
 	queue_free()
 
 func got_shot(damage, push_back, custom_death_sprite=false):

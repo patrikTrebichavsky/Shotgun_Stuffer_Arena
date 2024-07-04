@@ -9,9 +9,15 @@ class_name Bullet_Base
 
 var hitcount 
 
+var previous_position := Vector2.ZERO
+
 func _init():
 	hitcount = 0
 
+
+func _process(delta):
+	previous_position = position
+		
 func _enemy_hit(body):
 	
 	
@@ -23,6 +29,8 @@ func _enemy_hit(body):
 		$AnimatedSprite2D.visible = false
 		
 		var push_back = linear_velocity.normalized() * push_back_multiplier
+		linear_velocity = Vector2.ZERO
+		position= previous_position
 		
 		if !"Wall" in body.name:
 			body.got_shot(damage, push_back)

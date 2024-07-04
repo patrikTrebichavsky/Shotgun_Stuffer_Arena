@@ -13,7 +13,6 @@ var speed : float
 
 
 func _ready():
-	
 	speed = speed_initial
 	var main_node = get_parent()
 	main_node.switch_mode.connect(_switch_mode)

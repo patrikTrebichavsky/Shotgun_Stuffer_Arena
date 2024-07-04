@@ -2,23 +2,23 @@
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
-[ext_resource type="Texture2D" uid="uid://d1cypkqirrmcm" path="res://sprites/Player/PlayerRunning.png" id="6_8xcwp"]
-[ext_resource type="AudioStream" uid="uid://do4mntj75vly0" path="res://sounds/Reload.mp3" id="6_tg73s"]
-[ext_resource type="Texture2D" uid="uid://hlcrtosoegi6" path="res://sprites/Player/PlayerShooting.png" id="7_1gcj0"]
-[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="7_k1wic"]
-[ext_resource type="Texture2D" uid="uid://b2qcu7ds40vrg" path="res://sprites/Player/Player_shooting_UndertaleMode_1.png" id="8_78hkm"]
-[ext_resource type="Texture2D" uid="uid://dgvs4axvxx1jq" path="res://sprites/Player/Player_Standing_UndertaleMode.png" id="8_ofqnr"]
-[ext_resource type="Texture2D" uid="uid://buo1cofsft8c8" path="res://sprites/Player/Player_shooting_UndertaleMode_2.png" id="9_ssl11"]
-[ext_resource type="AudioStream" uid="uid://b7riu5s7x3n4u" path="res://sounds/Shooting.mp3" id="10_l3jwu"]
-[ext_resource type="Texture2D" uid="uid://b04c3op722pe3" path="res://sprites/Player/Player_shooting_UndertaleMode_4.png" id="10_ng4qd"]
-[ext_resource type="Texture2D" uid="uid://db1q7huakmrwj" path="res://sprites/Player/Player_shooting_UndertaleMode_3.png" id="11_fubxn"]
-[ext_resource type="AudioStream" uid="uid://g5cvt304rnph" path="res://sounds/PowerUp.mp3" id="13_pra5w"]
-[ext_resource type="AudioStream" uid="uid://6ckykfhsjdoa" path="res://sounds/DashPlayer.wav" id="14_aj0jc"]
-[ext_resource type="AudioStream" uid="uid://ybtkfnovjt4n" path="res://sounds/DashReadyPlayer.wav" id="14_emxna"]
-[ext_resource type="AudioStream" uid="uid://cq7xi18hyox4l" path="res://sounds/SpecialModeOn.wav" id="16_8ce60"]
+[ext_resource type="Texture2D" uid="uid://d1cypkqirrmcm" path="res://sprites/Player/Running.png" id="6_8xcwp"]
+[ext_resource type="AudioStream" uid="uid://do4mntj75vly0" path="res://sounds/Player/Reload.mp3" id="6_tg73s"]
+[ext_resource type="Texture2D" uid="uid://hlcrtosoegi6" path="res://sprites/Player/Shooting.png" id="7_1gcj0"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="7_k1wic"]
+[ext_resource type="Texture2D" uid="uid://b2qcu7ds40vrg" path="res://sprites/Player/Undertale_Shooting_1.png" id="8_78hkm"]
+[ext_resource type="Texture2D" uid="uid://dgvs4axvxx1jq" path="res://sprites/Player/Undertale_Running.png" id="8_ofqnr"]
+[ext_resource type="Texture2D" uid="uid://buo1cofsft8c8" path="res://sprites/Player/Undertale_Shooting_2.png" id="9_ssl11"]
+[ext_resource type="AudioStream" uid="uid://b7riu5s7x3n4u" path="res://sounds/Player/Shooting.mp3" id="10_l3jwu"]
+[ext_resource type="Texture2D" uid="uid://b04c3op722pe3" path="res://sprites/Player/Undertale_Shooting_4.png" id="10_ng4qd"]
+[ext_resource type="Texture2D" uid="uid://db1q7huakmrwj" path="res://sprites/Player/Undertale_Shooting_3.png" id="11_fubxn"]
+[ext_resource type="AudioStream" uid="uid://g5cvt304rnph" path="res://sounds/Player/LevelUp.mp3" id="13_pra5w"]
+[ext_resource type="AudioStream" uid="uid://6ckykfhsjdoa" path="res://sounds/Player/Dash.wav" id="14_aj0jc"]
+[ext_resource type="AudioStream" uid="uid://ybtkfnovjt4n" path="res://sounds/Player/DashReady.wav" id="14_emxna"]
+[ext_resource type="AudioStream" uid="uid://cq7xi18hyox4l" path="res://sounds/Player/SpecialModeOn.wav" id="16_8ce60"]
 [ext_resource type="Texture2D" uid="uid://h57pnvbpmhyx" path="res://sprites/Player/SecondChance.png" id="17_bnnwt"]
-[ext_resource type="AudioStream" uid="uid://djntad7sbeox7" path="res://sounds/SecondChanceExplo.wav" id="18_23wb8"]
-[ext_resource type="AudioStream" uid="uid://bql2osmsmuf1a" path="res://sounds/SecondChanceAquired.wav" id="19_vdo5c"]
+[ext_resource type="AudioStream" uid="uid://djntad7sbeox7" path="res://sounds/Player/SecondChanceExplo.wav" id="18_23wb8"]
+[ext_resource type="AudioStream" uid="uid://bql2osmsmuf1a" path="res://sounds/Player/SecondChanceAquired.wav" id="19_vdo5c"]
 [ext_resource type="Script" path="res://scripts/CamereShake.gd" id="20_sffyf"]
 
 [sub_resource type="Animation" id="Animation_aw3x3"]
@@ -248,7 +248,7 @@ point_count = 6
 
 [node name="Player" type="CharacterBody2D" groups=["enemy"]]
 scale = Vector2(1.5, 1.5)
-collision_layer = 0
+collision_layer = 16384
 collision_mask = 16
 script = ExtResource("1_0llxv")
 dash_distance = 400
@@ -260,7 +260,8 @@ libraries = {
 }
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_mask = 3
+collision_layer = 0
+collision_mask = 0
 
 [node name="DeathParticles" type="GPUParticles2D" parent="Area2D"]
 emitting = false
@@ -416,9 +417,14 @@ target_position = Vector2(10, 10)
 collision_mask = 8
 hit_from_inside = true
 
+[node name="SpecialResetTimer" type="Timer" parent="."]
+wait_time = 0.15
+one_shot = true
+
 [connection signal="body_entered" from="Area2D" to="." method="death"]
 [connection signal="animation_finished" from="Area2D/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="ReloadTimer" to="." method="reloading"]
 [connection signal="timeout" from="SecChanceRegenTimer" to="." method="second_chance_on"]
 [connection signal="timeout" from="RunningAnimTimer" to="." method="running_delay"]
 [connection signal="timeout" from="DashTimer" to="." method="dash_reset"]
+[connection signal="timeout" from="SpecialResetTimer" to="." method="reset_special_switch"]

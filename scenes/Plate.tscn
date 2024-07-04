@@ -29,9 +29,9 @@ gradient = SubResource("Gradient_bda3o")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m3meo"]
 particle_flag_disable_z = true
-spread = 180.0
-initial_velocity_min = 150.0
-initial_velocity_max = 150.0
+spread = 90.0
+initial_velocity_min = -210.0
+initial_velocity_max = -150.0
 gravity = Vector3(0, 0, 0)
 scale_min = 3.0
 scale_max = 8.0
@@ -44,6 +44,7 @@ collision_layer = 4
 collision_mask = 2
 gravity_scale = 0.0
 script = ExtResource("1_eilrq")
+damage = 40
 push_back_multiplier = 100
 speed = 5000
 metadata/_edit_group_ = true

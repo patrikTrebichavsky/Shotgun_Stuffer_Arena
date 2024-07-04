@@ -43,7 +43,7 @@ func _on_edge_hit(body):
 		add_child(instance)
 		instance.position = impaled_enemy.position
 		instance._display_message(str(pierce_damage_threshold*10), "#A4A5AE", 35)
-		body.delete_enemy()
+		body._delete_enemy()
 
 	
 func _on_body_hit(body):

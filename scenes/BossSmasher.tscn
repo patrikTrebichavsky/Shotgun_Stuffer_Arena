@@ -1,19 +1,20 @@
-[gd_scene load_steps=25 format=3 uid="uid://dmkxymqoate61"]
+[gd_scene load_steps=31 format=3 uid="uid://dmkxymqoate61"]
 
 [ext_resource type="Script" path="res://scripts/Smasher.gd" id="1_0xh7w"]
 [ext_resource type="Texture2D" uid="uid://cnwpq05ci1a2s" path="res://sprites/Enemies/Boss/Smasher/ChasingPrey.png" id="2_onlsp"]
-[ext_resource type="Texture2D" uid="uid://bgphchwm1x4p8" path="res://sprites/Enemies/Boss/Smasher/Basic.png" id="3_g3h6p"]
+[ext_resource type="Texture2D" uid="uid://bgphchwm1x4p8" path="res://sprites/Enemies/Boss/Smasher/Running.png" id="3_g3h6p"]
 [ext_resource type="Texture2D" uid="uid://c5rd0it7703l3" path="res://sprites/Enemies/Boss/Smasher/Feasting.png" id="4_u4tpe"]
 [ext_resource type="Texture2D" uid="uid://cwi2av8wqiueg" path="res://sprites/Enemies/Boss/Smasher/Feasting2.png" id="5_2qhl8"]
 [ext_resource type="Texture2D" uid="uid://cy3lbb8d87t2w" path="res://sprites/Enemies/Boss/Smasher/Feasting3.png" id="6_lsv0e"]
 [ext_resource type="Texture2D" uid="uid://bmff1ihp5xlj6" path="res://sprites/Enemies/Boss/Smasher/Feasted.png" id="7_3q6wc"]
-[ext_resource type="Texture2D" uid="uid://bkrkv1sobugl" path="res://sprites/Enemies/Boss/Smasher/Death.png" id="8_d2ayg"]
+[ext_resource type="Texture2D" uid="uid://bkrkv1sobugl" path="res://sprites/Enemies/Boss/Smasher/Dying.png" id="8_d2ayg"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="9_cn446"]
-[ext_resource type="AudioStream" uid="uid://u2f78dmqbx37" path="res://sounds/DashStartSmasher.wav" id="10_8uvsl"]
-[ext_resource type="AudioStream" uid="uid://dc20wnceph4de" path="res://sounds/Smasher'/Crash.wav" id="11_bdnml"]
-[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="11_c6uuo"]
-[ext_resource type="AudioStream" uid="uid://d3shmfwro3x7j" path="res://sounds/Smasher'/EatingSoundEffect.mp3" id="13_yfwo8"]
-[ext_resource type="AudioStream" uid="uid://ribmfp3x1ink" path="res://sounds/Smasher'/HealingUp.wav" id="14_fftpt"]
+[ext_resource type="AudioStream" uid="uid://u2f78dmqbx37" path="res://sounds/Enemy/Smasher'/Dash.wav" id="10_8uvsl"]
+[ext_resource type="AudioStream" uid="uid://dc20wnceph4de" path="res://sounds/Enemy/Smasher'/Crash.wav" id="11_bdnml"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="11_c6uuo"]
+[ext_resource type="AudioStream" uid="uid://bdi0b52a472gy" path="res://sounds/Enemy/Smasher'/Spawn.wav" id="12_e10hw"]
+[ext_resource type="AudioStream" uid="uid://d3shmfwro3x7j" path="res://sounds/Enemy/Smasher'/Eating.mp3" id="13_yfwo8"]
+[ext_resource type="AudioStream" uid="uid://ribmfp3x1ink" path="res://sounds/Enemy/Smasher'/HealingUp.wav" id="14_fftpt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_l7jcl"]
 animations = [{
@@ -105,27 +106,121 @@ damping_max = 3000.0
 scale_max = 16.15
 color_ramp = SubResource("GradientTexture1D_as3m1")
 
+[sub_resource type="Gradient" id="Gradient_2kbcl"]
+offsets = PackedFloat32Array(0.470455)
+colors = PackedColorArray(0.569326, 0.372464, 0.218124, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vhnpe"]
+gradient = SubResource("Gradient_2kbcl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_08svk"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = -2500.0
+initial_velocity_max = -1900.0
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 500.0
+scale_min = 4.0
+scale_max = 27.0
+color_ramp = SubResource("GradientTexture1D_vhnpe")
+
+[sub_resource type="Animation" id="Animation_r34c6"]
+resource_name = "ArenaEntering"
+length = 3.0
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.98),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1920, 1080)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.97, 3),
+"transitions": PackedFloat32Array(1, 3.86374),
+"update": 0,
+"values": [Vector2(15, 15), Vector2(1, 1)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fallen_down"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(2.01),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("FalldownSound:playing")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(3),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eiun7"]
+_data = {
+"ArenaEntering": SubResource("Animation_r34c6")
+}
+
 [node name="SmasherEnemy" type="RigidBody2D" groups=["enemy", "smasher"]]
 z_index = 12
-collision_layer = 512
-collision_mask = 512
+position = Vector2(1920, 1080)
+collision_layer = 0
+collision_mask = 0
 gravity_scale = 0.0
 lock_rotation = true
 max_contacts_reported = 1
 contact_monitor = true
 script = ExtResource("1_0xh7w")
 dash_speed_min = 800
-dash_speed_max = 1600
+dash_speed_max = 1700
 dash_speed_increase = 35.0
-hp_max = 200
 xp = 0
+hp_max = 200
 player_position = Vector2(1000, 1000)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_l7jcl")
-animation = &"running"
+animation = &"death"
 
 [node name="DashAfterImage1" type="Sprite2D" parent="AnimatedSprite2D"]
+visible = false
 modulate = Color(1, 1, 1, 0.4)
 show_behind_parent = true
 texture = ExtResource("3_g3h6p")
@@ -164,12 +259,21 @@ scale = Vector2(1.5, 1.5)
 stream = ExtResource("10_8uvsl")
 volume_db = -5.0
 pitch_scale = 0.5
+bus = &"SFX"
 
 [node name="CrashSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("11_bdnml")
 volume_db = 5.0
 pitch_scale = 0.5
+bus = &"SFX"
+
+[node name="FalldownSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("12_e10hw")
+volume_db = 5.0
+pitch_scale = 0.5
+bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -217,16 +321,33 @@ one_shot = true
 explosiveness = 0.81
 randomness = 0.17
 
+[node name="FallParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 125
+process_material = SubResource("ParticleProcessMaterial_08svk")
+one_shot = true
+explosiveness = 1.0
+randomness = 0.17
+
 [node name="EatingSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_yfwo8")
+volume_db = 10.0
+bus = &"SFX"
 
 [node name="HealingSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_fftpt")
+bus = &"SFX"
 
 [node name="SpawnAddsTimer" type="Timer" parent="."]
 wait_time = 20.0
 one_shot = true
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_eiun7")
+}
+autoplay = "ArenaEntering"
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]

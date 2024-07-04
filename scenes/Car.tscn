@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c8svu6htyicfo" path="res://sprites/Bullets/Explosion1.png" id="3_1v5hs"]
 [ext_resource type="Texture2D" uid="uid://sw83laykexnj" path="res://sprites/Bullets/Explosion2.png" id="4_rrvra"]
 [ext_resource type="AudioStream" uid="uid://2ugwqkgu8s8b" path="res://sounds/Bullets/CarExplosion.mp3" id="5_7nbmq"]
-[ext_resource type="AudioStream" uid="uid://dxesm3hmvuqtc" path="res://sounds/RunOverSoundEffect.mp3" id="6_xt418"]
+[ext_resource type="AudioStream" uid="uid://dxesm3hmvuqtc" path="res://sounds/Bullets/RunOver.mp3" id="6_xt418"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{

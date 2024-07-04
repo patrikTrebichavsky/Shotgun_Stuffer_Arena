@@ -1,11 +1,11 @@
 [gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://cl1h3fuaoj8mq"]
 
-[ext_resource type="Texture2D" uid="uid://b8ag4ev6jr6qp" path="res://sprites/Enemies/Basic/EnemyDyingBurned.png" id="1_hva6s"]
-[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="1_j1a63"]
-[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/EnemyDying.png" id="2_mb0fx"]
-[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/EnemyRunning.png" id="3_5tm8g"]
-[ext_resource type="Texture2D" uid="uid://bf635hbr47kfr" path="res://sprites/Enemies/Basic/EnemyStandingUndertaleMode.png" id="4_akb58"]
-[ext_resource type="Texture2D" uid="uid://dsq8r243bblx3" path="res://sprites/Enemies/Basic/EnemyChasingUndertaleMode.png" id="5_lw2pp"]
+[ext_resource type="Texture2D" uid="uid://b8ag4ev6jr6qp" path="res://sprites/Enemies/Basic/Chared.png" id="1_hva6s"]
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="1_j1a63"]
+[ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/Dying.png" id="2_mb0fx"]
+[ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/Running.png" id="3_5tm8g"]
+[ext_resource type="Texture2D" uid="uid://bf635hbr47kfr" path="res://sprites/Enemies/Basic/Undertale_Dying.png" id="4_akb58"]
+[ext_resource type="Texture2D" uid="uid://dsq8r243bblx3" path="res://sprites/Enemies/Basic/Undertale_Running.png" id="5_lw2pp"]
 
 [resource]
 animations = [{

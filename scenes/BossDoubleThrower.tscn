@@ -1,0 +1,228 @@
+[gd_scene load_steps=17 format=3 uid="uid://3g5stnlx8o8p"]
+
+[ext_resource type="Script" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
+[ext_resource type="Texture2D" uid="uid://dmlb8cof48rky" path="res://sprites/Enemies/Boss/DoubleThrower/Running.png" id="2_ogxy4"]
+[ext_resource type="Texture2D" uid="uid://d0h5bhchd1hqe" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessArmlessBody.png" id="2_q5yru"]
+[ext_resource type="Texture2D" uid="uid://d3fcngncmt8wh" path="res://sprites/Enemies/Boss/DoubleThrower/ThrowingHeads.png" id="3_g6fis"]
+[ext_resource type="Texture2D" uid="uid://r2ggkwh81h3d" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessBody.png" id="3_s0lwn"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="15_mec06"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="16_h1jao"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="17_4bxts"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_74vta"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_q5yru")
+}],
+"loop": true,
+"name": &"armless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_q5yru")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_s0lwn")
+}],
+"loop": true,
+"name": &"headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ogxy4")
+}],
+"loop": true,
+"name": &"running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("2_ogxy4")
+}, {
+"duration": 2.0,
+"texture": ExtResource("3_g6fis")
+}],
+"loop": false,
+"name": &"throwing",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgfa6"]
+radius = 63.0
+height = 222.0
+
+[sub_resource type="Animation" id="Animation_s60e6"]
+resource_name = "Spin"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_51jee"]
+_data = {
+"Spin": SubResource("Animation_s60e6")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k0xfy"]
+radius = 781.4
+
+[node name="BossDoubleThrower" type="RigidBody2D" groups=["boss", "enemy"]]
+z_index = 12
+collision_layer = 512
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("1_kjvjf")
+hp_max = 300
+throw_speed_decrease = 1
+throw_speed_initial = 1000
+throw_distance = 1100
+hp = 150
+xp = 56
+player_position = Vector2(500, 500)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_74vta")
+animation = &"running"
+
+[node name="SideLeftArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(-21, -86)
+
+[node name="SideRightArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(-19, 86)
+
+[node name="FrontLeftArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(22, -39)
+
+[node name="FrontRightArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(20, 42)
+
+[node name="Head1Spawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(33, 55)
+
+[node name="Head2Spawn" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(34, -54)
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("15_mec06")
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="StopChaseTimer" type="Timer" parent="." groups=["enemy"]]
+one_shot = true
+
+[node name="GruntTimer" type="Timer" parent="."]
+wait_time = 6.0
+autostart = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("16_h1jao")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("17_4bxts")
+volume_db = -10.0
+bus = &"SFX"
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+one_shot = true
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 700.0
+avoidance_enabled = true
+radius = 50.0
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+debug_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 1)
+shape = SubResource("CapsuleShape2D_jgfa6")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1, 20)
+target_position = Vector2(700, 0)
+collision_mask = 32
+hit_from_inside = true
+
+[node name="StuckTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_51jee")
+}
+
+[node name="SecondPhaseArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16384
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SecondPhaseArea"]
+shape = SubResource("CircleShape2D_k0xfy")
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw_self"]
+[connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]
+[connection signal="timeout" from="StopChaseTimer" to="." method="_stop_body_chase"]
+[connection signal="body_exited" from="SecondPhaseArea" to="." method="player_left_boundries"]
