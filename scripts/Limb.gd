@@ -20,6 +20,18 @@ var speed : float
 @export var speed_frame_change: float
 @export var undertale_mode : bool
 
+@export var max_scale : float
+@export var min_scale : float
+@export var scale_variable : float
+
+enum float_enum{
+	ASCENDING,
+	DESCEDING,
+	STOP
+}
+var float_state = float_enum.STOP
+
+
 @export_category("Second Phase head settings")
 
 var player_in_boundries = true
@@ -34,6 +46,7 @@ var rotation_speed : float
 @export var lap_offset : float
 var lap_progress : float
 
+
 func _ready():
 	visible = false
 	
@@ -46,6 +59,7 @@ func _ready():
 	
 	if undertale_mode:
 		$Sprite.animation = "undertale_head"
+
 
 func _integrate_forces(state: PhysicsDirectBodyState2D):
 		
@@ -72,7 +86,24 @@ func _physics_process(delta):
 	if limb_in_tween :
 		return
 
-	
+	match float_state:
+		float_enum.ASCENDING:
+			
+			$Sprite.scale *= scale_variable
+			$CollisionShape2D.scale = ($Sprite.scale/0.75)
+			
+			if $Sprite.scale.x >= max_scale:
+				float_state = float_enum.DESCEDING
+				
+		float_enum.DESCEDING:
+			
+			$Sprite.scale /= scale_variable
+			$CollisionShape2D.scale = ($Sprite.scale/0.75)
+			
+			if $Sprite.scale.x <= min_scale:
+				float_state = float_enum.ASCENDING			
+
+			
 	if phase_one:	
 
 		var pos_des_diference
@@ -175,3 +206,13 @@ func _tween_movement(destination, time):
 func player_outside_boundries():
 	speed = speed_initial
 	player_in_boundries = false
+	
+	
+func start_floating():
+	
+	$Sprite.scale.x = max_scale
+	$Sprite.scale.y = max_scale
+			
+	$CollisionShape2D.scale = ($Sprite.scale/0.75)
+	
+	float_state = float_enum.DESCEDING

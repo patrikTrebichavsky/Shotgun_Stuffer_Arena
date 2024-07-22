@@ -388,13 +388,12 @@ position = Vector2(1869, 1044)
 shape = SubResource("RectangleShape2D_kq7s3")
 debug_color = Color(0, 0.643137, 0.32549, 0.419608)
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="EnemyWrongSideDeleter" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 6
 script = ExtResource("16_nq5j7")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-visible = false
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EnemyWrongSideDeleter"]
 build_mode = 1
 polygon = PackedVector2Array(-205, -191, -482, -509, -481, 2613, 4339, 2603, 4332, -537, -473, -509, -207, -201, 4043, -202, 4040, 2357, -197, 2361)
 

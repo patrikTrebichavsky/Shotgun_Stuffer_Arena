@@ -80,8 +80,8 @@ func move(velocity: Vector2):
 		linear_velocity = velocity
 	
 
-func delete_enemy():
-	set_collision_mask_value(20,false)
+func _delete_enemy():
+	set_collision_layer_value(20,false)
 	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	queue_free()
@@ -175,7 +175,6 @@ func throw():
 	head.start = position
 	head.position = position
 	head.destination = head_destination
-	head.get_node("AnimationPlayer").play("spin")
 	
 	head.body_reached.connect(head_returned) 
 	

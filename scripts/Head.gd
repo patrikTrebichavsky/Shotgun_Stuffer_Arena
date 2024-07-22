@@ -6,6 +6,7 @@ var start : Vector2
 var destination : Vector2
 var destination_reached : bool
 var speed : float
+@export var num_of_turns_ps : float
 @export var speed_initial : float
 @export var speed_min : float
 @export var speed_frame_change: float
@@ -20,8 +21,14 @@ func _ready():
 	if undertale_mode:
 		$Sprite.animation = "undertale_head"
 		
-func _process(delta):
-		
+func _physics_process(delta):
+	
+	if $Sprite.rotation > 2*PI :
+		$Sprite.rotation = 0
+
+	$Sprite.rotation += 2*PI*delta*num_of_turns_ps
+	$CollisionShape2D.rotation = rotation
+	
 	if !destination_reached:
 		if speed > speed_min:
 			speed -= speed_frame_change*delta

@@ -16,20 +16,23 @@ var exploaded = false
 
 func  _ready():
 	
-	sprite = get_node("AnimatedSprite2D")
+	sprite = get_node("ExplosionSprites")
 	explo_collider = get_node("CarExplosionArea")
-
-func _process(delta):
+	sprite.visible = false
+	
+func _physics_process(delta):
 
 
 	if exploaded && explosion_max_size >= sprite.scale:
 		sprite.scale *= explosion_size_increase
 		explo_collider.scale = sprite.scale
 		
-		if explo_collider.monitoring:
+		if explo_collider.monitoring && sprite.scale >= explosion_max_size:
+
 			for body in $CarExplosionArea.get_overlapping_bodies():
 				if !body.name.contains("Wall"):
 					var push_back = (body.global_position - $CarExplosionArea/ExplosionCenter.global_position).normalized() * explo_push_back
+					$CarSprite.visible = false
 					body.got_conditioned(explo_dmg, "burning",true)
 		
 		if sprite.scale > explosion_max_size/2 and wheels_not_shot :
@@ -44,16 +47,19 @@ func _process(delta):
 				
 func _enemy_hit(body):	
 	
-	if body.name.contains("Outer"):
-		return
-	if hitcount < 3 && !body.name.contains("Wall"):
-		$RunOverSound.play()
-		var push_back = linear_velocity.normalized() * push_back_multiplier
-		body.got_shot(damage, push_back)
+	#if hitcount > 4:
+		#return
+		#
+	#if body.name.contains("Outer"):
+		#return
+	#if hitcount < 3 && !body.name.contains("Wall"):
+		#$RunOverSound.play()
+		#var push_back = linear_velocity.normalized() * push_back_multiplier
+		#body.got_shot(damage, push_back)
+		#
+		#hitcount += 1
 		
-		hitcount += 1
-		
-	if hitcount >= 3 || body.name.contains("Wall"):
+	if hitcount < 1 && !body.name.contains("Outer"):
 		
 		linear_velocity = Vector2.ZERO
 		set_deferred("freeze",true)
@@ -65,21 +71,27 @@ func _enemy_hit(body):
 		exploaded = true
 
 		
-		sprite.animation = "explosion"
 		explo_collider.set_deferred("monitoring", true)
 		explo_collider.set_deferred("monitorable", true)
 		
+			
 		sprite.scale = sprite.scale * 0.075
 		explo_collider.scale = sprite.scale
+		sprite.visible = true
+		sprite.play("explosion")
+		
 		
 		hitcount += 1
 		
 		if body.name.contains("Wall"):
 			return
+			
+		sprite.global_position = body.global_position
+		$CarExplosionArea.global_position = body.global_position
 		
-		var push_back = linear_velocity.normalized() * push_back_multiplier
-		body.got_shot(damage, push_back)
-		
+		#var push_back = linear_velocity.normalized() * push_back_multiplier
+		#body.got_shot(damage, push_back)
+		#
 		
 			
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -104,7 +116,8 @@ func delete_bullet():
 	$CarArea.set_deferred("monitorable",false)
 	$CarExplosionArea.set_deferred("monitoring",false)
 	$CarExplosionArea.set_deferred("monitorable",false)
-	$AnimatedSprite2D.visible = false
+	sprite.visible = false
+	$CarSprite.visible = false
 	await get_tree().create_timer(1.0).timeout
 	queue_free()
 

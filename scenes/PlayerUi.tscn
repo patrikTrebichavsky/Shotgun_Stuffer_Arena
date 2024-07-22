@@ -234,6 +234,7 @@ scale = Vector2(1.25, 1.25)
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." groups=["hp_bar"]]
+visible = false
 modulate = Color(1, 1, 1, 0.784314)
 anchors_preset = 8
 anchor_left = 0.5

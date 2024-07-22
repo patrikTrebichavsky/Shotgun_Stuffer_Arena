@@ -7,8 +7,9 @@ class_name Lamppost
 
 func _ready():
 	await get_tree().create_timer(0.1).timeout
-	$Body.body_entered.disconnect(_on_edge_hit)
-	$Body.body_entered.connect(_on_body_hit)
+	$InitialEdge.set_deferred("monitoring",false)
+	$Edge.set_deferred("monitoring",true)
+	$Body.set_deferred("monitoring",true)
 	
 func _on_edge_hit(body):
 	
@@ -25,7 +26,7 @@ func _on_edge_hit(body):
 		$StabSound.play()
 		$CollisionParticles.emitting = true
 		
-		var impaled_enemy = get_node("ImpaledEnemySprite"+str(hitcount))
+		var impaled_enemy = $PiercedBodies.get_node("ImpaledEnemySprite"+str(hitcount))
 		var enemy_sprite_temp =  body.get_node("AnimatedSprite2D")
 		impaled_enemy.global_rotation = enemy_sprite_temp.global_rotation
 		if body.id == 2:
@@ -41,10 +42,9 @@ func _on_edge_hit(body):
 		
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
-		instance.position = impaled_enemy.position
+		instance.global_position = impaled_enemy.global_position
 		instance._display_message(str(pierce_damage_threshold*10), "#A4A5AE", 35)
 		body._delete_enemy()
-
 	
 func _on_body_hit(body):
 		

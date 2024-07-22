@@ -306,7 +306,6 @@ func instantiate_head_circle():
 	
 	
 	heads.append(instantiate_head(head_1_spawn,"res://scenes/BossHeads.tscn"))
-	await get_tree().create_timer(0.1)
 	heads.append(instantiate_head(head_2_spawn,"res://scenes/BossHeads.tscn"))
 
 
@@ -357,15 +356,15 @@ func instantiate_head(start,scene_location):
 	
 	head.rotation = $AnimatedSprite2D.rotation
 	
-	var temp = head.get_node("AnimationPlayer")
-	temp.play("float")
-	
 	get_parent().add_child(head)
 	
 	head.start = start
 	head.position = start
-
+	
 	head.body_reached.connect(head_returned)
+	
+	head.start_floating() 
+	
 	return head
 
 

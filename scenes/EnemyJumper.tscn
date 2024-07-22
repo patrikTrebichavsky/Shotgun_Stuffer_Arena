@@ -331,9 +331,10 @@ autostart = true
 avoidance_enabled = true
 radius = 50.0
 max_speed = 700.0
+debug_enabled = true
 
 [node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="body_shape_entered" from="." to="." method="body_shape_entered"]
-[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]
 [connection signal="timeout" from="JumpTimeout" to="." method="_on_jump_timeout_timeout"]

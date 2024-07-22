@@ -11,14 +11,6 @@
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_1lp18")
-}],
-"loop": true,
-"name": &"base",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": ExtResource("4_rrvra")
 }, {
 "duration": 1.0,
@@ -51,18 +43,24 @@ explo_push_back = 1000.0
 explo_dmg = 12
 burn_damage = 1
 explosion_max_size = Vector2(1.5, 1.5)
-explosion_size_increase = 1.25
+explosion_size_increase = 1.4
 damage = 10
 push_back_multiplier = 1000
 metadata/_edit_group_ = true
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="CarSprite" type="Sprite2D" parent="."]
 z_index = -1
 rotation = 1.5708
 scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_1lp18")
+
+[node name="ExplosionSprites" type="AnimatedSprite2D" parent="."]
+z_index = -1
+position = Vector2(58, 2)
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_nh842")
-animation = &"base"
-autoplay = "base"
+animation = &"explosion"
 
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_7nbmq")
@@ -105,7 +103,6 @@ polygon = PackedVector2Array(-5.99941, 162, 59.0006, 161, 75.0005, 144, 82.0004,
 
 [node name="CarExplosionArea" type="Area2D" parent="."]
 position = Vector2(-9, -2)
-scale = Vector2(0.075, 0.075)
 collision_layer = 32768
 collision_mask = 22
 monitoring = false

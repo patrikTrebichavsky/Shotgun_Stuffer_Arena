@@ -36,10 +36,10 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 
 @export var shooting_sounds_dictionary = {
 	"id" : "path",
-	1 : "res://sounds/Shooting.mp3",
+	1 : "res://sounds/Player/Shooting.mp3",
 	2 : "res://sounds/Bullets/Laser/Laser_Charging.mp3",
-	3 : "res://sounds/Bullets/Laser/Laser_Decharging.mp3"
-}
+	3 : "res://sounds/Bullets/Laser/Laser_Decharging.mp3"}
+
 
 
 @export var speed = 600.0
@@ -66,11 +66,11 @@ var just_dashed = false
 
 var charged = false
 
-var use_special = false
+var use_special = false;
 
-var can_switch_back = false
+var can_switch_back = false;
 
-var second_chance = false
+var second_chance = false;
 
 var regenrate_sec_chance = false
 
@@ -364,7 +364,19 @@ func bullet_instatiation(bullet_path,extra_rotation):
 	var instance = load(bullet_path).instantiate()
 		
 	instance.position = $Area2D/ShootingPoint.global_position
-	instance.rotation = $Area2D.rotation + extra_rotation
+	
+	if instance.name.contains("Lamp"):
+		
+		var instance_sprite = instance.get_node("AnimatedSprite2D")
+		
+		instance_sprite.rotation = $Area2D.rotation + extra_rotation
+		instance.get_node("Body").rotation = instance_sprite.rotation
+		instance.get_node("Edge").rotation = instance_sprite.rotation
+		instance.get_node("InitialEdge").rotation = instance_sprite.rotation
+		instance.get_node("PiercedBodies").rotation = instance_sprite.rotation
+
+	else:	
+		instance.rotation = $Area2D.rotation + extra_rotation
 	
 	if instance.tracking:
 		instance.array_of_bodies = $MouseCollider.get_overlapping_bodies()

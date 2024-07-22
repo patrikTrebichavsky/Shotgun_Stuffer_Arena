@@ -98,8 +98,8 @@ func _on_jump_timeout_timeout():
 	jump_available = true
 
 
-func delete_enemy():
-	set_collision_mask_value(20,false)
+func _delete_enemy():
+	set_collision_layer_value(20,false)
 	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	queue_free()

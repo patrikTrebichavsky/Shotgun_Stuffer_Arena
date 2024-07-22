@@ -210,6 +210,7 @@ avoidance_enabled = true
 radius = 50.0
 time_horizon_obstacles = 1.0
 max_speed = 700.0
+debug_enabled = true
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -225,4 +226,4 @@ hit_from_inside = true
 [node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw"]
-[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]

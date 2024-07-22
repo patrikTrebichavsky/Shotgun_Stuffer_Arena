@@ -27,6 +27,9 @@ var starting_game = false
 var game_running = false
 
 var game_force_ended = false
+
+var enemies_spawning = false
+
 #stores windows size before cursor change
 var cursor_windows_size : Vector2i
 
@@ -116,7 +119,7 @@ var special_ammo_range = 0
 @export var levels_needed_for_special_increase : int
 
 @export_category("Second Chance")
-var first_game = true    
+var first_game = false   
 var second_chance_counter = 0;
 var previous_attempt = 0;
 var current_attempt = 0;
@@ -178,9 +181,15 @@ func _process(delta):
 	if Input.is_action_just_pressed("force_level_up") && game_running:
 		leveled_up()
 	
+	var temp = $EnemiesInArea.get_overlapping_bodies()
+	print(temp.size())
+	
 func _switch_mode(_name):
 
 	var cursor_size = DisplayServer.window_get_size()
+	
+	if mode_running:
+		pass
 	
 	if !mode_running:
 		$SpecialModeTimer.start()
@@ -210,7 +219,9 @@ func _switch_mode(_name):
 	
 	await get_tree().create_timer(0.1).timeout
 	
-	$NavigationRegion2D.bake_navigation_polygon()
+	await $NavigationRegion2D.bake_finished
+	
+	$NavigationRegion2D.call_deferred("bake_navigation_polygon")
 	
 	
 func mode_timeout():
@@ -240,11 +251,10 @@ func generate_special_ammo():
 
 
 func leveled_up():
-	
-	
-	target_amount_of_basic_enemies = target_amount_of_basic_enemies_dic[player_level]
+
 	
 	player_level += 1
+	
 	
 	emit_signal("player_level_changed", player_level)
 	
@@ -257,6 +267,9 @@ func leveled_up():
 	current_xp = xp_needed
 	$PlayerUi/StatsUI/Experience.text = "Exp: " + "0/" + str(xp_needed)
 	$PlayerUi/StatsUI/Level.text = "Level: " + str(player_level)
+	
+	
+	target_amount_of_basic_enemies = target_amount_of_basic_enemies_dic[player_level]
 	
 	#Adds new special amunition id to range
 	if special_ammo_range < 5:
@@ -295,9 +308,9 @@ func leveled_up():
 		boss_should_spawn = true
 		which_boss = 1
 	
-	if player_level == 10:
-		boss_should_spawn = true
-		which_boss = 2
+	#if player_level == 10:
+		#boss_should_spawn = true
+		#which_boss = 2
 
 	#if player_level <= max_lvl_for_enemy_spawner:
 		#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
@@ -364,6 +377,7 @@ func force_menu():
 	game_force_ended = true
 	if mode_running:
 		_switch_mode("reset")
+	
 		
 func start_game():
 	
@@ -379,7 +393,7 @@ func start_game():
 	
 	var cursor_size = DisplayServer.window_get_size()
 		
-	player_level = 9
+	player_level = 0                      
 		
 	kill_counter = 0
 	
@@ -533,9 +547,8 @@ func spawn_enemy():
 			if mode_running:
 				enemy_instance._switch_mode("undertale")		
 
-		if basic_enemy_counter >= target_amount_of_basic_enemies+player_level/3:
-			$EnemySpawnTimer.stop()
-		
+			if basic_enemy_counter == special_enemy_start_value:
+				pass
 	
 func spawn_boss():
 	
@@ -584,6 +597,13 @@ func boss_killed():
 	
 	
 func decrease_basic_enemy_counter():
+	await  get_tree().create_timer(0.5).timeout
+	
+	if enemies_spawning == true:
+		pass
+	
+	enemies_spawning = true
+	
 	if !$EnemiesInArea.has_overlapping_bodies():
 		special_enemy_counter = 0
 		basic_enemy_counter = 0
@@ -595,9 +615,18 @@ func decrease_basic_enemy_counter():
 			spawn_boss()
 		else:
 			spawn_enemy()
-
+	
+	enemies_spawning = false
+	
 	
 func decrease_special_enemy_counter():
+	await  get_tree().create_timer(0.5).timeout
+		
+	if enemies_spawning == true:
+		pass
+	
+	enemies_spawning = true
+	
 	if !$EnemiesInArea.has_overlapping_bodies():
 		special_enemy_counter = 0
 		basic_enemy_counter = 0
@@ -605,6 +634,8 @@ func decrease_special_enemy_counter():
 			spawn_boss()
 		else:
 			spawn_enemy()
+	
+	enemies_spawning = false
 
 func set_cursor(bullet_id):
 	var cursor_size = DisplayServer.window_get_size()
@@ -618,6 +649,7 @@ func set_cursor(bullet_id):
 	
 	current_bullet = bullet_id
 
+
 func _bake_mesh():
 	$NavigationRegion2D.bake_navigation_polygon(true)
 
@@ -625,8 +657,11 @@ func _bake_mesh():
 func _entering_arena(body):
 	body.falling_down_from_wall()
 
+
 func _exit_game():
 	get_tree().quit()
 
+
 func _show_controls():
 	$Controls.visible = true
+

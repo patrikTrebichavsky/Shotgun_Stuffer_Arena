@@ -81,6 +81,8 @@ func player_is_dead():
 
 
 func _delete_enemy():
+	
+	set_collision_layer_value(20,false)
 	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	queue_free()
@@ -186,7 +188,6 @@ func _death(custom_death_sprite=false):
 		$DeathSound.play()
 		
 		emit_signal("enemy_killed", xp)
-		set_collision_mask_value(20,false)
 
 		linear_velocity = Vector2.ZERO
 		set_deferred("freeze",true)
