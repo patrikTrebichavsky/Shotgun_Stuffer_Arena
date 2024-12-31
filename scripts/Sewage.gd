@@ -5,12 +5,12 @@ signal player_entered(player)
 var can_be_used = true
 
 func _on_area_entered(area):
-	
-	if can_be_used == true:
+		
+	if can_be_used == true && area.name == "PlayerArea":
 		emit_signal("player_entered", area.get_parent())
 		can_be_used = false
 		$AnimatedSprite2D.play("closing")
-	$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
+		$StaticBody2D/CollisionShape2D.set_deferred("disabled", true)
 
 func _reset():
 	can_be_used = true

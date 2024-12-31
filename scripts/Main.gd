@@ -28,7 +28,9 @@ var game_running = false
 
 var game_force_ended = false
 
-var enemies_spawning = false
+var audio_tween : Tween
+
+var config 
 
 #stores windows size before cursor change
 var cursor_windows_size : Vector2i
@@ -90,7 +92,8 @@ var cursor_windows_size : Vector2i
 
 @export_category("Player leveling settings")
 
-@export var player_level = 0
+var player_level = 0
+@export var initial_level = 0
 var xp_needed : int
 var current_xp : int
 
@@ -107,7 +110,9 @@ var special_ammo_range = 0
 @export var reload_max_decrease : float
 
 @export_category("magazine Increase Settings")
+@export var starting_magazine_size : int
 @export var lvls_needed_for_mag_increase : int
+
 
 @export_category("Enemy Spawn settings")
 @export var size_of_enemy_group : int
@@ -136,7 +141,6 @@ var boss_is_active = false
 var which_boss = 0
 
 
-
 var cursor_dict = {
 	"id" : "path",
 	 1 : "res://sprites/UI/Cursors/720p/CursorUndertaleMode.png",
@@ -162,13 +166,39 @@ var cursor_dict = {
 	 27 : "res://sprites/UI/Cursors/1440p/CursorHouse.png"
 }
 
+var show_dialog = false
+
+var dialog_progress = 0
+
+var dialog_lines = {
+	"id" : "Array",
+	0:["Sup, Im your trusty companion","Just a quick heads up","You move with [W][A][S][D]","and shoot with LEFT MOUSE BUTTON"],
+	1:["Congratulations, you unlocked DASH","You DASH with [SPACEBAR] into the direction you are running"],
+	2:["Looks like you unlocked your first SPECIAL AMMUNITION","You gain SPECIAL AMMUNITION every few secconds",
+		"SPECIAL AMMUNITION is stored in LINE (1,2,3,4....)",
+		"You can select from first 3 possitions of that line by pressing [1][2][3] above [Q][W][E]",
+		"and just SHOOT with LEFT MOUSE BUTTON ",
+		"To switch to BASE AMMUNITION simply press [R]",
+		"In case you forget there is MANUAL in your MENU"]
+	}
+
+var manual_progression = 0
+
 func _ready():
+	
+	_load_save()
+		
 	$StartMenu/Button.pressed.connect(start_game)
 	$StartMenu/ExitButton.pressed.connect(_exit_game)
 	$StartMenu/ControlsButton.pressed.connect(_show_controls)
+	$StartMenu/SaveButton.pressed.connect(_delete_save)
+	$StartMenu/ManualButton.pressed.connect(_show_manual)
+	
 	enemy_initial_spawn_storage = size_of_enemy_group
 	cursor_windows_size = DisplayServer.window_get_size()
+	
 	set_cursor(0)
+	
 	
 func _process(delta):
 	
@@ -180,17 +210,25 @@ func _process(delta):
 		force_menu()
 	if Input.is_action_just_pressed("force_level_up") && game_running:
 		leveled_up()
+	if Input.is_action_just_pressed("force_special_mode"):
+		_switch_mode_force_button()
+	if Input.is_action_just_pressed("shoot") && $FinalScore.is_finished_displaying:
+		close_final_score()
+		
+
+func _switch_mode_force_button():
 	
-	var temp = $EnemiesInArea.get_overlapping_bodies()
-	print(temp.size())
+	_switch_mode("Undertale")
+	
+	if !$SpecialModeTimer.is_stopped():
+		$SpecialModeTimer.stop()
+		
+		
 	
 func _switch_mode(_name):
 
 	var cursor_size = DisplayServer.window_get_size()
-	
-	if mode_running:
-		pass
-	
+
 	if !mode_running:
 		$SpecialModeTimer.start()
 		mode_running = true
@@ -250,17 +288,33 @@ func generate_special_ammo():
 		emit_signal("generated_special_ammo" , ammo_id )
 
 
-func leveled_up():
-
+func leveled_up(increase = 1):
 	
-	player_level += 1
-	
+	player_level += increase
 	
 	emit_signal("player_level_changed", player_level)
 	
 	var temp_lvl = player_level + 1
 	
-	
+	#This progresivly shows manual pages and stores its value into save.
+	if manual_progression < 5 && manual_progression < player_level/3:
+		match player_level:
+			3:
+				manual_progression = 1	
+				$StartMenu/ManualButton.visible = true
+			6:
+				manual_progression = 2
+				$"ManualUI/Manual1-2/Page2/Piano".visible = true
+			9:
+				manual_progression = 3
+				$"ManualUI/Manual3-4/Page3/Lampost".visible = true
+			12:
+				manual_progression = 4
+				$"ManualUI/Manual3-4/Page3/Car".visible = true
+			15:
+				manual_progression = 5
+				$"ManualUI/Manual3-4/Page4/House".visible = true
+				
 	
 	#Xp formula
 	xp_needed = round(pow(0.20*temp_lvl,3) + pow(0.15*temp_lvl,2) + 7)
@@ -280,38 +334,44 @@ func leveled_up():
 	if $SpecialAmmoTimer.is_stopped() and player_level > 2:
 			$SpecialAmmoTimer.start()
 
-	
 	#Increase amount of special enemies that can be spawned
-	if player_level%levels_needed_for_special_increase == 0:
-		special_enemy_start_value = player_level/levels_needed_for_special_increase
+	#if player_level%levels_needed_for_special_increase == 0:
+	special_enemy_start_value = floor(player_level/levels_needed_for_special_increase)
 	
 	# changes amount of enemies spawn bassed on level
 	if player_level > 9 && max_size_of_enemy_group > size_of_enemy_group:
-		size_of_enemy_group = player_level/2
+		size_of_enemy_group = player_level/4
 	
 
 	if player_level <= max_lvl_for_special_generator:
-		
 		$SpecialAmmoTimer.wait_time = initial_special_ammo_time -((special_ammo_max_decrease/ max_lvl_for_special_generator) * player_level)
 		
-	if player_level % lvls_needed_for_mag_increase == 0:
-		emit_signal("set_magazine_size" , $Player.magazine_size + 1)
-
+	if player_level > 2:
+		emit_signal("set_magazine_size" , starting_magazine_size + floor(player_level % lvls_needed_for_mag_increase))
 
 	if player_level <= max_lvl_for_reload_decrease:
 		
 		var temp_reload_time = initial_reload_time -(reload_max_decrease / max_lvl_for_reload_decrease * player_level)
-		
 		emit_signal("set_reload_time", temp_reload_time)
+	
+	if (player_level == 1 and dialog_progress == 1)\
+	 or(player_level == 3 and dialog_progress == 2):
+		show_dialog = true
 		
 	if player_level == 5:
 		boss_should_spawn = true
 		which_boss = 1
-	
-	#if player_level == 10:
-		#boss_should_spawn = true
-		#which_boss = 2
 
+		if initial_level < 5 && !$StartMenu/CheckpointButton.button_pressed:
+			initial_level = 5
+	
+	if player_level == 10:
+		boss_should_spawn = true
+		which_boss = 2
+		
+		if initial_level < 10 && !$StartMenu/CheckpointButton.button_pressed: 
+			initial_level = 10
+		
 	#if player_level <= max_lvl_for_enemy_spawner:
 		#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
 	#
@@ -321,12 +381,12 @@ func leveled_up():
 	##$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*(float(basic_enemy_counter)+1/float(target_amount_of_basic_enemies))
 	#
 #Not used because it kept breaking
-func special_magazine_state_changed():
-	if !$SpecialAmmoTimer.is_stopped():
-		$SpecialAmmoTimer.stop()
-		
-	else:
-		$SpecialAmmoTimer.start()
+#func special_magazine_state_changed():
+	#if !$SpecialAmmoTimer.is_stopped():
+		#$SpecialAmmoTimer.stop()
+		#
+	#else:
+		#$SpecialAmmoTimer.start()
 
 
 func player_died():
@@ -335,12 +395,13 @@ func player_died():
 	game_running = false
 	
 	$SoundTrack.stop()
-	$SoundTrack.volume_db = 0
+	$SoundTrack.volume_db = -50
+	audio_tween.stop()
 	$GameOverSound.play()
 	
 	$MeshBakerTimer.stop()
 	
-	#$EnemySpawnTimer.stop()
+	$CheckForSpawning.stop()
 	$SpecialAmmoTimer.stop()
 	
 	set_cursor(0)
@@ -348,33 +409,71 @@ func player_died():
 	get_tree().call_group("enemy","player_is_dead")
 	get_tree().call_group("bullets","queue_free")
 	
+	$PlayerUi/DashIndicator.visible = false
+	
+	$FinalScore.reset()
+	
 	await get_tree().create_timer(1.0).timeout
+	$PlayerUi.visible = false
+	$FinalScore.visible = true
+	
+	var boss_slayin = 0
+	show_dialog = false
+	
+	if boss_is_active or boss_should_spawn:
+		boss_slayin = which_boss -1
+	else:
+		boss_slayin = which_boss
+		
+	$FinalScore.show_score($PlayerUi/StatsUI/Kills.text, boss_slayin)
+	
+func close_final_score():
+	$FinalScore.is_finished_displaying = false
 	$IntroTrack.volume_db = 0
 	$IntroTrack.play()
 	
-	$PlayerUi.visible = false
 	$StartMenu.visible = true
 	if mode_running:
 		_switch_mode("reset")
 	
 	get_tree().call_group("sewage","_reset")
+	get_tree().call_group("walls","reset")
 	
+	
+
 
 func force_menu():
 
 	
 	$SoundTrack.stop()
-	$SoundTrack.volume_db = 0
+	$SoundTrack.volume_db = -50
 	$IntroTrack.volume_db = 0
 	$IntroTrack.play()
+	audio_tween.stop()
 	$MeshBakerTimer.stop()
 	$SpecialAmmoTimer.stop()
+	$CheckForSpawning.stop()
 	get_tree().call_group("enemy","queue_free")
 	get_tree().call_group("bullets","queue_free")
-	game_running = false
+	
+	if initial_level> 10 && !$StartMenu/CheckpointButton.button_pressed:
+		get_tree().call_group("non_broken_walls","reset")
+	else:
+		get_tree().call_group("walls","reset")
+		
 	$PlayerUi.visible = false
+	$PlayerUi/DashIndicator.visible = false
+	$PlayerUi/ShotgunDialog.visible = false
 	$StartMenu.visible = true
+	
+	game_running = false
 	game_force_ended = true
+	boss_should_spawn = false
+	boss_is_active = false
+	show_dialog = false
+	DialogManager.reset_dialog_manager()
+		
+	boss_killed(true)
 	if mode_running:
 		_switch_mode("reset")
 	
@@ -392,8 +491,11 @@ func start_game():
 	get_tree().call_group("enemy","queue_free")
 	
 	var cursor_size = DisplayServer.window_get_size()
-		
-	player_level = 0                      
+	
+	if $StartMenu/CheckpointButton.button_pressed:
+		player_level = 0
+	else:
+		player_level = initial_level
 		
 	kill_counter = 0
 	
@@ -415,8 +517,10 @@ func start_game():
 	
 	boss_should_spawn = false
 	
-	get_tree().call_group("walls","reset")
+	#get_tree().call_group("walls","reset")
 		
+	$FinalScore.visible = false
+	
 	$PlayerUi.visible = true
 	$PlayerUi/StatsUI/Kills.text = "O"
 	$PlayerUi/StatsUI/Level.text = "Level: 0"
@@ -441,11 +545,14 @@ func start_game():
 	player_instance.is_third_special_activated.connect($PlayerUi/AmmoSpriteContainer3.is_slot_active)
 	
 	player_instance.next_ammo.connect($PlayerUi/AmmoSpriteContainer.set_ammo)
-	player_instance.bullet_cursor.connect(set_cursor)
+	player_instance.dashed.connect($PlayerUi/DashIndicator.load_dash)
+	
+	$PlayerUi/DashIndicator.animation_finished.connect(player_instance.dash_reset)
 	
 	$PlayerUi/AmmoSpriteContainer.is_slot_active(false)
 	$PlayerUi/AmmoSpriteContainer2.is_slot_active(false)
 	$PlayerUi/AmmoSpriteContainer3.is_slot_active(false)
+	
 	
 	if boss_is_active:
 		boss_is_active = false
@@ -488,50 +595,79 @@ func start_game():
 	
 	game_running = true
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property($IntroTrack,"volume_db",-20,2)
-	tween.tween_property($SoundTrack,"volume_db",0,1)
-
-	$IntroTrack.stop()
+	if player_level > 0:
+		leveled_up(0)
+	
+	audio_tween = get_tree().create_tween()
+	
+	audio_tween.set_ease(Tween.EASE_IN)
 	$SoundTrack.play()
+	audio_tween.tween_property($IntroTrack,"volume_db",-50,3)
+	audio_tween.set_parallel()
+	audio_tween.tween_property($SoundTrack,"volume_db",0,3)
+
+	await audio_tween.finished
+	$IntroTrack.stop()
+	
 
 	$MeshBakerTimer.start()
 	
-	if player_level > 0:
-		leveled_up()
-
-	await get_tree().create_timer(3.0).timeout
 	
-	spawn_enemy()
+	await get_tree().create_timer(1.0).timeout
+	
+		
+	if show_dialog && dialog_progress == 0:
+		start_dialog()
+	else:	
+		if game_running:
+			spawn_enemy()
 
+		if !boss_is_active and !boss_should_spawn:
+			$CheckForSpawning.start()
 	
 func spawn_enemy():
 	
-	if !game_running :
+	if show_dialog && dialog_progress > 0 && player_level != 0:
+		if !$CheckForSpawning.is_stopped():
+			$CheckForSpawning.stop()
+		start_dialog()
+		return	
+		
+	if !game_running || boss_is_active:
 		return
 		
 	if boss_should_spawn:
 		spawn_boss()
 		return
 		
+		
+	#Calculates amount of special enemies that should be in each group Rounded up	
+
+	var numb_of_groups = target_amount_of_basic_enemies /  float(size_of_enemy_group) 
+	var numb_of_specials_per_group = special_enemy_start_value / numb_of_groups
+	
 	while basic_enemy_counter < target_amount_of_basic_enemies:
 		
 		enemy_spawn_point.progress_ratio = randf()
-		var spawned_special = false
+		var spawned_special = false	
 	
+	
+		var num_of_specials_in_current_group = 0
 		
 		for x in size_of_enemy_group:
 			await get_tree().create_timer(0.0025).timeout
 			
 			var enemy_instance
 			
-			if special_enemy_counter < special_enemy_start_value:
+			
+			if special_enemy_counter < special_enemy_start_value && num_of_specials_in_current_group < numb_of_specials_per_group:
 				match randi_range(1,2):
 					1:
 						enemy_instance = load("res://scenes/EnemyJumper.tscn").instantiate()
 					2:
 						enemy_instance = load("res://scenes/EnemyThrower.tscn").instantiate()
 				special_enemy_counter +=1
+				num_of_specials_in_current_group += 1
 				spawned_special = true
 			else:			
 				enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
@@ -547,12 +683,14 @@ func spawn_enemy():
 			if mode_running:
 				enemy_instance._switch_mode("undertale")		
 
-			if basic_enemy_counter == special_enemy_start_value:
-				pass
+			
+			if basic_enemy_counter == target_amount_of_basic_enemies:
+				break
+	
 	
 func spawn_boss():
 	
-	$PlayerUi/TextureProgressBar.smasher_spawned() 
+	$PlayerUi/TextureProgressBar.boss_spawned() 
 	
 	var enemy_instance
 	
@@ -562,19 +700,34 @@ func spawn_boss():
 			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/Progress.png")
 		2:
 			enemy_instance = load("res://scenes/BossDoubleThrower.tscn").instantiate()
-			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/DoubleThrowerProgess.png")
+			
+			if mode_running:
+				enemy_instance._switch_mode("Undertale")
+				$InsideWalls/WallLeftTop.destroyed = true
+				$InsideWalls/WallLeftBottom.destroyed = true
+				$InsideWalls/WallRightTop.destroyed = true
+				$InsideWalls/WallRightBottom.destroyed = true
+			else:
+				get_tree().call_group("second_boss_arena","destroy") 
+			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/DoubleThrowerProgress.png")
+			$CheckForSpawning.stop()
 		3:
 			enemy_instance = null
 
 	call_deferred("add_child",enemy_instance)
-	enemy_spawn_point.progress_ratio = randf()
-
-	enemy_instance.position = enemy_spawn_point.global_position
+	
+	#enemy_spawn_point.progress_ratio = randf()
+#
+	#enemy_instance.position = enemy_spawn_point.global_position
 	boss_should_spawn = false
 	boss_is_active = true
 	$PlayerUi/TextureProgressBar.max_value = enemy_instance.hp_max
 	$PlayerUi/TextureProgressBar.value = enemy_instance.hp_max
 	
+	if !mode_running && which_boss == 2:
+		await get_tree().create_timer(3.5).timeout
+		$NavigationRegion2D.call_deferred("bake_navigation_polygon")
+		
 	
 func spawn_smasher_adds():
 	
@@ -588,54 +741,44 @@ func spawn_smasher_adds():
 		enemy_instance.speed = 400
 		enemy_instance.hp = 1
 		basic_enemy_counter += 1
+	
+	$CheckForSpawning.start()
 
 
-func boss_killed():
+func boss_killed(by_menu=false):
 	boss_is_active = false
 	$PlayerUi/TextureProgressBar.visible = false
-	spawn_enemy()
+	recieved_xp(0)
+	
+	if $CheckForSpawning.is_stopped() && game_running:
+		$CheckForSpawning.start()
+	
+	if !by_menu && !$StartMenu/CheckpointButton.button_pressed:
+		if initial_level == 5:
+				initial_level = 6
+		elif initial_level == 10:
+			initial_level = 11
 	
 	
-func decrease_basic_enemy_counter():
-	await  get_tree().create_timer(0.5).timeout
 	
-	if enemies_spawning == true:
-		pass
-	
-	enemies_spawning = true
+func check_for_alive_enemies():
 	
 	if !$EnemiesInArea.has_overlapping_bodies():
 		special_enemy_counter = 0
 		basic_enemy_counter = 0
-		if boss_is_active:
-			get_tree().call_group("smasher","start_add_timer")
-			return
-			
-		if boss_should_spawn:
-			spawn_boss()
-		else:
-			spawn_enemy()
-	
-	enemies_spawning = false
-	
-	
-func decrease_special_enemy_counter():
-	await  get_tree().create_timer(0.5).timeout
 		
-	if enemies_spawning == true:
-		pass
-	
-	enemies_spawning = true
-	
-	if !$EnemiesInArea.has_overlapping_bodies():
-		special_enemy_counter = 0
-		basic_enemy_counter = 0
-		if boss_should_spawn:
-			spawn_boss()
+		if boss_is_active:	
+			var temp = self.get_node("BossSmasher")
+			temp = temp.get_node("SpawnAddsTimer")
+		
+			if temp.is_stopped():
+				get_tree().call_group("smasher","start_add_timer")
+				$CheckForSpawning.stop()
+				return
+				
 		else:
 			spawn_enemy()
-	
-	enemies_spawning = false
+
 
 func set_cursor(bullet_id):
 	var cursor_size = DisplayServer.window_get_size()
@@ -657,11 +800,100 @@ func _bake_mesh():
 func _entering_arena(body):
 	body.falling_down_from_wall()
 
+#Temp to convert generic array into Array[String] so the Dialog manager shuts the fuck up
+func start_dialog():
+	var temp : Array[String]
+	temp.assign(dialog_lines[dialog_progress])
+	$PlayerUi/ShotgunDialog.visible = true
+	DialogManager.start_dialog(Vector2(200,800),temp)
+ 
+
+func dialog_finished():
+	$PlayerUi/ShotgunDialog.visible = false
+	show_dialog = false
+	dialog_progress += 1
+	$CheckForSpawning.start()
+
 
 func _exit_game():
+	_save()
 	get_tree().quit()
 
 
 func _show_controls():
 	$Controls.visible = true
 
+
+func _show_manual():
+	$ManualUI.visible = true
+
+
+func _save(save_volume=true,overwrite_dialog_and_manual=true):
+	config.set_value("game","initial_level",initial_level)
+	config.set_value("game","checkpoints_enabled",$StartMenu/CheckpointButton.is_pressed())
+	config.set_value("game","second_chance_counter", second_chance_counter)
+	config.set_value("game","regen_gained", regen_gained)
+	config.set_value("game","first_game", first_game)
+	
+	if save_volume:
+		config.set_value("game","sfx",$StartMenu/SFXSlider.value)
+		config.set_value("game","music",$StartMenu/MusicSlider.value)
+		
+	if overwrite_dialog_and_manual:
+		config.set_value("game","dialog_progress", dialog_progress)
+		config.set_value("game","manual_progression",manual_progression)
+	
+	
+	config.save("user://scores.cfg")
+	
+	
+func _load_save():
+	
+	config = ConfigFile.new()
+	
+	if FileAccess.file_exists("user://scores.cfg"):
+		
+		var err = config.load("user://scores.cfg")
+
+		initial_level = config.get_value("game","initial_level")
+		second_chance_counter = config.get_value("game","second_chance_counter", second_chance_counter)
+		regen_gained = config.get_value("game","regen_gained", regen_gained)
+		first_game = config.get_value("game","first_game", first_game)
+		dialog_progress = config.get_value("game","dialog_progress", dialog_progress)
+		manual_progression = config.get_value("game","manual_progression", manual_progression)
+		$StartMenu/CheckpointButton.set_pressed(config.get_value("game","checkpoints_enabled"))
+		$StartMenu/SFXSlider.value = config.get_value("game","sfx")
+		$StartMenu/MusicSlider.value = config.get_value("game","music")
+		
+		print(manual_progression)
+		
+		for value in manual_progression+1:
+			match value:
+				1:
+					$StartMenu/ManualButton.visible = true
+				2:
+					$"ManualUI/Manual1-2/Page2/Piano".visible = true
+				3:
+					$"ManualUI/Manual3-4/Page3/Lampost".visible = true
+				4:
+					$"ManualUI/Manual3-4/Page3/Car".visible = true
+				5:
+					$"ManualUI/Manual3-4/Page4/House".visible = true
+				
+func _delete_save():
+	
+	if FileAccess.file_exists("user://scores.cfg"):
+		
+		initial_level = 0
+		second_chance_counter = 0
+		dialog_progress = 0
+		manual_progression = 0
+		show_dialog = true
+		regen_gained = false
+		first_game = true
+		$StartMenu/CheckpointButton.button_pressed = false
+		
+		#This also replaces dialog and manual progresion. It is purelly for testing
+		_save(false,true)
+		
+		config.save("user://scores.cfg")

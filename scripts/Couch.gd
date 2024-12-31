@@ -29,6 +29,7 @@ func _ready():
 		
 		body.stop_homming.connect(target_died)
 		
+	
 func seek():
 	var steer = Vector2.ZERO
 	if target != null:
@@ -53,13 +54,18 @@ func _enemy_hit(body):
 
 			$MarkerSprite2D.visible = false
 			hitcount += 1
-			$CollisionSound.play()
+			$CollisionSound.random_pitch_play()
 			$CollisionParticles.emitting = true
 			$AnimatedSprite2D.visible = false
 			
 			var push_back = linear_velocity.normalized() * push_back_multiplier
 			if !"Wall" in body.name:
-				body.got_shot(damage, push_back)
+				if body == targeted_enemy:
+					damage = damage*2
+					body.got_shot(damage, push_back, false, true)
+					$CriticalSound.random_pitch_play()
+				else:
+					body.got_shot(damage, push_back)
 			
 			
 func target_died():

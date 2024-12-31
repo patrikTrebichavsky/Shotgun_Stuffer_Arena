@@ -64,8 +64,8 @@ animations = [{
 
 [node name="WallBlock3Wide" type="StaticBody2D" groups=["paths", "walls"]]
 z_index = -2
-collision_layer = 63
-collision_mask = 63
+collision_layer = 127
+collision_mask = 127
 script = ExtResource("1_4khf0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

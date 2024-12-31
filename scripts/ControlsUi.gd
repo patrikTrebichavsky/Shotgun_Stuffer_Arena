@@ -3,7 +3,8 @@ extends CanvasLayer
 
 func _process(delta): 
 	
-	
+	if !visible:
+		return
 	#This is for Entire Specials controls Scroll/ Keys / Reset
 	
 	if $ScrollDelay.is_stopped():

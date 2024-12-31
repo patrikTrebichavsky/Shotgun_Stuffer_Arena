@@ -16,4 +16,5 @@ func _on_value_changed(value: float):
 	AudioServer.set_bus_volume_db(bus_index,linear_to_db(value))
 
 func volume_setted(bool):
-	audio_stream.play()
+	if audio_stream != null:
+		audio_stream.play()

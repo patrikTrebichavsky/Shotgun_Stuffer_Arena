@@ -2,13 +2,15 @@ extends TextureProgressBar
 
 
 # Called when the node enters the scene tree for the first time
-func heal_to_full(use_tween = true,time = 0.5):
+func heal_to_full(use_tween = true,time = 0.5, ending =  max_value):
 	var tween = create_tween()
-	tween.tween_property(self,"value",max_value,time)
+	tween.tween_property(self, "value", ending, time)
 	
 func update_hp(amount: int):
 	value = amount
 	
-func smasher_spawned():
+func boss_spawned():
 	$"../AnimationPlayer".play("SpawnHealthBar")
+	modulate = Color(1,1,1,0)
 	visible = true
+	

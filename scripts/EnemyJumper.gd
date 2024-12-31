@@ -21,6 +21,7 @@ func _ready():
 		$AnimatedSprite2D.animation = "undertale_mode_running" 
 		$DropMarker.animation = "undertale_mode_drop_marker"
 
+
 func _physics_process(_delta):
 	
 	
@@ -68,7 +69,13 @@ func jump():
 	just_jumped = true
 	jump_available = false
 	
-	$CollisionShape2D.set_deferred("disabled",true)
+	#$CollisionShape2D.set_deferred("disabled",true)
+	
+	set_collision_mask_value(2,false)
+	set_collision_mask_value(3,false)
+	set_collision_layer_value(2,false)
+	set_collision_layer_value(3,false)
+	set_collision_layer_value(4,false)
 	
 	var temp = position
 	position = player_position
@@ -96,70 +103,3 @@ func _switch_mode(_name):
 
 func _on_jump_timeout_timeout():
 	jump_available = true
-
-
-func _delete_enemy():
-	set_collision_layer_value(20,false)
-	get_parent().decrease_basic_enemy_counter()
-	emit_signal("stop_homming")
-	queue_free()
-
-func got_shot(damage, push_back, custom_death_sprite=false):
-	
-	hp -= damage
-	
-	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
-	add_child(instance)
-	instance._display_message(str(damage*10), "#A4A5AE", 35)
-	
-	if hp <= 0:
-		
-		$CollisionShape2D.set_deferred("disabled", true)
-		$DeathParticles.emitting = true
-		
-		if !custom_death_sprite:		
-			if(undertale_mode):
-				$AnimatedSprite2D.animation = "undertale_mode_death"
-			else:
-				$AnimatedSprite2D.animation = "death"
-		
-		
-		$DeathTimer.start()
-		$DeathSound.play()
-		
-		emit_signal("enemy_killed", xp)
-		
-		linear_velocity = Vector2.ZERO
-		set_deferred("freeze",true)
-		
-		set_physics_process(false)
-		apply_central_impulse(push_back)
-		
-	else:
-		
-		set_physics_process(false)
-		apply_central_impulse(push_back)
-		
-		await get_tree().create_timer(0.2).timeout
-		set_physics_process(true)
-
-#func falling_down_from_wall():
-	#var tween = get_tree().create_tween()
-	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.8,0.8), 0.03625)
-	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.75,0.75), 0.03625)
-	#await  tween.finished
-	#
-	#set_collision_mask_value(10,false)
-	#set_collision_layer_value(10,false)
-	#
-	#set_collision_mask_value(2,true)
-	#set_collision_mask_value(3,true)
-	#set_collision_layer_value(2,true)
-	#set_collision_layer_value(3,true)
-	#set_collision_layer_value(4,true)
-	#z_index = 0
-	#in_arena = true
-
-func _enemy_fell_off_map():
-	get_parent().decrease_special_enemy_counter()
-	queue_free()

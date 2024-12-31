@@ -19,6 +19,8 @@ signal bullet_cursor(ammo_id)
 
 signal player_died
 
+signal dashed()
+
 
 var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 
@@ -48,7 +50,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 @export var player_level = 0
 @export var dash_distance = 1000
 
-var stored_ammo = []
+var stored_ammo = [1,1,1,2,2,2]
 
 var special_slot_chosen : int
 
@@ -78,6 +80,8 @@ var second_chance_usable = false
 
 var switch_special_ready = true
 
+var mouse_on_text_box = false
+
 var main_node
 
 
@@ -104,7 +108,7 @@ func _physics_process(delta):
 	$DashCollisonChecker.target_position = direction.normalized() * dash_distance
 	$DashCollisonChecker/Tip.position = direction.normalized() * dash_distance
 	$DashCollisonChecker/Tip.target_position = Vector2(30,30) * (direction*-1)
-	$MouseCollider.global_position = get_global_mouse_position()
+	$MouseRelatedNodes.global_position = get_global_mouse_position()
 	
 	
 	if switch_special_ready:
@@ -162,24 +166,26 @@ func _physics_process(delta):
 			
 			
 	#dash takes keyboard input and check if there are any walls in the way  with raycast. Then dashes maximum distance acordintly
-	if Input.is_action_just_pressed("dash") && can_dash && player_level > 0:
+	if Input.is_action_just_pressed("dash") \
+	&& can_dash \
+	&& player_level > 0 \
+	&& (direction.x != 0 or direction.y != 0):
+		
+		
 		can_dash = false
 		just_dashed = true
 		$DashSound.play()
-		$DashTimer.start()
-		$Area2D/DashParticles.emitting = true
+		emit_signal("dashed")
+		$PlayerArea/DashParticles.emitting = true
 		
 		var dash_destination = position + direction.normalized() * dash_distance
 		
 		var dash_collision_point = $DashCollisonChecker.get_collision_point()
 		
 		
-		$Area2D/CollisionPolygon2D.set_deferred("disabled", true)
-		$CollisionPolygon2D.set_deferred("disabled", true)
-		
-		
-		#await get_tree().create_timer(0.025).timeout
-		
+		$PlayerArea/CollisionPolygon2D.set_deferred("disabled", true)
+		set_collision_mask_value(5,false)
+	
 		var tween = get_tree().create_tween()
 		if !$DashCollisonChecker/Tip.is_colliding():
 			tween.tween_property(self,"position",dash_destination,0.25)
@@ -190,8 +196,8 @@ func _physics_process(delta):
 		await tween.finished
 		
 		$DashCollisonChecker.target_position = Vector2.ZERO
-		$Area2D/CollisionPolygon2D.set_deferred("disabled", false)
-		$CollisionPolygon2D.set_deferred("disabled", false)
+		$PlayerArea/CollisionPolygon2D.set_deferred("disabled", false)
+		set_collision_mask_value(5,true)
 		just_dashed = false
 	
 	#Signal pozicie pre enemakov
@@ -199,7 +205,7 @@ func _physics_process(delta):
 	
 	if !just_dashed:
 		#Movement
-		$Area2D.look_at(get_global_mouse_position())
+		$PlayerArea.look_at(get_global_mouse_position())
 		
 		
 		if direction:
@@ -208,9 +214,9 @@ func _physics_process(delta):
 			velocity = direction.normalized() * speed
 			
 			if !just_shot && undertale_mode && !charged:
-				$Area2D/AnimatedSprite2D.animation = "undertale_mode_running"
+				$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_running"
 			elif !just_shot && !undertale_mode:
-				$Area2D/AnimatedSprite2D.animation = "running"
+				$PlayerArea/AnimatedSprite2D.animation = "running"
 				
 		else:
 			
@@ -229,14 +235,14 @@ func _physics_process(delta):
 			$ShootingSound.stream = load(shooting_sounds_dictionary[3])
 			$ShootingSound.play()
 			
-			if get_node_or_null("Area2D/Laser") != null:
-				$Area2D/Laser.queue_free()
+			if get_node_or_null("PlayerArea/Laser") != null:
+				$PlayerArea/Laser.queue_free()
 			
 			charged = false
 			
-			$Area2D/AnimatedSprite2D.play("undertale_mode_decharging")
+			$PlayerArea/AnimatedSprite2D.play("undertale_mode_decharging")
 
-	if Input.is_action_just_pressed("shoot") && !can_reload:
+	if Input.is_action_pressed("shoot") && !can_reload && !mouse_on_text_box:
 		
 		if undertale_mode:
 			undertale_shoot()
@@ -271,21 +277,24 @@ func dash_reset():
 	$DashReadySound.play()
 	
 func reloading():
-	$ReloadingSound.playing = true
 	can_reload = false
+	$ReloadingSound.random_pitch_play()
 	if stored_ammo.size() > 2:
 		emit_signal("next_ammo",stored_ammo[2])
 	
 	
 func shoot():
 	
-	$Area2D/AnimatedSprite2D.animation = "standing_shooting"
+	$PlayerArea/AnimatedSprite2D.animation = "standing_shooting"
 	
-	$Area2D/ShootgunParticles.emitting = true
-	$ShootingSound.playing = true
-	
+	$PlayerArea/ShootgunParticles.emitting = true
 	
 	var bullet_path = ""
+	
+	$ShootingSound.random_pitch_play()
+
+	can_reload = true
+	just_shot = true
 
 	if stored_ammo.size() == 0 or !use_special:
 		bullet_path = bullet_dictionary[0]
@@ -295,19 +304,16 @@ func shoot():
 			
 		elif player_level < 5:
 			bullet_instatiation(bullet_path,0)
-			just_shot = true
 			await get_tree().create_timer(0.1).timeout
-			$ShootingSound.playing = true
+			$ShootingSound.random_pitch_play()
 			bullet_instatiation(bullet_path,0)
 			
 		else:
 			bullet_instatiation(bullet_path,0)
-			just_shot = true
-			await get_tree().create_timer(0.03).timeout
+			await get_tree().create_timer(0.01).timeout
 			bullet_instatiation(bullet_path,PI/32)
-			await get_tree().create_timer(0.04).timeout
+			await get_tree().create_timer(0.02).timeout
 			bullet_instatiation(bullet_path,-PI/32)
-			
 	else:
 		
 		if stored_ammo.size() > 3:
@@ -337,9 +343,7 @@ func shoot():
 		else:
 			for bullet_counter in range(8):
 				bullet_instatiation(bullet_path,(PI/4)*bullet_counter)
-			
-	just_shot = true
-	can_reload = true
+				
 	
 	if stored_ammo.size() > special_slot_chosen and use_special:
 		emit_signal("bullet_cursor",stored_ammo[special_slot_chosen])
@@ -359,29 +363,36 @@ func shoot():
 	$ReloadTimer.start()
 	
 #bullet is always instantiated before player extra rotation is there for adjusment
-func bullet_instatiation(bullet_path,extra_rotation):
+func bullet_instatiation(bullet_path,extra_rotation = 0):
 	
 	var instance = load(bullet_path).instantiate()
 		
-	instance.position = $Area2D/ShootingPoint.global_position
+	instance.position = $PlayerArea/ShootingPoint.global_position
 	
 	if instance.name.contains("Lamp"):
 		
 		var instance_sprite = instance.get_node("AnimatedSprite2D")
 		
-		instance_sprite.rotation = $Area2D.rotation + extra_rotation
+		instance_sprite.rotation = $PlayerArea.rotation + extra_rotation
 		instance.get_node("Body").rotation = instance_sprite.rotation
 		instance.get_node("Edge").rotation = instance_sprite.rotation
 		instance.get_node("InitialEdge").rotation = instance_sprite.rotation
 		instance.get_node("PiercedBodies").rotation = instance_sprite.rotation
 
 	else:	
-		instance.rotation = $Area2D.rotation + extra_rotation
+		instance.rotation = $PlayerArea.rotation + extra_rotation
+	
+	instance.crosshair_bodies = $MouseRelatedNodes/CrossHair.get_overlapping_bodies()
 	
 	if instance.tracking:
-		instance.array_of_bodies = $MouseCollider.get_overlapping_bodies()
+		instance.array_of_bodies = $MouseRelatedNodes/MouseCollider.get_overlapping_bodies()
+		
 	
-	instance.apply_central_impulse(Vector2.RIGHT.rotated($Area2D.rotation + extra_rotation)*instance.speed)
+	var crosshair_vector = (get_global_mouse_position()-$PlayerArea/ShootingPoint.global_position).normalized()
+	if extra_rotation == 0:
+		instance.apply_central_impulse(crosshair_vector*instance.speed)
+	elif !extra_rotation == 0:
+		instance.apply_central_impulse(crosshair_vector.rotated(extra_rotation)*instance.speed)
 	
 	get_parent().add_child(instance)
 		
@@ -394,22 +405,22 @@ func death(body):
 	elif second_chance:
 		$AnimationPlayer.play("Second_Chance_Hit")
 		main_node.get_tree().call_group("enemy","got_shot",100,Vector2.ZERO)
-		$Area2D.set_deferred("monitoring",false)
+		$PlayerArea.set_deferred("monitoring",false)
 		$SecondChanceExplosionSound.play()
 		second_chance = false
 		if regenrate_sec_chance:
 			$SecChanceRegenTimer.start()
 		return
 		
-	$Area2D/DeathParticles.emitting = true
+	$PlayerArea/DeathParticles.emitting = true
 	
 	if(undertale_mode):
-		$Area2D/AnimatedSprite2D.animation = "undertale_mode_running"
+		$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_running"
 	else:
-		$Area2D/AnimatedSprite2D.animation = "running"
+		$PlayerArea/AnimatedSprite2D.animation = "running"
 		
 	$DeathSound.play()
-	$Area2D.set_deferred("monitoring",false)
+	$PlayerArea.set_deferred("monitoring",false)
 	set_physics_process(false)
 	emit_signal("player_died")
 	await get_tree().create_timer(1.0).timeout
@@ -423,8 +434,8 @@ func undertale_shoot():
 		$ShootingSound.stream = load(shooting_sounds_dictionary[2])
 		$ShootingSound.play()
 		
-		$Area2D/AnimatedSprite2D.animation = "undertale_mode_charging"
-		$Area2D/AnimatedSprite2D.play()
+		$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_charging"
+		$PlayerArea/AnimatedSprite2D.play()
 		just_shot = true
 	
 	
@@ -432,22 +443,22 @@ func _on_animated_sprite_2d_animation_finished():
 	
 	if undertale_mode :
 		
-		if $Area2D/AnimatedSprite2D.animation == "undertale_mode_charging":
+		if $PlayerArea/AnimatedSprite2D.animation == "undertale_mode_charging":
 			
 			charged = true
 			
-			$Area2D/AnimatedSprite2D.animation = "undertale_mode_shooting"
-			$Area2D/AnimatedSprite2D.play()
+			$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_shooting"
+			$PlayerArea/AnimatedSprite2D.play()
 			
 			var bullet_path = bullet_dictionary[1001]
 			var instance = load(bullet_path).instantiate()
 		
-			instance.position += $Area2D/ShootingPoint.position
-			$Area2D.add_child(instance)
+			instance.position += $PlayerArea/ShootingPoint.position
+			$PlayerArea.add_child(instance)
 
-		if	$Area2D/AnimatedSprite2D.animation == "undertale_mode_decharging":
+		if	$PlayerArea/AnimatedSprite2D.animation == "undertale_mode_decharging":
 			
-			$Area2D/AnimatedSprite2D.animation = "undertale_mode_running"
+			$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_running"
 			just_shot = false
 
 
@@ -456,15 +467,15 @@ func _switch_mode(_name):
 	undertale_mode = !undertale_mode
 	
 	if undertale_mode:
-		$Area2D/AnimatedSprite2D.animation = "undertale_mode_running" 
+		$PlayerArea/AnimatedSprite2D.animation = "undertale_mode_running" 
 
 	else:
 		
 		$ShootingSound.stream = load(shooting_sounds_dictionary[1])
-		$Area2D/AnimatedSprite2D.animation = "running" 
+		$PlayerArea/AnimatedSprite2D.animation = "running" 
 		
-		if get_node_or_null("Area2D/Laser") != null:
-			$Area2D/Laser.queue_free()
+		if get_node_or_null("PlayerArea/Laser") != null:
+			$PlayerArea/Laser.queue_free()
 		
 
 func player_level_changed(level):
@@ -522,19 +533,22 @@ func player_level_changed(level):
 			instance._display_message("Second chance lost",  "#FFD000", 20)
 		
 func mode_switch_visuals():
+		
 	if use_special:
-		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOff.wav")
-		$SpecialModeSound.play()
+		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOn.wav")
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
 		instance._display_message(str(special_slot_chosen+1) + "  Slot", "#8A4FFF", 25)
+	
 	else:
-		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOn.wav")
-		$SpecialModeSound.play()
+		$SpecialModeSound.stream = load("res://sounds/Player/SpecialModeOff.wav")
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
 		instance._display_message("Special Off", "#8A4FFF", 25)
-
+	
+	$SpecialModeSound.play()
+	
+	
 func second_chance_on(regen = regenrate_sec_chance):
 	
 	regenrate_sec_chance = regen
@@ -552,9 +566,18 @@ func second_chance_on(regen = regenrate_sec_chance):
 	else:
 		instance._display_message("Second Chance Gained", "#FFD000", 20)
 	
-	$Area2D/SecondChance.visible = true
+	$PlayerArea/SecondChance.visible = true
 	$AnimationPlayer.play("SecondChance")	
 	$SecondChanceAquired.play()
 	
 func reset_special_switch():
 	switch_special_ready = true
+
+func mouse_on_text_box_state(on = true):
+	mouse_on_text_box = on
+
+func delay_enabling_of_shooting(on = true):
+	if on:
+		$BulletEnabledDelayTimer.start()
+	elif !on:
+		$BulletEnabledDelayTimer.stop()

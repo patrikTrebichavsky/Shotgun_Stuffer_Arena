@@ -63,8 +63,9 @@ func _enemy_hit(body):
 		
 		linear_velocity = Vector2.ZERO
 		set_deferred("freeze",true)
-
-		$CollisionSound.play()
+		
+		
+		$CollisionSound.random_pitch_play()
 		$CollisionParticles.emitting = true
 		$CarArea.set_deferred("monitoring", false)
 		$ExplosionDeletionTimer.start()

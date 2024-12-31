@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://l7apy6iqnhyi"]
+[gd_scene load_steps=27 format=3 uid="uid://l7apy6iqnhyi"]
 
 [ext_resource type="Script" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
 [ext_resource type="Texture2D" uid="uid://cno7dctoyi35c" path="res://sprites/Enemies/Thrower/Chared.png" id="2_0wpru"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://mw8iy8ujpot0" path="res://sprites/Enemies/Thrower/Undertale_Running.png" id="9_bj8wq"]
 [ext_resource type="Texture2D" uid="uid://25bbqj3wge23" path="res://sprites/Enemies/Thrower/Undertale_RunningHeadless.png" id="10_bskgb"]
 [ext_resource type="Texture2D" uid="uid://bbjno580j44i3" path="res://sprites/Enemies/Thrower/Undertale_Throwing.png" id="12_b3152"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="16_mws08"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_duxj0"]
 animations = [{
@@ -131,6 +132,25 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Gradient" id="Gradient_he8me"]
+offsets = PackedFloat32Array(0.981132)
+colors = PackedColorArray(0.875743, 0.226894, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cpplj"]
+gradient = SubResource("Gradient_he8me")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nd8o7"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_cpplj")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
 [sub_resource type="Gradient" id="Gradient_4hypc"]
 offsets = PackedFloat32Array(0, 0.518349, 1)
 colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
@@ -155,6 +175,7 @@ height = 92.0
 
 [node name="EnemyThrower" type="RigidBody2D" groups=["enemy"]]
 z_index = 12
+position = Vector2(-1, -2)
 collision_layer = 524800
 collision_mask = 512
 gravity_scale = 0.0
@@ -164,10 +185,12 @@ throw_distance = 700
 speed_max = 200
 id = 3
 xp = 2
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_duxj0")
-animation = &"throwing"
+animation = &"running"
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -178,13 +201,23 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
 
+[node name="MagicParticles" type="GPUParticles2D" parent="." groups=["magic_head"]]
+position = Vector2(-6, -1)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_nd8o7")
+lifetime = 0.5
+
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 wait_time = 0.5
 one_shot = true
 
-[node name="GruntTimer" type="Timer" parent="."]
-wait_time = 6.0
-autostart = true
+[node name="LaserDamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -197,6 +230,7 @@ scale = Vector2(1.5, 1.5)
 stream = ExtResource("5_gksv8")
 volume_db = -10.0
 bus = &"SFX"
+script = ExtResource("16_mws08")
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
@@ -210,9 +244,6 @@ avoidance_enabled = true
 radius = 50.0
 time_horizon_obstacles = 1.0
 max_speed = 700.0
-debug_enabled = true
-
-[node name="Node2D" type="Node2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_jgfa6")
@@ -222,8 +253,6 @@ scale = Vector2(1, 15)
 target_position = Vector2(700, 0)
 collision_mask = 32
 hit_from_inside = true
-
-[node name="StuckTimer" type="Timer" parent="."]
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw"]
 [connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]

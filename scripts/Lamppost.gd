@@ -6,10 +6,12 @@ class_name Lamppost
 @export var pierce_damage_threshold : int
 
 func _ready():
+	
 	await get_tree().create_timer(0.1).timeout
 	$InitialEdge.set_deferred("monitoring",false)
 	$Edge.set_deferred("monitoring",true)
 	$Body.set_deferred("monitoring",true)
+	
 	
 func _on_edge_hit(body):
 	
@@ -21,9 +23,9 @@ func _on_edge_hit(body):
 		
 	hitcount += 1
 	
-	if hitcount <= 3 and body.hp <= pierce_damage_threshold:
+	if hitcount <= 3 and (body.hp <= pierce_damage_threshold or (body.id == 20 and body.hp < (body.hp_max/4))):
 		
-		$StabSound.play()
+		$StabSound.random_pitch_play()
 		$CollisionParticles.emitting = true
 		
 		var impaled_enemy = $PiercedBodies.get_node("ImpaledEnemySprite"+str(hitcount))
@@ -36,6 +38,8 @@ func _on_edge_hit(body):
 				impaled_enemy.animation = "thrower"
 			else:
 				impaled_enemy.animation = "thrower_headless"
+		elif body.id == 20:
+			impaled_enemy.animation = "double_thrower"
 		else:
 			impaled_enemy.animation = "basic"
 			
@@ -51,7 +55,8 @@ func _on_body_hit(body):
 		if "Wall" in body.name:
 			return
 		
-		$HitSound.play()
+		$HitSound.random_pitch_play()
+		
 		var push_back = (body.position-position).normalized() * push_back_multiplier
 		body.got_shot(damage, push_back)
 

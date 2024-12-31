@@ -2,11 +2,13 @@ extends RigidBody2D
 
 signal destination_reached_signal()
 signal body_reached()
+signal current_radius(current_radius)
 
 var player_position : Vector2
 var circle_center : Vector2
 
 var phase_one = true
+
 
 var start : Vector2
 var destination : Vector2
@@ -14,6 +16,9 @@ var chase = true
 var destination_reached : bool
 var limb_in_tween : bool
 var speed : float
+
+@export var is_arm : bool
+var is_left = false
 
 @export var speed_initial : float
 @export var speed_min : float
@@ -56,9 +61,8 @@ func _ready():
 	var player = main_node.get_node("Player")
 	player.player_position.connect(update_player_position)
 	
-	
-	if undertale_mode:
-		$Sprite.animation = "undertale_head"
+	#if undertale_mode:
+		#_switch_mode("undertale")
 
 
 func _integrate_forces(state: PhysicsDirectBodyState2D):
@@ -117,7 +121,8 @@ func _physics_process(delta):
 			if pos_des_diference .x + 20 >= 0 \
 			and pos_des_diference .y + 20 >= 0 \
 			and pos_des_diference .x - 20 <= 0 \
-			and pos_des_diference .y - 20 <= 0:	
+			and pos_des_diference .y - 20 <= 0 \
+			and !destination_reached:	
 				destination_reached = true
 				speed = 0
 				emit_signal("destination_reached_signal")
@@ -139,6 +144,7 @@ func _physics_process(delta):
 			
 			if radius_current > radius_min:
 				radius_current = radius_current - (radius_decrease*delta)
+				emit_signal("current_radius",radius_current)
 				
 			lap_offset = (lap_offset *2 *PI) / rotation_speed
 			
@@ -158,15 +164,35 @@ func _physics_process(delta):
 func _switch_mode(_name):
 	 
 	undertale_mode = !undertale_mode
-
-	if undertale_mode :
-		$Sprite.animation = "undertale_head" 
+	
+	if !is_arm:
+		if undertale_mode :
+			$Sprite.animation = "undertale_head" 
+			$MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres")
+			
+		else:
+			$Sprite.animation = "head" 
+			$MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")
 		
 	else:
-		$Sprite.animation = "head_default" 
-		
-		
-	
+		if undertale_mode && is_left :
+			$Sprite.animation = "undertale_left" 
+			
+		elif undertale_mode:
+			$Sprite.animation = "undertale_right" 
+			
+		elif is_left:
+			$Sprite.animation = "left" 
+			
+		else:
+			$Sprite.animation = "right" 
+			
+		if undertale_mode:
+			$MagicParticles.process_material = load("res://particles/Undertale_MagicMaterial.tres")
+		else:
+			$MagicParticles.process_material = load("res://particles/MagicMaterial.tres")
+			
+			
 func _launch():
 	visible = true
 	speed = speed_initial

@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://fehee4vh2b56"]
+[gd_scene load_steps=12 format=3 uid="uid://fehee4vh2b56"]
 
 [ext_resource type="Script" path="res://scripts/BulletBase.gd" id="1_eilrq"]
 [ext_resource type="Texture2D" uid="uid://0cupbdsganch" path="res://sprites/Bullets/Plate.png" id="1_w6k4x"]
 [ext_resource type="AudioStream" uid="uid://cudo63mjqkijk" path="res://sounds/Bullets/PlateBreaking.mp3" id="2_lghnv"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_oekxv"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_je8ji"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -44,7 +46,7 @@ collision_layer = 4
 collision_mask = 2
 gravity_scale = 0.0
 script = ExtResource("1_eilrq")
-damage = 40
+damage = 10
 push_back_multiplier = 100
 speed = 5000
 metadata/_edit_group_ = true
@@ -66,12 +68,18 @@ shape = SubResource("CircleShape2D_x8owf")
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_lghnv")
 bus = &"SFX"
+script = ExtResource("4_oekxv")
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_je8ji")
+volume_db = -5.0
+bus = &"SFX"
+script = ExtResource("4_oekxv")
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
 z_index = 1
 y_sort_enabled = true
-rotation = -0.00635898
 emitting = false
 amount = 32
 process_material = SubResource("ParticleProcessMaterial_m3meo")

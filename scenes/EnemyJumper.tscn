@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dqvmhhhcsl0j5"]
+[gd_scene load_steps=27 format=3 uid="uid://dqvmhhhcsl0j5"]
 
 [ext_resource type="Script" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_ckm8h"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="5_so8b1"]
 [ext_resource type="Texture2D" uid="uid://breqmsqqxfjdg" path="res://sprites/Enemies/Jumper/Undertale_Running.png" id="6_w12ua"]
 [ext_resource type="AudioStream" uid="uid://f2lgsy1hcnxb" path="res://sounds/Enemy/Jump.mp3" id="9_bfju6"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="10_4h35n"]
 [ext_resource type="AudioStream" uid="uid://cdmd3iebmvl3u" path="res://sounds/Enemy/Drop.wav" id="10_7bcbx"]
 [ext_resource type="Texture2D" uid="uid://cgteklutre1r" path="res://sprites/Enemies/Jumper/Marker.png" id="10_tijb4"]
 [ext_resource type="Texture2D" uid="uid://bsot7cong8342" path="res://sprites/Enemies/Jumper/Undertale_Marker.png" id="13_1y6b5"]
@@ -119,8 +120,8 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [0.0],
-"method": &"play"
+"args": [],
+"method": &"random_pitch_play"
 }]
 }
 tracks/1/type = "method"
@@ -211,6 +212,30 @@ tracks/7/keys = {
 "method": &"start"
 }]
 }
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath(".:collision_layer")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [524302]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".:collision_mask")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb2wl"]
 _data = {
@@ -251,6 +276,7 @@ xp = 2
 player_position = Vector2(1400, 500)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_aaasd")
 animation = &"running"
 
@@ -262,9 +288,9 @@ shape = SubResource("CapsuleShape2D_tq2yw")
 wait_time = 0.5
 one_shot = true
 
-[node name="GruntTimer" type="Timer" parent="."]
-wait_time = 6.0
-autostart = true
+[node name="LaserDamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -277,14 +303,17 @@ scale = Vector2(1.5, 1.5)
 stream = ExtResource("5_so8b1")
 volume_db = -10.0
 bus = &"SFX"
+script = ExtResource("10_4h35n")
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_bfju6")
 bus = &"SFX"
+script = ExtResource("10_4h35n")
 
 [node name="FallSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("10_7bcbx")
 bus = &"SFX"
+script = ExtResource("10_4h35n")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -331,7 +360,6 @@ autostart = true
 avoidance_enabled = true
 radius = 50.0
 max_speed = 700.0
-debug_enabled = true
 
 [node name="StuckTimer" type="Timer" parent="."]
 

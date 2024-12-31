@@ -39,7 +39,7 @@ func _enemy_hit(body):
 		
 		if body.name.contains("Wall"):
 			body.cracked()
-			$CollisionSound.play()		
+			$CollisionSound.random_pitch_play()		
 			return
 		
 		temp.animation = "crushed"
@@ -50,7 +50,7 @@ func _enemy_hit(body):
 			
 			$CollisionParticles.position.y = randi_range(-180,180)
 			
-			$CollisionSound.play()
+			$CollisionSound.random_pitch_play()		
 			$AnimationPlayer.play("house_shake")
 			$CollisionParticles.emitting = true
 

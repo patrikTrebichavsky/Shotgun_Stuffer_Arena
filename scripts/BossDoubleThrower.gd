@@ -15,16 +15,24 @@ var num_of_arms = 4
 
 var aiming = false
 var thrown = false
-var dead = false
 var update_position = true
 var body_destination : Vector2
+@export var boss_is_ready = false
 
 var phase_one = true
 var phase_two_centred = false
 @export var throw_distance : int
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	
+	id = 20
+	
+	boss_is_ready = false	
+	
+	$AnimatedSprite2D.modulate = Color(1,1,1,0)
 
 	speed = randi_range(speed_min,speed_max)
 	
@@ -39,11 +47,13 @@ func _ready():
 
 	main_node.switch_mode.connect(_switch_mode)
 	
-	if undertale_mode:
-		$AnimatedSprite2D.animation = "undertale_mode_running" 
-
+	$AnimationPlayer.play("Spawn")
+	
 func _physics_process(_delta):
 	
+	if !boss_is_ready:
+		return
+		
 	if phase_one:
 		
 		var player_enemy_distance = abs((player_position-position).length())
@@ -57,7 +67,7 @@ func _physics_process(_delta):
 			return
 
 
-		if in_arena && has_head && player_enemy_distance <= throw_distance && !$RayCast2D.is_colliding():
+		if has_head && player_enemy_distance <= throw_distance && !$RayCast2D.is_colliding():
 			freeze = true
 			has_head = false
 			num_of_heads = 0
@@ -69,7 +79,7 @@ func _physics_process(_delta):
 			if !undertale_mode:
 				$AnimatedSprite2D.play("throwing")
 			else:
-				$AnimatedSprite2D.play("undertale_mode_throwing")
+				$AnimatedSprite2D.play("undertale_throwing")
 				
 		elif  aiming:
 			
@@ -118,10 +128,10 @@ func _physics_process(_delta):
 			var pos_des_diference = position - body_destination
 			
 			#Since vector comparision works bit wierd it will be compared separetly 
-			if pos_des_diference .x + 40 >= 0 \
-			and pos_des_diference .y + 40 >= 0 \
-			and pos_des_diference .x - 40 <= 0 \
-			and pos_des_diference .y - 40 <= 0:
+			if pos_des_diference .x + 75 >= 0 \
+			and pos_des_diference .y + 75 >= 0 \
+			and pos_des_diference .x - 75 <= 0 \
+			and pos_des_diference .y - 75 <= 0:
 				
 				throw_arms()
 			
@@ -148,6 +158,11 @@ func _physics_process(_delta):
 				
 				instantiate_head_circle()
 				
+		elif phase_two_centred && num_of_heads == 2:
+			
+			$AnimatedSprite2D.look_at(player_position)
+			$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
+			
 				
 func throw_self():
 	
@@ -159,7 +174,7 @@ func throw_self():
 	
 	freeze = false
 	if undertale_mode:
-		$AnimatedSprite2D.animation = "undertale_mode_headless"
+		$AnimatedSprite2D.animation = "undertale_headless"
 	else:	
 		$AnimatedSprite2D.animation = "headless"
 		
@@ -172,8 +187,7 @@ func throw_self():
 	
 	for head in heads:
 		head.visible = true
-	
-	$AnimationPlayer.play("Spin")
+		$AnimationPlayer.play("Spin")
 	
 	set_collision_mask_value(2,false)
 	set_collision_mask_value(3,false)
@@ -187,7 +201,10 @@ func throw_self():
 	update_position = true
 	$StopChaseTimer.start(1.0)
 		
-
+	get_tree().call_group("magic_head","set_emitting",true)
+	#$SpinStartSound.play()
+	$SpinSoundEffect.play()
+	
 func throw_arms():
 
 	if player == null:
@@ -215,12 +232,12 @@ func throw_arms():
 	num_of_arms = 0
 	var arms = []
 	
-	var left_side_arm_spawn = $AnimatedSprite2D/SideLeftArmSpawn.global_position
-	var right_side_arm_spawn = $AnimatedSprite2D/SideRightArmSpawn.global_position
-	var left_front_arm_spawn = $AnimatedSprite2D/FrontLeftArmSpawn.global_position
-	var right_front_arm_spawn = $AnimatedSprite2D/FrontRightArmSpawn.global_position
+	var left_side_arm_spawn = $AnimatedSprite2D/SideLeftMagicParticles.global_position
+	var right_side_arm_spawn = $AnimatedSprite2D/SideRightMagicParticles.global_position
+	var left_front_arm_spawn = $AnimatedSprite2D/FrontLeftMagicParticles.global_position
+	var right_front_arm_spawn = $AnimatedSprite2D/FrontRightMagicParticles.global_position
 	
-	var destination_arm_adjusment = (player_position - left_front_arm_spawn).normalized()
+	var destination_arm_adjusment = (player_position - position).normalized()
 	var perpedic_vector = Vector2(destination_arm_adjusment.y,destination_arm_adjusment.x*-1)
 	
 	var left_side_arm_destination = player_position + (player.velocity*0.5) + (perpedic_vector*speed*0.4)
@@ -234,23 +251,41 @@ func throw_arms():
 	arms.append(instantiate_arm(left_front_arm_spawn,left_front_arm_destination,"res://scenes/Arm.tscn",true))
 	arms.append(instantiate_arm(right_front_arm_spawn,right_front_arm_destination,"res://scenes/Arm.tscn",false))
 	
-	$AnimatedSprite2D.animation = "armless"
+	if undertale_mode:
+		$AnimatedSprite2D.animation = "undertale_armless"
+	else:
+		$AnimatedSprite2D.animation = "armless"
+	
 	
 	for arm in arms:
 		arm._launch()
-		
+		get_tree().call_group("magic_arm","set_emitting",true)
+	
+	$SpinSoundEffect.playing = false
+	$ShootArmsSound.playing = true
 	
 func arm_returned(): 
 	num_of_arms += 1
 	
 	if num_of_arms == 4:
 		if !dead:
-			if undertale_mode:
-				$AnimatedSprite2D.animation = "undertale_mode_headless"
+			if phase_two_centred:
+				if undertale_mode:
+					$AnimatedSprite2D.frame = 0 
+					$AnimatedSprite2D.play("undertale_second_phase")
+				else:
+					$AnimatedSprite2D.frame = 0 
+					$AnimatedSprite2D.play("second_phase")
 			else:
-				$AnimatedSprite2D.animation = "headless"
-			has_arms = true
-			return_heads()
+				if undertale_mode:
+					$AnimatedSprite2D.animation = "undertale_headless"
+				else:
+					$AnimatedSprite2D.animation = "headless"
+				has_arms = true
+				return_heads()
+				
+	get_tree().call_group("magic_arm","set_emitting",false)
+				
 
 
 func return_arms():
@@ -260,7 +295,9 @@ func return_arms():
 		var main = get_parent()
 		main.get_tree().call_group("arms","_return")
 		num_of_arms = 0
-		
+		$ShootArmsSound
+	
+
 			
 func head_returned():
 	num_of_heads += 1
@@ -268,12 +305,13 @@ func head_returned():
 	if num_of_heads == 2:
 		if !dead:
 			if undertale_mode:
-				$AnimatedSprite2D.animation = "undertale_mode_running"
+				$AnimatedSprite2D.animation = "undertale_running"
 			else:
 				$AnimatedSprite2D.animation = "running"
 			has_head = true
-			
-			
+		
+			get_tree().call_group("magic_head","set_emitting",false)
+
 func return_heads():
 	
 	for head in heads:
@@ -297,7 +335,7 @@ func instantiate_head_circle():
 	
 	freeze = false
 	if undertale_mode:
-		$AnimatedSprite2D.animation = "undertale_mode_headless"
+		$AnimatedSprite2D.animation = "undertale_headless"
 	else:	
 		$AnimatedSprite2D.animation = "headless"
 		
@@ -310,26 +348,79 @@ func instantiate_head_circle():
 
 
 	heads[0].lap_progress = 0.5
-	heads[0].modulate = Color(255,0,255,255)
+	heads[0].current_radius.connect(change_safe_area_radius)
 	
 	for head in heads:
 		head.visible = true
 		head.circle_center = position
 		head.get_node("Sprite").z_index = 20
 		head._tween_movement(position-Vector2(0,1200),1)
-
-	
+		$AnimatedSprite2D/Head1MagicParticles.emitting = true
+		$AnimatedSprite2D/Head2MagicParticles.emitting = true
+		
+		
 func heads_ready_phase_two():
 	num_of_heads += 1
 	
 	if num_of_heads == 2:
-		$SecondPhaseArea.set_deferred("monitoring", true)
-
-func player_left_boundries(body):
+		$SecondPhaseSafeArea.body_exited.connect(player_left_boundries)
+		$AnimatedSprite2D.frame_changed.connect(throw_arms_second_phase)
+		$AnimatedSprite2D.animation_finished.disconnect(throw_self)
+						
+		if undertale_mode:
+			$AnimatedSprite2D.play("undertale_second_phase")
+		else:
+			$AnimatedSprite2D.play("second_phase")
+			
+			
+		if !$SecondPhaseSafeArea.has_overlapping_bodies():
+			get_tree().create_timer(0.2).timeout.connect(player_left_boundries)
+		
+		
+func player_left_boundries(body=null):
 	
 	for head in heads:
-		head.player_outside_boundries()
+		if is_instance_valid(head):
+			head.player_outside_boundries()
+
 	
+func throw_arms_second_phase():
+	
+	var start : Vector2
+	var left : bool
+	if player == null:
+		return
+		
+	var destination	= position + ((player_position + (player.velocity*0.1)) - position).normalized()*heads[0].radius_min
+	
+	match $AnimatedSprite2D.frame:
+		0:
+			return
+		1:
+			start =	$AnimatedSprite2D/SideLeftMagicParticles.global_position
+			$AnimatedSprite2D/SideLeftMagicParticles.emitting = true
+			left = true
+			num_of_arms = 0
+		2:
+			start =	$AnimatedSprite2D/FrontLeftMagicParticles.global_position
+			$AnimatedSprite2D/FrontLeftMagicParticles.emitting = true
+			left = true
+		3:
+			start= $AnimatedSprite2D/FrontRightMagicParticles.global_position
+			$AnimatedSprite2D/FrontRightMagicParticles.emitting = true
+			left = false
+		4:
+			start = $AnimatedSprite2D/SideRightMagicParticles.global_position
+			$AnimatedSprite2D/SideRightMagicParticles.emitting = true
+			left = false
+	
+	$ShootArmsSound.play()
+	
+	var arm = instantiate_arm(start,destination,"res://scenes/Arm.tscn",left)
+	arm.speed_initial = 1500
+	arm._launch()
+	
+
 func instantiate_arm(start,destination,scene_location,left=false):
 		
 	var arm = load(scene_location).instantiate()
@@ -340,6 +431,7 @@ func instantiate_arm(start,destination,scene_location,left=false):
 	
 	if left:
 		arm.get_node("Sprite").animation = "left"
+		arm.is_left = true
 		
 	arm.start = start
 	arm.position = start
@@ -347,6 +439,10 @@ func instantiate_arm(start,destination,scene_location,left=false):
 	
 	arm.body_reached.connect(arm_returned) 
 	arm.destination_reached_signal.connect(return_arms)
+	
+	if undertale_mode:
+		arm._switch_mode("undertale")
+	
 	return arm
 
 
@@ -358,13 +454,16 @@ func instantiate_head(start,scene_location):
 	
 	get_parent().add_child(head)
 	
-	head.start = start
+	head.start = position
 	head.position = start
 	
 	head.body_reached.connect(head_returned)
 	
 	head.start_floating() 
 	
+	if undertale_mode:
+		head._switch_mode("undertale")
+		
 	return head
 
 
@@ -377,7 +476,7 @@ func _update_player_position(position):
 	player_position = position
 	
 	
-func got_shot(damage, push_back, custom_death_sprite=false):
+func got_shot(damage, push_back, custom_death_sprite=false ,critical_hit = false):
 	
 	hp -= damage
 	
@@ -394,33 +493,117 @@ func got_shot(damage, push_back, custom_death_sprite=false):
 		
 func _death(custom_death_sprite=false):
 		$CollisionShape2D.set_deferred("disabled", true)
+		$SecondPhaseSafeArea.set_deferred("disabled", true)
 		$DeathParticles.emitting = true
 		
 		if !custom_death_sprite:		
 			if(undertale_mode):
-				$AnimatedSprite2D.animation = "undertale_mode_death"
+				$AnimatedSprite2D.animation = "undertale_death"
 			else:
 				$AnimatedSprite2D.animation = "death"
 		
 		
 		$DeathTimer.start()
 		$DeathSound.play()
-		
-		emit_signal("enemy_killed", xp)
 		set_collision_mask_value(20,false)
 
 		linear_velocity = Vector2.ZERO
 		set_deferred("freeze",true)
 		
 		set_physics_process(false)
+	
+		get_parent().leveled_up()
+				
 		
-
+		
+		
 func _delete_enemy():
-	get_parent().decrease_basic_enemy_counter()
+	
 	emit_signal("stop_homming")
 	
-	if heads.size() > 0:
-		for head in heads:
-			head.queue_free()
+	var main = get_parent()
 	
+	main.boss_killed()
+	main.get_tree().call_group("boss_part","queue_free")
 	queue_free()
+
+
+func change_safe_area_radius(new_radius):
+	$SecondPhaseSafeArea/CollisionShape2D.shape.radius = new_radius
+
+
+func _switch_mode(_name):
+	
+	if phase_two_centred:
+		$AnimatedSprite2D.frame_changed.disconnect(throw_arms_second_phase)
+		
+	var current_frame = $AnimatedSprite2D.frame
+	
+	undertale_mode = !undertale_mode
+	
+	if undertale_mode:
+		
+		$AnimatedSprite2D/Head1MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres")
+		$AnimatedSprite2D/Head2MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres")
+		$AnimatedSprite2D/SideLeftMagicParticles.process_material = load("res://particles/Undertale_MagicMaterial.tres")
+		$AnimatedSprite2D/SideRightMagicParticles.process_material = load("res://particles/Undertale_MagicMaterial.tres")
+		$AnimatedSprite2D/FrontLeftMagicParticles.process_material = load("res://particles/Undertale_MagicMaterial.tres")
+		$AnimatedSprite2D/FrontRightMagicParticles.process_material = load("res://particles/Undertale_MagicMaterial.tres")
+		$SpawnParticles.process_material = load("res://particles/Undertale_SpawnMagicMaterial.tres")
+		
+		match $AnimatedSprite2D.animation:
+			"armless":
+				$AnimatedSprite2D.animation = "undertale_armless"
+				
+			"death":
+				$AnimatedSprite2D.animation = "undertale_death"
+				
+			"headless":
+				$AnimatedSprite2D.animation = "undertale_headless"
+				
+			"running":
+				$AnimatedSprite2D.animation = "undertale_running"
+				
+			"second_phase":
+				$AnimatedSprite2D.animation = "undertale_second_phase"
+				$AnimatedSprite2D.frame = current_frame
+				
+			"throwing":
+				$AnimatedSprite2D.animation = "undertale_throwing"
+				$AnimatedSprite2D.frame = current_frame
+						
+	else:
+		
+		$AnimatedSprite2D/Head1MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")
+		$AnimatedSprite2D/Head2MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")
+		$AnimatedSprite2D/SideLeftMagicParticles.process_material = load("res://particles/MagicMaterial.tres")
+		$AnimatedSprite2D/SideRightMagicParticles.process_material = load("res://particles/MagicMaterial.tres")
+		$AnimatedSprite2D/FrontLeftMagicParticles.process_material = load("res://particles/MagicMaterial.tres")
+		$AnimatedSprite2D/FrontRightMagicParticles.process_material = load("res://particles/MagicMaterial.tres")
+		$SpawnParticles.process_material = load("res://particles/SpawnMagicMaterial.tres")
+		
+		match $AnimatedSprite2D.animation:
+			"undertale_armless":
+				$AnimatedSprite2D.animation = "armless"
+				
+			"undertale_death":
+				$AnimatedSprite2D.animation = "death"
+
+			"undertale_headless":
+				$AnimatedSprite2D.animation = "headless"
+				
+			"undertale_running":
+				$AnimatedSprite2D.animation = "running"
+				
+			"undertale_second_phase":
+				$AnimatedSprite2D.animation = "second_phase"
+				$AnimatedSprite2D.frame = current_frame
+						
+			"undertale_throwing":
+				$AnimatedSprite2D.animation = "throwing"
+				$AnimatedSprite2D.frame = current_frame
+				
+	if phase_two_centred:
+		$AnimatedSprite2D.frame_changed.connect(throw_arms_second_phase)
+
+	

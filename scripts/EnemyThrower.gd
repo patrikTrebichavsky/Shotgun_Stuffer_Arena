@@ -3,7 +3,6 @@ extends BasicEnemy
 
 var has_head = true
 var aiming = false
-var dead = false
 var head_destination : Vector2
 @export var throw_distance : int
 
@@ -20,6 +19,7 @@ func _ready():
 		$AnimatedSprite2D.animation = "undertale_mode_running" 
 		
 
+	$DeathSound.pitch_scale = randf_range(0.9,1.1)
 
 func _physics_process(_delta):
 	
@@ -79,62 +79,8 @@ func move(velocity: Vector2):
 	if has_head:
 		linear_velocity = velocity
 	
-
-func _delete_enemy():
-	set_collision_layer_value(20,false)
-	get_parent().decrease_basic_enemy_counter()
-	emit_signal("stop_homming")
-	queue_free()
-
-
-func got_shot(damage, push_back, custom_death_sprite=false):
 	
-	hp -= damage
-	
-	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
-	add_child(instance)
-	instance._display_message(str(damage*10), "#A4A5AE", 35)
-	
-	if hp <= 0:
-		
-		dead = true	
-		$CollisionShape2D.set_deferred("disabled", true)
-		$DeathParticles.emitting = true
-		
-		if !custom_death_sprite:
-			if undertale_mode && $AnimatedSprite2D.animation.contains("headless"):
-				$AnimatedSprite2D.animation = "undertale_mode_death_headless"
-				
-			elif $AnimatedSprite2D.animation.contains("headless"):
-				$AnimatedSprite2D.animation = "death_headless"
-				
-			elif undertale_mode:
-				$AnimatedSprite2D.animation = "undertale_mode_death"
-				
-			else:
-				$AnimatedSprite2D.animation = "death"
-		
-		
-		$DeathTimer.start()
-		$DeathSound.play()
-		
-		emit_signal("enemy_killed", xp)
-		
-		linear_velocity = Vector2.ZERO
-		set_deferred("freeze",true)
-		
-		set_physics_process(false)
-		apply_central_impulse(push_back)
-		
-	else:
-		
-		set_physics_process(false)
-		apply_central_impulse(push_back)
-		
-		await get_tree().create_timer(0.2).timeout
-		set_physics_process(true)
-
-func got_conditioned(damage, _condition,custom_death_sprite):
+func got_conditioned(damage, _condition,custom_death_sprite=false):
 	
 	hp -= damage
 	
@@ -144,7 +90,7 @@ func got_conditioned(damage, _condition,custom_death_sprite):
 		if has_head:
 			$AnimatedSprite2D.animation = "burned"
 		else:
-			$AnimatedSprite2D. animation = "burned_headless"
+			$AnimatedSprite2D.animation = "burned_headless"
 			
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
@@ -153,6 +99,41 @@ func got_conditioned(damage, _condition,custom_death_sprite):
 	$ConditionParticles.emitting = true 
 	
 	
+	
+func _death(custom_death_sprite=false):
+	
+	if dead:
+		return
+			
+	dead = true
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+	$DeathParticles.emitting = true
+	
+	if !custom_death_sprite:
+		if undertale_mode && $AnimatedSprite2D.animation.contains("headless"):
+			$AnimatedSprite2D.animation = "undertale_mode_death_headless"
+				
+		elif $AnimatedSprite2D.animation.contains("headless"):
+			$AnimatedSprite2D.animation = "death_headless"
+		
+		elif undertale_mode:
+			$AnimatedSprite2D.animation = "undertale_mode_death"
+			
+		else:
+			$AnimatedSprite2D.animation = "death"
+		
+		
+	$DeathTimer.start()
+	$DeathSound.random_pitch_play()
+	
+	emit_signal("enemy_killed", xp)
+	
+	linear_velocity = Vector2.ZERO
+	set_deferred("freeze",true)
+		
+	set_physics_process(false)
+
 
 func throw():
 	
@@ -177,8 +158,9 @@ func throw():
 	head.destination = head_destination
 	
 	head.body_reached.connect(head_returned) 
+	$MagicParticles.emitting = true
 	
-	
+		
 func head_returned():
 	
 	if !dead:
@@ -187,7 +169,7 @@ func head_returned():
 		else:
 			$AnimatedSprite2D.animation = "running"
 		has_head = true
-
+		$MagicParticles.emitting = false
 
 func _switch_mode(_name):
 	
@@ -200,32 +182,14 @@ func _switch_mode(_name):
 			$AnimatedSprite2D.animation = "undertale_mode_running" 
 		else:
 			$AnimatedSprite2D.animation = "undertale_mode_running_headless" 
-			
+		
+		$MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres")
+				
 	elif  hp > 0:
 		
 		if has_head:
 			$AnimatedSprite2D.animation = "running" 
 		else:
 			$AnimatedSprite2D.animation = "running_headless" 
-
-
-#func falling_down_from_wall():
-	#var tween = get_tree().create_tween()
-	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.8,0.8), 0.03625)
-	#tween.tween_property($AnimatedSprite2D, "scale", Vector2(0.75,0.75), 0.03625)
-	#await  tween.finished
-	#
-	#set_collision_mask_value(10,false)
-	#set_collision_layer_value(10,false)
-	#
-	#set_collision_mask_value(2,true)
-	#set_collision_mask_value(3,true)
-	#set_collision_layer_value(2,true)
-	#set_collision_layer_value(3,true)
-	#set_collision_layer_value(4,true)
-	#z_index = 0
-	#in_arena = true
-	
-func _enemy_fell_off_map():
-	get_parent().decrease_special_enemy_counter()
-	queue_free()
+		
+		$MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")

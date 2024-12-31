@@ -21,6 +21,8 @@ var target_position : Vector2
 var player 
 var in_arena = false
 
+var dead = false
+
 @export var undertale_mode : bool
 
 
@@ -34,7 +36,8 @@ func _ready():
 
 	var main_node = get_parent()
 	player = main_node.get_node("Player")
-	player.player_position.connect(update_player_position)
+	if ! player == null:
+		player.player_position.connect(update_player_position)
 	
 
 	main_node.switch_mode.connect(_switch_mode)
@@ -74,7 +77,6 @@ func move(velocity: Vector2):
 	
 func player_is_dead():
 	
-	$GruntTimer.stop()
 	set_deferred("freeze",true)
 	angular_velocity = 0
 	set_physics_process(false)
@@ -82,20 +84,26 @@ func player_is_dead():
 
 func _delete_enemy():
 	
+	if !dead:
+		emit_signal("enemy_killed", xp)
+	
 	set_collision_layer_value(20,false)
-	get_parent().decrease_basic_enemy_counter()
 	emit_signal("stop_homming")
 	queue_free()
 
 
-func got_shot(damage, push_back, custom_death_sprite=false):
+func got_shot(damage, push_back, custom_death_sprite=false ,critical_hit = false):
 	
 	hp -= damage
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
-	instance._display_message(str(damage*10), "#A4A5AE", 35)
-	
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	else:
+		instance._display_message(str(damage*10), "#A4A5AE", 35)
+		
+			
 	if hp <= 0:
 		_death(custom_death_sprite)
 		apply_central_impulse(push_back)
@@ -108,8 +116,10 @@ func got_shot(damage, push_back, custom_death_sprite=false):
 		await get_tree().create_timer(0.2).timeout
 		set_physics_process(true)
 
+
+
 #condition variable isnt used for now its for potential new conditions 
-func got_conditioned(damage, _condition,custom_death_sprite):
+func got_conditioned(damage, _condition,custom_death_sprite=false):
 	
 	hp -= damage
 	
@@ -169,30 +179,35 @@ func falling_down_from_wall():
 	set_collision_layer_value(2,true)
 	set_collision_layer_value(3,true)
 	set_collision_layer_value(4,true)
+ 
 	z_index = 0
 	in_arena = true
 
 
 func _death(custom_death_sprite=false):
-		$CollisionShape2D.set_deferred("disabled", true)
-		$DeathParticles.emitting = true
+	
+	if dead:
+		return
 		
-		if !custom_death_sprite:		
-			if(undertale_mode):
-				$AnimatedSprite2D.animation = "undertale_mode_death"
-			else:
-				$AnimatedSprite2D.animation = "death"
+	dead = true
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+	$DeathParticles.emitting = true
 		
+	if !custom_death_sprite:		
+		if(undertale_mode):
+			$AnimatedSprite2D.animation = "undertale_mode_death"
+		else:
+			$AnimatedSprite2D.animation = "death"
 		
-		$DeathTimer.start()
-		$DeathSound.play()
-		
-		emit_signal("enemy_killed", xp)
+	$DeathTimer.start()
+	$DeathSound.random_pitch_play()
 
-		linear_velocity = Vector2.ZERO
-		set_deferred("freeze",true)
+	linear_velocity = Vector2.ZERO
+	emit_signal("enemy_killed", xp)
+	set_deferred("freeze",true)
 		
-		set_physics_process(false)
+	set_physics_process(false)
 
 
 func _enemy_fell_off_map():

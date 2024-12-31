@@ -197,15 +197,17 @@ _data = {
 "ArenaEntering": SubResource("Animation_r34c6")
 }
 
-[node name="SmasherEnemy" type="RigidBody2D" groups=["enemy", "smasher"]]
+[node name="BossSmasher" type="RigidBody2D" groups=["enemy", "smasher"]]
+visible = false
 z_index = 12
 position = Vector2(1920, 1080)
+scale = Vector2(15, 15)
 collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
 lock_rotation = true
-max_contacts_reported = 1
 contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_0xh7w")
 dash_speed_min = 800
 dash_speed_max = 1700
@@ -338,7 +340,7 @@ bus = &"SFX"
 stream = ExtResource("14_fftpt")
 bus = &"SFX"
 
-[node name="SpawnAddsTimer" type="Timer" parent="."]
+[node name="SpawnAddsTimer" type="Timer" parent="." groups=["enemy", "smasher"]]
 wait_time = 20.0
 one_shot = true
 autostart = true

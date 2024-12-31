@@ -1,13 +1,33 @@
-[gd_scene load_steps=17 format=3 uid="uid://3g5stnlx8o8p"]
+[gd_scene load_steps=37 format=3 uid="uid://3g5stnlx8o8p"]
 
 [ext_resource type="Script" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
 [ext_resource type="Texture2D" uid="uid://dmlb8cof48rky" path="res://sprites/Enemies/Boss/DoubleThrower/Running.png" id="2_ogxy4"]
 [ext_resource type="Texture2D" uid="uid://d0h5bhchd1hqe" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessArmlessBody.png" id="2_q5yru"]
 [ext_resource type="Texture2D" uid="uid://d3fcngncmt8wh" path="res://sprites/Enemies/Boss/DoubleThrower/ThrowingHeads.png" id="3_g6fis"]
-[ext_resource type="Texture2D" uid="uid://r2ggkwh81h3d" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessBody.png" id="3_s0lwn"]
+[ext_resource type="Texture2D" uid="uid://budhnellfwli1" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseFirst.png" id="5_6ui8m"]
+[ext_resource type="Texture2D" uid="uid://bmj723r84sue0" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseSecond.png" id="6_d81te"]
+[ext_resource type="Texture2D" uid="uid://bmor3vu3g150w" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseThird.png" id="7_wuv1d"]
+[ext_resource type="Texture2D" uid="uid://bbc7axwg7byee" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseFourth.png" id="8_4a2f1"]
+[ext_resource type="Material" uid="uid://ddui6mfcd6loh" path="res://particles/MagicMaterial.tres" id="10_dk6cq"]
+[ext_resource type="Texture2D" uid="uid://lhs2p6cxuxf5" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_HeadlessArmlessBody.png" id="10_ndieq"]
+[ext_resource type="Texture2D" uid="uid://bdgr1suv3xwu3" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_HeadlessBody.png" id="11_i5jqw"]
+[ext_resource type="Texture2D" uid="uid://d373nylulj3u4" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_Running.png" id="12_c8fvb"]
+[ext_resource type="Texture2D" uid="uid://cm0tgixobwn84" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_SecondPhaseFirst.png" id="13_8g1j1"]
+[ext_resource type="Texture2D" uid="uid://b7mx8achwu2p8" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_SecondPhaseSecond.png" id="14_8arr4"]
+[ext_resource type="Texture2D" uid="uid://csg1jeqnpw3u3" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_SecondPhaseThird.png" id="15_euljl"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="15_mec06"]
-[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="16_h1jao"]
+[ext_resource type="Texture2D" uid="uid://cj8ox65jhaof3" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_SecondPhaseFourth.png" id="16_gn0wi"]
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="17_4bxts"]
+[ext_resource type="Texture2D" uid="uid://yydbdsa45n3m" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_ThrowingHeads.png" id="17_pup4s"]
+[ext_resource type="Material" uid="uid://bkxahggaxhx57" path="res://particles/HeadMagicMaterial.tres" id="18_6kox5"]
+[ext_resource type="Material" uid="uid://cowkx17kfgsnb" path="res://particles/SpawnMagicMaterial.tres" id="21_2bagh"]
+[ext_resource type="AudioStream" uid="uid://7ece8qopbgf3" path="res://sounds/Enemy/DoubleThrower/Spin.wav" id="23_337f4"]
+[ext_resource type="AudioStream" uid="uid://dcsfhrkgtibmo" path="res://sounds/Enemy/DoubleThrower/ShootArms.wav" id="23_jlkag"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="23_un1ix"]
+[ext_resource type="AudioStream" uid="uid://7pmiulr7tw1x" path="res://sounds/Enemy/DoubleThrower/Spawn.wav" id="24_rsl4x"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hfvmx"]
+load_path = "res://.godot/imported/HeadlessBody.png-8a109c2d7240275a848b8ad6065f26fd.ctex"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_74vta"]
 animations = [{
@@ -29,7 +49,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_s0lwn")
+"texture": SubResource("CompressedTexture2D_hfvmx")
 }],
 "loop": true,
 "name": &"headless",
@@ -44,6 +64,26 @@ animations = [{
 "speed": 5.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_hfvmx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6ui8m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_d81te")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_wuv1d")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_4a2f1")
+}],
+"loop": false,
+"name": &"second_phase",
+"speed": 2.0
+}, {
+"frames": [{
 "duration": 3.0,
 "texture": ExtResource("2_ogxy4")
 }, {
@@ -52,6 +92,69 @@ animations = [{
 }],
 "loop": false,
 "name": &"throwing",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ndieq")
+}],
+"loop": true,
+"name": &"undertale_armless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_ndieq")
+}],
+"loop": true,
+"name": &"undertale_death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_i5jqw")
+}],
+"loop": true,
+"name": &"undertale_headless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_c8fvb")
+}],
+"loop": true,
+"name": &"undertale_running",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_i5jqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8g1j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_8arr4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_euljl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gn0wi")
+}],
+"loop": false,
+"name": &"undertale_second_phase",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 3.0,
+"texture": ExtResource("12_c8fvb")
+}, {
+"duration": 2.0,
+"texture": ExtResource("17_pup4s")
+}],
+"loop": false,
+"name": &"undertale_throwing",
 "speed": 5.0
 }]
 
@@ -74,8 +177,99 @@ color = Color(1, 0.92549, 0.14902, 1)
 color_ramp = SubResource("GradientTexture1D_khebe")
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgfa6"]
-radius = 63.0
-height = 222.0
+radius = 49.0
+height = 160.0
+
+[sub_resource type="Animation" id="Animation_vpnjt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_n2uep"]
+resource_name = "Spawn"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SpawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnParticles:amount_ratio")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 4.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("AnimatedSprite2D:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3.3, 3.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".:boss_is_ready")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(6),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpawnSound:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_s60e6"]
 resource_name = "Spin"
@@ -107,48 +301,108 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_51jee"]
 _data = {
+"RESET": SubResource("Animation_vpnjt"),
+"Spawn": SubResource("Animation_n2uep"),
 "Spin": SubResource("Animation_s60e6")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k0xfy"]
-radius = 781.4
+radius = 1080.0
 
 [node name="BossDoubleThrower" type="RigidBody2D" groups=["boss", "enemy"]]
 z_index = 12
-collision_layer = 512
-collision_mask = 512
+position = Vector2(1920, 1080)
+collision_layer = 6
+collision_mask = 14
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_kjvjf")
 hp_max = 300
 throw_speed_decrease = 1
 throw_speed_initial = 1000
+boss_is_ready = true
 throw_distance = 1100
 hp = 150
 xp = 56
 player_position = Vector2(500, 500)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_74vta")
-animation = &"running"
+animation = &"second_phase"
 
-[node name="SideLeftArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(-21, -86)
+[node name="Head1MagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_head"]]
+position = Vector2(-19.9998, 35.0001)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("18_6kox5")
+lifetime = 0.25
+local_coords = true
 
-[node name="SideRightArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(-19, 86)
-
-[node name="FrontLeftArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(22, -39)
-
-[node name="FrontRightArmSpawn" type="Marker2D" parent="AnimatedSprite2D"]
-position = Vector2(20, 42)
+[node name="Head2MagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_head"]]
+position = Vector2(-19.0002, -34.9999)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("18_6kox5")
+lifetime = 0.25
+local_coords = true
 
 [node name="Head1Spawn" type="Marker2D" parent="AnimatedSprite2D"]
 position = Vector2(33, 55)
 
 [node name="Head2Spawn" type="Marker2D" parent="AnimatedSprite2D"]
 position = Vector2(34, -54)
+
+[node name="SideLeftMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
+position = Vector2(-21.0004, -85.9999)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("10_dk6cq")
+lifetime = 0.5
+local_coords = true
+
+[node name="SideLeftMagicParticles2" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
+position = Vector2(-21.0004, -85.9999)
+rotation = -1.5708
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("10_dk6cq")
+lifetime = 0.5
+local_coords = true
+
+[node name="SideRightMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
+position = Vector2(-18.9996, 86.0001)
+rotation = 1.5708
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("10_dk6cq")
+lifetime = 0.5
+local_coords = true
+
+[node name="FrontLeftMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
+position = Vector2(22, -39)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("10_dk6cq")
+lifetime = 0.5
+local_coords = true
+
+[node name="FrontRightMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
+position = Vector2(20, 42)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+process_material = ExtResource("10_dk6cq")
+lifetime = 0.5
+local_coords = true
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -159,6 +413,13 @@ lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
 
+[node name="SpawnParticles" type="GPUParticles2D" parent="."]
+z_index = 13
+amount = 500
+amount_ratio = 0.0
+process_material = ExtResource("21_2bagh")
+randomness = 1.0
+
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 wait_time = 0.5
 one_shot = true
@@ -166,15 +427,28 @@ one_shot = true
 [node name="StopChaseTimer" type="Timer" parent="." groups=["enemy"]]
 one_shot = true
 
-[node name="GruntTimer" type="Timer" parent="."]
-wait_time = 6.0
-autostart = true
+[node name="LaserDamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
-[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+[node name="StuckTimer" type="Timer" parent="."]
+
+[node name="SpinSoundEffect" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
-stream = ExtResource("16_h1jao")
+stream = ExtResource("23_337f4")
+bus = &"SFX"
+script = ExtResource("23_un1ix")
+
+[node name="ShootArmsSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("23_jlkag")
 volume_db = -5.0
-pitch_scale = 0.5
+bus = &"SFX"
+script = ExtResource("23_un1ix")
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("24_rsl4x")
+volume_db = -11.31
+bus = &"SFX"
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -194,35 +468,32 @@ avoidance_enabled = true
 radius = 50.0
 time_horizon_obstacles = 1.0
 max_speed = 700.0
-debug_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-3, 1)
 shape = SubResource("CapsuleShape2D_jgfa6")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 scale = Vector2(1, 20)
-target_position = Vector2(700, 0)
-collision_mask = 32
+target_position = Vector2(1100, 0)
+collision_mask = 64
 hit_from_inside = true
-
-[node name="StuckTimer" type="Timer" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_51jee")
 }
 
-[node name="SecondPhaseArea" type="Area2D" parent="."]
+[node name="SecondPhaseSafeArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 16384
-monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SecondPhaseArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SecondPhaseSafeArea"]
 shape = SubResource("CircleShape2D_k0xfy")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw_self"]
 [connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]
 [connection signal="timeout" from="StopChaseTimer" to="." method="_stop_body_chase"]
-[connection signal="body_exited" from="SecondPhaseArea" to="." method="player_left_boundries"]

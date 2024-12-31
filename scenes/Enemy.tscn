@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://dir5j135wrl6q"]
+[gd_scene load_steps=11 format=3 uid="uid://dir5j135wrl6q"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_jfgch"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_onilt"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_lx7r7"]
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_0468r"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="6_336ml"]
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_ppktf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
@@ -60,9 +61,9 @@ explosiveness = 0.67
 wait_time = 0.5
 one_shot = true
 
-[node name="GruntTimer" type="Timer" parent="."]
-wait_time = 6.0
-autostart = true
+[node name="LaserDamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -75,6 +76,7 @@ scale = Vector2(1.5, 1.5)
 stream = ExtResource("6_ppktf")
 volume_db = -10.0
 bus = &"SFX"
+script = ExtResource("6_336ml")
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
@@ -88,7 +90,6 @@ target_desired_distance = 20.0
 avoidance_enabled = true
 time_horizon_obstacles = 1.0
 max_speed = 700.0
-debug_enabled = true
 
 [node name="StuckTimer" type="Timer" parent="."]
 

@@ -20,6 +20,7 @@ func _ready():
 	
 	if undertale_mode:
 		$Sprite.animation = "undertale_head"
+		$MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres") 
 		
 func _physics_process(delta):
 	
@@ -47,12 +48,14 @@ func _physics_process(delta):
 			emit_signal("body_reached")
 			queue_free()
 
-func _switch_mode(_name):
+func _switch_mode(_name): 
 	
 	undertale_mode = !undertale_mode
 
 	if undertale_mode :
 		$Sprite.animation = "undertale_head" 
-		
+		$MagicParticles.process_material = load("res://particles/Undertale_HeadMagicMaterial.tres")
+	
 	else:
 		$Sprite.animation = "head_default" 
+		$MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")

@@ -114,4 +114,4 @@ visible = false
 shape = SubResource("RectangleShape2D_wlqhk")
 
 [connection signal="animation_finished" from="." to="." method="_on_animation_finished"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_laser_hitbox_body_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="edge_hit"]

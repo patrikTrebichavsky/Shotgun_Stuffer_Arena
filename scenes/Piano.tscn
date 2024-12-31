@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bvopopcwn8xkl"]
+[gd_scene load_steps=22 format=3 uid="uid://bvopopcwn8xkl"]
 
 [ext_resource type="Script" path="res://scripts/Piano.gd" id="1_d3j6f"]
 [ext_resource type="Texture2D" uid="uid://bwge3o55hycnu" path="res://sprites/Bullets/Piano.png" id="2_vywv1"]
@@ -13,6 +13,8 @@
 [ext_resource type="AudioStream" uid="uid://cc02ornd0k68m" path="res://sounds/Bullets/PianoCollision/PianoCollision_9.mp3" id="11_eavr3"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="12_4rynb"]
 [ext_resource type="AudioStream" uid="uid://c72rkpnp1tqwp" path="res://sounds/Bullets/PianoWallCollision.wav" id="13_3poct"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="14_j5qnk"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="15_e8mbm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -139,6 +141,12 @@ process_material = SubResource("ParticleProcessMaterial_m3meo")
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_j5qnk")
+volume_db = -5.0
+bus = &"SFX"
+script = ExtResource("15_e8mbm")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 wait_time = 8.0

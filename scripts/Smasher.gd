@@ -354,11 +354,11 @@ func _on_animated_sprite_2d_animation_finished():
 		
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
-	instance._display_message("HP MAX", "#E80000", 35)
-	hp_current = hp_max
+	instance._display_message("HP++", "#E80000", 35)
+	hp_current = hp_current+hp_max/4
 	$HealingSound.play()
-	get_tree().call_group("hp_bar","heal_to_full")
-
+	get_tree().call_group("hp_bar","heal_to_full", true, 0.5, hp_current)
+	
 func start_add_timer():
 	$SpawnAddsTimer.start()
 

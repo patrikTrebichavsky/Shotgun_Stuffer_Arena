@@ -55,13 +55,19 @@ func _enemy_hit(body):
 			get_node("CollisionSound"+str(hitcount/2)).play()	
 			
 		var push_back = linear_velocity.normalized() * push_back_multiplier
-		body.got_shot(damage, push_back)
+		
+		if body == targeted_enemy:
+			damage = damage*2
+			body.got_shot(damage, push_back, false, true)
+			$CriticalSound.random_pitch_play()
+		else:
+			body.got_shot(damage, push_back)
 		
 		$Area2D.rotation += turn
 		$AnimatedSprite2D.rotation += turn
 		
 		linear_velocity = linear_velocity.rotated(turn)
-	
+		
 	if hitcount == num_of_notes:
 		
 		emit_signal("switch_mode", "This is place holder for future modes")

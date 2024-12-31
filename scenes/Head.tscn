@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://4shloqflan0l"]
+[gd_scene load_steps=7 format=3 uid="uid://4shloqflan0l"]
 
 [ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/Head.png" id="1_7lub3"]
 [ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/Undertale_Head.png" id="2_7eop7"]
 [ext_resource type="Script" path="res://scripts/Head.gd" id="3_a5mon"]
+[ext_resource type="Material" uid="uid://bkxahggaxhx57" path="res://particles/HeadMagicMaterial.tres" id="4_u0hrb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]
 animations = [{
@@ -43,3 +44,10 @@ animation = &"head_default"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(0.75, 0.75)
 shape = SubResource("CircleShape2D_xrkcs")
+
+[node name="MagicParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+scale = Vector2(1.5, 1.5)
+amount = 16
+process_material = ExtResource("4_u0hrb")
+lifetime = 0.5

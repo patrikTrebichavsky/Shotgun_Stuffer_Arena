@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://djck2jqyxiqvu"]
+
+[ext_resource type="Script" path="res://scripts/TextBox.gd" id="1_v13ov"]
+[ext_resource type="Texture2D" uid="uid://c3o8ikyby6qbq" path="res://sprites/UI/TextBox/TextBox.png" id="2_fgbuw"]
+[ext_resource type="FontFile" uid="uid://rludeyyeb5gw" path="res://fonts/Kenney Mini.ttf" id="3_ctvkp"]
+[ext_resource type="AudioStream" uid="uid://li6w7i34fj2p" path="res://sounds/ShotgunSpeech.mp3" id="4_3ctm5"]
+
+[node name="TextBox" type="MarginContainer"]
+modulate = Color(1, 1, 1, 0.784314)
+z_index = 80
+offset_right = 140.0
+offset_bottom = 140.0
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_v13ov")
+letter_time = 0.03
+space_time = 0.06
+punctuation_time = 0.1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_fgbuw")
+region_rect = Rect2(0, 0, 170, 170)
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 65
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 50
+
+[node name="DisplayedText" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ctvkp")
+theme_override_font_sizes/font_size = 80
+horizontal_alignment = 1
+
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="DialogSoundEffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3ctm5")
+volume_db = -12.0
+bus = &"SFX"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_display_letter"]

@@ -1,0 +1,573 @@
+[gd_scene load_steps=17 format=3 uid="uid://q3q8hs614ef4"]
+
+[ext_resource type="Script" path="res://scripts/Manual.gd" id="1_6m7gc"]
+[ext_resource type="Texture2D" uid="uid://dr7a8lkr6p6pk" path="res://sprites/Not Scaled/UI/StartScreen/StartScreen.png" id="2_cetlh"]
+[ext_resource type="Texture2D" uid="uid://bu6ecl1wd3i1d" path="res://sprites/UI/Manual/ManualOpen1-2.png" id="3_5gprr"]
+[ext_resource type="FontFile" uid="uid://rludeyyeb5gw" path="res://fonts/Kenney Mini.ttf" id="4_a5tai"]
+[ext_resource type="Texture2D" uid="uid://bwge3o55hycnu" path="res://sprites/Bullets/Piano.png" id="5_1ag0p"]
+[ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="6_14igh"]
+[ext_resource type="Texture2D" uid="uid://dejgnflsa7oj0" path="res://sprites/UI/Manual/Arrow.png" id="7_wb2qx"]
+[ext_resource type="Texture2D" uid="uid://badjpbyv668vd" path="res://sprites/UI/Manual/ArrowClicked.png" id="8_28ul2"]
+[ext_resource type="Texture2D" uid="uid://bjre8dg731cmr" path="res://sprites/UI/Manual/ArrowHower.png" id="9_rjxdv"]
+[ext_resource type="Texture2D" uid="uid://b31wsvm5wgcvr" path="res://sprites/UI/Manual/ManualOpen3-4.png" id="10_d1o6e"]
+[ext_resource type="Texture2D" uid="uid://vke4rlgh0qf1" path="res://sprites/Bullets/LampPost.png" id="11_s0tcl"]
+[ext_resource type="Texture2D" uid="uid://dngn5l0visv6t" path="res://sprites/Bullets/Car.png" id="12_rakrg"]
+[ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="13_oa27w"]
+[ext_resource type="Texture2D" uid="uid://ccaljik4ycn1x" path="res://sprites/UI/ControlsMenu/ExitX.png" id="14_0y6fp"]
+[ext_resource type="Texture2D" uid="uid://dc571cvgq3sc5" path="res://sprites/UI/ControlsMenu/ExitXPressed.png" id="15_4ibxr"]
+[ext_resource type="Texture2D" uid="uid://c6ovktesgfoqt" path="res://sprites/UI/ControlsMenu/ExitXHover.png" id="16_ibvu0"]
+
+[node name="ManualUI" type="CanvasLayer"]
+script = ExtResource("1_6m7gc")
+
+[node name="Background" type="TextureRect" parent="."]
+modulate = Color(0.446777, 0.446777, 0.446777, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_cetlh")
+
+[node name="Manual1-2" type="TextureRect" parent="."]
+offset_left = 560.0
+offset_top = 120.0
+offset_right = 1360.0
+offset_bottom = 920.0
+texture = ExtResource("3_5gprr")
+
+[node name="Page1" type="Control" parent="Manual1-2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -560.0
+offset_top = -120.0
+offset_right = -560.0
+offset_bottom = -120.0
+
+[node name="Headline" type="RichTextLabel" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 599.0
+offset_top = 153.0
+offset_right = 924.0
+offset_bottom = 279.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "    [u] Special
+ Ammunition [/u] "
+visible_characters_behavior = 1
+
+[node name="Generating" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 594.0
+offset_top = 307.0
+offset_right = 926.0
+offset_bottom = 388.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Is generated every 
+   few seconds"
+clip_text = true
+
+[node name="Stored" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 594.0
+offset_top = 406.0
+offset_right = 864.0
+offset_bottom = 446.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Is stored in Line"
+clip_text = true
+
+[node name="SizeIncrease" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 593.0
+offset_top = 460.0
+offset_right = 914.0
+offset_bottom = 544.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "-Line size increases 
+  as you LEVEL UP"
+clip_text = true
+
+[node name="Select" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 591.0
+offset_top = 547.0
+offset_right = 917.0
+offset_bottom = 667.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "-You can select from 
+  first 3 positions
+  by pressing:
+"
+
+[node name="Button1" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 629.0
+offset_top = 688.0
+offset_right = 680.0
+offset_bottom = 745.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 45
+text = "[1]
+"
+
+[node name="Button2" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 717.0
+offset_top = 688.0
+offset_right = 779.0
+offset_bottom = 745.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 45
+text = "[2]
+"
+
+[node name="Button3" type="Label" parent="Manual1-2/Page1"]
+layout_mode = 0
+offset_left = 813.0
+offset_top = 688.0
+offset_right = 875.0
+offset_bottom = 745.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 45
+text = "[3]
+"
+
+[node name="Page2" type="Control" parent="Manual1-2"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -560.0
+offset_top = -120.0
+offset_right = -520.0
+offset_bottom = -80.0
+
+[node name="Effects" type="RichTextLabel" parent="Manual1-2/Page2"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 153.0
+offset_right = 1371.0
+offset_bottom = 279.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "     [u] Special 
+  Ammo Types [/u]"
+visible_characters_behavior = 1
+
+[node name="Couch" type="Control" parent="Manual1-2/Page2"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Couch" type="RichTextLabel" parent="Manual1-2/Page2/Couch"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 299.0
+offset_right = 1313.0
+offset_bottom = 425.0
+theme_override_colors/default_color = Color(0.878431, 0.6, 0.313726, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[u] Couch [/u]"
+visible_characters_behavior = 1
+
+[node name="CouchPic" type="TextureRect" parent="Manual1-2/Page2/Couch"]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 296.0
+offset_right = 1320.0
+offset_bottom = 416.0
+texture = ExtResource("6_14igh")
+
+[node name="Effect" type="Label" parent="Manual1-2/Page2/Couch"]
+layout_mode = 0
+offset_left = 991.0
+offset_top = 366.0
+offset_right = 1149.0
+offset_bottom = 410.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Homing"
+clip_text = true
+
+[node name="Damage" type="Label" parent="Manual1-2/Page2/Couch"]
+layout_mode = 0
+offset_left = 991.0
+offset_top = 413.0
+offset_right = 1330.0
+offset_bottom = 533.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Heavy damage
+   to single enemy"
+clip_text = true
+
+[node name="Note" type="Label" parent="Manual1-2/Page2/Couch"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 498.0
+offset_right = 1339.0
+offset_bottom = 618.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 17
+text = "Install on your pillow to increase 
+your chance to win a pillow fight"
+clip_text = true
+
+[node name="Piano" type="Control" parent="Manual1-2/Page2"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Piano" type="RichTextLabel" parent="Manual1-2/Page2/Piano"]
+layout_mode = 0
+offset_left = 987.0
+offset_top = 548.0
+offset_right = 1312.0
+offset_bottom = 674.0
+theme_override_colors/default_color = Color(0.247059, 0.247059, 0.247059, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[u] Piano [/u]"
+visible_characters_behavior = 1
+
+[node name="PianoPic" type="TextureRect" parent="Manual1-2/Page2/Piano"]
+layout_mode = 0
+offset_left = 1181.0
+offset_top = 547.0
+offset_right = 1321.0
+offset_bottom = 667.0
+texture = ExtResource("5_1ag0p")
+metadata/_edit_use_anchors_ = true
+
+[node name="Effect" type="Label" parent="Manual1-2/Page2/Piano"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 617.0
+offset_right = 1146.0
+offset_bottom = 661.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Bouncy"
+clip_text = true
+
+[node name="Damage" type="Label" parent="Manual1-2/Page2/Piano"]
+layout_mode = 0
+offset_left = 988.0
+offset_top = 664.0
+offset_right = 1327.0
+offset_bottom = 784.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Medium damage
+  and plays notes"
+clip_text = true
+
+[node name="Note" type="Label" parent="Manual1-2/Page2/Piano"]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 756.0
+offset_right = 1339.0
+offset_bottom = 876.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 17
+text = "Music is gateway to different worlds"
+clip_text = true
+
+[node name="SwitchTo3-4" type="TextureButton" parent="Manual1-2"]
+layout_mode = 0
+offset_left = 832.0
+offset_top = 296.0
+offset_right = 1032.0
+offset_bottom = 496.0
+texture_normal = ExtResource("7_wb2qx")
+texture_pressed = ExtResource("8_28ul2")
+texture_hover = ExtResource("9_rjxdv")
+
+[node name="Manual3-4" type="TextureRect" parent="."]
+visible = false
+offset_left = 560.0
+offset_top = 120.0
+offset_right = 1360.0
+offset_bottom = 920.0
+texture = ExtResource("10_d1o6e")
+
+[node name="Page3" type="Control" parent="Manual3-4"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -560.0
+offset_top = -120.0
+offset_right = -520.0
+offset_bottom = -80.0
+
+[node name="Lampost" type="Control" parent="Manual3-4/Page3"]
+visible = false
+anchors_preset = 0
+offset_left = 593.0
+offset_top = 197.0
+offset_right = 633.0
+offset_bottom = 237.0
+
+[node name="Lampost" type="RichTextLabel" parent="Manual3-4/Page3/Lampost"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 324.0
+offset_bottom = 123.0
+theme_override_colors/default_color = Color(0.372549, 0.372549, 0.372549, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[u] Lampost [/u]"
+visible_characters_behavior = 1
+
+[node name="LampPostPic" type="TextureRect" parent="Manual3-4/Page3/Lampost"]
+layout_mode = 0
+offset_left = 326.0
+offset_top = 4.0
+offset_right = 566.0
+offset_bottom = 244.0
+rotation = 1.5708
+texture = ExtResource("11_s0tcl")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Effect" type="Label" parent="Manual3-4/Page3/Lampost"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 71.0
+offset_right = 161.0
+offset_bottom = 115.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Piercing"
+clip_text = true
+
+[node name="Damage" type="Label" parent="Manual3-4/Page3/Lampost"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 126.0
+offset_right = 342.0
+offset_bottom = 246.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Runs trough
+   the enemies"
+clip_text = true
+
+[node name="Note" type="Label" parent="Manual3-4/Page3/Lampost"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 235.0
+offset_right = 449.0
+offset_bottom = 355.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 17
+text = "Its quite light"
+clip_text = true
+
+[node name="Car" type="Control" parent="Manual3-4/Page3"]
+visible = false
+anchors_preset = 0
+offset_left = 600.0
+offset_top = 503.0
+offset_right = 640.0
+offset_bottom = 543.0
+
+[node name="Car" type="RichTextLabel" parent="Manual3-4/Page3/Car"]
+layout_mode = 0
+offset_left = 12.0
+offset_right = 337.0
+offset_bottom = 126.0
+theme_override_colors/default_color = Color(0.843137, 0.658824, 0, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[u] Car [/u]"
+visible_characters_behavior = 1
+
+[node name="Effect" type="Label" parent="Manual3-4/Page3/Car"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 91.0
+offset_right = 159.0
+offset_bottom = 135.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Explodes"
+clip_text = true
+
+[node name="Damage" type="Label" parent="Manual3-4/Page3/Car"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 143.0
+offset_right = 340.0
+offset_bottom = 263.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Covers battlefield 
+    with fiery inferno"
+clip_text = true
+
+[node name="Note" type="Label" parent="Manual3-4/Page3/Car"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 242.0
+offset_right = 351.0
+offset_bottom = 362.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 17
+text = "Hope you didnt lose your car keys"
+clip_text = true
+
+[node name="LampPostPic" type="TextureRect" parent="Manual3-4/Page3/Car"]
+layout_mode = 0
+offset_left = 326.0
+offset_top = -15.0
+offset_right = 506.0
+offset_bottom = 165.0
+rotation = 1.5708
+texture = ExtResource("12_rakrg")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Page4" type="Control" parent="Manual3-4"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -560.0
+offset_top = -120.0
+offset_right = -520.0
+offset_bottom = -80.0
+
+[node name="House" type="Control" parent="Manual3-4/Page4"]
+visible = false
+anchors_preset = 0
+offset_left = 991.0
+offset_top = 167.0
+offset_right = 1031.0
+offset_bottom = 207.0
+
+[node name="House" type="RichTextLabel" parent="Manual3-4/Page4/House"]
+modulate = Color(0.847059, 0.211765, 0.12549, 1)
+layout_mode = 0
+offset_left = 80.0
+offset_top = -12.0
+offset_right = 405.0
+offset_bottom = 114.0
+theme_override_colors/default_color = Color(0.878431, 0.6, 0.313726, 1)
+theme_override_fonts/normal_font = ExtResource("4_a5tai")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "[u] House [/u]"
+visible_characters_behavior = 1
+
+[node name="HousePic" type="TextureRect" parent="Manual3-4/Page4/House"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 290.0
+offset_right = 312.0
+offset_bottom = 690.0
+texture = ExtResource("13_oa27w")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="Effect" type="Label" parent="Manual3-4/Page4/House"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 59.0
+offset_right = 162.0
+offset_bottom = 103.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- House"
+clip_text = true
+
+[node name="Damage" type="Label" parent="Manual3-4/Page4/House"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 116.0
+offset_right = 343.0
+offset_bottom = 236.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 30
+text = "- Its a house....
+   It does 
+   all the damage."
+clip_text = true
+
+[node name="Note" type="Label" parent="Manual3-4/Page4/House"]
+layout_mode = 0
+offset_left = 13.0
+offset_top = 248.0
+offset_right = 352.0
+offset_bottom = 368.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_a5tai")
+theme_override_font_sizes/font_size = 17
+text = "Suprisingly being at end of this shot.
+Is quite painfull."
+clip_text = true
+
+[node name="SwitchTo1-2" type="TextureButton" parent="Manual3-4"]
+layout_mode = 0
+offset_left = -32.0
+offset_top = 496.0
+offset_right = 168.0
+offset_bottom = 696.0
+rotation = 3.14159
+texture_normal = ExtResource("7_wb2qx")
+texture_pressed = ExtResource("8_28ul2")
+texture_hover = ExtResource("9_rjxdv")
+
+[node name="ExitButton" type="TextureButton" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -83.0
+offset_top = -1080.0
+offset_right = 247.0
+offset_bottom = -750.0
+grow_horizontal = 0
+grow_vertical = 0
+scale = Vector2(0.25, 0.25)
+texture_normal = ExtResource("14_0y6fp")
+texture_pressed = ExtResource("15_4ibxr")
+texture_hover = ExtResource("16_ibvu0")
+stretch_mode = 0
+
+[connection signal="pressed" from="Manual1-2/SwitchTo3-4" to="." method="switchpageto34"]
+[connection signal="pressed" from="Manual3-4/SwitchTo1-2" to="." method="switchpageto12"]
+[connection signal="pressed" from="ExitButton" to="." method="hide_manual"]
