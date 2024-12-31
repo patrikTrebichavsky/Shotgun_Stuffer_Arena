@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/Kenney Bold.ttf-4b6335d7921e2d4f100c4699c9400
 Rendering=null
 antialiasing=1
 generate_mipmaps=false
+disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
 msdf_pixel_range=8
 msdf_size=48
