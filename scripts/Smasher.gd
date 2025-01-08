@@ -224,13 +224,17 @@ func delete_enemy():
 	queue_free()
 
 
-func got_shot(damage, push_back, custom_death_sprite=false):
+func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,critical_hit = false):
 	
 	hp_current -= damage
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
-	instance._display_message(str(damage*10), "#A4A5AE", 35)
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	else:
+		instance._display_message(str(damage*10), "#A4A5AE", 35)
+		
 	
 	get_tree().call_group("hp_bar","update_hp",hp_current)
 	

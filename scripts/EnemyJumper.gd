@@ -1,6 +1,5 @@
 extends BasicEnemy
 
-
 @export var just_jumped = false
 @export var jump_available = false
 @export var jump_distance : int

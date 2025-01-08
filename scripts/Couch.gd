@@ -29,7 +29,6 @@ func _ready():
 		
 		body.stop_homming.connect(target_died)
 		
-	
 func seek():
 	var steer = Vector2.ZERO
 	if target != null:

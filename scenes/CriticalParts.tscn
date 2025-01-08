@@ -1,0 +1,174 @@
+[gd_scene load_steps=17 format=3 uid="uid://cmouec5jc00ec"]
+
+[ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
+[ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
+[ext_resource type="Script" path="res://scripts/critical_parts_controler.gd" id="1_kxdh2"]
+[ext_resource type="Script" path="res://scripts/Rotation.gd" id="1_niriw"]
+[ext_resource type="Texture2D" uid="uid://dtej587ckm37x" path="res://sprites/Enemies/Basic/Parts/RightArm.png" id="3_5xtkf"]
+[ext_resource type="Texture2D" uid="uid://cijaawfjlmg6x" path="res://sprites/Enemies/Basic/Parts/Head.png" id="4_kkkc8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jtry5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7tf1t")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_aemqf"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_oj1ys"]
+gradient = SubResource("Gradient_aemqf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yiftw"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 240.0
+initial_velocity_max = 480.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_oj1ys")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ljh1t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gja27")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_a3xb4"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7lf3e"]
+gradient = SubResource("Gradient_a3xb4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2q0a0"]
+particle_flag_disable_z = true
+initial_velocity_min = 240.0
+initial_velocity_max = 480.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_7lf3e")
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ro7gj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5xtkf")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r1wa0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kkkc8")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}]
+
+[node name="CriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts")]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_kxdh2")
+body_parts = [NodePath("Body"), NodePath("LeftArm"), NodePath("RightArm"), NodePath("Head")]
+
+[node name="Body" type="RigidBody2D" parent="."]
+position = Vector2(-15, 6)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_niriw")
+variable_launch_angle = 20.0
+fixed_launch_angle = 10.0
+
+[node name="Body" type="AnimatedSprite2D" parent="Body"]
+sprite_frames = SubResource("SpriteFrames_jtry5")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="Body"]
+position = Vector2(1, -7)
+rotation = 1.5708
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_yiftw")
+
+[node name="LeftArm" type="RigidBody2D" parent="."]
+position = Vector2(-1, -37)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_launch_angle = 20.0
+fixed_launch_angle = 45.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LeftArm"]
+sprite_frames = SubResource("SpriteFrames_ljh1t")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="LeftArm"]
+position = Vector2(-15, 7)
+rotation = 1.5708
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_2q0a0")
+
+[node name="RightArm" type="RigidBody2D" parent="."]
+position = Vector2(-1, 33)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_launch_angle = 20.0
+fixed_launch_angle = -45.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="RightArm"]
+sprite_frames = SubResource("SpriteFrames_ro7gj")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="RightArm"]
+position = Vector2(-21, -11)
+rotation = -1.5708
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_2q0a0")
+
+[node name="Head" type="RigidBody2D" parent="."]
+position = Vector2(-16, -2)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_launch_angle = 20.0
+fixed_launch_angle = -10.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Head"]
+sprite_frames = SubResource("SpriteFrames_r1wa0")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="Head"]
+show_behind_parent = true
+position = Vector2(-1, 0)
+rotation = 1.5708
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_yiftw")

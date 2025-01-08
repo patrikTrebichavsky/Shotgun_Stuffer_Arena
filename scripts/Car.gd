@@ -31,9 +31,13 @@ func _physics_process(delta):
 
 			for body in $CarExplosionArea.get_overlapping_bodies():
 				if !body.name.contains("Wall"):
-					var push_back = (body.global_position - $CarExplosionArea/ExplosionCenter.global_position).normalized() * explo_push_back
 					$CarSprite.visible = false
-					body.got_conditioned(explo_dmg, "burning",true)
+					if body == targeted_enemy:
+						body.got_shot(explo_dmg*2, Vector2.ZERO, false, true)
+						$CriticalSound.random_pitch_play()
+					else:
+						body.got_conditioned(explo_dmg, "burning",true)
+			
 		
 		if sprite.scale > explosion_max_size/2 and wheels_not_shot :
 			
@@ -109,7 +113,11 @@ func burning_tick():
 	if explo_collider.monitoring:
 		for body in $CarExplosionArea.get_overlapping_bodies():
 			if !body.name.contains("Wall"):
-				body.got_conditioned(burn_damage, "burning",true)
+				if body == targeted_enemy:
+					body.got_shot(burn_damage*2,Vector2.ZERO, false, true)
+					$CriticalSound.random_pitch_play()
+				else:
+					body.got_conditioned(burn_damage, "burning",true)
 
 func delete_bullet():
 	

@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpbf2ylqljbje"]
+[gd_scene load_steps=12 format=3 uid="uid://dpbf2ylqljbje"]
 
 [ext_resource type="Script" path="res://scripts/House.gd" id="1_k1080"]
 [ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="2_waqes"]
 [ext_resource type="AudioStream" uid="uid://bcs2wcwdbfnjr" path="res://sounds/Bullets/HouseCollision.wav" id="3_l0ogn"]
 [ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_xfqik"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_fnscb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -76,6 +77,12 @@ animation = &"base"
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_l0ogn")
 volume_db = 9.576
+bus = &"SFX"
+script = ExtResource("4_xfqik")
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_fnscb")
+volume_db = -5.0
 bus = &"SFX"
 script = ExtResource("4_xfqik")
 

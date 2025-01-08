@@ -57,8 +57,7 @@ func _enemy_hit(body):
 		var push_back = linear_velocity.normalized() * push_back_multiplier
 		
 		if body == targeted_enemy:
-			damage = damage*2
-			body.got_shot(damage, push_back, false, true)
+			body.got_shot(damage*2, push_back, false, true)
 			$CriticalSound.random_pitch_play()
 		else:
 			body.got_shot(damage, push_back)

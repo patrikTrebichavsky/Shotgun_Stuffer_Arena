@@ -49,10 +49,12 @@ func _ready():
 	
 func _physics_process(_delta):
 	
+
+	
 	nav.target_position = player_position
 	target_position = (nav.get_next_path_position()-global_position).normalized()
 	current_velocity = target_position * speed
-	nav.set_velocity(current_velocity)
+	nav.set_velocity(current_velocity) 	
 	$AnimatedSprite2D.look_at(nav.get_next_path_position())
 	$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
 	
@@ -92,7 +94,7 @@ func _delete_enemy():
 	queue_free()
 
 
-func got_shot(damage, push_back, custom_death_sprite=false ,critical_hit = false):
+func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,critical_hit = false):
 	
 	hp -= damage
 	
@@ -103,9 +105,11 @@ func got_shot(damage, push_back, custom_death_sprite=false ,critical_hit = false
 	else:
 		instance._display_message(str(damage*10), "#A4A5AE", 35)
 		
-			
 	if hp <= 0:
-		_death(custom_death_sprite)
+		if critical_hit:
+			$CollisionShape2D/CriticalParts.launch_vector = push_back
+			$CollisionShape2D/CriticalParts.visible = true
+		_death(custom_death_sprite,critical_hit)
 		apply_central_impulse(push_back)
 		
 	else:
@@ -184,7 +188,7 @@ func falling_down_from_wall():
 	in_arena = true
 
 
-func _death(custom_death_sprite=false):
+func _death(custom_death_sprite=false,crittical_hit=false):
 	
 	if dead:
 		return
@@ -192,13 +196,20 @@ func _death(custom_death_sprite=false):
 	dead = true
 	
 	$CollisionShape2D.set_deferred("disabled", true)
-	$DeathParticles.emitting = true
+	
+	if !crittical_hit:
+		$DeathParticles.emitting = true
 		
-	if !custom_death_sprite:		
+	if crittical_hit:
+		$CollisionShape2D/CriticalParts.position = Vector2.ZERO
+		$AnimatedSprite2D.visible = false
+		$CollisionShape2D/CriticalParts._launch_parts()
+	elif !custom_death_sprite:		
 		if(undertale_mode):
 			$AnimatedSprite2D.animation = "undertale_mode_death"
 		else:
 			$AnimatedSprite2D.animation = "death"
+	
 		
 	$DeathTimer.start()
 	$DeathSound.random_pitch_play()

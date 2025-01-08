@@ -47,8 +47,6 @@ script = ExtResource("1_r2gt5")
 steer_force = 400.0
 damage = 7
 tracking = true
-push_back_multiplier = null
-speed = null
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -66,6 +64,12 @@ script = ExtResource("4_iq4n1")
 min_pitch = 1.8
 max_pitch = 2.2
 min_pitch_diff = 0.1
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_utheb")
+volume_db = -5.0
+bus = &"SFX"
+script = ExtResource("4_iq4n1")
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -96,12 +100,6 @@ shape = SubResource("RectangleShape2D_1ma7h")
 [node name="MarkerSprite2D" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("4_dxse5")
-
-[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("6_utheb")
-volume_db = -5.0
-bus = &"SFX"
-script = ExtResource("4_iq4n1")
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
 [connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

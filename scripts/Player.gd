@@ -50,7 +50,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 @export var player_level = 0
 @export var dash_distance = 1000
 
-var stored_ammo = [1,1,1,2,2,2]
+var stored_ammo = [3,4,5]
 
 var special_slot_chosen : int
 
@@ -395,6 +395,7 @@ func bullet_instatiation(bullet_path,extra_rotation = 0):
 		instance.apply_central_impulse(crosshair_vector.rotated(extra_rotation)*instance.speed)
 	
 	get_parent().add_child(instance)
+	instance.check_crosshair()
 		
 		
 func death(body):

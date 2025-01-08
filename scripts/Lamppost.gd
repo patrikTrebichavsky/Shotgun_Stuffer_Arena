@@ -23,7 +23,7 @@ func _on_edge_hit(body):
 		
 	hitcount += 1
 	
-	if hitcount <= 3 and (body.hp <= pierce_damage_threshold or (body.id == 20 and body.hp < (body.hp_max/4))):
+	if hitcount <= 3 and (body.hp <= pierce_damage_threshold) or (body == targeted_enemy and body.hp <= pierce_damage_threshold*2):
 		
 		$StabSound.random_pitch_play()
 		$CollisionParticles.emitting = true
@@ -47,9 +47,12 @@ func _on_edge_hit(body):
 		var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 		add_child(instance)
 		instance.global_position = impaled_enemy.global_position
-		instance._display_message(str(pierce_damage_threshold*10), "#A4A5AE", 35)
+		if body == targeted_enemy:
+			instance._display_message(str(pierce_damage_threshold*20)+"!", "#C33149", 55)
+		else:
+			instance._display_message(str(pierce_damage_threshold*10), "#A4A5AE", 35)
 		body._delete_enemy()
-	
+
 func _on_body_hit(body):
 		
 		if "Wall" in body.name:
@@ -58,7 +61,12 @@ func _on_body_hit(body):
 		$HitSound.random_pitch_play()
 		
 		var push_back = (body.position-position).normalized() * push_back_multiplier
-		body.got_shot(damage, push_back)
+		if body == targeted_enemy:
+			damage = damage*2
+			body.got_shot(damage, push_back, false, true)
+			$CriticalSound.random_pitch_play()
+		else:
+			body.got_shot(damage, push_back)
 
 func delete_bullet():
 	
