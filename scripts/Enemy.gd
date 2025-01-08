@@ -23,6 +23,8 @@ var in_arena = false
 
 var dead = false
 
+var critical_parts
+
 @export var undertale_mode : bool
 
 
@@ -107,8 +109,9 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 		
 	if hp <= 0:
 		if critical_hit:
-			$CollisionShape2D/CriticalParts.launch_vector = push_back
-			$CollisionShape2D/CriticalParts.visible = true
+			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
 		_death(custom_death_sprite,critical_hit)
 		apply_central_impulse(push_back)
 		
@@ -201,9 +204,9 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		$DeathParticles.emitting = true
 		
 	if crittical_hit:
-		$CollisionShape2D/CriticalParts.position = Vector2.ZERO
+		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
-		$CollisionShape2D/CriticalParts._launch_parts()
+		critical_parts._launch_parts()
 	elif !custom_death_sprite:		
 		if(undertale_mode):
 			$AnimatedSprite2D.animation = "undertale_mode_death"

@@ -100,7 +100,7 @@ func got_conditioned(damage, _condition,custom_death_sprite=false):
 	
 	
 	
-func _death(custom_death_sprite=false):
+func _death(custom_death_sprite=false,crittical_hit=false):
 	
 	if dead:
 		return

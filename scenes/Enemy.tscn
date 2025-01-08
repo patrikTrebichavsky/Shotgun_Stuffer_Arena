@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dir5j135wrl6q"]
+[gd_scene load_steps=11 format=3 uid="uid://dir5j135wrl6q"]
 
 [ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_jfgch"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_onilt"]
@@ -6,7 +6,6 @@
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_0468r"]
 [ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="6_336ml"]
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_ppktf"]
-[ext_resource type="PackedScene" uid="uid://cmouec5jc00ec" path="res://scenes/CriticalParts.tscn" id="7_uqoaa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
 radius = 37.75
@@ -48,8 +47,6 @@ animation = &"running"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.250031, 0)
 shape = SubResource("CapsuleShape2D_fcclg")
-
-[node name="CriticalParts" parent="CollisionShape2D" instance=ExtResource("7_uqoaa")]
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)

@@ -7,4 +7,9 @@ var launch_vector : Vector2
 
 func _launch_parts() -> void:
 	for part in body_parts:
+		print(launch_vector)
 		part._launch(launch_vector)
+
+
+func _on_deletion_timer_timeout() -> void:
+	queue_free()

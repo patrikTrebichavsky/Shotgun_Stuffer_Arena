@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
 [ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
-[ext_resource type="Script" path="res://scripts/critical_parts_controler.gd" id="1_kxdh2"]
+[ext_resource type="Script" path="res://scripts/CriticalPartControler.gd" id="1_kxdh2"]
 [ext_resource type="Script" path="res://scripts/Rotation.gd" id="1_niriw"]
 [ext_resource type="Texture2D" uid="uid://dtej587ckm37x" path="res://sprites/Enemies/Basic/Parts/RightArm.png" id="3_5xtkf"]
 [ext_resource type="Texture2D" uid="uid://cijaawfjlmg6x" path="res://sprites/Enemies/Basic/Parts/Head.png" id="4_kkkc8"]
@@ -85,6 +85,7 @@ animations = [{
 }]
 
 [node name="CriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts")]
+z_index = 15
 scale = Vector2(0.75, 0.75)
 script = ExtResource("1_kxdh2")
 body_parts = [NodePath("Body"), NodePath("LeftArm"), NodePath("RightArm"), NodePath("Head")]
@@ -172,3 +173,7 @@ rotation = 1.5708
 emitting = false
 amount = 16
 process_material = SubResource("ParticleProcessMaterial_yiftw")
+
+[node name="DeletionTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DeletionTimer" to="." method="_on_deletion_timer_timeout"]

@@ -57,7 +57,7 @@ func _enemy_hit(body):
 			$CollisionParticles.emitting = true
 			$AnimatedSprite2D.visible = false
 			
-			var push_back = linear_velocity.normalized() * push_back_multiplier
+			var push_back = ((body.position-position).normalized()) * push_back_multiplier
 			if !"Wall" in body.name:
 				if body == targeted_enemy:
 					damage = damage*2

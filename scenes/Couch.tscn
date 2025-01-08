@@ -47,6 +47,7 @@ script = ExtResource("1_r2gt5")
 steer_force = 400.0
 damage = 7
 tracking = true
+push_back_multiplier = 1000
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
