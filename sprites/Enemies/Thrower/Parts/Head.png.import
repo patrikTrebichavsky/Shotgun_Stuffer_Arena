@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://kkm42i8tv50l"
-path="res://.godot/imported/Basic_Hand_Left.png-eeaad3d19a17993a1ab88a15e48f0310.ctex"
+uid="uid://cenkexoskaw8s"
+path="res://.godot/imported/Head.png-da379d1684bf8159220002fc2d0d1afc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Enemies/Basic/Basic_Parts/Basic_Hand_Left.png"
-dest_files=["res://.godot/imported/Basic_Hand_Left.png-eeaad3d19a17993a1ab88a15e48f0310.ctex"]
+source_file="res://sprites/Enemies/Thrower/Parts/Head.png"
+dest_files=["res://.godot/imported/Head.png-da379d1684bf8159220002fc2d0d1afc.ctex"]
 
 [params]
 

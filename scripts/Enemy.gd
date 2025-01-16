@@ -200,18 +200,21 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	
 	$CollisionShape2D.set_deferred("disabled", true)
 	
-	if !crittical_hit:
-		$DeathParticles.emitting = true
 		
 	if crittical_hit:
 		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
-		critical_parts._launch_parts()
+		critical_parts._launch_parts(id)
 	elif !custom_death_sprite:		
+		$DeathParticles.emitting = true
 		if(undertale_mode):
 			$AnimatedSprite2D.animation = "undertale_mode_death"
 		else:
 			$AnimatedSprite2D.animation = "death"
+			
+		var tween = create_tween()
+		tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)
+
 	
 		
 	$DeathTimer.start()

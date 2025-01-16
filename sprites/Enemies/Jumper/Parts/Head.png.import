@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bxb40xx4t8bxy"
-path="res://.godot/imported/Basic_Body.png-66f29fd9001ef375d32885dbfa5b3bfd.ctex"
+uid="uid://ccj24m7r021bx"
+path="res://.godot/imported/Head.png-a241b6c24b0c18ae8af27b64df4a5465.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Enemies/Basic/Basic_Parts/Basic_Body.png"
-dest_files=["res://.godot/imported/Basic_Body.png-66f29fd9001ef375d32885dbfa5b3bfd.ctex"]
+source_file="res://sprites/Enemies/Jumper/Parts/Head.png"
+dest_files=["res://.godot/imported/Head.png-a241b6c24b0c18ae8af27b64df4a5465.ctex"]
 
 [params]
 

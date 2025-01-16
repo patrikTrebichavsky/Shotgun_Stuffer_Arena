@@ -285,7 +285,6 @@ position = Vector2(0.250031, 0)
 shape = SubResource("CapsuleShape2D_tq2yw")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
-wait_time = 0.5
 one_shot = true
 
 [node name="LaserDamageTimer" type="Timer" parent="."]

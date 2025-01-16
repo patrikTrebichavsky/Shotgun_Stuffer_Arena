@@ -1,11 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://cmouec5jc00ec"]
+[gd_scene load_steps=29 format=3 uid="uid://cmouec5jc00ec"]
 
 [ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
 [ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
 [ext_resource type="Script" path="res://scripts/CriticalPartControler.gd" id="1_kxdh2"]
 [ext_resource type="Script" path="res://scripts/Rotation.gd" id="1_niriw"]
 [ext_resource type="Texture2D" uid="uid://dtej587ckm37x" path="res://sprites/Enemies/Basic/Parts/RightArm.png" id="3_5xtkf"]
+[ext_resource type="Texture2D" uid="uid://di5754graxwla" path="res://sprites/Enemies/CharredParts/Body.png" id="4_i0oh0"]
 [ext_resource type="Texture2D" uid="uid://cijaawfjlmg6x" path="res://sprites/Enemies/Basic/Parts/Head.png" id="4_kkkc8"]
+[ext_resource type="Texture2D" uid="uid://c7u5doxmv7o1c" path="res://sprites/Enemies/Jumper/Parts/Body.png" id="4_vax7j"]
+[ext_resource type="Texture2D" uid="uid://8egykslptmi0" path="res://sprites/Enemies/Thrower/Parts/Body.png" id="5_lkjhw"]
+[ext_resource type="Texture2D" uid="uid://sjaw1tljj3jc" path="res://sprites/Enemies/Jumper/Parts/LeftArm.png" id="6_p2fub"]
+[ext_resource type="Texture2D" uid="uid://bnka1upbky5rs" path="res://sprites/Enemies/Jumper/Parts/RightArm.png" id="8_34362"]
+[ext_resource type="Texture2D" uid="uid://c8g5d4s1i87ie" path="res://sprites/Enemies/CharredParts/LeftHand.png" id="8_ber7v"]
+[ext_resource type="Texture2D" uid="uid://bcp1jafd3t3gn" path="res://sprites/Enemies/Thrower/Parts/LeftArm.png" id="8_i5fu7"]
+[ext_resource type="Texture2D" uid="uid://ccj24m7r021bx" path="res://sprites/Enemies/Jumper/Parts/Head.png" id="10_uacic"]
+[ext_resource type="Texture2D" uid="uid://cxnd2f1cbdojo" path="res://sprites/Enemies/Thrower/Parts/RightArm.png" id="11_5j7wh"]
+[ext_resource type="Texture2D" uid="uid://drjq33xg1ujct" path="res://sprites/Enemies/CharredParts/RightHand.png" id="12_08pyy"]
+[ext_resource type="Texture2D" uid="uid://cenkexoskaw8s" path="res://sprites/Enemies/Thrower/Parts/Head.png" id="14_kc0j7"]
+[ext_resource type="Texture2D" uid="uid://crh5t00o77ux6" path="res://sprites/Enemies/CharredParts/Head.png" id="16_k1loo"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jtry5"]
 animations = [{
@@ -15,6 +27,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_i0oh0")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vax7j")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lkjhw")
+}],
+"loop": true,
+"name": &"thrower",
 "speed": 5.0
 }]
 
@@ -44,6 +80,30 @@ animations = [{
 "loop": true,
 "name": &"basic",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ber7v")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_p2fub")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_i5fu7")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
 }]
 
 [sub_resource type="Gradient" id="Gradient_a3xb4"]
@@ -71,6 +131,30 @@ animations = [{
 "loop": true,
 "name": &"basic",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_08pyy")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_34362")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_5j7wh")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_r1wa0"]
@@ -81,6 +165,30 @@ animations = [{
 }],
 "loop": true,
 "name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_k1loo")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_uacic")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_kc0j7")
+}],
+"loop": true,
+"name": &"thrower",
 "speed": 5.0
 }]
 
@@ -96,12 +204,13 @@ collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_niriw")
+launch_speed_variable = 500
 variable_launch_angle = 20.0
 fixed_launch_angle = 10.0
 
-[node name="Body" type="AnimatedSprite2D" parent="Body"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
 sprite_frames = SubResource("SpriteFrames_jtry5")
-animation = &"basic"
+animation = &"burned"
 
 [node name="BloodParticles" type="GPUParticles2D" parent="Body"]
 position = Vector2(1, -7)
@@ -117,12 +226,13 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
-variable_launch_angle = 20.0
+launch_speed_variable = 350
+variable_launch_angle = 45.0
 fixed_launch_angle = 45.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="LeftArm"]
 sprite_frames = SubResource("SpriteFrames_ljh1t")
-animation = &"basic"
+animation = &"burned"
 
 [node name="BloodParticles" type="GPUParticles2D" parent="LeftArm"]
 position = Vector2(-15, 7)
@@ -138,12 +248,13 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
-variable_launch_angle = 20.0
+launch_speed_variable = 350
+variable_launch_angle = 45.0
 fixed_launch_angle = -45.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="RightArm"]
 sprite_frames = SubResource("SpriteFrames_ro7gj")
-animation = &"basic"
+animation = &"burned"
 
 [node name="BloodParticles" type="GPUParticles2D" parent="RightArm"]
 position = Vector2(-21, -11)
@@ -164,7 +275,7 @@ fixed_launch_angle = -10.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="Head"]
 sprite_frames = SubResource("SpriteFrames_r1wa0")
-animation = &"basic"
+animation = &"burned"
 
 [node name="BloodParticles" type="GPUParticles2D" parent="Head"]
 show_behind_parent = true

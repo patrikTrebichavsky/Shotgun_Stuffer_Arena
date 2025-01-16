@@ -58,7 +58,6 @@ one_shot = true
 explosiveness = 0.67
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
-wait_time = 0.5
 one_shot = true
 
 [node name="LaserDamageTimer" type="Timer" parent="."]

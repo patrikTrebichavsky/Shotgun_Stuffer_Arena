@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://723q2hbvg7es"
-path="res://.godot/imported/Basic_Headless.png-ea16985d81e17d5f7d6613248218f678.ctex"
+uid="uid://b05o0u4umdwwe"
+path="res://.godot/imported/Jumper_Hand_Right.png-bb1832da93bb559b1a47aab0d8c3b53e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Enemies/Basic/Basic_Parts/Basic_Headless.png"
-dest_files=["res://.godot/imported/Basic_Headless.png-ea16985d81e17d5f7d6613248218f678.ctex"]
+source_file="res://sprites/Not Scaled/Enemies/Jumper/Parts/Jumper_Hand_Right.png"
+dest_files=["res://.godot/imported/Jumper_Hand_Right.png-bb1832da93bb559b1a47aab0d8c3b53e.ctex"]
 
 [params]
 
