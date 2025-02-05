@@ -5,6 +5,7 @@ class_name CriticalParts
 @export var rotations_per_sec = 1
 @export var launch_speed = 1200
 @export var launch_speed_variable = 200
+@export var explosion_boost = 2
 @export var speed_damp = 0.85
 @export var variable_launch_angle = 0.0
 @export var fixed_launch_angle = 0.0
@@ -24,9 +25,22 @@ func _physics_process(delta: float) -> void:
 		if rotation > 2*PI:
 			rotation = 0
 
-func _launch(launch_vector):
+func _launch(launch_vector, enemy_id = 1, exploded = false):
+		
+	if exploded:
+		$Sprite.animation = "burned"
+	elif enemy_id == 1:
+		$Sprite.animation = "basic"
+	elif enemy_id == 2:
+		$Sprite.animation = "jumper"
+	elif enemy_id == 3:
+		$Sprite.animation = "thrower"
 
 	var temp = position+(launch_speed-randf_range(-launch_speed_variable,launch_speed_variable))*(launch_vector.normalized())
+	
+	if exploded:
+		temp = temp * explosion_boost
+	
 	temp = temp.rotated(fixed_launch_angle)
 	temp = temp.rotated(randf_range(-1*variable_launch_angle,variable_launch_angle))
 	

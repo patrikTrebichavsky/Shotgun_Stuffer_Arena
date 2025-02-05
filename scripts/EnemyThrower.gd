@@ -80,24 +80,53 @@ func move(velocity: Vector2):
 		linear_velocity = velocity
 	
 	
-func got_conditioned(damage, _condition,custom_death_sprite=false):
+#func got_conditioned(damage, _condition,custom_death_sprite=false):
+	#
+	#hp -= damage
+	#
+	#
+	#if hp <= 0:
+		#_death(custom_death_sprite)
+		#if has_head:
+			#$AnimatedSprite2D.animation = "burned"
+		#else:
+			#$AnimatedSprite2D.animation = "burned_headless"
+			#
+	#var instance = load("res://scenes/TextPopUp.tscn").instantiate()
+	#add_child(instance)
+	#instance._display_message(str(damage*10), "#e86a17", 35)
+#
+	#$ConditionParticles.emitting = true 
+	
+
+func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false):
 	
 	hp -= damage
 	
+	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
+	add_child(instance)
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	else:
+		instance._display_message(str(damage*10), "#e86a17", 35)
 	
 	if hp <= 0:
-		_death(custom_death_sprite)
-		if has_head:
+		if critical_hit:
+			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+		
 			$AnimatedSprite2D.animation = "burned"
+			
+		elif has_head:
+			$AnimatedSprite2D.animation = "burned"
+			
 		else:
 			$AnimatedSprite2D.animation = "burned_headless"
 			
-	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
-	add_child(instance)
-	instance._display_message(str(damage*10), "#e86a17", 35)
+		_death(custom_death_sprite,critical_hit)
 
 	$ConditionParticles.emitting = true 
-	
 	
 	
 func _death(custom_death_sprite=false,crittical_hit=false):
@@ -114,7 +143,10 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
 		$MagicParticles.emitting = false
-		critical_parts._launch_parts(id,has_head)
+		
+		var exploded = $AnimatedSprite2D.animation == "burned"
+		
+		critical_parts._launch_parts(id,has_head,exploded)
 	
 	elif !custom_death_sprite:
 		if undertale_mode && $AnimatedSprite2D.animation.contains("headless"):

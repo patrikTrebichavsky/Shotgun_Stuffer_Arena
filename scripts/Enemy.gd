@@ -126,18 +126,25 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 
 
 #condition variable isnt used for now its for potential new conditions 
-func got_conditioned(damage, _condition,custom_death_sprite=false):
+func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false):
 	
 	hp -= damage
 	
-	
-	if hp <= 0:
-		_death(custom_death_sprite)
-		$AnimatedSprite2D.animation = "burned"
-	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
-	instance._display_message(str(damage*10), "#e86a17", 35)
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	else:
+		instance._display_message(str(damage*10), "#e86a17", 35)
+	
+	if hp <= 0:
+		if critical_hit:
+			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+		
+		$AnimatedSprite2D.animation = "burned"
+		_death(custom_death_sprite,critical_hit)
 
 	$ConditionParticles.emitting = true 
 	
@@ -204,7 +211,11 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	if crittical_hit:
 		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
-		critical_parts._launch_parts(id)
+		
+		var exploded = $AnimatedSprite2D.animation == "burned"
+		
+		critical_parts._launch_parts(id, true, exploded)
+		
 	elif !custom_death_sprite:		
 		$DeathParticles.emitting = true
 		if(undertale_mode):

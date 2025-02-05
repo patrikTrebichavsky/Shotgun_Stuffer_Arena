@@ -28,12 +28,14 @@ func _physics_process(delta):
 		explo_collider.scale = sprite.scale
 		
 		if explo_collider.monitoring && sprite.scale >= explosion_max_size:
-
+			
 			for body in $CarExplosionArea.get_overlapping_bodies():
 				if !body.name.contains("Wall"):
 					$CarSprite.visible = false
 					if body == targeted_enemy:
-						body.got_shot(explo_dmg*2, Vector2.ZERO, false, true)
+						
+						var push_back = ((body.position-position).normalized()) * push_back_multiplier
+						body.got_conditioned(explo_dmg*2, push_back, false, true)
 						$CriticalSound.random_pitch_play()
 					else:
 						body.got_conditioned(explo_dmg, "burning",true)
