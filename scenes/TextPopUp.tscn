@@ -51,7 +51,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0a7ek"]
 _data = {
-"pop_up": SubResource("Animation_c4rlq")
+&"pop_up": SubResource("Animation_c4rlq")
 }
 
 [node name="TextPopUp" type="Marker2D"]

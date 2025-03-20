@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bdoq30lhabww8"]
 
-[ext_resource type="Script" path="res://scripts/Portal.gd" id="1_0htur"]
+[ext_resource type="Script" uid="uid://doy8j8ipql30w" path="res://scripts/Portal.gd" id="1_0htur"]
 [ext_resource type="AudioStream" uid="uid://bw3amb57qyy5y" path="res://sounds/PortalApearing.wav" id="2_kko4c"]
 [ext_resource type="Texture2D" uid="uid://dn2grxfs0xv4t" path="res://sprites/Arena/EdgePortal/EdgeClosedProtectionPortal.png" id="3_xoqea"]
 [ext_resource type="Texture2D" uid="uid://7f3lcqgqkhbn" path="res://sprites/Arena/EdgePortal/EdgeNextClosedProtectionPortal.png" id="4_0ronl"]
@@ -76,8 +76,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3yq80"]
 _data = {
-"Appear": SubResource("Animation_yqsui"),
-"Dissappear": SubResource("Animation_sy452")
+&"Appear": SubResource("Animation_yqsui"),
+&"Dissappear": SubResource("Animation_sy452")
 }
 
 [node name="EdgeProtectionPortal" type="Node2D" groups=["portals"]]

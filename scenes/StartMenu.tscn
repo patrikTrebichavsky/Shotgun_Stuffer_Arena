@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://chcx0bav3w2cg" path="res://sprites/UI/Save/SaveIcon.png" id="9_dukvo"]
 [ext_resource type="Texture2D" uid="uid://b1lhcgfv4cknv" path="res://sprites/UI/StartScreen/ManualIcon.png" id="9_gkyh2"]
 [ext_resource type="Texture2D" uid="uid://ddr7yw22254ft" path="res://sprites/UI/SliderSlider.png" id="9_noou4"]
-[ext_resource type="Script" path="res://scripts/VolumeSlider.gd" id="10_2uv5q"]
+[ext_resource type="Script" uid="uid://cl1xw43doxjlv" path="res://scripts/VolumeSlider.gd" id="10_2uv5q"]
 [ext_resource type="Texture2D" uid="uid://cgcwsu87n744e" path="res://sprites/UI/StartScreen/ManualIconClicked.png" id="10_selan"]
 [ext_resource type="Texture2D" uid="uid://dmxok0r4i8wtx" path="res://sprites/UI/Save/SaveIconBroken.png" id="10_wt02w"]
 [ext_resource type="Texture2D" uid="uid://dsmbdo2f30opi" path="res://sprites/UI/Save/SaveIconCracking.png" id="11_f1sl2"]

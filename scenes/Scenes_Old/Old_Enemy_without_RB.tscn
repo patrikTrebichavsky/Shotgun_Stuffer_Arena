@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://blkly143yoirp"]
 
-[ext_resource type="Script" path="res://scripts/old_scripts/Old_Enemy.gd" id="1_agpfe"]
+[ext_resource type="Script" uid="uid://m2pq3d220v7l" path="res://scripts/old_scripts/Old_Enemy.gd" id="1_agpfe"]
 [ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/Dying.png" id="2_0i803"]
 [ext_resource type="Texture2D" uid="uid://bwlo1antfqor6" path="res://sprites/Enemies/Basic/Running.png" id="3_vlcbc"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_o03a0"]

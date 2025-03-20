@@ -1,10 +1,10 @@
 [gd_scene load_steps=16 format=3 uid="uid://dtccf58xuw842"]
 
-[ext_resource type="Script" path="res://scripts/Lamppost.gd" id="1_0a3k4"]
+[ext_resource type="Script" uid="uid://cm3dojjgmpp87" path="res://scripts/Lamppost.gd" id="1_0a3k4"]
 [ext_resource type="Texture2D" uid="uid://vke4rlgh0qf1" path="res://sprites/Bullets/LampPost.png" id="2_ncc3p"]
 [ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="3_etklm"]
 [ext_resource type="AudioStream" uid="uid://bsr5lygbxh8r4" path="res://sounds/Bullets/LampStab.mp3" id="3_qpfkk"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_1vl42"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_1vl42"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_33wpf"]
 [ext_resource type="AudioStream" uid="uid://dya4lr4bkorjb" path="res://sounds/Bullets/LampHit.mp3" id="4_jnmlt"]
 [ext_resource type="Texture2D" uid="uid://bwphqaifbuxem" path="res://sprites/Enemies/Basic/Dying.png" id="4_shry8"]
@@ -95,7 +95,7 @@ offset = Vector2(10, -75)
 
 [node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_etklm")
-volume_db = -5.0
+volume_db = -10.0
 bus = &"SFX"
 script = ExtResource("4_1vl42")
 
@@ -119,10 +119,10 @@ position = Vector2(229, 0)
 rotation = -0.00635898
 emitting = false
 amount = 32
-process_material = ExtResource("4_33wpf")
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+process_material = ExtResource("4_33wpf")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 wait_time = 2.0

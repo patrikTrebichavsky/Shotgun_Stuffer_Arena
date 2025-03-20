@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bbmgqhgxp8cea" path="res://sprites/Arena/Portal/NextClosedProtectionPortal.png" id="2_rbpyq"]
 [ext_resource type="Texture2D" uid="uid://cva3pt602vevy" path="res://sprites/Arena/Portal/OpenProtectionPortal.png" id="3_10ifw"]
 [ext_resource type="Texture2D" uid="uid://c0phyn7iwdhqx" path="res://sprites/Arena/Portal/PreviousClosedProtectionPortal.png" id="4_5q536"]
-[ext_resource type="Script" path="res://scripts/Portal.gd" id="5_ltfdq"]
+[ext_resource type="Script" uid="uid://doy8j8ipql30w" path="res://scripts/Portal.gd" id="5_ltfdq"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uor8w"]
 animations = [{
@@ -76,8 +76,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_3yq80"]
 _data = {
-"Appear": SubResource("Animation_yqsui"),
-"Dissappear": SubResource("Animation_lpsxc")
+&"Appear": SubResource("Animation_yqsui"),
+&"Dissappear": SubResource("Animation_lpsxc")
 }
 
 [node name="ProtectionPortal" type="Node2D" groups=["portals"]]

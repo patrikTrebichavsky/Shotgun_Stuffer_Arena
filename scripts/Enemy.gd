@@ -108,10 +108,12 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 		instance._display_message(str(damage*10), "#A4A5AE", 35)
 		
 	if hp <= 0:
+		
 		if critical_hit:
 			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
 			get_parent().add_child(critical_parts)
 			critical_parts.launch_vector = push_back
+			
 		_death(custom_death_sprite,critical_hit)
 		apply_central_impulse(push_back)
 		
@@ -209,6 +211,7 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	
 		
 	if crittical_hit:
+				
 		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
 		

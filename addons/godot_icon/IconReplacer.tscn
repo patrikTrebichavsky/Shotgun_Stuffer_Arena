@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ccudvp6ptf2lv"]
 
-[ext_resource type="Script" path="res://addons/godot_icon/IconReplacer.gd" id="1"]
+[ext_resource type="Script" uid="uid://bqtvarhrahn6s" path="res://addons/godot_icon/IconReplacer.gd" id="1"]
 
 [node name="IconReplacer" type="ConfirmationDialog"]
 title = "Icon replacer"

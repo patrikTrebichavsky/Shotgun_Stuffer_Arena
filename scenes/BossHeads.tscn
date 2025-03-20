@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bbkmfw2ub71au"]
 
-[ext_resource type="Script" path="res://scripts/Limb.gd" id="1_aapyt"]
+[ext_resource type="Script" uid="uid://b2dmjbe818jx3" path="res://scripts/Limb.gd" id="1_aapyt"]
 [ext_resource type="Texture2D" uid="uid://c2ni1ihxsufha" path="res://sprites/Enemies/Boss/DoubleThrower/Head.png" id="2_7vkra"]
 [ext_resource type="Texture2D" uid="uid://jgmb7uv80p12" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_Head.png" id="3_nptjl"]
 [ext_resource type="Material" uid="uid://bkxahggaxhx57" path="res://particles/HeadMagicMaterial.tres" id="4_oram5"]

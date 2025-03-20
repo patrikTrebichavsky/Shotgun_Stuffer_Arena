@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://dqvmhhhcsl0j5"]
 
-[ext_resource type="Script" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
+[ext_resource type="Script" uid="uid://beq008bqngvkl" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_ckm8h"]
 [ext_resource type="Texture2D" uid="uid://bgeide4j1avlr" path="res://sprites/Enemies/Jumper/Chared.png" id="2_qs00d"]
 [ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/Dying.png" id="3_3kitq"]
@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="5_so8b1"]
 [ext_resource type="Texture2D" uid="uid://breqmsqqxfjdg" path="res://sprites/Enemies/Jumper/Undertale_Running.png" id="6_w12ua"]
 [ext_resource type="AudioStream" uid="uid://f2lgsy1hcnxb" path="res://sounds/Enemy/Jump.mp3" id="9_bfju6"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="10_4h35n"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="10_4h35n"]
 [ext_resource type="AudioStream" uid="uid://cdmd3iebmvl3u" path="res://sounds/Enemy/Drop.wav" id="10_7bcbx"]
 [ext_resource type="Texture2D" uid="uid://cgteklutre1r" path="res://sprites/Enemies/Jumper/Marker.png" id="10_tijb4"]
 [ext_resource type="Texture2D" uid="uid://bsot7cong8342" path="res://sprites/Enemies/Jumper/Undertale_Marker.png" id="13_1y6b5"]
@@ -239,7 +239,7 @@ tracks/9/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eb2wl"]
 _data = {
-"Jump_animation": SubResource("Animation_txhfg")
+&"Jump_animation": SubResource("Animation_txhfg")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_5eyyl"]

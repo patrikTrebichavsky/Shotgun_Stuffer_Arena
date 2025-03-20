@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://bikkabmbs338u"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_7r814"]
+[ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy.gd" id="1_7r814"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_lspkh"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_mko0e"]
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="4_r4uqy"]

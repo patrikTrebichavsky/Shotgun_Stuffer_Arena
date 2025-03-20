@@ -1,23 +1,27 @@
-[gd_scene load_steps=29 format=3 uid="uid://cmouec5jc00ec"]
+[gd_scene load_steps=33 format=3 uid="uid://cmouec5jc00ec"]
 
 [ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
 [ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
-[ext_resource type="Script" path="res://scripts/CriticalPartsControler.gd" id="1_kxdh2"]
-[ext_resource type="Script" path="res://scripts/CriticalPart.gd" id="1_niriw"]
+[ext_resource type="Script" uid="uid://cfgu6yyym3va3" path="res://scripts/CriticalPartsControler.gd" id="1_kxdh2"]
+[ext_resource type="Script" uid="uid://drbsko5upahfx" path="res://scripts/CriticalPart.gd" id="1_niriw"]
 [ext_resource type="Texture2D" uid="uid://dtej587ckm37x" path="res://sprites/Enemies/Basic/Parts/RightArm.png" id="3_5xtkf"]
 [ext_resource type="Texture2D" uid="uid://di5754graxwla" path="res://sprites/Enemies/CharredParts/Body.png" id="4_i0oh0"]
 [ext_resource type="Texture2D" uid="uid://cijaawfjlmg6x" path="res://sprites/Enemies/Basic/Parts/Head.png" id="4_kkkc8"]
 [ext_resource type="Texture2D" uid="uid://c7u5doxmv7o1c" path="res://sprites/Enemies/Jumper/Parts/Body.png" id="4_vax7j"]
 [ext_resource type="Texture2D" uid="uid://8egykslptmi0" path="res://sprites/Enemies/Thrower/Parts/Body.png" id="5_lkjhw"]
 [ext_resource type="Texture2D" uid="uid://sjaw1tljj3jc" path="res://sprites/Enemies/Jumper/Parts/LeftArm.png" id="6_p2fub"]
+[ext_resource type="Texture2D" uid="uid://8bepqi1bd4jy" path="res://sprites/Enemies/Boss/Smasher/Parts/Body.png" id="6_rhmc4"]
 [ext_resource type="Texture2D" uid="uid://bnka1upbky5rs" path="res://sprites/Enemies/Jumper/Parts/RightArm.png" id="8_34362"]
 [ext_resource type="Texture2D" uid="uid://c8g5d4s1i87ie" path="res://sprites/Enemies/CharredParts/LeftHand.png" id="8_ber7v"]
 [ext_resource type="Texture2D" uid="uid://bcp1jafd3t3gn" path="res://sprites/Enemies/Thrower/Parts/LeftArm.png" id="8_i5fu7"]
 [ext_resource type="Texture2D" uid="uid://ccj24m7r021bx" path="res://sprites/Enemies/Jumper/Parts/Head.png" id="10_uacic"]
 [ext_resource type="Texture2D" uid="uid://cxnd2f1cbdojo" path="res://sprites/Enemies/Thrower/Parts/RightArm.png" id="11_5j7wh"]
+[ext_resource type="Texture2D" uid="uid://bffatx83476oq" path="res://sprites/Enemies/Boss/Smasher/Parts/LeftArm.png" id="11_6cbbd"]
 [ext_resource type="Texture2D" uid="uid://drjq33xg1ujct" path="res://sprites/Enemies/CharredParts/RightHand.png" id="12_08pyy"]
 [ext_resource type="Texture2D" uid="uid://cenkexoskaw8s" path="res://sprites/Enemies/Thrower/Parts/Head.png" id="14_kc0j7"]
 [ext_resource type="Texture2D" uid="uid://crh5t00o77ux6" path="res://sprites/Enemies/CharredParts/Head.png" id="16_k1loo"]
+[ext_resource type="Texture2D" uid="uid://dw7xdhdu7v6ml" path="res://sprites/Enemies/Boss/Smasher/Parts/RightArm.png" id="16_m7ufb"]
+[ext_resource type="Texture2D" uid="uid://bpre0d56fweqf" path="res://sprites/Enemies/Boss/Smasher/Parts/Head.png" id="21_mtxa2"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jtry5"]
 animations = [{
@@ -43,6 +47,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_rhmc4")
+}],
+"loop": true,
+"name": &"smasher",
 "speed": 5.0
 }, {
 "frames": [{
@@ -99,6 +111,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("11_6cbbd")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("8_i5fu7")
 }],
 "loop": true,
@@ -150,6 +170,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("16_m7ufb")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("11_5j7wh")
 }],
 "loop": true,
@@ -185,6 +213,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("21_mtxa2")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("14_kc0j7")
 }],
 "loop": true,
@@ -204,7 +240,10 @@ collision_layer = 0
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_niriw")
-launch_speed_variable = 500
+variable_rps_min = -0.5
+variable_rps_max = -0.25
+launch_speed = 800
+explosion_boost = 3
 variable_launch_angle = 20.0
 fixed_launch_angle = 10.0
 
@@ -226,6 +265,9 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
+variable_rps_min = 1.5
+variable_rps_max = 2.0
+launch_speed = 1350
 launch_speed_variable = 350
 variable_launch_angle = 45.0
 fixed_launch_angle = 45.0
@@ -248,6 +290,9 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
+variable_rps_min = 1.5
+variable_rps_max = 2.0
+launch_speed = 1350
 launch_speed_variable = 350
 variable_launch_angle = 45.0
 fixed_launch_angle = -45.0
@@ -270,6 +315,10 @@ collision_mask = 0
 gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
+variable_rps_min = 0.0
+variable_rps_max = 0.25
+launch_speed = 1600
+launch_speed_variable = 500
 variable_launch_angle = 20.0
 fixed_launch_angle = -10.0
 

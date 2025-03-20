@@ -322,6 +322,7 @@ func instantiate_head_circle():
 	
 	heads.resize(0)
 	num_of_heads = 0
+	has_head = false
 	
 	$AnimatedSprite2D.look_at(position-Vector2(0,1300))
 	$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
@@ -400,19 +401,22 @@ func throw_arms_second_phase():
 			start =	$AnimatedSprite2D/SideLeftMagicParticles.global_position
 			$AnimatedSprite2D/SideLeftMagicParticles.emitting = true
 			left = true
-			num_of_arms = 0
+			num_of_arms = 3
 		2:
 			start =	$AnimatedSprite2D/FrontLeftMagicParticles.global_position
 			$AnimatedSprite2D/FrontLeftMagicParticles.emitting = true
 			left = true
+			num_of_arms = 2
 		3:
 			start= $AnimatedSprite2D/FrontRightMagicParticles.global_position
 			$AnimatedSprite2D/FrontRightMagicParticles.emitting = true
 			left = false
+			num_of_arms = 1
 		4:
 			start = $AnimatedSprite2D/SideRightMagicParticles.global_position
 			$AnimatedSprite2D/SideRightMagicParticles.emitting = true
 			left = false
+			num_of_arms = 0
 	
 	$ShootArmsSound.play()
 	
@@ -490,32 +494,55 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	get_tree().call_group("hp_bar","update_hp",hp)
 	
 	if hp <= 0:
-		_death(custom_death_sprite)
+		
+		if critical_hit:
+			critical_parts = load("res://scenes/DoubleThrowerCriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+		
+		_death(custom_death_sprite,critical_hit)
 		apply_central_impulse(push_back)
 		
 		
-func _death(custom_death_sprite=false):
-		$CollisionShape2D.set_deferred("disabled", true)
-		$SecondPhaseSafeArea.set_deferred("disabled", true)
-		$DeathParticles.emitting = true
-		
-		if !custom_death_sprite:		
-			if(undertale_mode):
-				$AnimatedSprite2D.animation = "undertale_death"
-			else:
-				$AnimatedSprite2D.animation = "death"
-		
-		
-		$DeathTimer.start()
-		$DeathSound.play()
-		set_collision_mask_value(20,false)
-
-		linear_velocity = Vector2.ZERO
-		set_deferred("freeze",true)
-		
-		set_physics_process(false)
+func _death(custom_death_sprite=false,crittical_hit=false):
 	
-		get_parent().leveled_up()
+	if dead:
+		return
+		
+	dead = true
+		
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+	$SecondPhaseSafeArea.set_deferred("disabled", true)
+	$DeathParticles.emitting = true
+		
+		
+	if crittical_hit:
+			
+		critical_parts.position = position
+		$AnimatedSprite2D.visible = false
+		
+		var exploded = $AnimatedSprite2D.animation == "burned"
+		
+		critical_parts._launch_parts(has_head, num_of_arms)
+		
+	if !custom_death_sprite:		
+		if(undertale_mode):
+			$AnimatedSprite2D.animation = "undertale_death"
+		else:
+			$AnimatedSprite2D.animation = "death"
+		
+		
+	$DeathTimer.start()
+	$DeathSound.play()
+	set_collision_mask_value(20,false)
+
+	linear_velocity = Vector2.ZERO
+	set_deferred("freeze",true)
+		
+	set_physics_process(false)
+	
+	get_parent().leveled_up()
 				
 		
 		

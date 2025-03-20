@@ -1,10 +1,10 @@
 [gd_scene load_steps=11 format=3 uid="uid://dir5j135wrl6q"]
 
-[ext_resource type="Script" path="res://scripts/Enemy.gd" id="1_jfgch"]
+[ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy.gd" id="1_jfgch"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_onilt"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_lx7r7"]
 [ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_0468r"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="6_336ml"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="6_336ml"]
 [ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_ppktf"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
@@ -52,10 +52,10 @@ shape = SubResource("CapsuleShape2D_fcclg")
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("4_lx7r7")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("4_lx7r7")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 one_shot = true
@@ -80,8 +80,8 @@ script = ExtResource("6_336ml")
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
 path_desired_distance = 50.0

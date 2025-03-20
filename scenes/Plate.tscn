@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://fehee4vh2b56"]
 
-[ext_resource type="Script" path="res://scripts/BulletBase.gd" id="1_eilrq"]
+[ext_resource type="Script" uid="uid://dl3gc4u4bgy6n" path="res://scripts/BulletBase.gd" id="1_eilrq"]
 [ext_resource type="Texture2D" uid="uid://0cupbdsganch" path="res://sprites/Bullets/Plate.png" id="1_w6k4x"]
 [ext_resource type="AudioStream" uid="uid://cudo63mjqkijk" path="res://sounds/Bullets/PlateBreaking.mp3" id="2_lghnv"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_oekxv"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_oekxv"]
 [ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_je8ji"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
@@ -71,7 +71,7 @@ script = ExtResource("4_oekxv")
 
 [node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_je8ji")
-volume_db = -5.0
+volume_db = -10.0
 bus = &"SFX"
 script = ExtResource("4_oekxv")
 
@@ -81,10 +81,10 @@ z_index = 1
 y_sort_enabled = true
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_m3meo")
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_m3meo")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 wait_time = 2.0

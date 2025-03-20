@@ -115,11 +115,7 @@ func burning_tick():
 	if explo_collider.monitoring:
 		for body in $CarExplosionArea.get_overlapping_bodies():
 			if !body.name.contains("Wall"):
-				if body == targeted_enemy:
-					body.got_shot(burn_damage*2,Vector2.ZERO, false, true)
-					$CriticalSound.random_pitch_play()
-				else:
-					body.got_conditioned(burn_damage, "burning",true)
+				body.got_conditioned(burn_damage, "burning",true)
 
 func delete_bullet():
 	

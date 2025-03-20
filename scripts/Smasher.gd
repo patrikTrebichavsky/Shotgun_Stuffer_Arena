@@ -37,6 +37,7 @@ var feasting = false
 var target_prey = null
 var feast_targets_array : Array
 
+var critical_parts
 
 @export var undertale_mode : bool
 
@@ -239,7 +240,13 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	get_tree().call_group("hp_bar","update_hp",hp_current)
 	
 	if hp_current <= 0:
-		_death(custom_death_sprite)
+		
+		if critical_hit:
+			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+			
+		_death(custom_death_sprite, critical_hit)
 		apply_central_impulse(push_back)
 	#else:
 		#
@@ -312,9 +319,16 @@ func fallen_down():
 	z_index = 0
 	in_arena = true
 
-func _death(custom_death_sprite=false):
+func _death(custom_death_sprite=false,crittical_hit=false):
 		$CollisionShape2D.set_deferred("disabled", true)
 		$DeathParticles.emitting = true
+		
+		if crittical_hit:
+			
+			critical_parts.position = position
+			$AnimatedSprite2D.visible = false
+					
+			critical_parts._launch_parts(id, true)
 		
 		if !custom_death_sprite:		
 			if(undertale_mode):

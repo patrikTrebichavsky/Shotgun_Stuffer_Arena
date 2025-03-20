@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://djcca17u7fsi1"]
 
-[ext_resource type="Script" path="res://scripts/Sewage.gd" id="1_4np7v"]
+[ext_resource type="Script" uid="uid://mljitawvtlhv" path="res://scripts/Sewage.gd" id="1_4np7v"]
 [ext_resource type="Texture2D" uid="uid://btidnvpdv8iar" path="res://sprites/Arena/Sewage/Closed.png" id="2_v0f7q"]
 [ext_resource type="Texture2D" uid="uid://byh4jt0y6mgic" path="res://sprites/Arena/Sewage/Open.png" id="3_00jia"]
 [ext_resource type="Texture2D" uid="uid://do4ckc22e7xi1" path="res://sprites/Arena/Sewage/Closing.png" id="4_ii1tm"]

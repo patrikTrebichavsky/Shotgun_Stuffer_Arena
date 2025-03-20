@@ -1,9 +1,9 @@
 [gd_scene load_steps=12 format=3 uid="uid://dpbf2ylqljbje"]
 
-[ext_resource type="Script" path="res://scripts/House.gd" id="1_k1080"]
+[ext_resource type="Script" uid="uid://b3033xjgtef0t" path="res://scripts/House.gd" id="1_k1080"]
 [ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="2_waqes"]
 [ext_resource type="AudioStream" uid="uid://bcs2wcwdbfnjr" path="res://sounds/Bullets/HouseCollision.wav" id="3_l0ogn"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_xfqik"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_xfqik"]
 [ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_fnscb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
@@ -53,7 +53,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o447t"]
 _data = {
-"house_shake": SubResource("Animation_ps426")
+&"house_shake": SubResource("Animation_ps426")
 }
 
 [node name="House" type="RigidBody2D" groups=["bullets"]]
@@ -93,10 +93,10 @@ y_sort_enabled = true
 position = Vector2(236, -162)
 rotation = -0.00635898
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_coaw0")
 lifetime = 0.25
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_coaw0")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 wait_time = 2.0
@@ -114,7 +114,7 @@ polygon = PackedVector2Array(-170, -14, -168, 226, 147, 226, 175, 195, 178, -14,
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_o447t")
+&"": SubResource("AnimationLibrary_o447t")
 }
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]

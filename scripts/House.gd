@@ -42,11 +42,11 @@ func _enemy_hit(body):
 			$CollisionSound.random_pitch_play()		
 			return
 				
-		if body == targeted_enemy:
-			body.got_shot(damage*2, push_back, false, true)
-			$CriticalSound.random_pitch_play()
-		else:
-			body.got_shot(damage, push_back)
+		#if body == targeted_enemy:
+			#body.got_shot(damage*2, push_back, false, true)
+			#$CriticalSound.random_pitch_play()
+		#else:
+		body.got_shot(damage, push_back)
 		
 		temp.animation = "crushed"
 		

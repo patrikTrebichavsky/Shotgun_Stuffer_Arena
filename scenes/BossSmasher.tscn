@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://dmkxymqoate61"]
 
-[ext_resource type="Script" path="res://scripts/Smasher.gd" id="1_0xh7w"]
+[ext_resource type="Script" uid="uid://c5k85iddo26ko" path="res://scripts/Smasher.gd" id="1_0xh7w"]
 [ext_resource type="Texture2D" uid="uid://cnwpq05ci1a2s" path="res://sprites/Enemies/Boss/Smasher/ChasingPrey.png" id="2_onlsp"]
 [ext_resource type="Texture2D" uid="uid://bgphchwm1x4p8" path="res://sprites/Enemies/Boss/Smasher/Running.png" id="3_g3h6p"]
 [ext_resource type="Texture2D" uid="uid://c5rd0it7703l3" path="res://sprites/Enemies/Boss/Smasher/Feasting.png" id="4_u4tpe"]
@@ -194,7 +194,7 @@ tracks/4/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eiun7"]
 _data = {
-"ArenaEntering": SubResource("Animation_r34c6")
+&"ArenaEntering": SubResource("Animation_r34c6")
 }
 
 [node name="BossSmasher" type="RigidBody2D" groups=["enemy", "smasher"]]
@@ -213,7 +213,7 @@ dash_speed_min = 800
 dash_speed_max = 1700
 dash_speed_increase = 35.0
 xp = 0
-hp_max = 200
+hp_max = 150
 player_position = Vector2(1000, 1000)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -241,10 +241,10 @@ shape = SubResource("CapsuleShape2D_fcclg")
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("9_cn446")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("9_cn446")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 wait_time = 0.5
@@ -286,8 +286,8 @@ bus = &"SFX"
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
 avoidance_enabled = true
@@ -317,19 +317,19 @@ shape = SubResource("CircleShape2D_328xn")
 [node name="CrashWallParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 25
-process_material = SubResource("ParticleProcessMaterial_6kop4")
 lifetime = 0.45
 one_shot = true
 explosiveness = 0.81
 randomness = 0.17
+process_material = SubResource("ParticleProcessMaterial_6kop4")
 
 [node name="FallParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 125
-process_material = SubResource("ParticleProcessMaterial_08svk")
 one_shot = true
 explosiveness = 1.0
 randomness = 0.17
+process_material = SubResource("ParticleProcessMaterial_08svk")
 
 [node name="EatingSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_yfwo8")
@@ -347,7 +347,7 @@ autostart = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_eiun7")
+&"": SubResource("AnimationLibrary_eiun7")
 }
 autoplay = "ArenaEntering"
 

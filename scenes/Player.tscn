@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=3 uid="uid://drphqi8eilyr3"]
 
-[ext_resource type="Script" path="res://scripts/Player.gd" id="1_0llxv"]
+[ext_resource type="Script" uid="uid://c37sw0sjl034f" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
 [ext_resource type="Texture2D" uid="uid://d1cypkqirrmcm" path="res://sprites/Player/Running.png" id="6_8xcwp"]
 [ext_resource type="AudioStream" uid="uid://do4mntj75vly0" path="res://sounds/Player/Reload.mp3" id="6_tg73s"]
@@ -12,16 +12,16 @@
 [ext_resource type="AudioStream" uid="uid://b7riu5s7x3n4u" path="res://sounds/Player/Shooting.mp3" id="10_l3jwu"]
 [ext_resource type="Texture2D" uid="uid://b04c3op722pe3" path="res://sprites/Player/Undertale_Shooting_4.png" id="10_ng4qd"]
 [ext_resource type="Texture2D" uid="uid://db1q7huakmrwj" path="res://sprites/Player/Undertale_Shooting_3.png" id="11_fubxn"]
-[ext_resource type="Script" path="res://scripts/PitchEditor.gd" id="12_y3lap"]
+[ext_resource type="Script" uid="uid://vio0hsns0jbn" path="res://scripts/PitchEditor.gd" id="12_y3lap"]
 [ext_resource type="AudioStream" uid="uid://g5cvt304rnph" path="res://sounds/Player/LevelUp.mp3" id="13_pra5w"]
 [ext_resource type="AudioStream" uid="uid://6ckykfhsjdoa" path="res://sounds/Player/Dash.wav" id="14_aj0jc"]
 [ext_resource type="AudioStream" uid="uid://ybtkfnovjt4n" path="res://sounds/Player/DashReady.wav" id="14_emxna"]
 [ext_resource type="AudioStream" uid="uid://cq7xi18hyox4l" path="res://sounds/Player/SpecialModeOn.wav" id="16_8ce60"]
 [ext_resource type="Texture2D" uid="uid://h57pnvbpmhyx" path="res://sprites/Player/SecondChance.png" id="17_bnnwt"]
 [ext_resource type="AudioStream" uid="uid://djntad7sbeox7" path="res://sounds/Player/SecondChanceExplo.wav" id="18_23wb8"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="19_g710j"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="19_g710j"]
 [ext_resource type="AudioStream" uid="uid://bql2osmsmuf1a" path="res://sounds/Player/SecondChanceAquired.wav" id="19_vdo5c"]
-[ext_resource type="Script" path="res://scripts/CamereShake.gd" id="20_sffyf"]
+[ext_resource type="Script" uid="uid://3n6jmcfv6gqi" path="res://scripts/CamereShake.gd" id="20_sffyf"]
 
 [sub_resource type="Animation" id="Animation_aw3x3"]
 resource_name = "SecondChance"
@@ -93,8 +93,8 @@ tracks/3/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kxhu0"]
 _data = {
-"SecondChance": SubResource("Animation_aw3x3"),
-"Second_Chance_Hit": SubResource("Animation_dx1tr")
+&"SecondChance": SubResource("Animation_aw3x3"),
+&"Second_Chance_Hit": SubResource("Animation_dx1tr")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_edg2r"]
@@ -263,7 +263,7 @@ metadata/_edit_lock_ = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../PlayerArea/SecondChance")
 libraries = {
-"": SubResource("AnimationLibrary_kxhu0")
+&"": SubResource("AnimationLibrary_kxhu0")
 }
 
 [node name="PlayerArea" type="Area2D" parent="."]
@@ -273,10 +273,10 @@ collision_mask = 7
 [node name="DeathParticles" type="GPUParticles2D" parent="PlayerArea"]
 emitting = false
 amount = 16
-process_material = ExtResource("4_r38ej")
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+process_material = ExtResource("4_r38ej")
 
 [node name="ShootingPoint" type="Marker2D" parent="PlayerArea"]
 position = Vector2(38.6667, 20)
@@ -296,10 +296,10 @@ centered = false
 position = Vector2(34.6667, 14.6667)
 scale = Vector2(0.5, 0.5)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_q63i6")
 lifetime = 0.1
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_q63i6")
 
 [node name="DashParticles" type="GPUParticles2D" parent="PlayerArea"]
 show_behind_parent = true
@@ -308,11 +308,11 @@ rotation = 3.14159
 scale = Vector2(0.5, 0.5)
 emitting = false
 amount = 16
-process_material = SubResource("ParticleProcessMaterial_gfvjh")
 lifetime = 0.25
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_gfvjh")
 
 [node name="SecondChance" type="Sprite2D" parent="PlayerArea"]
 visible = false
@@ -325,10 +325,10 @@ position = Vector2(-12, 1.33334)
 scale = Vector2(0.649, 0.649)
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_korv0")
 lifetime = 0.8
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_korv0")
 
 [node name="ReloadTimer" type="Timer" parent="."]
 wait_time = 0.4

@@ -9,11 +9,11 @@
 [ext_resource type="Texture2D" uid="uid://cpkfq33abm1ig" path="res://sprites/UI/Dash/DashOne.png" id="6_jprmi"]
 [ext_resource type="Texture2D" uid="uid://iph7fdk1b6cx" path="res://sprites/UI/Boss/HealthBar/Under.png" id="7_76og7"]
 [ext_resource type="Texture2D" uid="uid://bk05fctal6usq" path="res://sprites/UI/Dash/DashTwo.png" id="7_rci13"]
-[ext_resource type="Script" path="res://scripts/DashIndicator.gd" id="8_ebmyn"]
+[ext_resource type="Script" uid="uid://dtt6rhrk2imf0" path="res://scripts/DashIndicator.gd" id="8_ebmyn"]
 [ext_resource type="Texture2D" uid="uid://bcn0068c0puxj" path="res://sprites/UI/Dash/DashThree.png" id="8_fbpk0"]
 [ext_resource type="Texture2D" uid="uid://cq5otuy00juk5" path="res://sprites/UI/Boss/HealthBar/Progress.png" id="8_usjog"]
 [ext_resource type="Texture2D" uid="uid://cuth715rn674n" path="res://sprites/UI/Dash/DashFour.png" id="9_hbf5l"]
-[ext_resource type="Script" path="res://scripts/BossHpBar.gd" id="9_uf2sd"]
+[ext_resource type="Script" uid="uid://brwanmc2mmlmd" path="res://scripts/BossHpBar.gd" id="9_uf2sd"]
 [ext_resource type="AudioStream" uid="uid://xqwixpqknyfb" path="res://sounds/Enemy/Smasher'/Anoucement.wav" id="10_quuqq"]
 [ext_resource type="Texture2D" uid="uid://bbhmpy8hctvur" path="res://sprites/UI/Dialog/Shotgun.png" id="11_xi6wi"]
 [ext_resource type="Texture2D" uid="uid://bbg2ncsuctlcc" path="res://sprites/UI/Dialog/Shotgun2.png" id="12_n1mhw"]
@@ -113,7 +113,7 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gufw6"]
 _data = {
-"SpawnHealthBar": SubResource("Animation_rkmw7")
+&"SpawnHealthBar": SubResource("Animation_rkmw7")
 }
 
 [node name="PlayerUi" type="CanvasLayer"]

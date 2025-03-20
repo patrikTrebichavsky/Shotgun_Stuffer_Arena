@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://djck2jqyxiqvu"]
 
-[ext_resource type="Script" path="res://scripts/TextBox.gd" id="1_v13ov"]
+[ext_resource type="Script" uid="uid://codhx0klppfle" path="res://scripts/TextBox.gd" id="1_v13ov"]
 [ext_resource type="Texture2D" uid="uid://c3o8ikyby6qbq" path="res://sprites/UI/TextBox/TextBox.png" id="2_fgbuw"]
 [ext_resource type="FontFile" uid="uid://rludeyyeb5gw" path="res://fonts/Kenney Mini.ttf" id="3_ctvkp"]
 [ext_resource type="AudioStream" uid="uid://li6w7i34fj2p" path="res://sounds/ShotgunSpeech.mp3" id="4_3ctm5"]

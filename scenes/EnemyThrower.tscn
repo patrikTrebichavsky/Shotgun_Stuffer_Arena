@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://l7apy6iqnhyi"]
 
-[ext_resource type="Script" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
+[ext_resource type="Script" uid="uid://dvavucse0gvpe" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
 [ext_resource type="Texture2D" uid="uid://cno7dctoyi35c" path="res://sprites/Enemies/Thrower/Chared.png" id="2_0wpru"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_3itsn"]
 [ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/Dying.png" id="3_km6br"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://mw8iy8ujpot0" path="res://sprites/Enemies/Thrower/Undertale_Running.png" id="9_bj8wq"]
 [ext_resource type="Texture2D" uid="uid://25bbqj3wge23" path="res://sprites/Enemies/Thrower/Undertale_RunningHeadless.png" id="10_bskgb"]
 [ext_resource type="Texture2D" uid="uid://bbjno580j44i3" path="res://sprites/Enemies/Thrower/Undertale_Throwing.png" id="12_b3152"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="16_mws08"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="16_mws08"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_duxj0"]
 animations = [{

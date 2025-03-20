@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://6b0q7pwmcuwv"]
 
-[ext_resource type="Script" path="res://scripts/BulletBase.gd" id="1_mb5vb"]
+[ext_resource type="Script" uid="uid://dl3gc4u4bgy6n" path="res://scripts/BulletBase.gd" id="1_mb5vb"]
 [ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="2_vbwe1"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_0341l"]
 

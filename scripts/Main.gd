@@ -886,14 +886,14 @@ func _delete_save():
 		
 		initial_level = 0
 		second_chance_counter = 0
-		dialog_progress = 0
-		manual_progression = 0
 		show_dialog = true
 		regen_gained = false
 		first_game = true
 		$StartMenu/CheckpointButton.button_pressed = false
 		
 		#This also replaces dialog and manual progresion. It is purelly for testing
-		_save(false,true)
+		#dialog_progress = 0
+		#manual_progression = 0
+		#_save(false,true)
 		
 		config.save("user://scores.cfg")

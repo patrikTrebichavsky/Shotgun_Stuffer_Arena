@@ -1,6 +1,6 @@
 [gd_scene load_steps=37 format=3 uid="uid://3g5stnlx8o8p"]
 
-[ext_resource type="Script" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
+[ext_resource type="Script" uid="uid://dcmcg8oswn6t3" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
 [ext_resource type="Texture2D" uid="uid://dmlb8cof48rky" path="res://sprites/Enemies/Boss/DoubleThrower/Running.png" id="2_ogxy4"]
 [ext_resource type="Texture2D" uid="uid://d0h5bhchd1hqe" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessArmlessBody.png" id="2_q5yru"]
 [ext_resource type="Texture2D" uid="uid://d3fcngncmt8wh" path="res://sprites/Enemies/Boss/DoubleThrower/ThrowingHeads.png" id="3_g6fis"]
@@ -23,7 +23,7 @@
 [ext_resource type="Material" uid="uid://cowkx17kfgsnb" path="res://particles/SpawnMagicMaterial.tres" id="21_2bagh"]
 [ext_resource type="AudioStream" uid="uid://7ece8qopbgf3" path="res://sounds/Enemy/DoubleThrower/Spin.wav" id="23_337f4"]
 [ext_resource type="AudioStream" uid="uid://dcsfhrkgtibmo" path="res://sounds/Enemy/DoubleThrower/ShootArms.wav" id="23_jlkag"]
-[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="23_un1ix"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="23_un1ix"]
 [ext_resource type="AudioStream" uid="uid://7pmiulr7tw1x" path="res://sounds/Enemy/DoubleThrower/Spawn.wav" id="24_rsl4x"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hfvmx"]
@@ -301,9 +301,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_51jee"]
 _data = {
-"RESET": SubResource("Animation_vpnjt"),
-"Spawn": SubResource("Animation_n2uep"),
-"Spin": SubResource("Animation_s60e6")
+&"RESET": SubResource("Animation_vpnjt"),
+&"Spawn": SubResource("Animation_n2uep"),
+&"Spin": SubResource("Animation_s60e6")
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_k0xfy"]
@@ -317,7 +317,7 @@ collision_mask = 14
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_kjvjf")
-hp_max = 300
+hp_max = 250
 throw_speed_decrease = 1
 throw_speed_initial = 1000
 boss_is_ready = true
@@ -330,25 +330,25 @@ player_position = Vector2(500, 500)
 modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_74vta")
-animation = &"second_phase"
+animation = &"running"
 
 [node name="Head1MagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_head"]]
 position = Vector2(-19.9998, 35.0001)
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("18_6kox5")
 lifetime = 0.25
 local_coords = true
+process_material = ExtResource("18_6kox5")
 
 [node name="Head2MagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_head"]]
 position = Vector2(-19.0002, -34.9999)
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("18_6kox5")
 lifetime = 0.25
 local_coords = true
+process_material = ExtResource("18_6kox5")
 
 [node name="Head1Spawn" type="Marker2D" parent="AnimatedSprite2D"]
 position = Vector2(33, 55)
@@ -362,9 +362,9 @@ rotation = -1.5708
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("10_dk6cq")
 lifetime = 0.5
 local_coords = true
+process_material = ExtResource("10_dk6cq")
 
 [node name="SideLeftMagicParticles2" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
 position = Vector2(-21.0004, -85.9999)
@@ -372,9 +372,9 @@ rotation = -1.5708
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("10_dk6cq")
 lifetime = 0.5
 local_coords = true
+process_material = ExtResource("10_dk6cq")
 
 [node name="SideRightMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
 position = Vector2(-18.9996, 86.0001)
@@ -382,43 +382,43 @@ rotation = 1.5708
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("10_dk6cq")
 lifetime = 0.5
 local_coords = true
+process_material = ExtResource("10_dk6cq")
 
 [node name="FrontLeftMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
 position = Vector2(22, -39)
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("10_dk6cq")
 lifetime = 0.5
 local_coords = true
+process_material = ExtResource("10_dk6cq")
 
 [node name="FrontRightMagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_arm"]]
 position = Vector2(20, 42)
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("10_dk6cq")
 lifetime = 0.5
 local_coords = true
+process_material = ExtResource("10_dk6cq")
 
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("15_mec06")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("15_mec06")
 
 [node name="SpawnParticles" type="GPUParticles2D" parent="."]
 z_index = 13
 amount = 500
 amount_ratio = 0.0
-process_material = ExtResource("21_2bagh")
 randomness = 1.0
+process_material = ExtResource("21_2bagh")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 wait_time = 0.5
@@ -459,8 +459,8 @@ bus = &"SFX"
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_max_distance = 700.0
@@ -482,7 +482,7 @@ hit_from_inside = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_51jee")
+&"": SubResource("AnimationLibrary_51jee")
 }
 
 [node name="SecondPhaseSafeArea" type="Area2D" parent="."]

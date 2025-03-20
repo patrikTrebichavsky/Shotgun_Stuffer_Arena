@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://47hs83icyvwc"]
 
-[ext_resource type="Script" path="res://scripts/Head.gd" id="1_180rx"]
+[ext_resource type="Script" uid="uid://cmrrnv38bew07" path="res://scripts/Head.gd" id="1_180rx"]
 [ext_resource type="Texture2D" uid="uid://cor5vg8f4ri3o" path="res://sprites/Enemies/Boss/DoubleThrower/SideArmLeft.png" id="4_0kjqs"]
 [ext_resource type="Texture2D" uid="uid://btfldxo8cq6wu" path="res://sprites/Enemies/Boss/DoubleThrower/SideArmRight.png" id="5_nouwy"]
 
@@ -23,7 +23,7 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jkll0"]
 _data = {
-"spin": SubResource("Animation_xjxls")
+&"spin": SubResource("Animation_xjxls")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]

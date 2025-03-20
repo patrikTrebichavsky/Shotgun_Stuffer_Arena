@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/Head.png" id="1_7lub3"]
 [ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/Undertale_Head.png" id="2_7eop7"]
-[ext_resource type="Script" path="res://scripts/Head.gd" id="3_a5mon"]
+[ext_resource type="Script" uid="uid://cmrrnv38bew07" path="res://scripts/Head.gd" id="3_a5mon"]
 [ext_resource type="Material" uid="uid://bkxahggaxhx57" path="res://particles/HeadMagicMaterial.tres" id="4_u0hrb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]

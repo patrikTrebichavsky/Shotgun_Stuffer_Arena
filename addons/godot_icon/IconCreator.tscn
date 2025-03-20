@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cr2sgeg651iyo"]
 
-[ext_resource type="Script" path="res://addons/godot_icon/IconCreator.gd" id="1"]
+[ext_resource type="Script" uid="uid://5yis2le3kw70" path="res://addons/godot_icon/IconCreator.gd" id="1"]
 
 [node name="GodotIconCreator" type="ConfirmationDialog"]
 title = "Icon creator"

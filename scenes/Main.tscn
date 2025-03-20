@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://r3ij7lyaw6lm"]
 
-[ext_resource type="Script" path="res://scripts/Main.gd" id="1"]
+[ext_resource type="Script" uid="uid://qciuml1e0bdx" path="res://scripts/Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://bjv3ojhnmrymb" path="res://scenes/PlayerUi.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://cehgytkbca30a" path="res://scenes/FinalScore.tscn" id="2_y8bu5"]
 [ext_resource type="PackedScene" uid="uid://bgsvsvarhpce0" path="res://scenes/Controls.tscn" id="3"]
@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://80gyke6i8npv" path="res://scenes/WallBlock3Wide.tscn" id="13"]
 [ext_resource type="PackedScene" uid="uid://bveylkc8yvegg" path="res://scenes/WallBlock5Wide.tscn" id="14"]
 [ext_resource type="PackedScene" uid="uid://djcca17u7fsi1" path="res://scenes/Sewage.tscn" id="15"]
-[ext_resource type="Script" path="res://scripts/EnemiesOffArenaDeleter.gd" id="16_nq5j7"]
+[ext_resource type="Script" uid="uid://bdnwhrthyqdn1" path="res://scripts/EnemiesOffArenaDeleter.gd" id="16_nq5j7"]
 
 [sub_resource type="SpriteFrames" id="1"]
 animations = [{
