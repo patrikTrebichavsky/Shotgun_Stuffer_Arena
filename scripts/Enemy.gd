@@ -51,7 +51,7 @@ func _ready():
 	
 func _physics_process(_delta):
 	
-
+	
 	
 	nav.target_position = player_position
 	target_position = (nav.get_next_path_position()-global_position).normalized()
@@ -107,7 +107,7 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	else:
 		instance._display_message(str(damage*10), "#A4A5AE", 35)
 		
-	if hp <= 0:
+	if hp <= 0 and !dead:
 		
 		if critical_hit:
 			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
@@ -209,6 +209,7 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	
 	$CollisionShape2D.set_deferred("disabled", true)
 	
+	set_physics_process(false)
 		
 	if crittical_hit:
 				
@@ -238,7 +239,6 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	emit_signal("enemy_killed", xp)
 	set_deferred("freeze",true)
 		
-	set_physics_process(false)
 
 
 func _enemy_fell_off_map():

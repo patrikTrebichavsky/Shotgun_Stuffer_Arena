@@ -4,6 +4,7 @@ extends BasicEnemy
 var has_head = true
 var aiming = false
 var head_destination : Vector2
+var head_ref
 @export var throw_distance : int
 
 func _ready():
@@ -139,6 +140,11 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	$CollisionShape2D.set_deferred("disabled", true)
 	$DeathParticles.emitting = true
 	
+	if head_ref != null:
+		head_ref.queue_free()
+	
+	set_physics_process(false)
+	
 	if crittical_hit:
 		critical_parts.position = position
 		$AnimatedSprite2D.visible = false
@@ -172,7 +178,6 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 	linear_velocity = Vector2.ZERO
 	set_deferred("freeze",true)
 		
-	set_physics_process(false)
 
 
 func throw():
@@ -200,6 +205,7 @@ func throw():
 	head.body_reached.connect(head_returned) 
 	$MagicParticles.emitting = true
 	
+	head_ref = head
 		
 func head_returned():
 	
@@ -233,3 +239,15 @@ func _switch_mode(_name):
 			$AnimatedSprite2D.animation = "running_headless" 
 		
 		$MagicParticles.process_material = load("res://particles/HeadMagicMaterial.tres")
+
+func _delete_enemy():
+	
+	if !dead:
+		emit_signal("enemy_killed", xp)
+	
+	if head_ref != null:
+		head_ref.queue_free()
+		
+	set_collision_layer_value(20,false)
+	emit_signal("stop_homming")
+	queue_free()

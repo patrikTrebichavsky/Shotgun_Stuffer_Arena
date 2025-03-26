@@ -318,29 +318,29 @@ script = ExtResource("10_4h35n")
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("3_jpx1l")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("3_jpx1l")
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="DropParticles" type="GPUParticles2D" parent="."]
 emitting = false
 amount = 34
-process_material = SubResource("ParticleProcessMaterial_imt42")
 lifetime = 0.5
 one_shot = true
 explosiveness = 1.0
 randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_imt42")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_eb2wl")
+&"": SubResource("AnimationLibrary_eb2wl")
 }
 speed_scale = 2.0
 

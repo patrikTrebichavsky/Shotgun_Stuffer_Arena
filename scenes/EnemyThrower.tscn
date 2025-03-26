@@ -196,18 +196,18 @@ animation = &"running"
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("3_u6dp4")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("3_u6dp4")
 
 [node name="MagicParticles" type="GPUParticles2D" parent="." groups=["magic_head"]]
 position = Vector2(-6, -1)
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = SubResource("ParticleProcessMaterial_nd8o7")
 lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_nd8o7")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
 one_shot = true
@@ -234,8 +234,8 @@ script = ExtResource("16_mws08")
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_max_distance = 700.0

@@ -11,7 +11,8 @@ var has_head = true
 var num_of_heads = 2
 
 var has_arms = true
-var num_of_arms = 4
+var arm_func_counter = 4
+var num_of_arms_on_body = 4
 
 var aiming = false
 var thrown = false
@@ -50,7 +51,7 @@ func _ready():
 	$AnimationPlayer.play("Spawn")
 	
 func _physics_process(_delta):
-	
+
 	if !boss_is_ready:
 		return
 		
@@ -229,7 +230,8 @@ func throw_arms():
 	
 
 	has_arms = false
-	num_of_arms = 0
+	arm_func_counter = 0
+	num_of_arms_on_body = 0
 	var arms = []
 	
 	var left_side_arm_spawn = $AnimatedSprite2D/SideLeftMagicParticles.global_position
@@ -265,9 +267,10 @@ func throw_arms():
 	$ShootArmsSound.playing = true
 	
 func arm_returned(): 
-	num_of_arms += 1
+	arm_func_counter += 1
 	
-	if num_of_arms == 4:
+	if arm_func_counter == 4:
+		num_of_arms_on_body = 4
 		if !dead:
 			if phase_two_centred:
 				if undertale_mode:
@@ -289,13 +292,14 @@ func arm_returned():
 
 
 func return_arms():
-	num_of_arms += 1
+	arm_func_counter += 1
 	
-	if num_of_arms == 4:
+	
+	if arm_func_counter == 4:
 		var main = get_parent()
 		main.get_tree().call_group("arms","_return")
-		num_of_arms = 0
-		$ShootArmsSound
+		arm_func_counter = 0
+		$ShootArmsSound.play()
 	
 
 			
@@ -322,7 +326,6 @@ func instantiate_head_circle():
 	
 	heads.resize(0)
 	num_of_heads = 0
-	has_head = false
 	
 	$AnimatedSprite2D.look_at(position-Vector2(0,1300))
 	$CollisionShape2D.rotation = $AnimatedSprite2D.rotation
@@ -398,25 +401,26 @@ func throw_arms_second_phase():
 		0:
 			return
 		1:
+			arm_func_counter = 0
+			num_of_arms_on_body = 3
 			start =	$AnimatedSprite2D/SideLeftMagicParticles.global_position
 			$AnimatedSprite2D/SideLeftMagicParticles.emitting = true
 			left = true
-			num_of_arms = 3
 		2:
+			num_of_arms_on_body = 2
 			start =	$AnimatedSprite2D/FrontLeftMagicParticles.global_position
 			$AnimatedSprite2D/FrontLeftMagicParticles.emitting = true
 			left = true
-			num_of_arms = 2
 		3:
+			num_of_arms_on_body = 1
 			start= $AnimatedSprite2D/FrontRightMagicParticles.global_position
 			$AnimatedSprite2D/FrontRightMagicParticles.emitting = true
 			left = false
-			num_of_arms = 1
 		4:
+			num_of_arms_on_body = 0
 			start = $AnimatedSprite2D/SideRightMagicParticles.global_position
 			$AnimatedSprite2D/SideRightMagicParticles.emitting = true
 			left = false
-			num_of_arms = 0
 	
 	$ShootArmsSound.play()
 	
@@ -493,7 +497,7 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	
 	get_tree().call_group("hp_bar","update_hp",hp)
 	
-	if hp <= 0:
+	if hp <= 0 && !dead:
 		
 		if critical_hit:
 			critical_parts = load("res://scenes/DoubleThrowerCriticalParts.tscn").instantiate()
@@ -524,7 +528,7 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		
 		var exploded = $AnimatedSprite2D.animation == "burned"
 		
-		critical_parts._launch_parts(has_head, num_of_arms)
+		critical_parts._launch_parts(num_of_heads, num_of_arms_on_body)
 		
 	if !custom_death_sprite:		
 		if(undertale_mode):

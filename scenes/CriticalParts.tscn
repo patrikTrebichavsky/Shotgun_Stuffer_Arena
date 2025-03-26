@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://cmouec5jc00ec"]
+[gd_scene load_steps=30 format=3 uid="uid://cmouec5jc00ec"]
 
 [ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
 [ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
@@ -66,22 +66,25 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="Gradient" id="Gradient_aemqf"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 0, 0, 1)
+[sub_resource type="Gradient" id="Gradient_rhmc4"]
+offsets = PackedFloat32Array(0.340102, 0.634518, 1)
+colors = PackedColorArray(0.975664, 4.57242e-06, 1.54018e-06, 1, 0.787542, 4.16331e-06, 5.77569e-07, 1, 1, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_oj1ys"]
-gradient = SubResource("Gradient_aemqf")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6cbbd"]
+gradient = SubResource("Gradient_rhmc4")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_yiftw"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m7ufb"]
+lifetime_randomness = 1.0
 particle_flag_disable_z = true
-spread = 180.0
-initial_velocity_min = 240.0
-initial_velocity_max = 480.0
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
 gravity = Vector3(0, 0, 0)
+damping_max = 100.0
 scale_min = 5.0
 scale_max = 15.0
-color_ramp = SubResource("GradientTexture1D_oj1ys")
+color_ramp = SubResource("GradientTexture1D_6cbbd")
+turbulence_noise_strength = 20.0
+turbulence_noise_scale = 2.506
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ljh1t"]
 animations = [{
@@ -125,22 +128,6 @@ animations = [{
 "name": &"thrower",
 "speed": 5.0
 }]
-
-[sub_resource type="Gradient" id="Gradient_a3xb4"]
-offsets = PackedFloat32Array(1)
-colors = PackedColorArray(1, 0, 0, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_7lf3e"]
-gradient = SubResource("Gradient_a3xb4")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2q0a0"]
-particle_flag_disable_z = true
-initial_velocity_min = 240.0
-initial_velocity_max = 480.0
-gravity = Vector3(0, 0, 0)
-scale_min = 5.0
-scale_max = 15.0
-color_ramp = SubResource("GradientTexture1D_7lf3e")
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ro7gj"]
 animations = [{
@@ -228,13 +215,13 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="CriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts")]
-z_index = 15
+[node name="CriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts") groups=["enemy"]]
 scale = Vector2(0.75, 0.75)
 script = ExtResource("1_kxdh2")
 body_parts = [NodePath("Body"), NodePath("LeftArm"), NodePath("RightArm"), NodePath("Head")]
 
 [node name="Body" type="RigidBody2D" parent="."]
+z_index = 15
 position = Vector2(-15, 6)
 collision_layer = 0
 collision_mask = 0
@@ -255,10 +242,15 @@ animation = &"basic"
 position = Vector2(1, -7)
 rotation = 1.5708
 emitting = false
-amount = 16
-process_material = SubResource("ParticleProcessMaterial_yiftw")
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+local_coords = true
+trail_lifetime = 0.08
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
 
 [node name="LeftArm" type="RigidBody2D" parent="."]
+z_index = 15
 position = Vector2(-1, -37)
 collision_layer = 0
 collision_mask = 0
@@ -280,10 +272,13 @@ animation = &"basic"
 position = Vector2(-15, 7)
 rotation = 1.5708
 emitting = false
-amount = 16
-process_material = SubResource("ParticleProcessMaterial_2q0a0")
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
 
 [node name="RightArm" type="RigidBody2D" parent="."]
+z_index = 15
 position = Vector2(-1, 33)
 collision_layer = 0
 collision_mask = 0
@@ -291,7 +286,7 @@ gravity_scale = 0.0
 linear_damp = 0.2
 script = ExtResource("1_niriw")
 variable_rps_min = 1.5
-variable_rps_max = 2.0
+variable_rps_max = 2.025
 launch_speed = 1350
 launch_speed_variable = 350
 variable_launch_angle = 45.0
@@ -305,10 +300,13 @@ animation = &"basic"
 position = Vector2(-21, -11)
 rotation = -1.5708
 emitting = false
-amount = 16
-process_material = SubResource("ParticleProcessMaterial_2q0a0")
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
 
 [node name="Head" type="RigidBody2D" parent="."]
+z_index = 15
 position = Vector2(-16, -2)
 collision_layer = 0
 collision_mask = 0
@@ -331,8 +329,10 @@ show_behind_parent = true
 position = Vector2(-1, 0)
 rotation = 1.5708
 emitting = false
-amount = 16
-process_material = SubResource("ParticleProcessMaterial_yiftw")
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 

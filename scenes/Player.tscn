@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://drphqi8eilyr3"]
+[gd_scene load_steps=46 format=3 uid="uid://drphqi8eilyr3"]
 
 [ext_resource type="Script" uid="uid://c37sw0sjl034f" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
@@ -91,10 +91,39 @@ tracks/3/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_b8lor"]
+resource_name = "invulnerable"
+length = 2.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../AnimatedSprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true, false, true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..:monitoring")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(2.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kxhu0"]
 _data = {
 &"SecondChance": SubResource("Animation_aw3x3"),
-&"Second_Chance_Hit": SubResource("Animation_dx1tr")
+&"Second_Chance_Hit": SubResource("Animation_dx1tr"),
+&"invulnerable": SubResource("Animation_b8lor")
 }
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_edg2r"]

@@ -15,7 +15,7 @@ config/version="0.5"
 run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 boot_splash/show_image=false
-config/icon="res://sprites/Not Scaled/Icon.ico"
+config/icon="uid://by188xett0kse"
 config/windows_native_icon="res://sprites/Not Scaled/Icon.ico"
 
 [autoload]

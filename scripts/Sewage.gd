@@ -20,6 +20,8 @@ func _reset():
 
 func transport_player(player):
 	
+	player.went_trough_sewage()
+		
 	player.position = $ExitMarker.global_position
 	can_be_used = false
 	$AnimatedSprite2D.play("closing")

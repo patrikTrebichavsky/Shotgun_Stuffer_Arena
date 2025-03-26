@@ -6,14 +6,15 @@ class_name CriticalParts
 @export var rps = 1
 @export var variable_rps_min = 0.25
 @export var variable_rps_max = 0.5
+@export var rotation_duration = 2
 
 @export_category("Launch Speed")
 @export var launch_speed = 1200
 @export var launch_speed_variable = 200
 @export var explosion_boost = 2
-
+var rps_max
 @export_category("Damping")
-@export var speed_damp = 0.85
+@export var speed_damp = 1
 
 @export_category("Angle")
 @export var variable_launch_angle = 0.0
@@ -26,13 +27,17 @@ func _ready() -> void:
 	variable_launch_angle = variable_launch_angle * PI / 180
 	fixed_launch_angle = fixed_launch_angle * PI / 180
 	
-	
+	rps_max = rps
 	
 func _physics_process(delta: float) -> void:
 	if	launched:
 		rotation += rps*delta
 		if rotation > 2*PI:
 			rotation = 0
+		
+		if rps > 0:
+			rps -= (rps_max/rotation_duration)*delta
+			
 
 func _launch(launch_vector, enemy_id = 1, exploded = false):
 		
@@ -63,5 +68,8 @@ func _launch(launch_vector, enemy_id = 1, exploded = false):
 	launched = true
 	$BloodParticles.emitting = true
 	
+	await get_tree().create_timer(0.5).timeout
+	z_index = 11
+	await get_tree().create_timer(1.5).timeout
 	var tween = create_tween()
 	tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)

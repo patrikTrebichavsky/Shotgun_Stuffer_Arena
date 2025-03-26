@@ -120,7 +120,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="DoubleThrowerCriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts")]
+[node name="DoubleThrowerCriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts") groups=["enemy"]]
 z_index = 15
 scale = Vector2(0.75, 0.75)
 script = ExtResource("1_vk80u")

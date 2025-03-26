@@ -582,3 +582,7 @@ func delay_enabling_of_shooting(on = true):
 		$BulletEnabledDelayTimer.start()
 	elif !on:
 		$BulletEnabledDelayTimer.stop()
+
+func went_trough_sewage():
+	$PlayerArea.monitoring = false
+	$AnimationPlayer.play("invulnerable")

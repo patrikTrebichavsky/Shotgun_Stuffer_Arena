@@ -32,6 +32,7 @@ var audio_tween : Tween
 
 var config 
 
+
 #stores windows size before cursor change
 var cursor_windows_size : Vector2i
 
@@ -425,6 +426,14 @@ func player_died():
 	else:
 		boss_slayin = which_boss
 		
+	if boss_is_active && which_boss == 2:
+				
+		$InsideWalls/WallLeftTop.destroyed = false
+		$InsideWalls/WallLeftBottom.destroyed = false
+		$InsideWalls/WallRightTop.destroyed = false
+		$InsideWalls/WallRightBottom.destroyed = false
+		
+		
 	$FinalScore.show_score($PlayerUi/StatsUI/Kills.text, boss_slayin)
 	
 func close_final_score():
@@ -437,7 +446,7 @@ func close_final_score():
 		_switch_mode("reset")
 	
 	get_tree().call_group("sewage","_reset")
-	get_tree().call_group("walls","reset")
+	#get_tree().call_group("walls","reset")
 	
 	
 
@@ -469,6 +478,14 @@ func force_menu():
 	game_running = false
 	game_force_ended = true
 	boss_should_spawn = false
+	
+	if boss_is_active && which_boss == 2:
+				
+		$InsideWalls/WallLeftTop.destroyed = false
+		$InsideWalls/WallLeftBottom.destroyed = false
+		$InsideWalls/WallRightTop.destroyed = false
+		$InsideWalls/WallRightBottom.destroyed = false
+		
 	boss_is_active = false
 	show_dialog = false
 	DialogManager.reset_dialog_manager()
@@ -834,6 +851,8 @@ func _save(save_volume=true,overwrite_dialog_and_manual=true):
 	config.set_value("game","second_chance_counter", second_chance_counter)
 	config.set_value("game","regen_gained", regen_gained)
 	config.set_value("game","first_game", first_game)
+	config.set_value("game","corner_walls_destroyed", $InsideWalls/WallLeftTop.destroyed)
+
 	
 	if save_volume:
 		config.set_value("game","sfx",$StartMenu/SFXSlider.value)
@@ -842,8 +861,7 @@ func _save(save_volume=true,overwrite_dialog_and_manual=true):
 	if overwrite_dialog_and_manual:
 		config.set_value("game","dialog_progress", dialog_progress)
 		config.set_value("game","manual_progression",manual_progression)
-	
-	
+		
 	config.save("user://scores.cfg")
 	
 	
@@ -865,8 +883,17 @@ func _load_save():
 		$StartMenu/SFXSlider.value = config.get_value("game","sfx")
 		$StartMenu/MusicSlider.value = config.get_value("game","music")
 		
-		print(manual_progression)
-		
+		if config.get_value("game","corner_walls_destroyed") == true:
+			$InsideWalls/WallLeftTop.destroyed = true
+			$InsideWalls/WallLeftBottom.destroyed = true
+			$InsideWalls/WallRightTop.destroyed = true
+			$InsideWalls/WallRightBottom.destroyed = true
+			
+			$InsideWalls/WallLeftTop.animation_destroyed_finished()
+			$InsideWalls/WallLeftBottom.animation_destroyed_finished()
+			$InsideWalls/WallRightTop.animation_destroyed_finished()
+			$InsideWalls/WallRightBottom.animation_destroyed_finished()
+			
 		for value in manual_progression+1:
 			match value:
 				1:
@@ -892,8 +919,14 @@ func _delete_save():
 		$StartMenu/CheckpointButton.button_pressed = false
 		
 		#This also replaces dialog and manual progresion. It is purelly for testing
-		#dialog_progress = 0
-		#manual_progression = 0
-		#_save(false,true)
-		
-		config.save("user://scores.cfg")
+		dialog_progress = 0
+		manual_progression = 0
+		$InsideWalls/WallLeftTop.destroyed = false
+		$InsideWalls/WallLeftBottom.destroyed = false
+		$InsideWalls/WallRightTop.destroyed = false
+		$InsideWalls/WallRightBottom.destroyed = false
+				
+		_save(false,true)
+	
+	get_tree().call_group("sewage","_reset")
+	get_tree().call_group("walls","reset")
