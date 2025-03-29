@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://dpnay36wh1fdi"
+path="res://.godot/imported/WoodPlankBackGround.png-68542f45421ee63dc4f7291f25c397f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://SSA - Subory/Topdown Shooter (Pixel)/WoodPlankBackGround.png"
+dest_files=["res://.godot/imported/WoodPlankBackGround.png-68542f45421ee63dc4f7291f25c397f2.ctex"]
 
 [params]
 

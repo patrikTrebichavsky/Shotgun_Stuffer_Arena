@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://dew2u34oqd0bk"
+path="res://.godot/imported/Car.png-e1af65a13d06de828ed11269847e286f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://sprites/Not Scaled/UI/SpecialUI - Shells/Car.png"
+dest_files=["res://.godot/imported/Car.png-e1af65a13d06de828ed11269847e286f.ctex"]
 
 [params]
 

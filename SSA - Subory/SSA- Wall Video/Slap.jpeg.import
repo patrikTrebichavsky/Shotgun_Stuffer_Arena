@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://lumlmgmc3o1a"
+path="res://.godot/imported/Slap.jpeg-dfef00bb27ea4e0f60a48ad92daddc4a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://SSA - Subory/SSA- Wall Video/Slap.jpeg"
+dest_files=["res://.godot/imported/Slap.jpeg-dfef00bb27ea4e0f60a48ad92daddc4a.ctex"]
 
 [params]
 

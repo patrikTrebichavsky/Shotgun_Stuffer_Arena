@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://2jvmb0rtysjd"
+path="res://.godot/imported/Shoot.png-26d31f1b1cec5e5149e9b77a665a2fe4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://SSA - Subory/ControlsMenu/Shoot.png"
+dest_files=["res://.godot/imported/Shoot.png-26d31f1b1cec5e5149e9b77a665a2fe4.ctex"]
 
 [params]
 

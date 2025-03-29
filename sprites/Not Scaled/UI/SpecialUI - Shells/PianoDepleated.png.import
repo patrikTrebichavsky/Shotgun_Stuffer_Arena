@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://dgvhxruw43bo5"
+path="res://.godot/imported/PianoDepleated.png-f473085f059dd033df8d9d971f5c45cf.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://sprites/Not Scaled/UI/SpecialUI - Shells/PianoDepleated.png"
+dest_files=["res://.godot/imported/PianoDepleated.png-f473085f059dd033df8d9d971f5c45cf.ctex"]
 
 [params]
 

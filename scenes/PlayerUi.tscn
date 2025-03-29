@@ -1,8 +1,6 @@
-[gd_scene load_steps=24 format=3 uid="uid://bjv3ojhnmrymb"]
+[gd_scene load_steps=25 format=3 uid="uid://bjv3ojhnmrymb"]
 
 [ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/ScoreTracker/Background.png" id="1_3b84t"]
-[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
-[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUI/SpecialUIBackgroundAsembled2.png" id="2_tillq"]
 [ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="2_w0dvj"]
 [ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/ScoreTracker/EnemyKillCount.png" id="3_8wmgf"]
 [ext_resource type="PackedScene" uid="uid://bceh2j3u3e5b3" path="res://scenes/AmmoSpriteContainer.tscn" id="4_bwgcm"]
@@ -14,9 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://cq5otuy00juk5" path="res://sprites/UI/Boss/HealthBar/Progress.png" id="8_usjog"]
 [ext_resource type="Texture2D" uid="uid://cuth715rn674n" path="res://sprites/UI/Dash/DashFour.png" id="9_hbf5l"]
 [ext_resource type="Script" uid="uid://brwanmc2mmlmd" path="res://scripts/BossHpBar.gd" id="9_uf2sd"]
+[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUI - Shotgun/SpecialUIBackgroundAsembled.png" id="9_wuh4h"]
+[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUI - Shotgun/SpecialUIBackgroundAsembled2.png" id="10_57vea"]
 [ext_resource type="AudioStream" uid="uid://xqwixpqknyfb" path="res://sounds/Enemy/Smasher'/Anoucement.wav" id="10_quuqq"]
 [ext_resource type="Texture2D" uid="uid://bbhmpy8hctvur" path="res://sprites/UI/Dialog/Shotgun.png" id="11_xi6wi"]
 [ext_resource type="Texture2D" uid="uid://bbg2ncsuctlcc" path="res://sprites/UI/Dialog/Shotgun2.png" id="12_n1mhw"]
+[ext_resource type="PackedScene" uid="uid://2isv4vvk230y" path="res://scenes/SpecialAmmoShell.tscn" id="18_wuh4h"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i33on"]
 animations = [{
@@ -42,18 +43,18 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_76gam")
+"texture": ExtResource("9_wuh4h")
 }],
 "loop": true,
 "name": &"default",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 3.0,
-"texture": ExtResource("1_76gam")
+"duration": 2.0,
+"texture": ExtResource("10_57vea")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_tillq")
+"texture": ExtResource("9_wuh4h")
 }],
 "loop": false,
 "name": &"reload",
@@ -122,10 +123,10 @@ transform = Transform2D(1, 0, 0, 1, -20, -20)
 
 [node name="StatsUI" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.784314)
-offset_left = 1468.0
-offset_top = 873.0
-offset_right = 2468.0
-offset_bottom = 1393.0
+offset_left = 1461.0
+offset_top = 860.0
+offset_right = 2461.0
+offset_bottom = 1380.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_3b84t")
 expand_mode = 1
@@ -257,6 +258,9 @@ modulate = Color(1, 1, 1, 0.784314)
 position = Vector2(251, 135)
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_0uphs")
+animation = &"reload"
+frame = 1
+frame_progress = 1.0
 script = SubResource("GDScript_4tcm2")
 
 [node name="ShotgunDialog" type="AnimatedSprite2D" parent="."]
@@ -296,18 +300,19 @@ scale = Vector2(1.25, 1.25)
 metadata/_edit_use_anchors_ = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." groups=["hp_bar"]]
-modulate = Color(1, 1, 1, 0)
+modulate = Color(1, 1, 1, 0.784314)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -310.0
-offset_top = 260.0
-offset_right = 310.0
-offset_bottom = 340.0
+offset_left = 973.0
+offset_top = -364.0
+offset_right = 1593.0
+offset_bottom = -284.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 1.5708
 value = 100.0
 rounded = true
 texture_under = ExtResource("7_76og7")
@@ -325,26 +330,23 @@ libraries = {
 &"": SubResource("AnimationLibrary_gufw6")
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
-offset_left = 741.0
-offset_top = 949.0
-offset_right = 801.0
-offset_bottom = 1099.0
+[node name="TextureProgressBar2" parent="." instance=ExtResource("18_wuh4h")]
+offset_left = 682.0
+offset_top = 931.0
+offset_right = 782.0
+offset_bottom = 1081.0
 
-[node name="ColorRect2" type="ColorRect" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
-offset_left = 934.0
-offset_top = 950.0
-offset_right = 994.0
-offset_bottom = 1100.0
+[node name="TextureProgressBar3" parent="." instance=ExtResource("18_wuh4h")]
+offset_left = 883.0
+offset_top = 931.0
+offset_right = 983.0
+offset_bottom = 1081.0
 
-[node name="ColorRect3" type="ColorRect" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
-offset_left = 1131.0
-offset_top = 953.0
-offset_right = 1191.0
-offset_bottom = 1103.0
+[node name="TextureProgressBar4" parent="." instance=ExtResource("18_wuh4h")]
+offset_left = 1087.0
+offset_top = 932.0
+offset_right = 1187.0
+offset_bottom = 1082.0
 
 [connection signal="animation_finished" from="ShotgunStorage" to="ShotgunStorage" method="_on_animation_finished"]
 [connection signal="animation_finished" from="ShotgunDialog" to="ShotgunDialog" method="_on_animation_finished"]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://bsadhdgsd03m1"
+path="res://.godot/imported/boss_clasic.webp-2739a5efefccd13829605c78714c3d92.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://SSA - Subory/DoubleThrowerFilesFromKaja/boss_clasic.webp"
+dest_files=["res://.godot/imported/boss_clasic.webp-2739a5efefccd13829605c78714c3d92.ctex"]
 
 [params]
 

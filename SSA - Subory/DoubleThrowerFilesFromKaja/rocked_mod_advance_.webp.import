@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://bksgtwpib1k5n"
+path="res://.godot/imported/rocked_mod_advance_.webp-2cebbf6a71a3991600caf3f4c4b750d3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://SSA - Subory/DoubleThrowerFilesFromKaja/rocked_mod_advance_.webp"
+dest_files=["res://.godot/imported/rocked_mod_advance_.webp-2cebbf6a71a3991600caf3f4c4b750d3.ctex"]
 
 [params]
 

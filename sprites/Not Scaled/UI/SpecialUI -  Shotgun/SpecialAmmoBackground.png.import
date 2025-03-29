@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dvmrygfn06pki"
-path="res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"
+uid="uid://mrqsujgo8cs"
+path="res://.godot/imported/SpecialAmmoBackground.png-7239b5581577138f7195f0f950ea57c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SSA - Subory/DoubleThrowerOLD/BigHead.png"
-dest_files=["res://.godot/imported/BigHead.png-e782a2398382b6a53927463185c3e704.ctex"]
+source_file="res://sprites/Not Scaled/UI/SpecialUI -  Shotgun/SpecialAmmoBackground.png"
+dest_files=["res://.godot/imported/SpecialAmmoBackground.png-7239b5581577138f7195f0f950ea57c7.ctex"]
 
 [params]
 
