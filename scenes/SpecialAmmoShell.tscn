@@ -1,20 +1,101 @@
-[gd_scene load_steps=3 format=3 uid="uid://2isv4vvk230y"]
+[gd_scene load_steps=16 format=3 uid="uid://2isv4vvk230y"]
 
-[ext_resource type="Texture2D" uid="uid://d0hdmcgnw7r0x" path="res://sprites/UI/SpecialUi - Shells/Empty.png" id="1_422b3"]
+[ext_resource type="Texture2D" uid="uid://c3mp6e0hmye5d" path="res://sprites/UI/SpecialUi - Shells/Car/Depleated.png" id="1_b8l3r"]
 [ext_resource type="FontFile" uid="uid://23orjal55uvl" path="res://SSA - Subory/Fonts/Kenney Blocks.ttf" id="2_422b3"]
+[ext_resource type="Texture2D" uid="uid://b8sk6dpw3nll7" path="res://sprites/UI/SpecialUi - Shells/Car/Filled.png" id="2_ayaps"]
+[ext_resource type="Script" uid="uid://fp5ndk0frr0s" path="res://scenes/SpecialAmmoShell.gd" id="3_cp161"]
+[ext_resource type="Texture2D" uid="uid://cjwq4lryaef2m" path="res://sprites/UI/SpecialUi - Shells/Car/BorderFirst.png" id="4_q11l6"]
+[ext_resource type="Texture2D" uid="uid://bcr66r8wammu3" path="res://sprites/UI/SpecialUi - Shells/Car/BorderSecond.png" id="5_seyea"]
+[ext_resource type="Texture2D" uid="uid://bxndvsg266c2n" path="res://sprites/UI/SpecialUi - Shells/Couch/BorderFirst.png" id="6_dtrmc"]
+[ext_resource type="Texture2D" uid="uid://dlq0kuvctxk21" path="res://sprites/UI/SpecialUi - Shells/Couch/BorderSecond.png" id="7_cp161"]
+[ext_resource type="Texture2D" uid="uid://bce4qaj4augb1" path="res://sprites/UI/SpecialUi - Shells/House/BorderFirst.png" id="8_tf4kk"]
+[ext_resource type="Texture2D" uid="uid://2htyyuo6ggtn" path="res://sprites/UI/SpecialUi - Shells/House/BorderSecond.png" id="9_1coa8"]
+[ext_resource type="Texture2D" uid="uid://bdr61633x84oi" path="res://sprites/UI/SpecialUi - Shells/Lamp/BorderFirst.png" id="10_mpc34"]
+[ext_resource type="Texture2D" uid="uid://bssyc7am2v55x" path="res://sprites/UI/SpecialUi - Shells/Lamp/BorderSecond.png" id="11_atby0"]
+[ext_resource type="Texture2D" uid="uid://v5fr6qyid0mp" path="res://sprites/UI/SpecialUi - Shells/Piano/BorderFirst.png" id="12_6hv3n"]
+[ext_resource type="Texture2D" uid="uid://d4b73ks44nh0s" path="res://sprites/UI/SpecialUi - Shells/Piano/BorderSecond.png" id="13_7ax21"]
 
-[node name="TextureProgressBar" type="TextureProgressBar"]
-offset_left = 3.0
-offset_top = 1.0
-offset_right = 103.0
-offset_bottom = 151.0
-texture_under = ExtResource("1_422b3")
+[sub_resource type="SpriteFrames" id="SpriteFrames_xhkdt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q11l6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_seyea")
+}],
+"loop": true,
+"name": &"Car",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_dtrmc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cp161")
+}],
+"loop": true,
+"name": &"Couch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_tf4kk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1coa8")
+}],
+"loop": true,
+"name": &"House",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_mpc34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atby0")
+}],
+"loop": true,
+"name": &"Lamp",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_6hv3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7ax21")
+}],
+"loop": true,
+"name": &"Piano",
+"speed": 5.0
+}]
 
-[node name="TextEdit" type="TextEdit" parent="."]
+[node name="SpecialAmmoShell" type="TextureProgressBar"]
+offset_left = 50.0
+offset_top = 84.0
+offset_right = 150.0
+offset_bottom = 234.0
+max_value = 25.0
+fill_mode = 3
+texture_under = ExtResource("1_b8l3r")
+texture_progress = ExtResource("2_ayaps")
+script = ExtResource("3_cp161")
+
+[node name="Counter" type="TextEdit" parent="."]
 layout_mode = 0
-offset_left = 3.0
-offset_top = -36.0
-offset_right = 85.0
+offset_left = 4.0
+offset_top = -53.0
+offset_right = 86.0
+offset_bottom = -17.0
 theme_override_fonts/font = ExtResource("2_422b3")
 theme_override_font_sizes/font_size = 16
 text = "30 / 30"
+
+[node name="SelectedAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(45, 75)
+sprite_frames = SubResource("SpriteFrames_xhkdt")
+animation = &"Car"
