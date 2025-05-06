@@ -37,6 +37,10 @@ var feasting = false
 var target_prey = null
 var feast_targets_array : Array
 
+var dead = false
+
+var message_rotation = "middle"
+
 var critical_parts
 
 @export var undertale_mode : bool
@@ -220,6 +224,12 @@ func player_is_dead():
 
 
 func delete_enemy():
+	
+	var tween = create_tween()
+	
+	tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)
+	await tween.finished
+	
 	emit_signal("stop_homming")
 	get_parent().boss_killed()
 	queue_free()
@@ -231,6 +241,20 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
+	
+	match message_rotation:
+		"left":
+			instance.rotation_degrees = -25
+			instance.position.x = -30
+			message_rotation = "right"
+		"middle":
+			instance.rotation_degrees =  0
+			message_rotation = "left"
+		"right":
+			instance.rotation_degrees = 25
+			instance.position.x = 30
+			message_rotation = "middle"
+	
 	if critical_hit:
 		instance._display_message(str(damage*10)+"!", "#C33149", 55)
 	else:
@@ -248,29 +272,55 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 			
 		_death(custom_death_sprite, critical_hit)
 		apply_central_impulse(push_back)
-	#else:
-		#
-		##set_physics_process(false)
-		##apply_central_impulse(push_back)
-		##
-		##await get_tree().create_timer(0.2).timeout
-		##set_physics_process(true)
+	
 
 #condition variable isnt used for now its for potential new conditions 
-func got_conditioned(damage, _condition,custom_death_sprite):
+func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false,  type_cond="explosion"):
 	
 	hp_current -= damage
 	
-	
-	if hp_current <= 0:
-		_death(custom_death_sprite)
-		$AnimatedSprite2D.animation = "burned"
+	get_tree().call_group("hp_bar","update_hp",hp_current)
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
-	instance._display_message(str(damage*10), "#e86a17", 35)
+	
+	match message_rotation:
+		"left":
+			instance.rotation_degrees = -25
+			instance.position.x = -30
+			message_rotation = "right"
+		"middle":
+			instance.rotation_degrees =  0
+			message_rotation = "left"
+		"right":
+			instance.rotation_degrees = 25
+			instance.position.x = 30
+			message_rotation = "middle"
 
-	$ConditionParticles.emitting = true 
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	elif type_cond == "explosion":
+		instance._display_message(str(damage*10), "#e86a17", 35)
+	elif type_cond == "electrocute":
+		instance._display_message(str(damage*10), "#e2d80d", 35)
+	elif type_cond == "bleeding":
+		instance._display_message(str(damage*10), "#C11B36", 35)
+
+
+	if hp_current <= 0 and !dead:
+		if critical_hit:
+			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+		
+		#Used also in critical parts 
+		_death(custom_death_sprite,critical_hit)
+	
+		if type_cond == "explosion" or type_cond == "eletrocute":
+			$AnimatedSprite2D.animation = "burned"
+			$ConditionParticles.emitting = true 
+		elif type_cond == "bleeding":
+			$DeathParticles.emitting = true
 	
 	
 func update_player_position(position):
@@ -320,32 +370,41 @@ func fallen_down():
 	in_arena = true
 
 func _death(custom_death_sprite=false,crittical_hit=false):
-		$CollisionShape2D.set_deferred("disabled", true)
-		$DeathParticles.emitting = true
+	
+	dead = true
+	
+	$CollisionShape2D.set_deferred("disabled", true)
+	$DeathParticles.emitting = true
+	
+	if crittical_hit:
 		
-		if crittical_hit:
-			
-			critical_parts.position = position
-			$AnimatedSprite2D.visible = false
-					
-			critical_parts._launch_parts(id, true)
-		
-		if !custom_death_sprite:		
-			if(undertale_mode):
-				$AnimatedSprite2D.animation = "undertale_mode_death"
-			else:
-				$AnimatedSprite2D.animation = "death"
-		
-		
-		$DeathTimer.start()
-		$DeathSound.play()
-		
-		linear_velocity = Vector2.ZERO
-		set_deferred("freeze",true)
-		
-		set_physics_process(false)
-		
-		get_parent().leveled_up()
+		critical_parts.position = position
+		$AnimatedSprite2D.visible = false
+				
+		critical_parts._launch_parts(id, true)
+	
+	if !custom_death_sprite:		
+		if(undertale_mode):
+			$AnimatedSprite2D.animation = "undertale_mode_death"
+		else:
+			$AnimatedSprite2D.animation = "death"
+	
+	if $AnimatedSprite2D.get_node_or_null("PoopSticked") != null:
+		var temp = $AnimatedSprite2D.get_node("PoopSticked")
+		var main = get_parent()
+		var area = temp.get_node("Area2D")
+		temp.call_deferred("reparent",main,true)
+		area.set_deferred("monitorable",true)
+	
+	$DeathTimer.start()
+	$DeathSound.play()
+	
+	linear_velocity = Vector2.ZERO
+	set_deferred("freeze",true)
+
+	set_physics_process(false)
+	
+	get_parent().leveled_up()
 		
 
 func dash():

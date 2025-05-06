@@ -483,18 +483,34 @@ func _update_player_position(position):
 	
 	player_position = position
 	
-func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,critical_hit = false):
+func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,critical_hit = false, utility_pole = false):
 	
 	hp -= damage
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
+	
+	match message_rotation:
+		"left":
+			instance.rotation_degrees = -25
+			instance.position.x = -30
+			message_rotation = "right"
+		"middle":
+			instance.rotation_degrees =  0
+			message_rotation = "left"
+		"right":
+			instance.rotation_degrees = 25
+			instance.position.x = 30
+			message_rotation = "middle"
+	
 	if critical_hit:
 		instance._display_message(str(damage*10)+"!", "#C33149", 55)
 	else:
 		instance._display_message(str(damage*10), "#A4A5AE", 35)
 		
-	
+	if utility_pole:
+		critical_hit = false
+		 
 	get_tree().call_group("hp_bar","update_hp",hp)
 	
 	if hp <= 0 && !dead:
@@ -508,7 +524,53 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 		apply_central_impulse(push_back)
 		
 		
-func _death(custom_death_sprite=false,crittical_hit=false):
+func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false, type_cond="explosion"):
+	
+	hp -= damage
+	
+	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
+	add_child(instance)
+	
+	match message_rotation:
+		"left":
+			instance.rotation_degrees = -25
+			instance.position.x = -30
+			message_rotation = "right"
+		"middle":
+			instance.rotation_degrees =  0
+			message_rotation = "left"
+		"right":
+			instance.rotation_degrees = 25
+			instance.position.x = 30
+			message_rotation = "middle"
+	
+	if critical_hit:
+		instance._display_message(str(damage*10)+"!", "#C33149", 55)
+	elif type_cond == "explosion":
+		instance._display_message(str(damage*10), "#e86a17", 35)
+	elif type_cond == "electrocute":
+		instance._display_message(str(damage*10), "#e2d80d", 35)
+	elif type_cond == "bleeding":
+		instance._display_message(str(damage*10), "#C11B36", 35)
+		
+	get_tree().call_group("hp_bar","update_hp",hp)
+		
+	if hp <= 0 and !dead:
+		if critical_hit:
+			critical_parts = load("res://scenes/DoubleThrowerCriticalParts.tscn").instantiate()
+			get_parent().add_child(critical_parts)
+			critical_parts.launch_vector = push_back
+		
+		#Used also in critical parts 
+		$AnimatedSprite2D.animation = "burned"
+		_death(custom_death_sprite,critical_hit,type_cond)
+
+		if type_cond == "explosion" or type_cond == "eletrocute":
+			$ConditionParticles.emitting = true 
+		elif type_cond == "bleeding":
+			$DeathParticles.emitting = true
+		
+func _death(custom_death_sprite=false,crittical_hit=false,cond_type = "none"):
 	
 	if dead:
 		return
@@ -528,14 +590,20 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		
 		var exploded = $AnimatedSprite2D.animation == "burned"
 		
-		critical_parts._launch_parts(num_of_heads, num_of_arms_on_body)
+		critical_parts._launch_parts(num_of_heads, num_of_arms_on_body, cond_type)
 		
 	if !custom_death_sprite:		
 		if(undertale_mode):
 			$AnimatedSprite2D.animation = "undertale_death"
 		else:
 			$AnimatedSprite2D.animation = "death"
-		
+	
+	if $AnimatedSprite2D.get_node_or_null("PoopSticked") != null:
+		var temp = $AnimatedSprite2D.get_node("PoopSticked")
+		var main = get_parent()
+		var area = temp.get_node("Area2D")
+		temp.call_deferred("reparent",main,true)
+		area.set_deferred("monitorable",true)
 		
 	$DeathTimer.start()
 	$DeathSound.play()
@@ -554,6 +622,11 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 func _delete_enemy():
 	
 	emit_signal("stop_homming")
+	
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)
+	
+	await tween.finished
 	
 	var main = get_parent()
 	

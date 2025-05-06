@@ -67,7 +67,7 @@ turn = 0.786
 num_of_notes = 18
 max_wall_bounces = 4
 damage = 4
-push_back_multiplier = 200
+push_back_multiplier = 100
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

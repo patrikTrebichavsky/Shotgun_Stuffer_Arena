@@ -25,7 +25,6 @@ func _process(delta):
 		
 func _enemy_hit(body):
 	
-	
 	if hitcount == 0:
 		
 		hitcount += 1
@@ -58,6 +57,7 @@ func check_crosshair():
 			targeted_enemy = body
 		elif (targeted_enemy.global_position-mouse_placement).length() > (body.global_position-mouse_placement).length():
 			targeted_enemy = body
+	
 	
 func delete_bullet():
 	

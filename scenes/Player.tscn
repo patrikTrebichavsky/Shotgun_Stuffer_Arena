@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://drphqi8eilyr3"]
+[gd_scene load_steps=45 format=3 uid="uid://drphqi8eilyr3"]
 
 [ext_resource type="Script" uid="uid://c37sw0sjl034f" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
@@ -196,21 +196,21 @@ animations = [{
 offsets = PackedFloat32Array(0.631148, 0.92623)
 colors = PackedColorArray(1, 0.454902, 0, 1, 0, 0, 0, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_l153x"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_b8lor"]
 gradient = SubResource("Gradient_5ymhf")
 
 [sub_resource type="Curve" id="Curve_igvoq"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.933333, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_46txb"]
+[sub_resource type="CurveTexture" id="CurveTexture_6e537"]
 curve = SubResource("Curve_igvoq")
 
 [sub_resource type="Curve" id="Curve_0n77v"]
 _data = [Vector2(0.0333333, 1), 0.0, 0.0, 0, 0, Vector2(0.98, 0.131868), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="CurveTexture" id="CurveTexture_rmsrc"]
+[sub_resource type="CurveTexture" id="CurveTexture_p07f3"]
 curve = SubResource("Curve_0n77v")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_q63i6"]
@@ -221,9 +221,9 @@ initial_velocity_max = 1000.0
 gravity = Vector3(0, 0, 0)
 scale_min = 12.0
 scale_max = 12.0
-scale_curve = SubResource("CurveTexture_rmsrc")
-color_ramp = SubResource("GradientTexture1D_l153x")
-emission_curve = SubResource("CurveTexture_46txb")
+scale_curve = SubResource("CurveTexture_p07f3")
+color_ramp = SubResource("GradientTexture1D_b8lor")
+emission_curve = SubResource("CurveTexture_6e537")
 
 [sub_resource type="Gradient" id="Gradient_cnxbb"]
 offsets = PackedFloat32Array(0.0269058)
@@ -274,12 +274,6 @@ radius = 167.863
 [sub_resource type="CircleShape2D" id="CircleShape2D_2c4an"]
 radius = 20.0
 
-[sub_resource type="Curve2D" id="Curve2D_48d6q"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, -852.225, -457.351, 0, 0, 0, 0, -855.333, 474.667, 0, 0, 0, 0, 861.333, 471.123, 0, 0, 0, 0, 861.333, -464.438, 0, 0, 0, 0, -394.613, -462.076, 0, 0, 0, 0, -842.276, -462.076)
-}
-point_count = 6
-
 [node name="Player" type="CharacterBody2D" groups=["enemy", "player"]]
 scale = Vector2(1.5, 1.5)
 collision_layer = 16384
@@ -298,6 +292,8 @@ libraries = {
 [node name="PlayerArea" type="Area2D" parent="."]
 collision_layer = 15
 collision_mask = 7
+monitoring = false
+monitorable = false
 
 [node name="DeathParticles" type="GPUParticles2D" parent="PlayerArea"]
 emitting = false
@@ -444,16 +440,6 @@ collision_mask = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MouseRelatedNodes/CrossHair"]
 shape = SubResource("CircleShape2D_2c4an")
-
-[node name="EnemySpawnPath" type="Path2D" parent="."]
-position = Vector2(-4.88326, 9.41567)
-scale = Vector2(1.07223, 1.15713)
-curve = SubResource("Curve2D_48d6q")
-
-[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
-position = Vector2(-604.776, -462.076)
-rotation = 3.14159
-progress = 5050.37
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(-27.3333, 11.3333, -22, 27.3333, -17.3333, 31.3333, 6.66669, 31.3333, 22.6667, 22, 22.6667, -22, 8, -28, -17.3333, -28, -22.6666, -22.6667, -28, -8)

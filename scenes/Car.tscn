@@ -47,8 +47,7 @@ burn_damage = 1
 explosion_max_size = Vector2(1.5, 1.5)
 explosion_size_increase = 1.4
 damage = 10
-push_back_multiplier = 1000
-metadata/_edit_group_ = true
+push_back_multiplier = 200
 
 [node name="CarSprite" type="Sprite2D" parent="."]
 z_index = -1

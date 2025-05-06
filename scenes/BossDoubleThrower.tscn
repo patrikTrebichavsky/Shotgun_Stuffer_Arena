@@ -1,9 +1,10 @@
-[gd_scene load_steps=37 format=3 uid="uid://3g5stnlx8o8p"]
+[gd_scene load_steps=38 format=3 uid="uid://3g5stnlx8o8p"]
 
 [ext_resource type="Script" uid="uid://dcmcg8oswn6t3" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
 [ext_resource type="Texture2D" uid="uid://dmlb8cof48rky" path="res://sprites/Enemies/Boss/DoubleThrower/Running.png" id="2_ogxy4"]
 [ext_resource type="Texture2D" uid="uid://d0h5bhchd1hqe" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessArmlessBody.png" id="2_q5yru"]
 [ext_resource type="Texture2D" uid="uid://d3fcngncmt8wh" path="res://sprites/Enemies/Boss/DoubleThrower/ThrowingHeads.png" id="3_g6fis"]
+[ext_resource type="Texture2D" uid="uid://b1abrbkipw1xa" path="res://sprites/Enemies/Boss/DoubleThrower/chared.png" id="3_uhbsk"]
 [ext_resource type="Texture2D" uid="uid://budhnellfwli1" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseFirst.png" id="5_6ui8m"]
 [ext_resource type="Texture2D" uid="uid://bmj723r84sue0" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseSecond.png" id="6_d81te"]
 [ext_resource type="Texture2D" uid="uid://bmor3vu3g150w" path="res://sprites/Enemies/Boss/DoubleThrower/SecondPhaseThird.png" id="7_wuv1d"]
@@ -37,6 +38,14 @@ animations = [{
 }],
 "loop": true,
 "name": &"armless",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_uhbsk")
+}],
+"loop": true,
+"name": &"burned",
 "speed": 5.0
 }, {
 "frames": [{
@@ -330,7 +339,7 @@ player_position = Vector2(500, 500)
 modulate = Color(1, 1, 1, 0)
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_74vta")
-animation = &"second_phase"
+animation = &"running"
 
 [node name="Head1MagicParticles" type="GPUParticles2D" parent="AnimatedSprite2D" groups=["magic_head"]]
 position = Vector2(-19.9998, 35.0001)

@@ -51,13 +51,14 @@ shape = SubResource("CapsuleShape2D_fcclg")
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
 emitting = false
-amount = 16
+amount = 32
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
 process_material = ExtResource("4_lx7r7")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
 one_shot = true
 
 [node name="LaserDamageTimer" type="Timer" parent="."]

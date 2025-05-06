@@ -5,6 +5,8 @@
 [sub_resource type="GDScript" id="GDScript_3nx57"]
 script/source = "extends Marker2D
 
+
+
 func set_display_time(display_time):
 	$Timer.wait_time = display_time
 
@@ -46,7 +48,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.0966318, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(-60, -20), Vector2(-60, -80), Vector2(-60, -110)]
+"values": [Vector2(-60, -20), Vector2(-60, -80), Vector2(-60, -150)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0a7ek"]
@@ -60,21 +62,23 @@ script = SubResource("GDScript_3nx57")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_0a7ek")
+&"": SubResource("AnimationLibrary_0a7ek")
 }
 
 [node name="Label" type="Label" parent="."]
 z_index = 5
 offset_left = -60.0
-offset_top = -20.0
+offset_top = -150.0
 offset_right = 60.0
-offset_bottom = 56.0
-scale = Vector2(0.5, 0.5)
+offset_bottom = -59.0
+scale = Vector2(1.2, 1.2)
 pivot_offset = Vector2(60, 37)
 theme_override_colors/font_color = Color(0.643137, 0.647059, 0.682353, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_mrn0j")
 theme_override_font_sizes/font_size = 35
+text = "666
+"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2

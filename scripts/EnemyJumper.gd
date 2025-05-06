@@ -23,6 +23,8 @@ func _ready():
 
 func _physics_process(_delta):
 	
+	if dead:
+		return
 	
 	var player_enemy_distance = abs((player_position-position).length())
 			

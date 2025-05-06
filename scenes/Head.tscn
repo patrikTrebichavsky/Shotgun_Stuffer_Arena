@@ -49,5 +49,5 @@ shape = SubResource("CircleShape2D_xrkcs")
 show_behind_parent = true
 scale = Vector2(1.5, 1.5)
 amount = 16
-process_material = ExtResource("4_u0hrb")
 lifetime = 0.5
+process_material = ExtResource("4_u0hrb")

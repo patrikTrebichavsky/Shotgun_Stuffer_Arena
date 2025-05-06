@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5qtdv3pa4pf"
-path="res://.godot/imported/CarEmpty.png-8d12b897e13932850268f42bdaee94dd.ctex"
+uid="uid://b03x3hyq3lfc5"
+path="res://.godot/imported/Chared.png-945471191bc473fe275e08abfa603384.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/UI/SpecialUI - Shells/CarEmpty.png"
-dest_files=["res://.godot/imported/CarEmpty.png-8d12b897e13932850268f42bdaee94dd.ctex"]
+source_file="res://sprites/Not Scaled/Enemies/Boss/DoubleThrower/Chared.png"
+dest_files=["res://.godot/imported/Chared.png-945471191bc473fe275e08abfa603384.ctex"]
 
 [params]
 

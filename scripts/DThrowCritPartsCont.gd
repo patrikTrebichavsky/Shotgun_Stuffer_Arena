@@ -5,9 +5,9 @@ var launch_vector : Vector2
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
-func _launch_parts(num_of_heads = 2, num_of_arms = 4) -> void:
+func _launch_parts(num_of_heads_missing = 2, num_of_arms = 4, cond_type = "none") -> void:
 	
-	if num_of_heads == 2:
+	if num_of_heads_missing == 2:
 		$HeadLeft.visible = false
 		$HeadRight.visible = false
 
@@ -26,7 +26,7 @@ func _launch_parts(num_of_heads = 2, num_of_arms = 4) -> void:
 	
 			
 	for part in body_parts:
-		part._launch(launch_vector,0)
+		part._launch(launch_vector,0,cond_type)
 	
 	
 	

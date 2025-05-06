@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c3mp6e0hmye5d" path="res://sprites/UI/SpecialUi - Shells/Car/Depleated.png" id="1_b8l3r"]
 [ext_resource type="FontFile" uid="uid://23orjal55uvl" path="res://SSA - Subory/Fonts/Kenney Blocks.ttf" id="2_422b3"]
 [ext_resource type="Texture2D" uid="uid://b8sk6dpw3nll7" path="res://sprites/UI/SpecialUi - Shells/Car/Filled.png" id="2_ayaps"]
-[ext_resource type="Script" uid="uid://fp5ndk0frr0s" path="res://scenes/SpecialAmmoShell.gd" id="3_cp161"]
+[ext_resource type="Script" uid="uid://fp5ndk0frr0s" path="res://scripts/SpecialAmmoShell.gd" id="3_cp161"]
 [ext_resource type="Texture2D" uid="uid://cjwq4lryaef2m" path="res://sprites/UI/SpecialUi - Shells/Car/BorderFirst.png" id="4_q11l6"]
 [ext_resource type="Texture2D" uid="uid://bcr66r8wammu3" path="res://sprites/UI/SpecialUi - Shells/Car/BorderSecond.png" id="5_seyea"]
 [ext_resource type="Texture2D" uid="uid://bxndvsg266c2n" path="res://sprites/UI/SpecialUi - Shells/Couch/BorderFirst.png" id="6_dtrmc"]

@@ -24,6 +24,7 @@ signal dashed()
 
 var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 
+#After adding all the special amunition reorder it ascdending into categories
 @export var bullet_dictionary = {
 	"id" : "path",
 	0 : "res://scenes/Plate.tscn",
@@ -32,6 +33,10 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 	3 : "res://scenes/Lamppost.tscn",
 	4 : "res://scenes/Car.tscn",
 	5 : "res://scenes/House.tscn",
+	6 : "res://scenes/UtilityPole.tscn",
+	7 : "res://scenes/Poop.tscn",
+	8 : "res://scenes/Nails/Nails.tscn",
+	9 : "res://scenes/SuperShotgun.tscn",
 	1001: "res://scenes/Laser.tscn"
 }
 
@@ -50,7 +55,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 @export var player_level = 0
 @export var dash_distance = 1000
 
-var stored_ammo = []
+var stored_ammo = [9,9,9,9,9,9,9,9,9]
 
 var special_slot_chosen : int
 
@@ -369,6 +374,7 @@ func bullet_instatiation(bullet_path,extra_rotation = 0):
 		
 	instance.position = $PlayerArea/ShootingPoint.global_position
 	
+	
 	if instance.name.contains("Lamp"):
 		
 		var instance_sprite = instance.get_node("AnimatedSprite2D")
@@ -378,9 +384,11 @@ func bullet_instatiation(bullet_path,extra_rotation = 0):
 		instance.get_node("Edge").rotation = instance_sprite.rotation
 		instance.get_node("InitialEdge").rotation = instance_sprite.rotation
 		instance.get_node("PiercedBodies").rotation = instance_sprite.rotation
-
 	else:	
 		instance.rotation = $PlayerArea.rotation + extra_rotation
+	
+	if instance.name.contains("Nails"):
+		instance.target_position = get_global_mouse_position()
 	
 	instance.crosshair_bodies = $MouseRelatedNodes/CrossHair.get_overlapping_bodies()
 	

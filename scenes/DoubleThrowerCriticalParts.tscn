@@ -1,17 +1,32 @@
-[gd_scene load_steps=23 format=3 uid="uid://bi5pkaqonv5vr"]
+[gd_scene load_steps=30 format=3 uid="uid://bi5pkaqonv5vr"]
 
 [ext_resource type="Script" uid="uid://buoiqhwfljyw2" path="res://scripts/DThrowCritPartsCont.gd" id="1_vk80u"]
 [ext_resource type="Script" uid="uid://drbsko5upahfx" path="res://scripts/CriticalPart.gd" id="2_vqbje"]
+[ext_resource type="Texture2D" uid="uid://cewx8lh321vha" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/Body.png" id="3_k34ng"]
 [ext_resource type="Texture2D" uid="uid://covnrb53jrb4s" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Body.png" id="3_vk80u"]
 [ext_resource type="Texture2D" uid="uid://bivi5bsn4jdcc" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/SideArmLeft.png" id="4_hnmes"]
 [ext_resource type="Texture2D" uid="uid://cgj0vch0t0b33" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/SideArmRight.png" id="5_8j823"]
+[ext_resource type="Texture2D" uid="uid://b5rggjyqsj86h" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/SideArmLeft.png" id="5_dpsa7"]
 [ext_resource type="Texture2D" uid="uid://cvrgahw8gt8sv" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/FrontArmRight.png" id="6_g25i5"]
+[ext_resource type="Texture2D" uid="uid://mv6c1jv7hobm" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/SideArmRight.png" id="7_on6gn"]
 [ext_resource type="Texture2D" uid="uid://dgovv6sqe3bm6" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/FrontArmLeft.png" id="7_s7kr5"]
 [ext_resource type="Texture2D" uid="uid://brgyw67q3lv8y" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/HeadLeft.png" id="8_w3it2"]
+[ext_resource type="Texture2D" uid="uid://dhdv8gncshph3" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/FrontArmLeft.png" id="9_0rrab"]
 [ext_resource type="Texture2D" uid="uid://xv15axrc5ql0" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/HeadRight.png" id="9_m07u2"]
+[ext_resource type="Texture2D" uid="uid://b8q83x7ctsqe7" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/FrontArmRight.png" id="11_3vig1"]
+[ext_resource type="Texture2D" uid="uid://rdgkcxdtw2pl" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/HeadLeft.png" id="13_yn2wv"]
+[ext_resource type="Texture2D" uid="uid://ll1a3psujmqt" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/HeadRight.png" id="15_d2i5q"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_jtry5"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_k34ng")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("3_vk80u")
@@ -42,6 +57,14 @@ color_ramp = SubResource("GradientTexture1D_oj1ys")
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("5_dpsa7")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("4_hnmes")
 }],
 "loop": true,
@@ -69,6 +92,14 @@ color_ramp = SubResource("GradientTexture1D_7lf3e")
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("7_on6gn")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("5_8j823")
 }],
 "loop": true,
@@ -78,6 +109,14 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hjv07"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_0rrab")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("7_s7kr5")
@@ -91,6 +130,14 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("11_3vig1")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("6_g25i5")
 }],
 "loop": true,
@@ -102,6 +149,14 @@ animations = [{
 animations = [{
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("13_yn2wv")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("8_w3it2")
 }],
 "loop": true,
@@ -111,6 +166,14 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1w11w"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_d2i5q")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("9_m07u2")
@@ -134,7 +197,8 @@ gravity_scale = 0.0
 script = ExtResource("2_vqbje")
 variable_rps_min = -0.5
 variable_rps_max = -0.25
-launch_speed = 800
+part_speed_mult = 6.0
+part_speed_mult_var = 2.0
 explosion_boost = 3
 variable_launch_angle = 20.0
 fixed_launch_angle = 10.0
@@ -159,8 +223,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 1.5
 variable_rps_max = 2.0
-launch_speed = 1350
-launch_speed_variable = 350
+part_speed_mult = 13.5
+part_speed_mult_var = 4.0
 variable_launch_angle = 45.0
 fixed_launch_angle = -45.0
 
@@ -184,8 +248,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 1.5
 variable_rps_max = 2.0
-launch_speed = 1350
-launch_speed_variable = 350
+part_speed_mult = 13.5
+part_speed_mult_var = 4.0
 variable_launch_angle = 45.0
 fixed_launch_angle = -45.0
 
@@ -209,8 +273,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 1.5
 variable_rps_max = 2.0
-launch_speed = 1350
-launch_speed_variable = 350
+part_speed_mult = 13.5
+part_speed_mult_var = 4.0
 variable_launch_angle = 45.0
 fixed_launch_angle = -45.0
 
@@ -234,8 +298,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 1.5
 variable_rps_max = 2.0
-launch_speed = 1350
-launch_speed_variable = 350
+part_speed_mult = 13.5
+part_speed_mult_var = 4.0
 variable_launch_angle = 45.0
 fixed_launch_angle = 45.0
 
@@ -259,8 +323,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 0.0
 variable_rps_max = 0.25
-launch_speed = 1600
-launch_speed_variable = 500
+part_speed_mult = 10.0
+part_speed_mult_var = 3.5
 variable_launch_angle = 20.0
 fixed_launch_angle = -10.0
 
@@ -285,8 +349,8 @@ linear_damp = 0.2
 script = ExtResource("2_vqbje")
 variable_rps_min = 0.0
 variable_rps_max = 0.25
-launch_speed = 1600
-launch_speed_variable = 500
+part_speed_mult = 10.0
+part_speed_mult_var = 3.5
 variable_launch_angle = 20.0
 fixed_launch_angle = -10.0
 

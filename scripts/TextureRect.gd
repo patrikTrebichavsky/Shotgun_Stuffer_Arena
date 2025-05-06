@@ -14,6 +14,11 @@ var is_active : bool
 	3 : "res://sprites/UI/SpecialUI - Shotgun/LampUI.png",
 	4 : "res://sprites/UI/SpecialUI - Shotgun/CarUI.png",
 	5 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
+	6 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
+	7 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
+	8 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
+	9 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
+	10 : "res://sprites/UI/SpecialUI - Shotgun/HouseUI.png",
 }
 
 var current_value = 0

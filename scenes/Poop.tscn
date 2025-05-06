@@ -1,0 +1,81 @@
+[gd_scene load_steps=9 format=3 uid="uid://d14kwqtl7ndt3"]
+
+[ext_resource type="Script" uid="uid://cwci0v7qaaas" path="res://scripts/Poop.gd" id="1_g7i88"]
+[ext_resource type="Texture2D" uid="uid://ckgh72gfshfim" path="res://sprites/Bullets/Doggy/Poop.png" id="2_aa7i8"]
+[ext_resource type="AudioStream" uid="uid://bvxh1t367jxtk" path="res://sounds/Poop.mp3" id="3_g7i88"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_cagqm"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m3fle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_aa7i8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_g7i88"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.611765, 0.294118, 0.0941176, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_aa7i8"]
+gradient = SubResource("Gradient_g7i88")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m3fle"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = -210.0
+initial_velocity_max = -150.0
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 8.0
+color_ramp = SubResource("GradientTexture1D_aa7i8")
+hue_variation_min = -0.05
+hue_variation_max = -2.23517e-08
+
+[node name="Poop" type="RigidBody2D" groups=["bullets"]]
+visibility_layer = 2
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+script = ExtResource("1_g7i88")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 2
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_m3fle")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 22
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+rotation = 0.00702498
+polygon = PackedVector2Array(-67.4715, 75.4758, 38.5259, 74.7312, 68.5252, 74.5205, 68.469, 66.5207, 75.4688, 66.4715, 75.3143, 44.472, 68.3144, 44.5212, 68.2582, 36.5214, 60.2584, 36.5776, 60.2093, 29.5778, 53.2094, 29.6269, 53.0549, 7.62748, 45.0551, 7.68368, 44.9989, -0.31612, 37.9991, -0.266947, 37.8375, -23.2664, 29.8377, -23.2102, 29.7885, -30.21, 22.7887, -30.1608, 22.6833, -45.1605, 14.6835, -45.1043, 14.6273, -53.1041, 7.62748, -53.0549, 7.52211, -68.0545, -0.477695, -67.9983, -0.526869, -74.9981, -22.5263, -74.8436, -30.477, -67.7876, -30.4208, -59.7878, -22.421, -59.844, -19.4491, -63.8649, -14.4141, -58.9002, -8.41427, -58.9423, -8.3651, -51.9425, -15.3649, -51.8933, -15.3368, -47.8934, -15.3158, -44.8935, -23.3156, -44.8373, -23.2102, -29.8377, -30.21, -29.7885, -30.1538, -21.7887, -37.1536, -21.7395, -36.9991, 0.259922, -44.9989, 0.316122, -44.9427, 8.31592, -52.9425, 8.37212, -52.7879, 30.3716, -60.7877, 30.4278, -60.7315, 38.4276, -67.7314, 38.4768, -67.6822, 45.4766, -75.682, 45.5328, -75.5204, 68.5322, -67.5206, 68.476)
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_g7i88")
+bus = &"SFX"
+script = ExtResource("4_cagqm")
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+visibility_layer = 2
+y_sort_enabled = true
+emitting = false
+amount = 32
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_m3fle")
+
+[node name="DeletionTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]
+[connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]

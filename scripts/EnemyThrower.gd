@@ -24,6 +24,9 @@ func _ready():
 
 func _physics_process(_delta):
 	
+	if dead:
+		return
+	
 	var player_enemy_distance = abs((player_position-position).length())
 	
 	#
@@ -100,16 +103,34 @@ func move(velocity: Vector2):
 	#$ConditionParticles.emitting = true 
 	
 
-func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false):
+func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, critical_hit = false,  type_cond="explosion"):
 	
 	hp -= damage
 	
 	var instance = load("res://scenes/TextPopUp.tscn").instantiate()
 	add_child(instance)
+	
+	match message_rotation:
+		"left":
+			instance.rotation_degrees = -25
+			instance.position.x = -30
+			message_rotation = "right"
+		"middle":
+			instance.rotation_degrees =  0
+			message_rotation = "left"
+		"right":
+			instance.rotation_degrees = 25
+			instance.position.x = 30
+			message_rotation = "middle"
+	
 	if critical_hit:
 		instance._display_message(str(damage*10)+"!", "#C33149", 55)
-	else:
+	elif type_cond == "explosion":
 		instance._display_message(str(damage*10), "#e86a17", 35)
+	elif type_cond == "electrocute":
+		instance._display_message(str(damage*10), "#e2d80d", 35)
+	elif type_cond == "bleeding":
+		instance._display_message(str(damage*10), "#C11B36", 35)
 	
 	if hp <= 0:
 		if critical_hit:
@@ -127,11 +148,14 @@ func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, 
 			
 		_death(custom_death_sprite,critical_hit)
 
-	$ConditionParticles.emitting = true 
+		if type_cond == "explosion" or type_cond == "eletrocute":
+			$ConditionParticles.emitting = true 
+		elif type_cond == "bleeding":
+			$DeathParticles.emitting = true
 	
 	
-func _death(custom_death_sprite=false,crittical_hit=false):
-	
+func _death(custom_death_sprite=false,crittical_hit=false,cond_type = "none"):
+		
 	if dead:
 		return
 			
@@ -150,9 +174,8 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		$AnimatedSprite2D.visible = false
 		$MagicParticles.emitting = false
 		
-		var exploded = $AnimatedSprite2D.animation == "burned"
 		
-		critical_parts._launch_parts(id,has_head,exploded)
+		critical_parts._launch_parts(id,has_head,cond_type)
 	
 	elif !custom_death_sprite:
 		if undertale_mode && $AnimatedSprite2D.animation.contains("headless"):
@@ -167,8 +190,14 @@ func _death(custom_death_sprite=false,crittical_hit=false):
 		else:
 			$AnimatedSprite2D.animation = "death"
 		
-		var tween = create_tween()
-		tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)
+
+		
+	if $AnimatedSprite2D.get_node_or_null("PoopSticked") != null:
+		var temp = $AnimatedSprite2D.get_node("PoopSticked")
+		var main = get_parent()
+		var area = temp.get_node("Area2D")
+		temp.call_deferred("reparent",main,true)
+		area.set_deferred("monitorable",true)
 		
 	$DeathTimer.start()
 	$DeathSound.random_pitch_play()
@@ -247,6 +276,11 @@ func _delete_enemy():
 	
 	if head_ref != null:
 		head_ref.queue_free()
+		
+	var tween = create_tween()
+	
+	tween.tween_property(self, "modulate", Color(0,0,0,0) , 0.5).set_ease(Tween.EASE_IN).set_delay(0.5)
+	await tween.finished
 		
 	set_collision_layer_value(20,false)
 	emit_signal("stop_homming")

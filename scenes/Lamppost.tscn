@@ -83,7 +83,7 @@ gravity_scale = 0.0
 script = ExtResource("1_0a3k4")
 pierce_damage_threshold = 25
 damage = 2
-push_back_multiplier = 100
+push_back_multiplier = 125
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visibility_layer = 2

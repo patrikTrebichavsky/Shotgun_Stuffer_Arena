@@ -9,8 +9,8 @@ class_name CriticalParts
 @export var rotation_duration = 2
 
 @export_category("Launch Speed")
-@export var launch_speed = 1200
-@export var launch_speed_variable = 200
+@export var part_speed_mult = 1200.0
+@export var part_speed_mult_var = 200.0
 @export var explosion_boost = 2
 var rps_max
 @export_category("Damping")
@@ -39,11 +39,11 @@ func _physics_process(delta: float) -> void:
 			rps -= (rps_max/rotation_duration)*delta
 			
 
-func _launch(launch_vector, enemy_id = 1, exploded = false):
+func _launch(launch_vector, enemy_id = 1, cond_type = "none"):
 		
 	#EnemyID is set to 0 in case of double thrower because he has only one animation 
 		
-	if exploded:
+	if cond_type == "explosion" or cond_type == "electrocute" :
 		$Sprite.animation = "burned"
 	elif enemy_id == 1:
 		$Sprite.animation = "basic"
@@ -54,9 +54,9 @@ func _launch(launch_vector, enemy_id = 1, exploded = false):
 	elif enemy_id == 10:
 		$Sprite.animation = "smasher"
 
-	var temp = position+(launch_speed-randf_range(-launch_speed_variable,launch_speed_variable))*(launch_vector.normalized())
+	var temp = position+(part_speed_mult-randf_range(-part_speed_mult_var,part_speed_mult_var))*(launch_vector)
 	
-	if exploded:
+	if cond_type == "explosion":
 		temp = temp * explosion_boost
 	
 	temp = temp.rotated(fixed_launch_angle)
