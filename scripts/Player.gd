@@ -55,7 +55,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 @export var player_level = 0
 @export var dash_distance = 1000
 
-var stored_ammo = [9,9,9,9,9,9,9,9,9]
+var stored_ammo = [1,2,3,4,5,6,7,8,9]
 
 var special_slot_chosen : int
 
