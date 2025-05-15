@@ -1,9 +1,22 @@
-[gd_scene load_steps=19 format=4 uid="uid://dvgv70tuitxri"]
+[gd_scene load_steps=22 format=4 uid="uid://c2n6oicpblqw7"]
 
-[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="1_myinc"]
+[ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="1_nae2k"]
+[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="2_pef0h"]
+[ext_resource type="Texture2D" uid="uid://b3h5i40elakg3" path="res://sprites/Bullets/Closet/Berserk/DragonSlayer.png" id="3_qy1rb"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_njov2"]
-viewport_path = NodePath("SubViewport")
+[sub_resource type="SpriteFrames" id="SpriteFrames_6fbwv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_nae2k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_tup5g"]
+viewport_path = NodePath("3dDragonSlayer/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c0c15"]
 resource_name = "material_0"
@@ -11,11 +24,11 @@ transparency = 2
 alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("1_myinc")
+albedo_texture = ExtResource("2_pef0h")
 texture_filter = 0
 texture_repeat = false
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_51p56"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_myinc"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 0.0625, 0.0625, 0.1875),
 "format": 34896613377,
@@ -45,9 +58,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_51p56")
+shadow_mesh = SubResource("ArrayMesh_myinc")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_obbbu"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_njov2"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 0.375, 0.0625, 0.0625),
 "format": 34896613377,
@@ -77,9 +90,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_obbbu")
+shadow_mesh = SubResource("ArrayMesh_njov2")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_hhs5k"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_2au82"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 1.375, 0.0625, 0.4375),
 "format": 34896613377,
@@ -109,9 +122,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_hhs5k")
+shadow_mesh = SubResource("ArrayMesh_2au82")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_er8c1"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_8tn2x"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 0.0625, 0.0625, 0.3125),
 "format": 34896613377,
@@ -141,9 +154,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_er8c1")
+shadow_mesh = SubResource("ArrayMesh_8tn2x")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_qbr45"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_aq4fw"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 0.0625, 0.0625, 0.1875),
 "format": 34896613377,
@@ -173,9 +186,9 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_qbr45")
+shadow_mesh = SubResource("ArrayMesh_aq4fw")
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_24qwn"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_ivycn"]
 _surfaces = [{
 "aabb": AABB(-0.0625, 0, -0.0625, 0.0625, 0.0625, 0.0625),
 "format": 34896613377,
@@ -205,100 +218,167 @@ _surfaces = [{
 "vertex_data": PackedByteArray("/////////7//////AAD/v///AAD///+///8AAAAA/78AAP//AAD/vwAA//////+/AAAAAAAA/78AAAAA////vwAA//8AAP///////wAA//8AAP//////////////////AAAAAP//AAD//wAA//8AAAAAAAAAAAAA//8AAAAAAAAAAP////8AgP///////wCAAAAAAP//AID//wAA//8AgP////8AAP//AAD//wAA/////wAAAAD//wAAAAAAAP///38AAP9/AAD/fwAA/38AAP9/////f////3////9/////f/+//3//v/9//7//f/+//3//P/9//z//f/8//3//P/9/////f////3////9/////f////3////9/////f///")
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_24qwn")
+shadow_mesh = SubResource("ArrayMesh_ivycn")
 
-[sub_resource type="Animation" id="Animation_8tn2x"]
+[sub_resource type="Animation" id="Animation_rilub"]
+resource_name = "Overhead"
+length = 1.0
+step = 0.0416667
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/blockbench_export")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.125, 1, 0, 0, 0, 0.250415, 1, 0, 0, -0.0920423, 0.416667, 1, 0, 0.5, -0.092, 0.5, 1, 0, 0, -0.0920423)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/blockbench_export")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.125, 1, 0, 0, 0, 1, 0.25, 1, 0, 0, 0.176226, 0.98435, 0.416667, 1, 0, 0, 0.580703, 0.814116, 0.5, 1, 0, 0, 0.944089, 0.329691, 0.583333, 1, 0, 0, 0.953717, 0.300706, 0.666667, 1, 0, 0, 0.965926, 0.258819)
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/blockbench_export:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0416667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/blockbench_export/Node:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.121667, 0.25, 0.583333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2hpb4"]
 length = 0.001
 tracks/0/type = "position_3d"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("blockbench_export")
+tracks/0/path = NodePath("SubViewport/blockbench_export")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 1.33588, 0, 0.053169)
-
-[sub_resource type="Animation" id="Animation_2au82"]
-resource_name = "new_animation"
-loop_mode = 2
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("blockbench_export")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 1.33588, 0, 0.053169)
-tracks/1/type = "rotation_3d"
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("blockbench_export")
+tracks/1/path = NodePath("SubViewport/blockbench_export:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.4, 1, 0, 0.993207, 0, 0.116359, 0.833333, 1, 0, -0.557332, 0, 0.83029, 1, 1, 0, 0, 0, 1)
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_aq4fw"]
-_data = {
-&"RESET": SubResource("Animation_8tn2x"),
-&"new_animation": SubResource("Animation_2au82")
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/blockbench_export/Node:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1.41546, 0, 0)]
 }
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_leqan"]
+_data = {
+&"Overhead": SubResource("Animation_rilub"),
+&"RESET": SubResource("Animation_2hpb4")
+}
+
+[node name="RigidBody2D" type="RigidBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_6fbwv")
+
+[node name="3dDragonSlayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
-[node name="Panel" type="Panel" parent="."]
+[node name="Panel" type="Panel" parent="3dDragonSlayer"]
+offset_left = -58.0
+offset_top = 19.0
+offset_right = -58.0
+offset_bottom = 19.0
+rotation = 1.58025
 
-[node name="TextureRect" type="TextureRect" parent="Panel"]
+[node name="TextureRect" type="TextureRect" parent="3dDragonSlayer/Panel"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("ViewportTexture_njov2")
+offset_left = -519.583
+offset_top = -588.114
+offset_right = 504.417
+offset_bottom = 435.886
+texture = SubResource("ViewportTexture_tup5g")
 
-[node name="SubViewport" type="SubViewport" parent="."]
+[node name="SubViewport" type="SubViewport" parent="3dDragonSlayer"]
+transparent_bg = true
+size = Vector2i(1024, 1024)
 
-[node name="blockbench_export" type="Node3D" parent="SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.33588, 0, 0.053169)
+[node name="blockbench_export" type="Node3D" parent="3dDragonSlayer/SubViewport"]
+transform = Transform3D(0.802453, -0.596716, 0, 0.596716, 0.802453, 0, 0, 0, 1, 0, 0, 0)
 
-[node name="Node" type="Node3D" parent="SubViewport/blockbench_export"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21709, -0.00330544, -0.0101607)
+[node name="Node" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export"]
+transform = Transform3D(1, 0, 0, 0, 0.15471, -0.98796, 0, 0.98796, 0.15471, 1.21709, -0.00330544, -0.0101607)
 
-[node name="bone" type="Node3D" parent="SubViewport/blockbench_export/Node"]
+[node name="bone" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07813, 0, -0.21875)
 
-[node name="Hilt" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node"]
+[node name="Hilt" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6875, 0, -0.09375)
 mesh = SubResource("ArrayMesh_ickyw")
 skeleton = NodePath("")
 
-[node name="Handle" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node"]
+[node name="Handle" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0625, 0, -0.03125)
 mesh = SubResource("ArrayMesh_2do1k")
 skeleton = NodePath("")
 
-[node name="Blade" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node"]
+[node name="Blade" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, -0.21875)
 mesh = SubResource("ArrayMesh_7kvwg")
 skeleton = NodePath("")
 
-[node name="Tip" type="Node3D" parent="SubViewport/blockbench_export/Node"]
+[node name="Tip" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8125, 0, -0.09375)
 
-[node name="cube" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node/Tip"]
+[node name="cube" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0625, 0, -0.0625)
 mesh = SubResource("ArrayMesh_f0snb")
 skeleton = NodePath("")
 
-[node name="cube2" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node/Tip"]
+[node name="cube2" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 mesh = SubResource("ArrayMesh_7pxcv")
 skeleton = NodePath("")
 
-[node name="cube3" type="MeshInstance3D" parent="SubViewport/blockbench_export/Node/Tip"]
+[node name="cube3" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0625, 0, 0.0625)
 mesh = SubResource("ArrayMesh_f5y0w")
 skeleton = NodePath("")
 
-[node name="Camera3D" type="Camera3D" parent="SubViewport"]
-transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, 1.17445, 2.01401, 0)
+[node name="Camera3D" type="Camera3D" parent="3dDragonSlayer/SubViewport"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -0.0276067, 4.2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="SubViewport"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="3dDragonSlayer"]
 libraries = {
-&"": SubResource("AnimationLibrary_aq4fw")
+&"": SubResource("AnimationLibrary_leqan")
 }
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(196, 0)
+texture = ExtResource("3_qy1rb")
