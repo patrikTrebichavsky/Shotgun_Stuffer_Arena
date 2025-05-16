@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=4 uid="uid://c2n6oicpblqw7"]
+[gd_scene load_steps=32 format=4 uid="uid://c2n6oicpblqw7"]
 
 [ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Closet/Berserk/Guts.gd" id="1_1kgq5"]
 [ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="1_nae2k"]
@@ -18,9 +18,23 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_e04th"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(1, 125, 100)
+spread = 23.209
+initial_velocity_min = 694.43
+initial_velocity_max = 694.43
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 100.0
+scale_min = 1.65
+scale_max = 11.35
+color = Color(1, 1, 1, 0.0196078)
+
 [sub_resource type="Animation" id="Animation_rilub"]
 resource_name = "Overhead"
-length = 1.12501
+length = 1.20834
 step = 0.0416667
 tracks/0/type = "position_3d"
 tracks/0/imported = false
@@ -28,14 +42,14 @@ tracks/0/enabled = true
 tracks/0/path = NodePath("SubViewport/blockbench_export")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.125, 1, 0, 0, 0, 0.250415, 1, 0, 0, -0.0920423, 0.416667, 1, 0, 0.5, -0.092, 0.5, 1, 0, 0, -0.0920423, 0.916667, 1, 0, 0, -0.0920423, 0.958333, 1, 0, 0.5, -0.092, 1.04167, 1, 0, 0.5, -0.025, 1.125, 1, 0, 0.5, -0.0568372)
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.125, 1, 0, 0, 0, 0.250415, 1, 0, 0, -0.0920423, 0.416667, 1, 0, 0.5, -0.092, 0.5, 1, 0, 0, -0.0920423, 0.916667, 1, 0, 0, -0.0920423, 0.958333, 1, 0, 0.5, -0.092, 1.04167, 1, 0, 0.5, -0.025, 1.125, 1, 0, 0.5, -0.025, 1.16667, 1, 0, 0, 0, 1.21106, 1, 0, 0.5, -0.0568372)
 tracks/1/type = "rotation_3d"
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/path = NodePath("SubViewport/blockbench_export")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.125, 1, 0, 0, 0, 1, 0.25, 1, 0, 0, 0.176226, 0.98435, 0.416667, 1, 0, 0, 0.580703, 0.814116, 0.5, 1, 0, 0, 0.944089, 0.329691, 0.583333, 1, 0, 0, 0.953717, 0.300706, 0.666667, 1, 0, 0, 0.965926, 0.258819, 0.833333, 1, 0, 0, 0.965926, 0.258819, 0.833433, 1, 0, 0, 0.941176, 0.337917, 0.916667, 1, 0, 0, 0.38349, 0.923545, 0.958333, 1, 0, 0, -0.188238, 0.982123, 1, 1, 0, 0, -0.173648, 0.984808, 1.04167, 1, 0, 0, -0.173648, 0.984808)
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.125, 1, 0, 0, 0, 1, 0.25, 1, 0, 0, 0.176226, 0.98435, 0.416667, 1, 0, 0, 0.580703, 0.814116, 0.5, 1, 0, 0, 0.944089, 0.329691, 0.583333, 1, 0, 0, 0.953717, 0.300706, 0.666667, 1, 0, 0, 0.965926, 0.258819, 0.833333, 1, 0, 0, 0.965926, 0.258819, 0.833433, 1, 0, 0, 0.941176, 0.337917, 0.916667, 1, 0, 0, 0.38349, 0.923545, 0.958333, 1, 0, 0, -0.188238, 0.982123, 1, 1, 0, 0, -0.173648, 0.984808, 1.04167, 1, 0, 0, -0.173648, 0.984808, 1.125, 1, 0, 0, -0.173648, 0.984808, 1.16775, 1, 0, 0, 0, 1)
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
@@ -55,10 +69,10 @@ tracks/3/path = NodePath("SubViewport/blockbench_export/Node:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.121667, 0.25, 0.583333, 0.875, 0.958333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.121667, 0.25, 0.583333, 0.875, 0.958333, 1.125, 1.16667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.06814, 0, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.06814, 0, 0), Vector3(1.06814, 0, 0), Vector3(0, 0, 0)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -115,7 +129,7 @@ tracks/8/path = NodePath("../GutsSprite2D:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.291667, 0.458333, 0.75, 0.958333, 1.04167, 1.125),
+"times": PackedFloat32Array(0, 0.291667, 0.458333, 0.75, 0.958333, 1.04167, 1.21106),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(0, 0), Vector2(-15, 0), Vector2(-15, 0), Vector2(0, 0), Vector2(7, 0), Vector2(0, 0)]
@@ -144,14 +158,187 @@ tracks/10/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("../Panel:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 1.20833),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("../DragonSlayerSprite2D:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 1.20833),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="Animation" id="Animation_2hpb4"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Panel:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../DragonSlayerSprite2D:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../DragonSlayerSprite2D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../DragonSlayerSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(56.9991, -260)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../DragonSlayerSprite2D/SwingParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../GutsSprite2D:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(7, 0)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../GutsSprite2D:rotation")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_1kgq5"]
+resource_name = "SwingLeft"
+step = 0.0416667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../DragonSlayerSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.166667, 0.291667, 0.333333, 0.375, 0.458333, 0.583333, 0.625, 0.666667, 0.75, 0.833333, 0.875, 0.916667, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(196, 6.10352e-05), Vector2(161, -56.75), Vector2(55.9992, -227), Vector2(55.9992, -227), Vector2(50.9992, -227), Vector2(50.9992, -227), Vector2(196, 6.10352e-05), Vector2(36.0008, 212), Vector2(17.0008, 227), Vector2(17.0008, 227), Vector2(36.0008, 212), Vector2(36.0008, 212), Vector2(127.001, 134), Vector2(177, 76.9994), Vector2(196, 6.10352e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../DragonSlayerSprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.166667, 0.291667, 0.333333, 0.375, 0.458333, 0.583333, 0.625, 0.666667, 0.75, 0.833333, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.392699, -1.5708, -1.5708, -1.65806, -1.69297, 0.0, 1.65806, 1.74533, 1.74533, 1.8326, 1.65806, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../DragonSlayerSprite2D/SwingParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.416667, 0.625),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../GutsSprite2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.166667, 0.375, 0.625, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(7, 0), Vector2(0, 0), Vector2(-10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(5, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../GutsSprite2D:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.125, 0.166667, 0.375, 0.625, 0.666667, 0.833333, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.218166, -0.218166, -0.218166, 0.272271, 0.314159, 0.314159, 0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_leqan"]
 _data = {
 &"Overhead": SubResource("Animation_rilub"),
-&"RESET": SubResource("Animation_2hpb4")
+&"RESET": SubResource("Animation_2hpb4"),
+&"SwingLeft": SubResource("Animation_1kgq5")
 }
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nae2k"]
@@ -165,9 +352,6 @@ damping_max = 100.0
 scale_min = 1.65
 scale_max = 11.35
 color = Color(1, 1, 1, 0.0196078)
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_tup5g"]
-viewport_path = NodePath("3dDragonSlayer/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c0c15"]
 resource_name = "material_0"
@@ -371,6 +555,9 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ivycn")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_tup5g"]
+viewport_path = NodePath("3dDragonSlayer/SubViewport")
+
 [sub_resource type="Gradient" id="Gradient_pef0h"]
 offsets = PackedFloat32Array(0.470455)
 colors = PackedColorArray(0.569326, 0.372464, 0.218124, 1)
@@ -390,15 +577,42 @@ scale_min = 4.0
 scale_max = 27.0
 color_ramp = SubResource("GradientTexture1D_qy1rb")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e04th"]
+radius = 199.0
+height = 470.0
+
 [node name="RigidBody2D" type="RigidBody2D"]
 position = Vector2(689, 367)
 rotation = 1.5708
+scale = Vector2(0.75, 0.75)
 mass = 0.001
 gravity_scale = 0.0
 script = ExtResource("1_1kgq5")
 
 [node name="GutsSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(7, 0)
 sprite_frames = SubResource("SpriteFrames_6fbwv")
+
+[node name="DragonSlayerSprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(56.9991, -260)
+texture = ExtResource("3_qy1rb")
+
+[node name="SwingParticles" type="GPUParticles2D" parent="DragonSlayerSprite2D"]
+show_behind_parent = true
+z_index = 1
+z_as_relative = false
+position = Vector2(18.6669, 62.6659)
+rotation = -1.5708
+emitting = false
+amount = 32
+lifetime = 0.5
+preprocess = 1.0
+speed_scale = 4.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_e04th")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../3dDragonSlayer")
@@ -408,7 +622,8 @@ libraries = {
 
 [node name="AirParticles" type="GPUParticles2D" parent="."]
 z_index = 9
-position = Vector2(351, 2)
+position = Vector2(321, 8)
+rotation = 3.14159
 emitting = false
 amount = 16
 lifetime = 0.5
@@ -419,22 +634,6 @@ trail_enabled = true
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_nae2k")
 
-[node name="Panel" type="Panel" parent="."]
-offset_left = -58.0
-offset_top = 19.0
-offset_right = -58.0
-offset_bottom = 19.0
-rotation = 1.58025
-metadata/_edit_use_anchors_ = true
-
-[node name="TextureRect" type="TextureRect" parent="Panel"]
-layout_mode = 0
-offset_left = -519.583
-offset_top = -588.114
-offset_right = 504.417
-offset_bottom = 435.886
-texture = SubResource("ViewportTexture_tup5g")
-
 [node name="3dDragonSlayer" type="CanvasLayer" parent="."]
 layer = 0
 
@@ -443,7 +642,6 @@ transparent_bg = true
 size = Vector2i(1024, 1024)
 
 [node name="blockbench_export" type="Node3D" parent="3dDragonSlayer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Node" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21709, -0.00330544, -0.0101607)
@@ -491,10 +689,21 @@ transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -4.3711
 directional_shadow_max_distance = 2001.0
 sky_mode = 1
 
-[node name="DragonSlayerSprite2D" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(196, 0)
-texture = ExtResource("3_qy1rb")
+[node name="Panel" type="Panel" parent="."]
+offset_left = -58.0
+offset_top = 19.0
+offset_right = -58.0
+offset_bottom = 19.0
+rotation = 1.58025
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 0
+offset_left = -519.583
+offset_top = -588.114
+offset_right = 504.417
+offset_bottom = 435.886
+texture = SubResource("ViewportTexture_tup5g")
 
 [node name="OverHeadParticles" type="GPUParticles2D" parent="."]
 z_index = -2
@@ -528,3 +737,16 @@ offset_right = -829.0
 offset_bottom = -1531.0
 scale = Vector2(177.782, 61.1237)
 color = Color(0.219626, 0.597158, 0, 1)
+
+[node name="SwingArea2D" type="Area2D" parent="."]
+position = Vector2(196, 0.000183105)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="SwingArea2D"]
+polygon = PackedVector2Array(-152, 4.99976, -137.998, 455, 79.0015, 414.999, 241.001, 297.998, 312, 129.998, 320, -4.00195, 301.999, -177.002, 231.999, -296.002, 72.9985, -404.001, -164.002, -445)
+
+[node name="OverHeadArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OverHeadArea2D"]
+position = Vector2(275, 0.999005)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_e04th")
