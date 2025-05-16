@@ -110,7 +110,7 @@ color_ramp = SubResource("GradientTexture1D_as3m1")
 offsets = PackedFloat32Array(0.470455)
 colors = PackedColorArray(0.569326, 0.372464, 0.218124, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_vhnpe"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h80fp"]
 gradient = SubResource("Gradient_2kbcl")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_08svk"]
@@ -123,7 +123,7 @@ damping_min = 100.0
 damping_max = 500.0
 scale_min = 4.0
 scale_max = 27.0
-color_ramp = SubResource("GradientTexture1D_vhnpe")
+color_ramp = SubResource("GradientTexture1D_h80fp")
 
 [sub_resource type="Animation" id="Animation_r34c6"]
 resource_name = "ArenaEntering"

@@ -1,8 +1,11 @@
-[gd_scene load_steps=22 format=4 uid="uid://c2n6oicpblqw7"]
+[gd_scene load_steps=29 format=4 uid="uid://c2n6oicpblqw7"]
 
+[ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Closet/Berserk/Guts.gd" id="1_1kgq5"]
 [ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="1_nae2k"]
 [ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="2_pef0h"]
 [ext_resource type="Texture2D" uid="uid://b3h5i40elakg3" path="res://sprites/Bullets/Closet/Berserk/DragonSlayer.png" id="3_qy1rb"]
+[ext_resource type="AudioStream" uid="uid://cs422cyr3o5pv" path="res://sounds/Bullets/Closet/Berserk/Swing.wav" id="5_1kgq5"]
+[ext_resource type="AudioStream" uid="uid://dk7e8wx0f23te" path="res://sounds/Bullets/Closet/Berserk/Clang.wav" id="6_1kgq5"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6fbwv"]
 animations = [{
@@ -14,6 +17,154 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_rilub"]
+resource_name = "Overhead"
+length = 1.12501
+step = 0.0416667
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SubViewport/blockbench_export")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.125, 1, 0, 0, 0, 0.250415, 1, 0, 0, -0.0920423, 0.416667, 1, 0, 0.5, -0.092, 0.5, 1, 0, 0, -0.0920423, 0.916667, 1, 0, 0, -0.0920423, 0.958333, 1, 0, 0.5, -0.092, 1.04167, 1, 0, 0.5, -0.025, 1.125, 1, 0, 0.5, -0.0568372)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SubViewport/blockbench_export")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.125, 1, 0, 0, 0, 1, 0.25, 1, 0, 0, 0.176226, 0.98435, 0.416667, 1, 0, 0, 0.580703, 0.814116, 0.5, 1, 0, 0, 0.944089, 0.329691, 0.583333, 1, 0, 0, 0.953717, 0.300706, 0.666667, 1, 0, 0, 0.965926, 0.258819, 0.833333, 1, 0, 0, 0.965926, 0.258819, 0.833433, 1, 0, 0, 0.941176, 0.337917, 0.916667, 1, 0, 0, 0.38349, 0.923545, 0.958333, 1, 0, 0, -0.188238, 0.982123, 1, 1, 0, 0, -0.173648, 0.984808, 1.04167, 1, 0, 0, -0.173648, 0.984808)
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SubViewport/blockbench_export:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.0416667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SubViewport/blockbench_export/Node:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.121667, 0.25, 0.583333, 0.875, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.06814, 0, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../AirParticles:emitting")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.291667, 0.5, 0.833333, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("../AirParticles:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0.25, 0.416667, 0.541667, 0.791667, 0.833333, 0.875, 0.916667, 0.958333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(351, 2), Vector2(35, -14), Vector2(-337, -7), Vector2(-337, -7), Vector2(-337, -7), Vector2(-28, -7), Vector2(456, -7), Vector2(321, 8)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("../OverHeadParticles:emitting")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.916667),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("../AirParticles:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.791667, 0.833333),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 3.14159]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("../GutsSprite2D:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 0.291667, 0.458333, 0.75, 0.958333, 1.04167, 1.125),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(-15, 0), Vector2(-15, 0), Vector2(0, 0), Vector2(7, 0), Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("../WindSound:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 0.208333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("../OverHeadSound:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0.958333),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_2hpb4"]
+length = 0.001
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_leqan"]
+_data = {
+&"Overhead": SubResource("Animation_rilub"),
+&"RESET": SubResource("Animation_2hpb4")
+}
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nae2k"]
+particle_flag_disable_z = true
+spread = 23.209
+initial_velocity_min = 694.43
+initial_velocity_max = 694.43
+gravity = Vector3(0, 0, 0)
+damping_min = 100.0
+damping_max = 100.0
+scale_min = 1.65
+scale_max = 11.35
+color = Color(1, 1, 1, 0.0196078)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_tup5g"]
 viewport_path = NodePath("3dDragonSlayer/SubViewport")
@@ -220,105 +371,63 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_ivycn")
 
-[sub_resource type="Animation" id="Animation_rilub"]
-resource_name = "Overhead"
-length = 1.0
-step = 0.0416667
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewport/blockbench_export")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 0.125, 1, 0, 0, 0, 0.250415, 1, 0, 0, -0.0920423, 0.416667, 1, 0, 0.5, -0.092, 0.5, 1, 0, 0, -0.0920423)
-tracks/1/type = "rotation_3d"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewport/blockbench_export")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 0.125, 1, 0, 0, 0, 1, 0.25, 1, 0, 0, 0.176226, 0.98435, 0.416667, 1, 0, 0, 0.580703, 0.814116, 0.5, 1, 0, 0, 0.944089, 0.329691, 0.583333, 1, 0, 0, 0.953717, 0.300706, 0.666667, 1, 0, 0, 0.965926, 0.258819)
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewport/blockbench_export:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.0416667),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("SubViewport/blockbench_export/Node:rotation")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.121667, 0.25, 0.583333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(1.5708, 0, 0), Vector3(1.5708, 0, 0)]
-}
+[sub_resource type="Gradient" id="Gradient_pef0h"]
+offsets = PackedFloat32Array(0.470455)
+colors = PackedColorArray(0.569326, 0.372464, 0.218124, 1)
 
-[sub_resource type="Animation" id="Animation_2hpb4"]
-length = 0.001
-tracks/0/type = "position_3d"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SubViewport/blockbench_export")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SubViewport/blockbench_export:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SubViewport/blockbench_export/Node:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1.41546, 0, 0)]
-}
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qy1rb"]
+gradient = SubResource("Gradient_pef0h")
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_leqan"]
-_data = {
-&"Overhead": SubResource("Animation_rilub"),
-&"RESET": SubResource("Animation_2hpb4")
-}
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1kgq5"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 749.57
+initial_velocity_max = 983.07
+gravity = Vector3(0, 0, 0)
+damping_min = 1100.0
+damping_max = 1400.0
+scale_min = 4.0
+scale_max = 27.0
+color_ramp = SubResource("GradientTexture1D_qy1rb")
 
 [node name="RigidBody2D" type="RigidBody2D"]
+position = Vector2(689, 367)
+rotation = 1.5708
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_1kgq5")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="GutsSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_6fbwv")
 
-[node name="3dDragonSlayer" type="CanvasLayer" parent="."]
-follow_viewport_enabled = true
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../3dDragonSlayer")
+libraries = {
+&"": SubResource("AnimationLibrary_leqan")
+}
 
-[node name="Panel" type="Panel" parent="3dDragonSlayer"]
+[node name="AirParticles" type="GPUParticles2D" parent="."]
+z_index = 9
+position = Vector2(351, 2)
+emitting = false
+amount = 16
+lifetime = 0.5
+preprocess = 1.0
+speed_scale = 4.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_nae2k")
+
+[node name="Panel" type="Panel" parent="."]
 offset_left = -58.0
 offset_top = 19.0
 offset_right = -58.0
 offset_bottom = 19.0
 rotation = 1.58025
+metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="3dDragonSlayer/Panel"]
+[node name="TextureRect" type="TextureRect" parent="Panel"]
 layout_mode = 0
 offset_left = -519.583
 offset_top = -588.114
@@ -326,15 +435,18 @@ offset_right = 504.417
 offset_bottom = 435.886
 texture = SubResource("ViewportTexture_tup5g")
 
+[node name="3dDragonSlayer" type="CanvasLayer" parent="."]
+layer = 0
+
 [node name="SubViewport" type="SubViewport" parent="3dDragonSlayer"]
 transparent_bg = true
 size = Vector2i(1024, 1024)
 
 [node name="blockbench_export" type="Node3D" parent="3dDragonSlayer/SubViewport"]
-transform = Transform3D(0.802453, -0.596716, 0, 0.596716, 0.802453, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="Node" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export"]
-transform = Transform3D(1, 0, 0, 0, 0.15471, -0.98796, 0, 0.98796, 0.15471, 1.21709, -0.00330544, -0.0101607)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21709, -0.00330544, -0.0101607)
 
 [node name="bone" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07813, 0, -0.21875)
@@ -374,11 +486,45 @@ skeleton = NodePath("")
 [node name="Camera3D" type="Camera3D" parent="3dDragonSlayer/SubViewport"]
 transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -0.0276067, 4.2, 0)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="3dDragonSlayer"]
-libraries = {
-&"": SubResource("AnimationLibrary_leqan")
-}
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="3dDragonSlayer/SubViewport/Camera3D"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -4.37114e-08, 1, -1.20673e-09, 0.0276067, 0.187948)
+directional_shadow_max_distance = 2001.0
+sky_mode = 1
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="DragonSlayerSprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(196, 0)
 texture = ExtResource("3_qy1rb")
+
+[node name="OverHeadParticles" type="GPUParticles2D" parent="."]
+z_index = -2
+position = Vector2(343, 6)
+emitting = false
+amount = 60
+amount_ratio = 0.9
+one_shot = true
+explosiveness = 1.0
+randomness = 0.17
+process_material = SubResource("ParticleProcessMaterial_1kgq5")
+
+[node name="WindSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_1kgq5")
+volume_db = -5.0
+pitch_scale = 0.5
+bus = &"SFX"
+
+[node name="OverHeadSound" type="AudioStreamPlayer2D" parent="."]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_1kgq5")
+volume_db = -5.0
+bus = &"SFX"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -8
+offset_left = -869.0
+offset_top = -1571.0
+offset_right = -829.0
+offset_bottom = -1531.0
+scale = Vector2(177.782, 61.1237)
+color = Color(0.219626, 0.597158, 0, 1)
