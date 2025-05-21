@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://y87br56fs8tq"]
+
+[ext_resource type="PackedScene" uid="uid://dvyno8ehyqf2m" path="res://scenes/Berserk/Guts.tscn" id="1_myinc"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_njov2"]
+vertices = PackedVector2Array(3343.52, 1404.23, -465.008, 1475.79, -309.727, -213.492, 2847.36, -776.477)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-319, -222, -476, 1486, 3356, 1414, 2855, -788)])
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RigidBody2D" parent="." instance=ExtResource("1_myinc")]
+enemy_position = Vector2(1000, 500)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(11, -6)
+navigation_polygon = SubResource("NavigationPolygon_njov2")
