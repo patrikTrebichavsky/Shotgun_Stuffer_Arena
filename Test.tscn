@@ -1,17 +1,339 @@
-[gd_scene load_steps=3 format=3 uid="uid://y87br56fs8tq"]
+[gd_scene load_steps=14 format=3 uid="uid://y87br56fs8tq"]
 
 [ext_resource type="PackedScene" uid="uid://dvyno8ehyqf2m" path="res://scenes/Berserk/Guts.tscn" id="1_myinc"]
+[ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy.gd" id="2_q1uvj"]
+[ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="3_qs82m"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_c4vo5"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_vwb7u"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_cqdos"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="7_r6p7k"]
+[ext_resource type="PackedScene" uid="uid://dir5j135wrl6q" path="res://scenes/Enemy.tscn" id="8_qs82m"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_njov2"]
 vertices = PackedVector2Array(3343.52, 1404.23, -465.008, 1475.79, -309.727, -213.492, 2847.36, -776.477)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-319, -222, -476, 1486, 3356, 1414, 2855, -788)])
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
+radius = 37.75
+height = 90.0
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
 [node name="Node2D" type="Node2D"]
 
-[node name="RigidBody2D" parent="." instance=ExtResource("1_myinc")]
-enemy_position = Vector2(1000, 500)
-
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
-position = Vector2(11, -6)
+position = Vector2(49, 19)
 navigation_polygon = SubResource("NavigationPolygon_njov2")
+
+[node name="Guts" parent="." instance=ExtResource("1_myinc")]
+push_back_multiplier = 90
+
+[node name="Enemy" type="RigidBody2D" parent="." groups=["enemy"]]
+z_index = 12
+position = Vector2(547, 408)
+collision_layer = 524800
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_q1uvj")
+speed_min = 150.0
+speed_max = 275
+hp = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy"]
+sprite_frames = ExtResource("3_qs82m")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = ExtResource("4_c4vo5")
+
+[node name="DeathTimer" type="Timer" parent="Enemy" groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserDamageTimer" type="Timer" parent="Enemy"]
+wait_time = 0.1
+one_shot = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_vwb7u")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_cqdos")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_r6p7k")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="Enemy"]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy" groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="Enemy"]
+
+[node name="Enemy2" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(355, 562)
+
+[node name="Enemy3" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(667, 183)
+
+[node name="Enemy4" type="RigidBody2D" parent="." groups=["enemy"]]
+z_index = 12
+position = Vector2(735, 508)
+collision_layer = 524800
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_q1uvj")
+speed_min = 150.0
+speed_max = 275
+hp = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy4"]
+sprite_frames = ExtResource("3_qs82m")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy4"]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Enemy4"]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = ExtResource("4_c4vo5")
+
+[node name="DeathTimer" type="Timer" parent="Enemy4" groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserDamageTimer" type="Timer" parent="Enemy4"]
+wait_time = 0.1
+one_shot = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Enemy4"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_vwb7u")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Enemy4"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_cqdos")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_r6p7k")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="Enemy4"]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy4" groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="Enemy4"]
+
+[node name="Enemy5" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(543, 662)
+
+[node name="Enemy6" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(855, 283)
+
+[node name="Enemy7" type="RigidBody2D" parent="." groups=["enemy"]]
+z_index = 12
+position = Vector2(850, 508)
+collision_layer = 524800
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_q1uvj")
+speed_min = 150.0
+speed_max = 275
+hp = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy7"]
+sprite_frames = ExtResource("3_qs82m")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy7"]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Enemy7"]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = ExtResource("4_c4vo5")
+
+[node name="DeathTimer" type="Timer" parent="Enemy7" groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserDamageTimer" type="Timer" parent="Enemy7"]
+wait_time = 0.1
+one_shot = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Enemy7"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_vwb7u")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Enemy7"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_cqdos")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_r6p7k")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="Enemy7"]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy7" groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="Enemy7"]
+
+[node name="Enemy8" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(658, 662)
+
+[node name="Enemy9" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(970, 283)
+
+[node name="Enemy10" type="RigidBody2D" parent="." groups=["enemy"]]
+z_index = 12
+position = Vector2(820, 410)
+collision_layer = 524800
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_q1uvj")
+speed_min = 150.0
+speed_max = 275
+hp = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy10"]
+sprite_frames = ExtResource("3_qs82m")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy10"]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Enemy10"]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = ExtResource("4_c4vo5")
+
+[node name="DeathTimer" type="Timer" parent="Enemy10" groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserDamageTimer" type="Timer" parent="Enemy10"]
+wait_time = 0.1
+one_shot = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Enemy10"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_vwb7u")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Enemy10"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_cqdos")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_r6p7k")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="Enemy10"]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy10" groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="Enemy10"]
+
+[node name="Enemy11" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(628, 564)
+
+[node name="Enemy12" parent="." instance=ExtResource("8_qs82m")]
+position = Vector2(940, 185)
+
+[connection signal="timeout" from="Enemy/DeathTimer" to="Enemy" method="_delete_enemy"]
+[connection signal="timeout" from="Enemy/StuckTimer" to="Enemy" method="stuck_timeout"]
+[connection signal="timeout" from="Enemy4/DeathTimer" to="Enemy4" method="_delete_enemy"]
+[connection signal="timeout" from="Enemy4/StuckTimer" to="Enemy4" method="stuck_timeout"]
+[connection signal="timeout" from="Enemy7/DeathTimer" to="Enemy7" method="_delete_enemy"]
+[connection signal="timeout" from="Enemy7/StuckTimer" to="Enemy7" method="stuck_timeout"]
+[connection signal="timeout" from="Enemy10/DeathTimer" to="Enemy10" method="_delete_enemy"]
+[connection signal="timeout" from="Enemy10/StuckTimer" to="Enemy10" method="stuck_timeout"]

@@ -1,18 +1,23 @@
-[gd_scene load_steps=36 format=4 uid="uid://dvyno8ehyqf2m"]
+[gd_scene load_steps=46 format=4 uid="uid://y87br56fs8tq"]
 
-[ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Closet/Berserk/Guts.gd" id="1_1kgq5"]
-[ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="1_nae2k"]
-[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="2_pef0h"]
-[ext_resource type="Texture2D" uid="uid://b3h5i40elakg3" path="res://sprites/Bullets/Closet/Berserk/DragonSlayer.png" id="3_qy1rb"]
-[ext_resource type="AudioStream" uid="uid://cs422cyr3o5pv" path="res://sounds/Bullets/Closet/Berserk/Swing.wav" id="5_1kgq5"]
-[ext_resource type="AudioStream" uid="uid://dk7e8wx0f23te" path="res://sounds/Bullets/Closet/Berserk/Clang.wav" id="6_1kgq5"]
-[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="6_e04th"]
+[ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Closet/Berserk/Guts.gd" id="1_r6p7k"]
+[ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy.gd" id="2_q1uvj"]
+[ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="2_rc7cs"]
+[ext_resource type="Texture2D" uid="uid://b3h5i40elakg3" path="res://sprites/Bullets/Closet/Berserk/DragonSlayer.png" id="3_d1b21"]
+[ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="3_qs82m"]
+[ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_c4vo5"]
+[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="4_ilduj"]
+[ext_resource type="AudioStream" uid="uid://cs422cyr3o5pv" path="res://sounds/Bullets/Closet/Berserk/Swing.wav" id="5_s2xbw"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="5_vwb7u"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="6_cqdos"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="7_r6p7k"]
+[ext_resource type="AudioStream" uid="uid://dk7e8wx0f23te" path="res://sounds/Bullets/Closet/Berserk/Clang.wav" id="7_rdfvj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6fbwv"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_nae2k")
+"texture": ExtResource("2_rc7cs")
 }],
 "loop": true,
 "name": &"default",
@@ -45,7 +50,7 @@ scale_min = 1.65
 scale_max = 11.35
 color = Color(1, 1, 1, 0.0196078)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_tup5g"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_iw7q2"]
 viewport_path = NodePath("3dDragonSlayer/SubViewport")
 
 [sub_resource type="Animation" id="Animation_rilub"]
@@ -202,20 +207,6 @@ tracks/12/keys = {
 "method": &"random_pitch_play"
 }]
 }
-tracks/13/type = "method"
-tracks/13/imported = false
-tracks/13/enabled = true
-tracks/13/path = NodePath("..")
-tracks/13/interp = 1
-tracks/13/loop_wrap = true
-tracks/13/keys = {
-"times": PackedFloat32Array(0.916667),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"overhead"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_2hpb4"]
 length = 0.001
@@ -314,18 +305,6 @@ tracks/7/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.173]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("../Node2D/DragonSlayerSprite2D/SwordArea:monitoring")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_e04th"]
@@ -432,18 +411,6 @@ tracks/7/keys = {
 "method": &"random_pitch_play"
 }]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("../Node2D/DragonSlayerSprite2D/SwordArea:monitoring")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.541667, 1.08333),
-"transitions": PackedFloat32Array(1, 1, 1.03526),
-"update": 1,
-"values": [false, true, false]
-}
 
 [sub_resource type="Animation" id="Animation_1kgq5"]
 resource_name = "Swing"
@@ -548,18 +515,6 @@ tracks/7/keys = {
 "method": &"random_pitch_play"
 }]
 }
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("../Node2D/DragonSlayerSprite2D/SwordArea:monitoring")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
-"times": PackedFloat32Array(0, 0.375, 0.666667),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [false, true, false]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_leqan"]
 _data = {
@@ -575,7 +530,7 @@ transparency = 2
 alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("2_pef0h")
+albedo_texture = ExtResource("4_ilduj")
 texture_filter = 0
 texture_repeat = false
 
@@ -790,36 +745,63 @@ scale_min = 4.0
 scale_max = 27.0
 color_ramp = SubResource("GradientTexture1D_qy1rb")
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e04th"]
-radius = 160.001
-height = 424.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_1kgq5"]
+radius = 846.844
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_gxitn"]
-radius = 1175.04
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_e04th"]
+radius = 199.0
+height = 470.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e04th"]
 radius = 46.6667
 
-[node name="Guts" type="RigidBody2D"]
-collision_layer = 0
-collision_mask = 14
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_njov2"]
+vertices = PackedVector2Array(3343.52, 1404.23, -465.008, 1475.79, -309.727, -213.492, 2847.36, -776.477)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-319, -222, -476, 1486, 3356, 1414, 2855, -788)])
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fcclg"]
+radius = 37.75
+height = 90.0
+
+[sub_resource type="Gradient" id="Gradient_4hypc"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_4hypc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
 mass = 0.001
 gravity_scale = 0.0
-script = ExtResource("1_1kgq5")
+script = ExtResource("1_r6p7k")
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="Node2D" type="Node2D" parent="RigidBody2D"]
 scale = Vector2(0.75, 0.75)
 
-[node name="GutsSprite2D" type="AnimatedSprite2D" parent="Node2D"]
+[node name="GutsSprite2D" type="AnimatedSprite2D" parent="RigidBody2D/Node2D"]
 position = Vector2(7, 0)
 sprite_frames = SubResource("SpriteFrames_6fbwv")
 
-[node name="DragonSlayerSprite2D" type="Sprite2D" parent="Node2D"]
+[node name="DragonSlayerSprite2D" type="Sprite2D" parent="RigidBody2D/Node2D"]
 z_index = 1
 position = Vector2(205, 0)
-texture = ExtResource("3_qy1rb")
+texture = ExtResource("3_d1b21")
 
-[node name="SwingParticles" type="GPUParticles2D" parent="Node2D/DragonSlayerSprite2D"]
+[node name="SwingParticles" type="GPUParticles2D" parent="RigidBody2D/Node2D/DragonSlayerSprite2D"]
 show_behind_parent = true
 z_index = 1
 z_as_relative = false
@@ -836,17 +818,7 @@ trail_enabled = true
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_e04th")
 
-[node name="SwordArea" type="Area2D" parent="Node2D/DragonSlayerSprite2D"]
-position = Vector2(56.3333, 0.00024414)
-scale = Vector2(1.33333, 1.33333)
-collision_layer = 0
-collision_mask = 514
-monitoring = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Node2D/DragonSlayerSprite2D/SwordArea"]
-polygon = PackedVector2Array(-162, -5.00018, -162, 3.99982, -119, 5.99982, -109, 26.9998, 55, 25.9998, 59, 21.9998, 62, 17.9998, 70, 10.9998, 78, 3.99982, 78, -4.00018, 70, -11.0002, 62, -19.0002, 55, -27.0002, -110, -26.0002, -119, -7.00018)
-
-[node name="AirParticles" type="GPUParticles2D" parent="Node2D"]
+[node name="AirParticles" type="GPUParticles2D" parent="RigidBody2D/Node2D"]
 z_index = 9
 position = Vector2(351, 2)
 emitting = false
@@ -859,7 +831,7 @@ trail_enabled = true
 trail_lifetime = 0.5
 process_material = SubResource("ParticleProcessMaterial_nae2k")
 
-[node name="Panel" type="Panel" parent="Node2D"]
+[node name="Panel" type="Panel" parent="RigidBody2D/Node2D"]
 visible = false
 z_index = 1
 offset_left = -50.6667
@@ -869,76 +841,77 @@ offset_bottom = 18.6667
 rotation = 1.58025
 metadata/_edit_use_anchors_ = true
 
-[node name="TextureRect" type="TextureRect" parent="Node2D/Panel"]
+[node name="TextureRect" type="TextureRect" parent="RigidBody2D/Node2D/Panel"]
 layout_mode = 0
 offset_left = -519.583
 offset_top = -588.114
 offset_right = 504.417
 offset_bottom = 435.886
-texture = SubResource("ViewportTexture_tup5g")
+texture = SubResource("ViewportTexture_iw7q2")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RigidBody2D"]
 root_node = NodePath("../3dDragonSlayer")
 libraries = {
 &"": SubResource("AnimationLibrary_leqan")
 }
 
-[node name="3dDragonSlayer" type="CanvasLayer" parent="."]
+[node name="3dDragonSlayer" type="CanvasLayer" parent="RigidBody2D"]
 layer = 0
+visible = false
 
-[node name="SubViewport" type="SubViewport" parent="3dDragonSlayer"]
+[node name="SubViewport" type="SubViewport" parent="RigidBody2D/3dDragonSlayer"]
 transparent_bg = true
 size = Vector2i(1024, 1024)
 
-[node name="blockbench_export" type="Node3D" parent="3dDragonSlayer/SubViewport"]
+[node name="blockbench_export" type="Node3D" parent="RigidBody2D/3dDragonSlayer/SubViewport"]
 
-[node name="Node" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export"]
+[node name="Node" type="Node3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.21709, -0.00330544, -0.0101607)
 
-[node name="bone" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
+[node name="bone" type="Node3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.07813, 0, -0.21875)
 
-[node name="Hilt" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
+[node name="Hilt" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6875, 0, -0.09375)
 mesh = SubResource("ArrayMesh_ickyw")
 skeleton = NodePath("")
 
-[node name="Handle" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
+[node name="Handle" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0625, 0, -0.03125)
 mesh = SubResource("ArrayMesh_2do1k")
 skeleton = NodePath("")
 
-[node name="Blade" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
+[node name="Blade" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.625, 0, -0.21875)
 mesh = SubResource("ArrayMesh_7kvwg")
 skeleton = NodePath("")
 
-[node name="Tip" type="Node3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node"]
+[node name="Tip" type="Node3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8125, 0, -0.09375)
 
-[node name="cube" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
+[node name="cube" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0625, 0, -0.0625)
 mesh = SubResource("ArrayMesh_f0snb")
 skeleton = NodePath("")
 
-[node name="cube2" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
+[node name="cube2" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 mesh = SubResource("ArrayMesh_7pxcv")
 skeleton = NodePath("")
 
-[node name="cube3" type="MeshInstance3D" parent="3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
+[node name="cube3" type="MeshInstance3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/blockbench_export/Node/Tip"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0625, 0, 0.0625)
 mesh = SubResource("ArrayMesh_f5y0w")
 skeleton = NodePath("")
 
-[node name="Camera3D" type="Camera3D" parent="3dDragonSlayer/SubViewport"]
+[node name="Camera3D" type="Camera3D" parent="RigidBody2D/3dDragonSlayer/SubViewport"]
 transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -0.0276067, 4.2, 0)
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="3dDragonSlayer/SubViewport/Camera3D"]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="RigidBody2D/3dDragonSlayer/SubViewport/Camera3D"]
 transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 1, -4.37114e-08, -4.37114e-08, 4.37114e-08, -4.37114e-08, 1, -1.20673e-09, 0.0276067, 0.187948)
 directional_shadow_max_distance = 2001.0
 sky_mode = 1
 
-[node name="OverHeadParticles" type="GPUParticles2D" parent="."]
+[node name="OverHeadParticles" type="GPUParticles2D" parent="RigidBody2D"]
 z_index = -2
 position = Vector2(343, 6)
 emitting = false
@@ -949,50 +922,57 @@ explosiveness = 1.0
 randomness = 0.17
 process_material = SubResource("ParticleProcessMaterial_1kgq5")
 
-[node name="WindSound" type="AudioStreamPlayer2D" parent="."]
+[node name="WindSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
 scale = Vector2(1.5, 1.5)
-stream = ExtResource("5_1kgq5")
+stream = ExtResource("5_s2xbw")
 volume_db = -5.0
 pitch_scale = 0.5
 bus = &"SFX"
-script = ExtResource("6_e04th")
+script = ExtResource("7_r6p7k")
 min_pitch = 0.45
 max_pitch = 0.55
 min_pitch_diff = 0.025
 
-[node name="OverHeadSound" type="AudioStreamPlayer2D" parent="."]
+[node name="OverHeadSound" type="AudioStreamPlayer2D" parent="RigidBody2D"]
 scale = Vector2(1.5, 1.5)
-stream = ExtResource("6_1kgq5")
+stream = ExtResource("7_rdfvj")
 volume_db = -5.0
 bus = &"SFX"
-script = ExtResource("6_e04th")
+script = ExtResource("7_r6p7k")
 
-[node name="OverHeadArea2D" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 514
+[node name="SwingArea2D" type="Area2D" parent="RigidBody2D"]
+visible = false
+position = Vector2(196, 0.000183105)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="OverHeadArea2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RigidBody2D/SwingArea2D"]
+polygon = PackedVector2Array(-152, 4.99976, -137.998, 455, 79.0015, 414.999, 241.001, 297.998, 312, 129.998, 320, -4.00195, 301.999, -177.002, 231.999, -296.002, 72.9985, -404.001, -164.002, -445)
+
+[node name="SpinArea2D" type="Area2D" parent="RigidBody2D"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/SpinArea2D"]
+shape = SubResource("CircleShape2D_1kgq5")
+
+[node name="DetectionArea" type="Area2D" parent="RigidBody2D"]
+collision_layer = 512
+collision_mask = 518
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/DetectionArea"]
+shape = SubResource("CircleShape2D_1kgq5")
+
+[node name="OverHeadArea2D" type="Area2D" parent="RigidBody2D"]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D/OverHeadArea2D"]
 position = Vector2(275, 0.999005)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_e04th")
-debug_color = Color(0.489317, 0.584674, 3.85046e-07, 0.42)
 
-[node name="DetectionArea2D" type="Area2D" parent="."]
-visible = false
-collision_layer = 0
-collision_mask = 514
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea2D"]
-shape = SubResource("CircleShape2D_gxitn")
-debug_color = Color(2.93598e-06, 0.638907, 0.372189, 0.42)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
 position = Vector2(1, 0)
 shape = SubResource("CircleShape2D_e04th")
-debug_color = Color(0, 0, 0, 0.42)
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="RigidBody2D" groups=["enemy", "paths"]]
 path_desired_distance = 50.0
 target_desired_distance = 20.0
 avoidance_enabled = true
@@ -1000,9 +980,79 @@ time_horizon_obstacles = 1.0
 max_speed = 700.0
 debug_enabled = true
 
-[node name="Timer" type="Timer" parent="."]
+[node name="Timer" type="Timer" parent="RigidBody2D"]
 wait_time = 20.0
 
-[connection signal="body_entered" from="Node2D/DragonSlayerSprite2D/SwordArea" to="." method="attack_hit"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="attack_finished"]
-[connection signal="timeout" from="Timer" to="." method="delete_guts"]
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(11, -6)
+navigation_polygon = SubResource("NavigationPolygon_njov2")
+
+[node name="Enemy" type="RigidBody2D" parent="." groups=["enemy"]]
+z_index = 12
+position = Vector2(860, 312)
+collision_layer = 524800
+collision_mask = 512
+gravity_scale = 0.0
+lock_rotation = true
+script = ExtResource("2_q1uvj")
+speed_min = 150.0
+speed_max = 275
+hp = 5
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Enemy"]
+sprite_frames = ExtResource("3_qs82m")
+animation = &"running"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+position = Vector2(0.250031, 0)
+shape = SubResource("CapsuleShape2D_fcclg")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = ExtResource("4_c4vo5")
+
+[node name="DeathTimer" type="Timer" parent="Enemy" groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[node name="LaserDamageTimer" type="Timer" parent="Enemy"]
+wait_time = 0.1
+one_shot = true
+
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("5_vwb7u")
+volume_db = -5.0
+pitch_scale = 0.5
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Enemy"]
+scale = Vector2(1.5, 1.5)
+stream = ExtResource("6_cqdos")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_r6p7k")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="Enemy"]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="Enemy" groups=["enemy", "paths"]]
+path_desired_distance = 50.0
+target_desired_distance = 20.0
+avoidance_enabled = true
+time_horizon_obstacles = 1.0
+max_speed = 700.0
+
+[node name="StuckTimer" type="Timer" parent="Enemy"]
+
+[connection signal="animation_finished" from="RigidBody2D/AnimationPlayer" to="RigidBody2D" method="attack_finished"]
+[connection signal="timeout" from="RigidBody2D/Timer" to="RigidBody2D" method="delete_guts"]
+[connection signal="timeout" from="Enemy/DeathTimer" to="Enemy" method="_delete_enemy"]
+[connection signal="timeout" from="Enemy/StuckTimer" to="Enemy" method="stuck_timeout"]
