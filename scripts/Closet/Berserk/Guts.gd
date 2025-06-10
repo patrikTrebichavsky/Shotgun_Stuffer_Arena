@@ -3,6 +3,7 @@ extends RigidBody2D
 @export var speed = 600
 var current_velocity = 0
 var enemy = null
+var player = null
 @onready var nav: NavigationAgent2D = $NavigationAgent2D
 var target_position : Vector2
 @export var push_back_multiplier = 10
@@ -21,9 +22,12 @@ var  bodies
 func _ready():
 	
 	nav.velocity_computed.connect(move)
-	
+	$AnimationPlayer.play("Run")
 	
 func _physics_process(_delta):
+	
+	if $Timer.time_left < 5 && $BerserkEyeParticles.emitting == false:
+		$BerserkEyeParticles.emitting = true	
 	
 	if attacking:
 		return
@@ -42,8 +46,20 @@ func _physics_process(_delta):
 				enemy = body
 			elif (position - body.position).abs().length() < (position - enemy.position).abs().length():
 				enemy = body 
+		
+				
 	if enemy == null:
+		
+		if !$AnimationPlayer.assigned_animation == "Run":
+			$AnimationPlayer.play("Run")
+		
+		nav.target_position = player.position
+		target_position = (nav.get_next_path_position()-global_position).normalized()
+		current_velocity = target_position * speed/1.5 
+		nav.set_velocity(current_velocity) 	
+		self.look_at(nav.get_next_path_position())
 		return
+	
 	
 	var temp = (position-enemy.position).abs()
 	
@@ -74,6 +90,14 @@ func move(velocity: Vector2):
 
 	if attacking:
 		return
+	
+	if enemy == null:
+		
+		var temp = (position-player.position).abs()
+		
+		if temp.x < 200 && temp.y < 200:
+			linear_velocity = Vector2.ZERO
+			return
 
 	linear_velocity = velocity
 	
@@ -96,8 +120,11 @@ func overhead():
 	
 	for body in bodies:
 		
+		if "Outer" in body.name:
+			return
 		if "Wall" in body.name:
 			body.cracked()
+			return
 		if "Guts" in body.name:
 			return
 			
@@ -108,4 +135,7 @@ func attack_finished(anim_name):
 	attacking = false
 
 func delete_guts():
+	set_physics_process(false)
+	$AnimationPlayer.play("Delete")
+	await $AnimationPlayer.animation_finished
 	queue_free()

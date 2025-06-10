@@ -21,7 +21,10 @@ func _enemy_hit(body):
 		
 		hitcount += 1
 		$CollisionSound.random_pitch_play()
-		$CollisionParticles.global_position = body.position
+		
+		if !"Wall" in body.name:
+			$CollisionParticles.global_position = body.position
+		
 		$CollisionParticles.emitting = true
 		$AnimatedSprite2D.visible = false
 		

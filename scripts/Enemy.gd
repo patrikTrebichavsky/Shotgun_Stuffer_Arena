@@ -31,26 +31,26 @@ var critical_parts
 
 
 
-#func _ready():
-	#
-	#speed = randi_range(speed_min,speed_max)
-	#
-	#prev_position = position
-	#
-#
-	#var main_node = get_parent()
-	#player = main_node.get_node("Player")
-	#if ! player == null:
-		#player.player_position.connect(update_player_position)
-	#
-#
-	#main_node.switch_mode.connect(_switch_mode)
-	#nav.velocity_computed.connect(move)
-	#
-	#if undertale_mode:
-		#$AnimatedSprite2D.animation = "undertale_mode_running" 
-		#
-	#
+func _ready():
+	
+	speed = randi_range(speed_min,speed_max)
+	
+	prev_position = position
+	
+
+	var main_node = get_parent()
+	player = main_node.get_node("Player")
+	if ! player == null:
+		player.player_position.connect(update_player_position)
+	
+
+	main_node.switch_mode.connect(_switch_mode)
+	nav.velocity_computed.connect(move)
+	
+	if undertale_mode:
+		$AnimatedSprite2D.animation = "undertale_mode_running" 
+		
+	
 func _physics_process(_delta):
 	
 	if dead:

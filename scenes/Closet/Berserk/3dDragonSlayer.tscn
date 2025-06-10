@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=4 uid="uid://dvgv70tuitxri"]
 
-[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="1_ro5yg"]
+[ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="1_mtdgg"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_njov2"]
 viewport_path = NodePath("SubViewport")
@@ -11,7 +11,7 @@ transparency = 2
 alpha_scissor_threshold = 0.05
 alpha_antialiasing_mode = 0
 cull_mode = 2
-albedo_texture = ExtResource("1_ro5yg")
+albedo_texture = ExtResource("1_mtdgg")
 texture_filter = 0
 texture_repeat = false
 

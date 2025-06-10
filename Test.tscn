@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://y87br56fs8tq"]
 
-[ext_resource type="PackedScene" uid="uid://dvyno8ehyqf2m" path="res://scenes/Berserk/Guts.tscn" id="1_myinc"]
+[ext_resource type="PackedScene" uid="uid://dvyno8ehyqf2m" path="res://scenes/Closet/Berserk/Guts.tscn" id="1_myinc"]
 [ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy.gd" id="2_q1uvj"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="3_qs82m"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_c4vo5"]

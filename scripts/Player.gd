@@ -37,6 +37,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 	7 : "res://scenes/Poop.tscn",
 	8 : "res://scenes/Nails/Nails.tscn",
 	9 : "res://scenes/SuperShotgun.tscn",
+	10: "res://scenes/Closet/Closet.tscn",
 	1001: "res://scenes/Laser.tscn"
 }
 
@@ -55,7 +56,7 @@ var special_messages_levels = [1, 2, 3, 5, 6, 9, 12, 15, 35, 50]
 @export var player_level = 0
 @export var dash_distance = 1000
 
-var stored_ammo = [9,9,9,9,9]
+var stored_ammo = [10,10,10,10,10,10,10]
 
 var special_slot_chosen : int
 
