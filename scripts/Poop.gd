@@ -1,57 +1,42 @@
 extends Bullet_Base
 
-var berserk_path = load("res://scenes/Closet/Berserk/Guts.tscn")
-var bomboclat_path = load("res://scenes/Doggy.tscn")
-var shaman_path = load("res://scenes/Doggy.tscn")
-var ignore_wall = true
+var doggy_path = load("res://scenes/Doggy.tscn")
+var poop_path = load("res://scenes/PoopSticked.tscn")
 
-func _ready() -> void:
-	
-	check_crosshair()
-	
-	await get_tree().create_timer(0.25).timeout
-	ignore_wall = false
 
 func _enemy_hit(body):
-	
-	if ignore_wall and "Wall" in body.name:
-		return
-		
+			
 	if hitcount == 0:
 		
 		hitcount += 1
 		$CollisionSound.random_pitch_play()
-		$CollisionParticles.global_position = body.position
+
 		$CollisionParticles.emitting = true
 		$AnimatedSprite2D.visible = false
-		
-		var push_back = linear_velocity.normalized() * push_back_multiplier
 		linear_velocity = Vector2.ZERO
 		position= previous_position
-		
-		var temp
-		var main = get_parent()
-		
-		match $AnimatedSprite2D.animation:
-			"Berserk":
-				temp = berserk_path.instantiate()
-				temp.player = main.get_node("Player")
-			"Shaman":
-				temp = shaman_path.instantiate()
-			"Bomboclat":
-				temp = bomboclat_path.instantiate()
-				
-		main.call_deferred("add_child", temp)
-		temp.position = position
-		
-		if !"Wall" in body.name:
-			if body == targeted_enemy:
-				damage = damage*2
-				body.got_shot(damage, push_back, false, true)
-				$CriticalSound.random_pitch_play()
-			else:
-				body.got_shot(damage, push_back)
 
+		if !"Wall" in body.name:
+			var temp_poop 
+			var temp_doggy		
+			var main = get_parent()
 			
-		
+			temp_poop = poop_path.instantiate()
+			body.get_node("AnimatedSprite2D").call_deferred("add_child",temp_poop)
+			temp_poop.global_rotation = rotation
+			
+			temp_doggy = doggy_path.instantiate()
+			main.call_deferred("add_child",temp_doggy)
+			temp_doggy.targeted_enemy = targeted_enemy
+			temp_doggy.marked_enemy = body
+			temp_doggy.poop_node = temp_poop
+			temp_doggy.position = position
+			
+			if body.position.x < position.x:
+				temp_doggy.position.x = temp_doggy.position.x - (DisplayServer.window_get_size().x/2)-400
+			else:
+				temp_doggy.position.x = temp_doggy.position.x + (DisplayServer.window_get_size().x/2)+400
+						
+
+
 		delete_bullet()
