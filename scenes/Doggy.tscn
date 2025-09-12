@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://cfc2hgp0kfa7a"]
 
-[ext_resource type="Script" uid="uid://dok3jyio87xtb" path="res://scripts/Doggy.gd" id="1_yanm8"]
+[ext_resource type="Script" uid="uid://dok3jyio87xtb" path="res://scripts/Ammo/Doggy.gd" id="1_yanm8"]
 [ext_resource type="Texture2D" uid="uid://bl55omu4v6c4u" path="res://sprites/Bullets/Doggy/BekyFirst.png" id="2_ymbks"]
 [ext_resource type="Texture2D" uid="uid://c0xa834cm76gy" path="res://sprites/Bullets/Doggy/BekySecond.png" id="3_fgru3"]
 [ext_resource type="Texture2D" uid="uid://ccato4xmc281r" path="res://sprites/Bullets/Doggy/BekyThird.png" id="4_45pmr"]

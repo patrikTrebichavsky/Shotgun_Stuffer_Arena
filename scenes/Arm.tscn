@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://begcjdpsru43o"]
 
-[ext_resource type="Script" uid="uid://b2dmjbe818jx3" path="res://scripts/Limb.gd" id="1_6bid5"]
+[ext_resource type="Script" uid="uid://b2dmjbe818jx3" path="res://scripts/Enemy/Limb.gd" id="1_6bid5"]
 [ext_resource type="Texture2D" uid="uid://ddp66wa388ebi" path="res://sprites/Enemies/Boss/DoubleThrower/FrontArmLeft.png" id="2_tgcqt"]
 [ext_resource type="Texture2D" uid="uid://be51smbbbcxxj" path="res://sprites/Enemies/Boss/DoubleThrower/FrontArmRight.png" id="3_h777n"]
 [ext_resource type="Material" uid="uid://ddui6mfcd6loh" path="res://particles/MagicMaterial.tres" id="4_b0vsl"]

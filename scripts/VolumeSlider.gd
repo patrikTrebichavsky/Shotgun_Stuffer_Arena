@@ -12,9 +12,9 @@ func _ready():
 	
 	value = db_to_linear(AudioServer.get_bus_volume_db(bus_index))
 
-func _on_value_changed(value: float):
-	AudioServer.set_bus_volume_db(bus_index,linear_to_db(value))
+func _on_value_changed(volume):
+	AudioServer.set_bus_volume_db(bus_index,linear_to_db(volume))
 
-func volume_setted(bool):
+func volume_setted():
 	if audio_stream != null:
 		audio_stream.play()

@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://11wbyeqxja42" path="res://sprites/Bullets/Laser/Laser_15.png" id="16_n1noi"]
 [ext_resource type="Texture2D" uid="uid://bcqlrh2rj2jfa" path="res://sprites/Bullets/Laser/Laser_16.png" id="17_5678w"]
 [ext_resource type="Texture2D" uid="uid://cocpxleleqgaa" path="res://sprites/Bullets/Laser/Laser_Shooting.png" id="18_g0l0d"]
-[ext_resource type="Script" uid="uid://chjq7c2s7mrph" path="res://scripts/Laser.gd" id="18_yoxtc"]
+[ext_resource type="Script" uid="uid://chjq7c2s7mrph" path="res://scripts/Ammo/Laser.gd" id="18_yoxtc"]
 [ext_resource type="Texture2D" uid="uid://b8fsapq8giodg" path="res://sprites/Bullets/Laser/Laser_Shooting_2.png" id="19_l35d4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_8r4ou"]

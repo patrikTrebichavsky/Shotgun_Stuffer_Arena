@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://ctoewuqj8iv0n"]
 
-[ext_resource type="Script" uid="uid://14nkylrlsi3w" path="res://scripts/nails/NailsPierced.gd" id="1_2xu5m"]
+[ext_resource type="Script" uid="uid://14nkylrlsi3w" path="res://scripts/Ammo/nails/NailsPierced.gd" id="1_2xu5m"]
 [ext_resource type="AudioStream" uid="uid://cwklkyyg7oto" path="res://sounds/Bullets/Nails/Stepped.wav" id="2_24m4s"]
 [ext_resource type="Texture2D" uid="uid://crr0hcpv34jv4" path="res://sprites/Bullets/Nails/Pierced.png" id="2_qxbd3"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="3_ps0x6"]

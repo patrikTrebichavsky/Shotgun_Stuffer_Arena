@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://d14kwqtl7ndt3"]
 
-[ext_resource type="Script" uid="uid://cwci0v7qaaas" path="res://scripts/Poop.gd" id="1_g7i88"]
+[ext_resource type="Script" uid="uid://cwci0v7qaaas" path="res://scripts/Ammo/Poop.gd" id="1_g7i88"]
 [ext_resource type="Texture2D" uid="uid://ckgh72gfshfim" path="res://sprites/Bullets/Doggy/Poop.png" id="2_aa7i8"]
 [ext_resource type="AudioStream" uid="uid://bvxh1t367jxtk" path="res://sounds/Poop.mp3" id="3_g7i88"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_cagqm"]

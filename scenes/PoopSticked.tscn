@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dp76iqie0f6sk"]
 
-[ext_resource type="Script" uid="uid://14nkylrlsi3w" path="res://scripts/nails/NailsPierced.gd" id="1_c3ggh"]
+[ext_resource type="Script" uid="uid://14nkylrlsi3w" path="res://scripts/Ammo/nails/NailsPierced.gd" id="1_c3ggh"]
 [ext_resource type="Texture2D" uid="uid://ckgh72gfshfim" path="res://sprites/Bullets/Doggy/Poop.png" id="2_2s7c7"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m3fle"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://citbxx5cfaywm"]
 
-[ext_resource type="Script" uid="uid://w5tky0e1t744" path="res://scripts/UtilityPole.gd" id="1_548jr"]
+[ext_resource type="Script" uid="uid://w5tky0e1t744" path="res://scripts/Ammo/UtilityPole.gd" id="1_548jr"]
 [ext_resource type="PackedScene" uid="uid://bwiml5ygypgln" path="res://scenes/UtilityPolePierced.tscn" id="2_3ow2r"]
 [ext_resource type="Texture2D" uid="uid://bv7sikamp1fe7" path="res://sprites/Bullets/UtilityPole/FirstFrame.png" id="3_lw3y6"]
 [ext_resource type="Texture2D" uid="uid://bo4ahvrjl627n" path="res://sprites/Bullets/UtilityPole/SecondFrame.png" id="4_5lois"]

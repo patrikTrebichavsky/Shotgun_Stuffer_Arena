@@ -27,6 +27,7 @@ var starting_game = false
 var game_running = false
 
 var game_force_ended = false
+var after_wave_display_special = false
 
 var audio_tween : Tween
 
@@ -98,12 +99,7 @@ var player_level = 0
 var xp_needed : int
 var current_xp : int
 
-@export_category("Special Ammo Generation Settings")
-@export var initial_special_ammo_time : float
-@export var max_lvl_for_special_generator : int
-@export var special_ammo_max_decrease: float
-var special_ammo_range = 0
-
+var special_slot_choosen = Node2D
 
 @export_category("Reload Time Settings")
 @export var initial_reload_time : float
@@ -201,22 +197,76 @@ func _ready():
 	set_cursor(0)
 	
 	
-func _process(delta):
+func _process(_delta):
 	
 	
 	var current_window_size = DisplayServer.window_get_size()
 	if current_window_size == cursor_windows_size:
 		set_cursor(current_bullet)
-	if Input.is_action_just_pressed("force_menu") && game_running:
-		force_menu()
-	if Input.is_action_just_pressed("force_level_up") && game_running:
-		leveled_up()
-	if Input.is_action_just_pressed("force_special_mode"):
-		_switch_mode_force_button()
+		
 	if Input.is_action_just_pressed("shoot") && $FinalScore.is_finished_displaying:
 		close_final_score()
 		
-
+	if game_running :
+		if Input.is_action_just_pressed("force_menu"):
+			force_menu()
+		if Input.is_action_just_pressed("force_level_up"):
+			leveled_up()
+		if Input.is_action_just_pressed("force_special_mode"):
+			_switch_mode_force_button()
+		
+		if mode_running:
+			return
+			
+		if Input.is_action_just_pressed("special_first") && $PlayerUi/SpecialAmmoContainer.slot_ready:
+			
+			if !$PlayerUi/SpecialAmmoContainer.selected:
+				
+				special_slot_choosen = $PlayerUi/SpecialAmmoContainer
+				
+				special_slot_choosen.set_select(true)
+				$PlayerUi/SpecialAmmoContainer2.set_select(false)
+				$PlayerUi/SpecialAmmoContainer3.set_select(false)	
+				player_instance.set_special(special_slot_choosen.slot_shell_name,true)
+				
+			elif $PlayerUi/SpecialAmmoContainer.selected:
+				special_slot_choosen.set_select(false)
+				player_instance.set_special()
+				
+				
+		if Input.is_action_just_pressed("special_second") && $PlayerUi/SpecialAmmoContainer2.slot_ready:
+			
+			if !$PlayerUi/SpecialAmmoContainer2.selected:
+				
+				special_slot_choosen = $PlayerUi/SpecialAmmoContainer2
+				
+				special_slot_choosen.set_select(true)
+				$PlayerUi/SpecialAmmoContainer.set_select(false)
+				$PlayerUi/SpecialAmmoContainer3.set_select(false)
+				player_instance.set_special(special_slot_choosen.slot_shell_name,true)
+				
+			elif $PlayerUi/SpecialAmmoContainer2.selected:
+				special_slot_choosen.set_select(false)
+				player_instance.set_special()
+				
+				
+		if Input.is_action_just_pressed("special_third") && $PlayerUi/SpecialAmmoContainer3.slot_ready:
+			
+			if !$PlayerUi/SpecialAmmoContainer3.selected:
+				
+				special_slot_choosen = $PlayerUi/SpecialAmmoContainer3
+				
+				special_slot_choosen.set_select(true)
+				$PlayerUi/SpecialAmmoContainer.set_select(false)
+				$PlayerUi/SpecialAmmoContainer2.set_select(false)
+				player_instance.set_special(special_slot_choosen.slot_shell_name,true)
+				
+			elif $PlayerUi/SpecialAmmoContainer3.selected:
+				special_slot_choosen.set_select(false)
+				player_instance.set_special()
+		
+		
+		
 func _switch_mode_force_button():
 	
 	_switch_mode("Undertale")
@@ -228,11 +278,14 @@ func _switch_mode_force_button():
 	
 func _switch_mode(_name):
 
-	var cursor_size = DisplayServer.window_get_size()
-
 	if !mode_running:
 		$SpecialModeTimer.start()
 		mode_running = true
+		$PlayerUi/SpecialAmmoContainer.set_select(false)
+		$PlayerUi/SpecialAmmoContainer2.set_select(false)
+		$PlayerUi/SpecialAmmoContainer3.set_select(false)
+		player_instance.set_special()
+		
 		
 		set_cursor(-1)
 
@@ -278,17 +331,6 @@ func recieved_xp(amount):
 	else :
 		$PlayerUi/StatsUI/Experience.text = "Exp: " + str(xp_needed-current_xp) + "/" + str(xp_needed)
 
-
-func generate_special_ammo():
-	# Player special ammo generator add new type of ammo every 5 levels
-		var ammo_id = 0
-		if player_level < 20:
-			ammo_id = randi_range(1, special_ammo_range)
-		else:
-			ammo_id = randi_range(2, special_ammo_range)
-		emit_signal("generated_special_ammo" , ammo_id )
-
-
 func leveled_up(increase = 1):
 	
 	player_level += increase
@@ -325,15 +367,6 @@ func leveled_up(increase = 1):
 	
 	
 	target_amount_of_basic_enemies = target_amount_of_basic_enemies_dic[player_level]
-	
-	#Adds new special amunition id to range
-	if special_ammo_range < 5:
-		special_ammo_range = player_level/3
-		if special_ammo_range > 5:
-			special_ammo_range = 5
-			
-	if $SpecialAmmoTimer.is_stopped() and player_level > 2:
-			$SpecialAmmoTimer.start()
 
 	#Increase amount of special enemies that can be spawned
 	#if player_level%levels_needed_for_special_increase == 0:
@@ -342,53 +375,33 @@ func leveled_up(increase = 1):
 	# changes amount of enemies spawn bassed on level
 	if player_level > 9 && max_size_of_enemy_group > size_of_enemy_group:
 		size_of_enemy_group = player_level/4
-	
-
-	if player_level <= max_lvl_for_special_generator:
-		$SpecialAmmoTimer.wait_time = initial_special_ammo_time -((special_ammo_max_decrease/ max_lvl_for_special_generator) * player_level)
-		
-	if player_level > 2:
-		emit_signal("set_magazine_size" , starting_magazine_size + floor(player_level % lvls_needed_for_mag_increase))
 
 	if player_level <= max_lvl_for_reload_decrease:
 		
 		var temp_reload_time = initial_reload_time -(reload_max_decrease / max_lvl_for_reload_decrease * player_level)
 		emit_signal("set_reload_time", temp_reload_time)
-	
-	if (player_level == 1 and dialog_progress == 1)\
-	 or(player_level == 3 and dialog_progress == 2):
-		show_dialog = true
 		
-	if player_level == 5:
+	if player_level == 5 && $PlayerUi/SPButtonControler.slot_num == 0 \
+	or player_level == 10 && $PlayerUi/SPButtonControler.slot_num == 1 \
+	or player_level == 15 && $PlayerUi/SPButtonControler.slot_num == 2:	
+		after_wave_display_special = true
+		if !$StartMenu/CheckpointButton.button_pressed:
+			initial_level = player_level
+		
+	if player_level == 8:
 		boss_should_spawn = true
 		which_boss = 1
 
-		if initial_level < 5 && !$StartMenu/CheckpointButton.button_pressed:
-			initial_level = 5
+		if initial_level < 8 && !$StartMenu/CheckpointButton.button_pressed:
+			initial_level = 8
 	
-	if player_level == 10:
+	if player_level == 14:
 		boss_should_spawn = true
 		which_boss = 2
 		
-		if initial_level < 10 && !$StartMenu/CheckpointButton.button_pressed: 
-			initial_level = 10
+		if initial_level < 14 && !$StartMenu/CheckpointButton.button_pressed: 
+			initial_level = 14
 		
-	#if player_level <= max_lvl_for_enemy_spawner:
-		#$EnemySpawnTimer.wait_time = initial_enemy_spawn_time - (enemy_spawn_max_decrease / max_lvl_for_enemy_spawner * player_level)
-	#
-	#else:
-		#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time/55 * 54
-	#
-	##$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*(float(basic_enemy_counter)+1/float(target_amount_of_basic_enemies))
-	#
-#Not used because it kept breaking
-#func special_magazine_state_changed():
-	#if !$SpecialAmmoTimer.is_stopped():
-		#$SpecialAmmoTimer.stop()
-		#
-	#else:
-		#$SpecialAmmoTimer.start()
-
 
 func player_died():
 	
@@ -403,7 +416,6 @@ func player_died():
 	$MeshBakerTimer.stop()
 	
 	$CheckForSpawning.stop()
-	$SpecialAmmoTimer.stop()
 	
 	set_cursor(0)
 	
@@ -460,7 +472,6 @@ func force_menu():
 	$IntroTrack.play()
 	audio_tween.stop()
 	$MeshBakerTimer.stop()
-	$SpecialAmmoTimer.stop()
 	$CheckForSpawning.stop()
 	get_tree().call_group("enemy","queue_free")
 	get_tree().call_group("bullets","queue_free")
@@ -507,8 +518,6 @@ func start_game():
 	
 	get_tree().call_group("enemy","queue_free")
 	
-	var cursor_size = DisplayServer.window_get_size()
-	
 	if $StartMenu/CheckpointButton.button_pressed:
 		player_level = 0
 	else:
@@ -518,7 +527,6 @@ func start_game():
 	
 	basic_enemy_counter = 0
 	
-	special_ammo_range = 0
 	
 	special_enemy_counter = 0
 	
@@ -528,7 +536,7 @@ func start_game():
 	
 	target_amount_of_basic_enemies = target_amount_of_basic_enemies_dic[player_level]
 	
-	xp_needed = round(pow(0.1,3) + pow(0.15,2) + 4)
+	xp_needed = 4
 	
 	current_xp = xp_needed
 	
@@ -552,24 +560,12 @@ func start_game():
 		
 	player_instance.position = $StartPoint.position
 	player_instance.player_died.connect(player_died)
-	
-	player_instance.shot_special.connect($PlayerUi/AmmoSpriteContainer.move_ammo_up)
-	player_instance.shot_special2.connect($PlayerUi/AmmoSpriteContainer2.move_ammo_up)
-	player_instance.shot_special3.connect($PlayerUi/AmmoSpriteContainer3.move_ammo_up)
-		
-	player_instance.is_first_special_activated.connect($PlayerUi/AmmoSpriteContainer.is_slot_active)
-	player_instance.is_second_special_activated.connect($PlayerUi/AmmoSpriteContainer2.is_slot_active)
-	player_instance.is_third_special_activated.connect($PlayerUi/AmmoSpriteContainer3.is_slot_active)
-	
-	player_instance.next_ammo.connect($PlayerUi/AmmoSpriteContainer.set_ammo)
+	player_instance.special_shot.connect(special_shot)
+
 	player_instance.dashed.connect($PlayerUi/DashIndicator.load_dash)
 	
 	$PlayerUi/DashIndicator.animation_finished.connect(player_instance.dash_reset)
-	
-	$PlayerUi/AmmoSpriteContainer.is_slot_active(false)
-	$PlayerUi/AmmoSpriteContainer2.is_slot_active(false)
-	$PlayerUi/AmmoSpriteContainer3.is_slot_active(false)
-	
+
 	
 	if boss_is_active:
 		boss_is_active = false
@@ -599,9 +595,6 @@ func start_game():
 		
 		player_instance.previous_best_level = previous_attempt
 		
-	$SpecialAmmoTimer.wait_time = initial_special_ammo_time	
-	#$EnemySpawnTimer.wait_time = $EnemySpawnTimer.wait_time*((float(basic_enemy_counter)+1)/float(target_amount_of_basic_enemies))
-
 	emit_signal("set_reload_time", initial_reload_time)
 	
 	await get_tree().create_timer(0.1).timeout
@@ -633,23 +626,29 @@ func start_game():
 	await get_tree().create_timer(1.0).timeout
 	
 		
-	if show_dialog && dialog_progress == 0:
-		start_dialog()
-	else:	
-		if game_running:
-			spawn_enemy()
+	#if show_dialog && dialog_progress == 0:
+		#start_dialog()
+	#else:	
+	if game_running:
+		spawn_enemy()
 
 		if !boss_is_active and !boss_should_spawn:
 			$CheckForSpawning.start()
 	
 func spawn_enemy():
 	
-	if show_dialog && dialog_progress > 0 && player_level != 0:
+	if after_wave_display_special:
 		if !$CheckForSpawning.is_stopped():
 			$CheckForSpawning.stop()
-		start_dialog()
-		return	
+		show_special_choices()
+		return
 		
+	#if show_dialog && dialog_progress > 0 && player_level != 0:
+		#if !$CheckForSpawning.is_stopped():
+			#$CheckForSpawning.stop()
+		#start_dialog()
+		#return	
+		#
 	if !game_running || boss_is_active:
 		return
 		
@@ -657,7 +656,7 @@ func spawn_enemy():
 		spawn_boss()
 		return
 		
-		
+	
 	#Calculates amount of special enemies that should be in each group Rounded up	
 
 	var numb_of_groups = target_amount_of_basic_enemies /  float(size_of_enemy_group) 
@@ -666,8 +665,6 @@ func spawn_enemy():
 	while basic_enemy_counter < target_amount_of_basic_enemies:
 		
 		enemy_spawn_point.progress_ratio = randf()
-		var spawned_special = false	
-	
 	
 		var num_of_specials_in_current_group = 0
 		
@@ -685,7 +682,7 @@ func spawn_enemy():
 						enemy_instance = load("res://scenes/EnemyThrower.tscn").instantiate()
 				special_enemy_counter +=1
 				num_of_specials_in_current_group += 1
-				spawned_special = true
+
 			else:			
 				enemy_instance = load("res://scenes/Enemy.tscn").instantiate()
 				if player_level < 8:
@@ -716,6 +713,7 @@ func spawn_boss():
 			enemy_instance = load("res://scenes/BossSmasher.tscn").instantiate()
 			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/Progress.png")
 		2:
+			$CheckForSpawning.stop()
 			enemy_instance = load("res://scenes/BossDoubleThrower.tscn").instantiate()
 			
 			if mode_running:
@@ -727,15 +725,11 @@ func spawn_boss():
 			else:
 				get_tree().call_group("second_boss_arena","destroy") 
 			$PlayerUi/TextureProgressBar.texture_progress = load("res://sprites/UI/Boss/HealthBar/DoubleThrowerProgress.png")
-			$CheckForSpawning.stop()
 		3:
 			enemy_instance = null
 
 	call_deferred("add_child",enemy_instance)
 	
-	#enemy_spawn_point.progress_ratio = randf()
-#
-	#enemy_instance.position = enemy_spawn_point.global_position
 	boss_should_spawn = false
 	boss_is_active = true
 	$PlayerUi/TextureProgressBar.max_value = enemy_instance.hp_max
@@ -771,10 +765,10 @@ func boss_killed(by_menu=false):
 		$CheckForSpawning.start()
 	
 	if !by_menu && !$StartMenu/CheckpointButton.button_pressed:
-		if initial_level == 5:
-				initial_level = 6
-		elif initial_level == 10:
-			initial_level = 11
+		if initial_level == 8:
+				initial_level = 9
+		elif initial_level == 14:
+			initial_level = 15
 	
 	
 	
@@ -785,6 +779,10 @@ func check_for_alive_enemies():
 		basic_enemy_counter = 0
 		
 		if boss_is_active:	
+			
+			if which_boss == 2:
+				return
+			
 			var temp = self.get_node("BossSmasher")
 			temp = temp.get_node("SpawnAddsTimer")
 		
@@ -801,11 +799,11 @@ func set_cursor(bullet_id):
 	var cursor_size = DisplayServer.window_get_size()
 	
 	if cursor_size.y < 900:
-		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+2]),0,Vector2(18,18))
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+2]),Input.CursorShape.CURSOR_ARROW,Vector2(18,18))
 	elif cursor_size.y < 1340:
-		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+12]),0,Vector2(36,36))
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+12]),Input.CursorShape.CURSOR_ARROW,Vector2(36,36))
 	else:
-		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+22]),0,Vector2(54,54))
+		Input.set_custom_mouse_cursor(load(cursor_dict[bullet_id+22]),Input.CursorShape.CURSOR_ARROW,Vector2(54,54))
 	
 	current_bullet = bullet_id
 
@@ -823,7 +821,22 @@ func start_dialog():
 	temp.assign(dialog_lines[dialog_progress])
 	$PlayerUi/ShotgunDialog.visible = true
 	DialogManager.start_dialog(Vector2(200,800),temp)
- 
+
+func show_special_choices():
+	after_wave_display_special = false
+	match $PlayerUi/SPButtonControler.slot_num:
+		0:
+			$PlayerUi/SPButtonControler.set_buttons(["Couch","Doggy","Nails"])
+		1:
+			$PlayerUi/SPButtonControler.set_buttons(["Lamppost","UtilityPole","Piano"])
+		2:
+			$PlayerUi/SPButtonControler.set_buttons(["Shotgun","Car","Closet"])
+	
+	await $PlayerUi/SPButtonControler.special_ammo_chosen
+	spawn_enemy()
+	if $CheckForSpawning.is_stopped():
+		$CheckForSpawning.start()
+
 
 func dialog_finished():
 	$PlayerUi/ShotgunDialog.visible = false
@@ -852,8 +865,13 @@ func _save(save_volume=true,overwrite_dialog_and_manual=true):
 	config.set_value("game","regen_gained", regen_gained)
 	config.set_value("game","first_game", first_game)
 	config.set_value("game","corner_walls_destroyed", $InsideWalls/WallLeftTop.destroyed)
-
 	
+	config.set_value("game","first_slot",$PlayerUi/SpecialAmmoContainer.slot_shell_name)
+	config.set_value("game","second_slot",$PlayerUi/SpecialAmmoContainer2.slot_shell_name)
+	config.set_value("game","third_slot",$PlayerUi/SpecialAmmoContainer3.slot_shell_name)
+	config.set_value("game","slot_num",$PlayerUi/SPButtonControler.slot_num)
+
+
 	if save_volume:
 		config.set_value("game","sfx",$StartMenu/SFXSlider.value)
 		config.set_value("game","music",$StartMenu/MusicSlider.value)
@@ -871,7 +889,7 @@ func _load_save():
 	
 	if FileAccess.file_exists("user://scores.cfg"):
 		
-		var err = config.load("user://scores.cfg")
+		config.load("user://scores.cfg")
 
 		initial_level = config.get_value("game","initial_level")
 		second_chance_counter = config.get_value("game","second_chance_counter", second_chance_counter)
@@ -883,6 +901,11 @@ func _load_save():
 		$StartMenu/SFXSlider.value = config.get_value("game","sfx")
 		$StartMenu/MusicSlider.value = config.get_value("game","music")
 		
+		$PlayerUi/SpecialAmmoContainer.set_shell(config.get_value("game","first_slot","Empty"))
+		$PlayerUi/SpecialAmmoContainer2.set_shell(config.get_value("game","second_slot","Empty"))
+		$PlayerUi/SpecialAmmoContainer3.set_shell(config.get_value("game","third_slot","Empty"))
+		$PlayerUi/SPButtonControler.slot_num = config.get_value("game","slot_num", 0)
+
 		if config.get_value("game","corner_walls_destroyed") == true:
 			$InsideWalls/WallLeftTop.destroyed = true
 			$InsideWalls/WallLeftBottom.destroyed = true
@@ -924,9 +947,13 @@ func _delete_save():
 		$InsideWalls/WallLeftTop.destroyed = false
 		$InsideWalls/WallLeftBottom.destroyed = false
 		$InsideWalls/WallRightTop.destroyed = false
-		$InsideWalls/WallRightBottom.destroyed = false
-				
+		$InsideWalls/WallRightBottom.destroyed = false		
+		$PlayerUi/SPButtonControler.reset_slots()
+		
 		_save(false,true)
 	
 	get_tree().call_group("sewage","_reset")
 	get_tree().call_group("walls","reset")
+
+func special_shot():
+	special_slot_choosen.slot_used()

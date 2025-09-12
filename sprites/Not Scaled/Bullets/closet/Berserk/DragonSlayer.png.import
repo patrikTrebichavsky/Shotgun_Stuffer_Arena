@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://7yvqiolwaxdn"
-path="res://.godot/imported/DragonSlayer.png-78db1165cc07747c7481c54d562bf5f1.ctex"
+path="res://.godot/imported/DragonSlayer.png-7e2be984eed3a1c2a10e970b7e33aca1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Bullets/closet/Berserk/DragonSlayer.png"
-dest_files=["res://.godot/imported/DragonSlayer.png-78db1165cc07747c7481c54d562bf5f1.ctex"]
+source_file="res://sprites/Not Scaled/Bullets/Closet/Berserk/DragonSlayer.png"
+dest_files=["res://.godot/imported/DragonSlayer.png-7e2be984eed3a1c2a10e970b7e33aca1.ctex"]
 
 [params]
 

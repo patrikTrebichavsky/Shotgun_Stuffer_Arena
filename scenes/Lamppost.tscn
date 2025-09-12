@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://dtccf58xuw842"]
 
-[ext_resource type="Script" uid="uid://cm3dojjgmpp87" path="res://scripts/Lamppost.gd" id="1_0a3k4"]
+[ext_resource type="Script" uid="uid://cm3dojjgmpp87" path="res://scripts/Ammo/Lamppost.gd" id="1_0a3k4"]
 [ext_resource type="Texture2D" uid="uid://vke4rlgh0qf1" path="res://sprites/Bullets/LampPost.png" id="2_ncc3p"]
 [ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="3_etklm"]
 [ext_resource type="AudioStream" uid="uid://bsr5lygbxh8r4" path="res://sounds/Bullets/LampStab.mp3" id="3_qpfkk"]
@@ -90,8 +90,61 @@ visibility_layer = 2
 scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_nh842")
 animation = &"base"
-centered = false
-offset = Vector2(10, -75)
+
+[node name="Edge" type="Area2D" parent="AnimatedSprite2D"]
+scale = Vector2(2, 2)
+collision_layer = 0
+collision_mask = 22
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Edge"]
+visibility_layer = 7
+position = Vector2(102.3, 0)
+shape = SubResource("RectangleShape2D_1ma7h")
+
+[node name="Body" type="Area2D" parent="AnimatedSprite2D"]
+scale = Vector2(2, 2)
+collision_layer = 0
+collision_mask = 22
+monitoring = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite2D/Body"]
+visibility_layer = 7
+position = Vector2(-114.7, 0)
+scale = Vector2(0.96, 0.64)
+polygon = PackedVector2Array(0, 26.5625, 22.9167, 59.375, 26.0417, 59.375, 28.125, 45.3125, 46.875, 43.75, 72.9167, 35.9375, 79.1667, 26.5625, 109.375, 18.75, 122, 13, 211.458, 12.5, 211.458, -12.5, 121.875, -12.5, 109.375, -20.3125, 78.125, -28.125, 72.9167, -35.9375, 46.875, -43.75, 27.0833, -43.75, 26.0417, -59.375, 20.8333, -59.375, 0, -25)
+
+[node name="InitialEdge" type="Area2D" parent="AnimatedSprite2D"]
+scale = Vector2(2, 2)
+collision_layer = 0
+collision_mask = 22
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite2D/InitialEdge"]
+visibility_layer = 7
+position = Vector2(-114.7, 0)
+scale = Vector2(0.96, 0.64)
+polygon = PackedVector2Array(0, 26.5625, 22.9167, 59.375, 26.0417, 59.375, 28.125, 45.3125, 46.875, 43.75, 72.9167, 35.9375, 79.1667, 26.5625, 109.375, 18.75, 122, 13, 240.625, 12.5, 240.625, -12.5, 121.875, -12.5, 109.375, -20.3125, 78.125, -28.125, 72.9167, -35.9375, 46.875, -43.75, 27.0833, -43.75, 26.0417, -59.375, 20.8333, -59.375, 0, -25)
+
+[node name="PiercedBodies" type="Node2D" parent="AnimatedSprite2D"]
+scale = Vector2(2, 2)
+
+[node name="ImpaledEnemySprite1" type="AnimatedSprite2D" parent="AnimatedSprite2D/PiercedBodies"]
+position = Vector2(-17, 0)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
+
+[node name="ImpaledEnemySprite2" type="AnimatedSprite2D" parent="AnimatedSprite2D/PiercedBodies"]
+position = Vector2(40, 0)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
+
+[node name="ImpaledEnemySprite3" type="AnimatedSprite2D" parent="AnimatedSprite2D/PiercedBodies"]
+position = Vector2(102, 0)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_x3sgm")
+animation = &"empty"
 
 [node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_etklm")
@@ -115,7 +168,7 @@ script = ExtResource("4_1vl42")
 visibility_layer = 2
 z_index = 1
 y_sort_enabled = true
-position = Vector2(229, 0)
+position = Vector2(100, 0)
 rotation = -0.00635898
 emitting = false
 amount = 32
@@ -129,58 +182,7 @@ wait_time = 2.0
 one_shot = true
 autostart = true
 
-[node name="Edge" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 22
-monitoring = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Edge"]
-visibility_layer = 7
-position = Vector2(222, 0)
-shape = SubResource("RectangleShape2D_1ma7h")
-
-[node name="Body" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 22
-monitoring = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Body"]
-visibility_layer = 7
-position = Vector2(5, 0)
-scale = Vector2(0.96, 0.64)
-polygon = PackedVector2Array(0, 26.5625, 22.9167, 59.375, 26.0417, 59.375, 28.125, 45.3125, 46.875, 43.75, 72.9167, 35.9375, 79.1667, 26.5625, 109.375, 18.75, 122, 13, 211.458, 12.5, 211.458, -12.5, 121.875, -12.5, 109.375, -20.3125, 78.125, -28.125, 72.9167, -35.9375, 46.875, -43.75, 27.0833, -43.75, 26.0417, -59.375, 20.8333, -59.375, 0, -25)
-
-[node name="InitialEdge" type="Area2D" parent="."]
-collision_layer = 0
-collision_mask = 22
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="InitialEdge"]
-visibility_layer = 7
-position = Vector2(5, 0)
-scale = Vector2(0.96, 0.64)
-polygon = PackedVector2Array(0, 26.5625, 22.9167, 59.375, 26.0417, 59.375, 28.125, 45.3125, 46.875, 43.75, 72.9167, 35.9375, 79.1667, 26.5625, 109.375, 18.75, 122, 13, 240.625, 12.5, 240.625, -12.5, 121.875, -12.5, 109.375, -20.3125, 78.125, -28.125, 72.9167, -35.9375, 46.875, -43.75, 27.0833, -43.75, 26.0417, -59.375, 20.8333, -59.375, 0, -25)
-
-[node name="PiercedBodies" type="Node2D" parent="."]
-
-[node name="ImpaledEnemySprite1" type="AnimatedSprite2D" parent="PiercedBodies"]
-position = Vector2(108, 0)
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_x3sgm")
-animation = &"empty"
-
-[node name="ImpaledEnemySprite2" type="AnimatedSprite2D" parent="PiercedBodies"]
-position = Vector2(165, 0)
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_x3sgm")
-animation = &"empty"
-
-[node name="ImpaledEnemySprite3" type="AnimatedSprite2D" parent="PiercedBodies"]
-position = Vector2(227, 0)
-scale = Vector2(0.75, 0.75)
-sprite_frames = SubResource("SpriteFrames_x3sgm")
-animation = &"empty"
-
+[connection signal="body_entered" from="AnimatedSprite2D/Edge" to="." method="_on_edge_hit"]
+[connection signal="body_entered" from="AnimatedSprite2D/Body" to="." method="_on_body_hit"]
+[connection signal="body_entered" from="AnimatedSprite2D/InitialEdge" to="." method="_on_edge_hit"]
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
-[connection signal="body_entered" from="Edge" to="." method="_on_edge_hit"]
-[connection signal="body_entered" from="Body" to="." method="_on_body_hit"]
-[connection signal="body_entered" from="InitialEdge" to="." method="_on_edge_hit"]

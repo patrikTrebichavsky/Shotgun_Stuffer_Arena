@@ -1,6 +1,6 @@
 [gd_scene load_steps=47 format=4 uid="uid://dvyno8ehyqf2m"]
 
-[ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Closet/Berserk/Guts.gd" id="1_1kgq5"]
+[ext_resource type="Script" uid="uid://y0rl7m0dqii1" path="res://scripts/Ammo/Closet/Berserk/Guts.gd" id="1_1kgq5"]
 [ext_resource type="Texture2D" uid="uid://hhh3e3713uhb" path="res://sprites/Bullets/Closet/Berserk/Guts.png" id="1_nae2k"]
 [ext_resource type="Texture2D" uid="uid://dm23x37pmtids" path="res://Model/Gutsu_0.png" id="2_pef0h"]
 [ext_resource type="Texture2D" uid="uid://b3h5i40elakg3" path="res://sprites/Bullets/Closet/Berserk/DragonSlayer.png" id="3_qy1rb"]

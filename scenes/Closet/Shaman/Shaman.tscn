@@ -1,0 +1,115 @@
+[gd_scene load_steps=9 format=3 uid="uid://rnh1r04evntt"]
+
+[ext_resource type="Script" uid="uid://df4l8vnwauo2g" path="res://scripts/Ammo/Closet/Shaman/Shaman.gd" id="1_76ktf"]
+[ext_resource type="AudioStream" uid="uid://ckf8j2t2k4h07" path="res://sounds/Bullets/Closet/Shaman/Isengard.mp3" id="2_76ktf"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="3_keswv"]
+[ext_resource type="Texture2D" uid="uid://cigdee8out8w1" path="res://sprites/Bullets/Closet/Shaman/Shaman.png" id="5_oe1tr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0e7sa"]
+radius = 52.0
+height = 130.667
+
+[sub_resource type="Animation" id="Animation_oe1tr"]
+resource_name = "Drum"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.0333333, 0.0666667, 0.166667, 0.2, 0.233333, 0.3, 0.333333, 0.366667, 0.6, 1.16667, 1.2, 1.36667, 1.5, 1.53333, 1.56667, 1.73333, 1.76667, 1.96667, 2.1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75), Vector2(0.8, 0.8), Vector2(0.75, 0.75), Vector2(0.75, 0.75)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(2.36667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"summon_doors"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_47qdc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sound:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.75, 0.75)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4qkw7"]
+_data = {
+&"Drum": SubResource("Animation_oe1tr"),
+&"RESET": SubResource("Animation_47qdc")
+}
+
+[node name="Shaman" type="RigidBody2D" groups=["bullets"]]
+disable_mode = 1
+collision_layer = 16
+collision_mask = 22
+gravity_scale = 0.0
+freeze = true
+script = ExtResource("1_76ktf")
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_76ktf")
+volume_db = 5.0
+bus = &"SFX"
+script = ExtResource("3_keswv")
+min_pitch_diff = 0.1
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_oe1tr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-21, 1)
+scale = Vector2(0.75, 0.75)
+shape = SubResource("CapsuleShape2D_0e7sa")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_4qkw7")
+}
+autoplay = "Drum"

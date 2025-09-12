@@ -1,0 +1,170 @@
+[gd_scene load_steps=20 format=3 uid="uid://2isv4vvk230y"]
+
+[ext_resource type="Texture2D" uid="uid://c3mp6e0hmye5d" path="res://sprites/UI/SpecialUi - Shells/Car/Depleated.png" id="1_b8l3r"]
+[ext_resource type="Texture2D" uid="uid://b8sk6dpw3nll7" path="res://sprites/UI/SpecialUi - Shells/Car/Filled.png" id="2_ayaps"]
+[ext_resource type="Script" uid="uid://fp5ndk0frr0s" path="res://scripts/SpecialAmmoShell.gd" id="3_cp161"]
+[ext_resource type="FontFile" uid="uid://cfijavsfa3qcf" path="res://fonts/Kenney Blocks.ttf" id="4_cp161"]
+[ext_resource type="Texture2D" uid="uid://cjwq4lryaef2m" path="res://sprites/UI/SpecialUi - Shells/Car/BorderFirst.png" id="4_q11l6"]
+[ext_resource type="Texture2D" uid="uid://bcr66r8wammu3" path="res://sprites/UI/SpecialUi - Shells/Car/BorderSecond.png" id="5_seyea"]
+[ext_resource type="Texture2D" uid="uid://bxndvsg266c2n" path="res://sprites/UI/SpecialUi - Shells/Couch/BorderFirst.png" id="6_dtrmc"]
+[ext_resource type="Texture2D" uid="uid://cdcoj1n7wajar" path="res://sprites/UI/SpecialUi - Shells/Closet/BorderFirst.png" id="7_1coa8"]
+[ext_resource type="Texture2D" uid="uid://dlq0kuvctxk21" path="res://sprites/UI/SpecialUi - Shells/Couch/BorderSecond.png" id="7_cp161"]
+[ext_resource type="Texture2D" uid="uid://csmg5mocsdyds" path="res://sprites/UI/SpecialUi - Shells/Closet/BorderSecond.png" id="8_mpc34"]
+[ext_resource type="Texture2D" uid="uid://bce4qaj4augb1" path="res://sprites/UI/SpecialUi - Shells/House/BorderFirst.png" id="8_tf4kk"]
+[ext_resource type="Texture2D" uid="uid://2htyyuo6ggtn" path="res://sprites/UI/SpecialUi - Shells/House/BorderSecond.png" id="9_1coa8"]
+[ext_resource type="Texture2D" uid="uid://bdr61633x84oi" path="res://sprites/UI/SpecialUi - Shells/Lamp/BorderFirst.png" id="10_mpc34"]
+[ext_resource type="Texture2D" uid="uid://bssyc7am2v55x" path="res://sprites/UI/SpecialUi - Shells/Lamp/BorderSecond.png" id="11_atby0"]
+[ext_resource type="Texture2D" uid="uid://v5fr6qyid0mp" path="res://sprites/UI/SpecialUi - Shells/Piano/BorderFirst.png" id="12_6hv3n"]
+[ext_resource type="Texture2D" uid="uid://d4b73ks44nh0s" path="res://sprites/UI/SpecialUi - Shells/Piano/BorderSecond.png" id="13_7ax21"]
+[ext_resource type="Texture2D" uid="uid://diayy2v352hw8" path="res://sprites/UI/SpecialUi - Shells/Shotgun/BorderFirst.png" id="17_atby0"]
+[ext_resource type="Texture2D" uid="uid://bjbuv3u5u7aq" path="res://sprites/UI/SpecialUi - Shells/Shotgun/BorderSecond.png" id="18_6hv3n"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xhkdt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_q11l6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_seyea")
+}],
+"loop": true,
+"name": &"Car",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1coa8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mpc34")
+}],
+"loop": true,
+"name": &"Closet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_dtrmc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_cp161")
+}],
+"loop": true,
+"name": &"Couch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1coa8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mpc34")
+}],
+"loop": true,
+"name": &"Doggy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_tf4kk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1coa8")
+}],
+"loop": true,
+"name": &"House",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_mpc34")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_atby0")
+}],
+"loop": true,
+"name": &"Lamppost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_1coa8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_mpc34")
+}],
+"loop": true,
+"name": &"Nails",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_6hv3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7ax21")
+}],
+"loop": true,
+"name": &"Piano",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("17_atby0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_6hv3n")
+}],
+"loop": true,
+"name": &"Shotgun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_6hv3n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_7ax21")
+}],
+"loop": true,
+"name": &"UtilityPole",
+"speed": 5.0
+}]
+
+[node name="SpecialAmmoShell" type="TextureProgressBar"]
+offset_left = 50.0
+offset_top = 84.0
+offset_right = 150.0
+offset_bottom = 234.0
+max_value = 25.0
+step = 0.01
+fill_mode = 3
+texture_under = ExtResource("1_b8l3r")
+texture_progress = ExtResource("2_ayaps")
+script = ExtResource("3_cp161")
+
+[node name="Shadow" type="ColorRect" parent="."]
+layout_direction = 4
+layout_mode = 0
+offset_top = -46.0
+offset_right = 90.0
+offset_bottom = -6.0
+color = Color(0, 0, 0, 0.478431)
+
+[node name="Counter" type="RichTextLabel" parent="Shadow"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 91.0
+offset_bottom = 36.0
+theme_override_fonts/normal_font = ExtResource("4_cp161")
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "[center]50/50[/center] "
+
+[node name="SelectedAnimation" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(45, 75)
+sprite_frames = SubResource("SpriteFrames_xhkdt")
+animation = &"Car"

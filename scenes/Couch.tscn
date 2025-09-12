@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://cuc8yrpfftkqr"]
 
-[ext_resource type="Script" uid="uid://bol4d0mggf3fu" path="res://scripts/Couch.gd" id="1_r2gt5"]
+[ext_resource type="Script" uid="uid://bol4d0mggf3fu" path="res://scripts/Ammo/Couch.gd" id="1_r2gt5"]
 [ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="2_aqbxc"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_a40t0"]
 [ext_resource type="Texture2D" uid="uid://etej2jvshkph" path="res://sprites/Bullets/ArmchairTarget.png" id="4_dxse5"]
@@ -45,7 +45,7 @@ collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_r2gt5")
 steer_force = 400.0
-damage = 200
+damage = 100
 tracking = true
 push_back_multiplier = 150
 metadata/_edit_group_ = true

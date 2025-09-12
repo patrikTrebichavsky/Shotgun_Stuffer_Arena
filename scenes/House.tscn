@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://dpbf2ylqljbje"]
 
-[ext_resource type="Script" uid="uid://b3033xjgtef0t" path="res://scripts/House.gd" id="1_k1080"]
+[ext_resource type="Script" uid="uid://b3033xjgtef0t" path="res://scripts/Ammo/House.gd" id="1_k1080"]
 [ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="2_waqes"]
 [ext_resource type="AudioStream" uid="uid://bcs2wcwdbfnjr" path="res://sounds/Bullets/HouseCollision.wav" id="3_l0ogn"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_xfqik"]

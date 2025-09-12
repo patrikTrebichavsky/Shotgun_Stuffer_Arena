@@ -1,6 +1,6 @@
 [gd_scene load_steps=19 format=3 uid="uid://7rjky3dhrlt3"]
 
-[ext_resource type="Script" uid="uid://dj2dxh8gkaiw" path="res://scripts/SuperShotgun.gd" id="1_gkvvj"]
+[ext_resource type="Script" uid="uid://dj2dxh8gkaiw" path="res://scripts/Ammo/SuperShotgun.gd" id="1_gkvvj"]
 [ext_resource type="Texture2D" uid="uid://bqfqb64ho3mkl" path="res://sprites/Bullets/SuperShotgun/Shotgun.png" id="2_gkvvj"]
 [ext_resource type="AudioStream" uid="uid://cudo63mjqkijk" path="res://sounds/Bullets/PlateBreaking.mp3" id="3_4vrjp"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_sps3y"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://drphqi8eilyr3"]
+[gd_scene load_steps=50 format=3 uid="uid://drphqi8eilyr3"]
 
 [ext_resource type="Script" uid="uid://c37sw0sjl034f" path="res://scripts/Player.gd" id="1_0llxv"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="4_r38ej"]
@@ -21,7 +21,11 @@
 [ext_resource type="AudioStream" uid="uid://djntad7sbeox7" path="res://sounds/Player/SecondChanceExplo.wav" id="18_23wb8"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="19_g710j"]
 [ext_resource type="AudioStream" uid="uid://bql2osmsmuf1a" path="res://sounds/Player/SecondChanceAquired.wav" id="19_vdo5c"]
+[ext_resource type="AudioStream" uid="uid://b6o4w7a76nc8g" path="res://sounds/Bullets/Closet/Shaman/DoorEnabled.wav" id="20_fgkxt"]
 [ext_resource type="Script" uid="uid://3n6jmcfv6gqi" path="res://scripts/CamereShake.gd" id="20_sffyf"]
+[ext_resource type="Texture2D" uid="uid://bvsp3n72k73pa" path="res://sprites/Bullets/Closet/Shaman/Door.png" id="23_6e537"]
+[ext_resource type="Script" uid="uid://crbdrhuwdryg0" path="res://scripts/Ammo/Closet/Shaman/Door.gd" id="24_p07f3"]
+[ext_resource type="AudioStream" uid="uid://cx6ur23opqee8" path="res://sounds/Bullets/Closet/Shaman/DoorHit.wav" id="25_viqgg"]
 
 [sub_resource type="Animation" id="Animation_aw3x3"]
 resource_name = "SecondChance"
@@ -274,12 +278,14 @@ radius = 167.863
 [sub_resource type="CircleShape2D" id="CircleShape2D_2c4an"]
 radius = 20.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6e537"]
+size = Vector2(149.333, 301.333)
+
 [node name="Player" type="CharacterBody2D" groups=["enemy", "player"]]
 scale = Vector2(1.5, 1.5)
 collision_layer = 16384
 collision_mask = 16
 script = ExtResource("1_0llxv")
-magazine_size = 3
 dash_distance = 400
 metadata/_edit_lock_ = true
 
@@ -290,9 +296,8 @@ libraries = {
 }
 
 [node name="PlayerArea" type="Area2D" parent="."]
-collision_layer = 15
-collision_mask = 7
-monitoring = false
+collision_layer = 0
+collision_mask = 0
 monitorable = false
 
 [node name="DeathParticles" type="GPUParticles2D" parent="PlayerArea"]
@@ -408,6 +413,14 @@ min_pitch = 0.95
 max_pitch = 1.05
 min_pitch_diff = 0.025
 
+[node name="DoorEnabledSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_fgkxt")
+bus = &"SFX"
+script = ExtResource("19_g710j")
+min_pitch = 0.95
+max_pitch = 1.05
+min_pitch_diff = 0.025
+
 [node name="SecondChanceExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("18_23wb8")
 bus = &"SFX"
@@ -460,6 +473,85 @@ one_shot = true
 [node name="BulletEnabledDelayTimer" type="Timer" parent="."]
 wait_time = 0.15
 
+[node name="Doors" type="Node2D" parent="."]
+
+[node name="Door1" type="Sprite2D" parent="Doors"]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_6e537")
+offset = Vector2(-300, 0)
+script = ExtResource("24_p07f3")
+push_back_multiplier = 1000
+
+[node name="Area2D" type="Area2D" parent="Doors/Door1"]
+position = Vector2(-300, 0)
+collision_layer = 0
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door1/Area2D"]
+position = Vector2(-6.10352e-05, -5.75399e-05)
+shape = SubResource("RectangleShape2D_6e537")
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="Doors/Door1"]
+stream = ExtResource("25_viqgg")
+volume_db = 5.0
+bus = &"SFX"
+script = ExtResource("19_g710j")
+
+[node name="Door2" type="Sprite2D" parent="Doors"]
+visible = false
+rotation = 2.0944
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_6e537")
+offset = Vector2(-300, 0)
+script = ExtResource("24_p07f3")
+push_back_multiplier = 1000
+
+[node name="Area2D" type="Area2D" parent="Doors/Door2"]
+position = Vector2(-300, 0)
+collision_layer = 0
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door2/Area2D"]
+position = Vector2(-6.10352e-05, -5.75399e-05)
+shape = SubResource("RectangleShape2D_6e537")
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="Doors/Door2"]
+stream = ExtResource("25_viqgg")
+volume_db = 5.0
+bus = &"SFX"
+script = ExtResource("19_g710j")
+
+[node name="Door3" type="Sprite2D" parent="Doors"]
+visible = false
+rotation = 4.18879
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("23_6e537")
+offset = Vector2(-300, 0)
+script = ExtResource("24_p07f3")
+push_back_multiplier = 1000
+
+[node name="Area2D" type="Area2D" parent="Doors/Door3"]
+position = Vector2(-300, 0)
+collision_layer = 0
+collision_mask = 6
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Doors/Door3/Area2D"]
+position = Vector2(-6.10352e-05, -5.75399e-05)
+shape = SubResource("RectangleShape2D_6e537")
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="Doors/Door3"]
+stream = ExtResource("25_viqgg")
+volume_db = 5.0
+bus = &"SFX"
+script = ExtResource("19_g710j")
+
 [connection signal="body_entered" from="PlayerArea" to="." method="death"]
 [connection signal="animation_finished" from="PlayerArea/AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="timeout" from="ReloadTimer" to="." method="reloading"]
@@ -467,3 +559,6 @@ wait_time = 0.15
 [connection signal="timeout" from="RunningAnimTimer" to="." method="running_delay"]
 [connection signal="timeout" from="SpecialResetTimer" to="." method="reset_special_switch"]
 [connection signal="timeout" from="BulletEnabledDelayTimer" to="." method="mouse_on_text_box_state"]
+[connection signal="body_entered" from="Doors/Door1/Area2D" to="Doors/Door1" method="_enemy_hit"]
+[connection signal="body_entered" from="Doors/Door2/Area2D" to="Doors/Door2" method="_enemy_hit"]
+[connection signal="body_entered" from="Doors/Door3/Area2D" to="Doors/Door3" method="_enemy_hit"]

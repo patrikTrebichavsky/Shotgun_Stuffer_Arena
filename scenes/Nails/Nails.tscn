@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c3qx4cvyto6xk"]
+[gd_scene load_steps=11 format=3 uid="uid://c3qx4cvyto6xk"]
 
-[ext_resource type="Script" uid="uid://ch24ber4nua6p" path="res://scripts/nails/Nails.gd" id="1_hh0rs"]
+[ext_resource type="Script" uid="uid://ch24ber4nua6p" path="res://scripts/Ammo/nails/Nails.gd" id="1_hh0rs"]
 [ext_resource type="Texture2D" uid="uid://cl0mlcyxp52pi" path="res://sprites/Bullets/Nails/Flying.png" id="2_1h1jb"]
 [ext_resource type="AudioStream" uid="uid://1i034nimillc" path="res://sounds/Bullets/Nails/NailsPierced.wav" id="3_hh0rs"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_xkekf"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_1h1jb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m3fle"]
 animations = [{
@@ -42,7 +43,6 @@ collision_layer = 4
 collision_mask = 22
 gravity_scale = 0.0
 script = ExtResource("1_hh0rs")
-push_back_multiplier = 30
 speed = 1200
 metadata/_edit_group_ = true
 
@@ -62,6 +62,12 @@ shape = SubResource("RectangleShape2D_t1eyj")
 
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_hh0rs")
+bus = &"SFX"
+script = ExtResource("4_xkekf")
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_1h1jb")
+volume_db = -10.0
 bus = &"SFX"
 script = ExtResource("4_xkekf")
 

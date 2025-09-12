@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://b7en6bqekjq6e"]
 
-[ext_resource type="Script" uid="uid://cnicssdkaic5y" path="res://scripts/nails/NailsPlaced.gd" id="1_kifmd"]
+[ext_resource type="Script" uid="uid://cnicssdkaic5y" path="res://scripts/Ammo/nails/NailsPlaced.gd" id="1_kifmd"]
 [ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="2_mx33g"]
 [ext_resource type="AudioStream" uid="uid://cwklkyyg7oto" path="res://sounds/Bullets/Nails/Stepped.wav" id="2_npxfg"]
 [ext_resource type="Texture2D" uid="uid://dp3xi6bipc8ex" path="res://sprites/Bullets/Nails/Placed.png" id="2_qjxw5"]

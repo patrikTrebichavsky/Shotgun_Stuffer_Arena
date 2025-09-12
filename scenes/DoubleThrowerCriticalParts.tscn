@@ -1,6 +1,6 @@
 [gd_scene load_steps=30 format=3 uid="uid://bi5pkaqonv5vr"]
 
-[ext_resource type="Script" uid="uid://buoiqhwfljyw2" path="res://scripts/DThrowCritPartsCont.gd" id="1_vk80u"]
+[ext_resource type="Script" uid="uid://buoiqhwfljyw2" path="res://scripts/Enemy/DThrowCritPartsCont.gd" id="1_vk80u"]
 [ext_resource type="Script" uid="uid://drbsko5upahfx" path="res://scripts/CriticalPart.gd" id="2_vqbje"]
 [ext_resource type="Texture2D" uid="uid://cewx8lh321vha" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Chared/Body.png" id="3_k34ng"]
 [ext_resource type="Texture2D" uid="uid://covnrb53jrb4s" path="res://sprites/Enemies/Boss/DoubleThrower/Parts/Body.png" id="3_vk80u"]

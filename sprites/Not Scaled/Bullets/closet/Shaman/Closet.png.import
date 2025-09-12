@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ksbo0pe8qxe1"
-path="res://.godot/imported/Closet.png-d21ece492f699e885c11beadba9a7679.ctex"
+path="res://.godot/imported/Closet.png-ff5e762b904791aaf694ef257026a236.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Bullets/closet/Shaman/Closet.png"
-dest_files=["res://.godot/imported/Closet.png-d21ece492f699e885c11beadba9a7679.ctex"]
+source_file="res://sprites/Not Scaled/Bullets/Closet/Shaman/Closet.png"
+dest_files=["res://.godot/imported/Closet.png-ff5e762b904791aaf694ef257026a236.ctex"]
 
 [params]
 

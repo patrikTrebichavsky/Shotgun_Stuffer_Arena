@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://demcdo12gnxsv"
-path="res://.godot/imported/Berserk.png-83ec397f7e7ef38b4079375058703ff5.ctex"
+path="res://.godot/imported/Berserk.png-4679aab680d303799f384f44e311184b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Bullets/closet/Berserk/Berserk.png"
-dest_files=["res://.godot/imported/Berserk.png-83ec397f7e7ef38b4079375058703ff5.ctex"]
+source_file="res://sprites/Not Scaled/Bullets/Closet/Berserk/Berserk.png"
+dest_files=["res://.godot/imported/Berserk.png-4679aab680d303799f384f44e311184b.ctex"]
 
 [params]
 

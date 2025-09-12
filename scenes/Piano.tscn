@@ -1,6 +1,6 @@
 [gd_scene load_steps=22 format=3 uid="uid://bvopopcwn8xkl"]
 
-[ext_resource type="Script" uid="uid://dhjmvlmglt0av" path="res://scripts/Piano.gd" id="1_d3j6f"]
+[ext_resource type="Script" uid="uid://dhjmvlmglt0av" path="res://scripts/Ammo/Piano.gd" id="1_d3j6f"]
 [ext_resource type="Texture2D" uid="uid://bwge3o55hycnu" path="res://sprites/Bullets/Piano.png" id="2_vywv1"]
 [ext_resource type="AudioStream" uid="uid://7rt3xkhjncpf" path="res://sounds/Bullets/PianoCollision/PianoCollision_1.mp3" id="3_uc2ra"]
 [ext_resource type="AudioStream" uid="uid://ncf57loq1db3" path="res://sounds/Bullets/PianoCollision/PianoCollision_2.mp3" id="4_vi53y"]

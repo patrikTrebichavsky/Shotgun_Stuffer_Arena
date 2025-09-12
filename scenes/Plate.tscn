@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://fehee4vh2b56"]
 
-[ext_resource type="Script" uid="uid://dl3gc4u4bgy6n" path="res://scripts/BulletBase.gd" id="1_eilrq"]
+[ext_resource type="Script" uid="uid://dl3gc4u4bgy6n" path="res://scripts/Ammo/BulletBase.gd" id="1_eilrq"]
 [ext_resource type="Texture2D" uid="uid://0cupbdsganch" path="res://sprites/Bullets/Plate.png" id="1_w6k4x"]
 [ext_resource type="AudioStream" uid="uid://cudo63mjqkijk" path="res://sounds/Bullets/PlateBreaking.mp3" id="2_lghnv"]
 [ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_oekxv"]
@@ -46,7 +46,6 @@ collision_layer = 4
 collision_mask = 2
 gravity_scale = 0.0
 script = ExtResource("1_eilrq")
-damage = 100
 push_back_multiplier = 70
 speed = 5000
 metadata/_edit_group_ = true

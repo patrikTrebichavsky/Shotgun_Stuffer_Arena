@@ -1,6 +1,6 @@
 [gd_scene load_steps=38 format=3 uid="uid://3g5stnlx8o8p"]
 
-[ext_resource type="Script" uid="uid://dcmcg8oswn6t3" path="res://scripts/BossDoubleThrower.gd" id="1_kjvjf"]
+[ext_resource type="Script" uid="uid://dcmcg8oswn6t3" path="res://scripts/Enemy/BossDoubleThrower.gd" id="1_kjvjf"]
 [ext_resource type="Texture2D" uid="uid://dmlb8cof48rky" path="res://sprites/Enemies/Boss/DoubleThrower/Running.png" id="2_ogxy4"]
 [ext_resource type="Texture2D" uid="uid://d0h5bhchd1hqe" path="res://sprites/Enemies/Boss/DoubleThrower/HeadlessArmlessBody.png" id="2_q5yru"]
 [ext_resource type="Texture2D" uid="uid://d3fcngncmt8wh" path="res://sprites/Enemies/Boss/DoubleThrower/ThrowingHeads.png" id="3_g6fis"]

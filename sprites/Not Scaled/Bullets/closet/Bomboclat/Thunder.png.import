@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ciokkctt1knt6"
-path="res://.godot/imported/Thunder.png-597b642c4d26733f00822f6eb8a83b3a.ctex"
+uid="uid://clbk8pfufmlaj"
+path="res://.godot/imported/Thunder.png-5d045c1bd4b17d1557a1cb0f6ac7c35d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Bullets/closet/Bomboclat/Thunder.png"
-dest_files=["res://.godot/imported/Thunder.png-597b642c4d26733f00822f6eb8a83b3a.ctex"]
+source_file="res://sprites/Not Scaled/Bullets/Closet/Bomboclat/Thunder.png"
+dest_files=["res://.godot/imported/Thunder.png-5d045c1bd4b17d1557a1cb0f6ac7c35d.ctex"]
 
 [params]
 

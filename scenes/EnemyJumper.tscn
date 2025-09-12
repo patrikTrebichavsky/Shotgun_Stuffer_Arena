@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://dqvmhhhcsl0j5"]
 
-[ext_resource type="Script" uid="uid://beq008bqngvkl" path="res://scripts/EnemyJumper.gd" id="1_8vh6h"]
+[ext_resource type="Script" uid="uid://beq008bqngvkl" path="res://scripts/Enemy/EnemyJumper.gd" id="1_8vh6h"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_ckm8h"]
 [ext_resource type="Texture2D" uid="uid://bgeide4j1avlr" path="res://sprites/Enemies/Jumper/Chared.png" id="2_qs00d"]
 [ext_resource type="Texture2D" uid="uid://cmy1jg1bdv3w0" path="res://sprites/Enemies/Jumper/Dying.png" id="3_3kitq"]
@@ -357,7 +357,8 @@ autostart = true
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 avoidance_enabled = true
-radius = 50.0
+radius = 30.0
+neighbor_distance = 800.0
 max_speed = 700.0
 
 [node name="StuckTimer" type="Timer" parent="."]

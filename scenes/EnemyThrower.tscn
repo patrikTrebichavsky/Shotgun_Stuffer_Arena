@@ -1,6 +1,6 @@
 [gd_scene load_steps=27 format=3 uid="uid://l7apy6iqnhyi"]
 
-[ext_resource type="Script" uid="uid://dvavucse0gvpe" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
+[ext_resource type="Script" uid="uid://dvavucse0gvpe" path="res://scripts/Enemy/EnemyThrower.gd" id="1_ieumm"]
 [ext_resource type="Texture2D" uid="uid://cno7dctoyi35c" path="res://sprites/Enemies/Thrower/Chared.png" id="2_0wpru"]
 [ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_3itsn"]
 [ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/Dying.png" id="3_km6br"]
@@ -240,9 +240,8 @@ process_material = SubResource("ParticleProcessMaterial_8bi13")
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_max_distance = 700.0
 avoidance_enabled = true
-radius = 50.0
-time_horizon_obstacles = 1.0
-max_speed = 700.0
+radius = 30.0
+neighbor_distance = 800.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_jgfa6")

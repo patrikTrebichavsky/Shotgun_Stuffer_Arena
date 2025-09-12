@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://r3ij7lyaw6lm"]
+[gd_scene load_steps=26 format=3 uid="uid://r3ij7lyaw6lm"]
 
 [ext_resource type="Script" uid="uid://qciuml1e0bdx" path="res://scripts/Main.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://bjv3ojhnmrymb" path="res://scenes/PlayerUi.tscn" id="2"]
@@ -45,19 +45,9 @@ size = Vector2(4241, 201)
 [sub_resource type="RectangleShape2D" id="3"]
 size = Vector2(2159, 201)
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_2skai"]
-resource_local_to_scene = true
-particle_flag_disable_z = true
-angle_min = -180.0
-angle_max = 180.0
-spread = 180.0
-initial_velocity_min = 400.0
-initial_velocity_max = 500.0
-gravity = Vector3(0, 0, 0)
-
 [sub_resource type="NavigationPolygon" id="4"]
-vertices = PackedVector2Array(2009.15, 582.133, 2434.79, 406.109, 2891.07, 887.43, 2106.15, 887.43, 1378.99, 882.922, 2892.8, 1149.75, 2976.7, 1115.08, 2417.87, 1634.88, 2018.02, 1738.55, 2613.13, 1818.73, -823.078, 2838.65, 2104.42, 1150.66, 2018.02, 1478.41, 2996.73, 927.492, 3191.28, 744.273, 4834.86, -445.742, 4896.01, 2804.95, 3173.66, 1296.04, 2009.15, 321.977, 1067.9, 1614, 1490.52, 1478.41, 1490.52, 1738.55, 874.844, 1798.7, 1380.72, 1145.25, 1481.64, 321.977, 1481.64, 582.133, 1061.75, 405.453, 864.789, 224.469, 592.344, 1146.16, 504.688, 1098.4, 594.047, 882.922, 501.219, 928.133, 2632.45, 224.469, -682.883, -495.578, 308.531, 1281.55, 305.961, 744.281)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 6, 7), PackedInt32Array(8, 7, 9, 10), PackedInt32Array(11, 5, 7, 8, 12), PackedInt32Array(13, 14, 15, 16, 17, 6), PackedInt32Array(6, 5, 2, 13), PackedInt32Array(1, 13, 2), PackedInt32Array(1, 0, 18), PackedInt32Array(19, 20, 21, 22), PackedInt32Array(3, 11, 12, 20, 23, 4), PackedInt32Array(24, 25, 26, 27), PackedInt32Array(23, 20, 19, 28), PackedInt32Array(28, 19, 29), PackedInt32Array(30, 28, 29, 31), PackedInt32Array(25, 0, 4), PackedInt32Array(26, 25, 4, 30), PackedInt32Array(31, 26, 30), PackedInt32Array(9, 17, 16), PackedInt32Array(9, 16, 10), PackedInt32Array(21, 8, 10, 22), PackedInt32Array(15, 14, 32), PackedInt32Array(33, 15, 32), PackedInt32Array(33, 32, 1, 18), PackedInt32Array(33, 18, 24, 27), PackedInt32Array(34, 22, 10), PackedInt32Array(34, 10, 33), PackedInt32Array(29, 34, 33, 35), PackedInt32Array(33, 27, 35), PackedInt32Array(29, 35, 31)])
+vertices = PackedVector2Array(3099.72, 660.156, 4834.86, -445.742, 4896.01, 2804.95, 3080.34, 1380.85, 2892.8, 1149.75, 2891.07, 887.43, 2905.6, 840.727, 2018.02, 1738.55, 2509.44, 1550.77, 2703.55, 1731.32, -823.078, 2838.65, 2886.23, 1200.29, 2018.02, 1478.41, 2104.42, 1150.66, 968.43, 490.25, 1481.64, 321.977, 1481.64, 582.133, 1378.99, 882.922, 594.047, 882.922, 591.641, 840.727, 2106.15, 887.43, 2009.15, 582.133, 2009.15, 321.977, 2528.81, 490.25, 1490.52, 1478.41, 1380.72, 1145.25, 592.344, 1146.16, 1490.52, 1738.55, 974.891, 1532.74, 598.102, 1182.27, 2722.93, 309.703, -682.883, -495.578, 774.313, 309.703, 780.773, 1713.3, 403.992, 1362.83, 397.523, 660.156)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5, 6), PackedInt32Array(7, 8, 9, 10), PackedInt32Array(4, 3, 11), PackedInt32Array(11, 8, 7, 12, 13, 4), PackedInt32Array(14, 15, 16, 17, 18, 19), PackedInt32Array(20, 21, 22, 23, 6, 5), PackedInt32Array(21, 20, 13, 12, 24, 25, 17, 16), PackedInt32Array(26, 25, 24, 27, 28, 29), PackedInt32Array(9, 3, 2), PackedInt32Array(9, 2, 10), PackedInt32Array(27, 7, 10), PackedInt32Array(1, 0, 30), PackedInt32Array(31, 1, 30, 22, 15, 32), PackedInt32Array(33, 28, 27), PackedInt32Array(33, 27, 10), PackedInt32Array(34, 33, 10), PackedInt32Array(34, 10, 31), PackedInt32Array(29, 34, 31, 26), PackedInt32Array(18, 26, 31, 35), PackedInt32Array(15, 14, 32), PackedInt32Array(30, 23, 22), PackedInt32Array(31, 32, 35), PackedInt32Array(18, 35, 19)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-749.986, -566.198, 4903.57, -515.135, 4967.34, 2874.54, -896.108, 2909.09)])
 source_geometry_mode = 2
 source_geometry_group_name = &"paths"
@@ -75,14 +65,14 @@ size = Vector2(6331, 4050)
 [node name="Main" type="Node"]
 script = ExtResource("1")
 target_amount_of_basic_enemies_dic = {
-0: 5,
-1: 6,
-2: 8,
-3: 8,
-4: 10,
-5: 11,
-6: 14,
-7: 16,
+0: 7,
+1: 9,
+2: 11,
+3: 12,
+4: 13,
+5: 13,
+6: 15,
+7: 17,
 8: 16,
 9: 18,
 10: 19,
@@ -128,12 +118,9 @@ target_amount_of_basic_enemies_dic = {
 50: 100,
 "player level": "amount of enemies"
 }
-initial_special_ammo_time = 3.0
-max_lvl_for_special_generator = 30
-special_ammo_max_decrease = 2.8
 initial_reload_time = 0.5
-max_lvl_for_reload_decrease = 15
-reload_max_decrease = 0.2
+max_lvl_for_reload_decrease = 25
+reload_max_decrease = 0.35
 starting_magazine_size = 3
 lvls_needed_for_mag_increase = 3
 size_of_enemy_group = 2
@@ -149,6 +136,7 @@ second_chance_regen_fail_mark = 8
 visible = false
 
 [node name="PlayerUi" parent="." instance=ExtResource("2")]
+visible = false
 
 [node name="Controls" parent="." instance=ExtResource("3")]
 layer = 2
@@ -315,43 +303,35 @@ position = Vector2(1889, 341)
 [node name="WallMiddleBottom" parent="InsideWalls" groups=["non_broken_walls"] instance=ExtResource("13")]
 position = Vector2(11, 1540)
 
-[node name="WallLeftTop" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("14")]
+[node name="WallLeftTop" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("13")]
 position = Vector2(-1316, 164)
-rotation = -0.785399
+rotation = -0.785398
 is_special_wall = true
-
-[node name="CrashParticles" parent="InsideWalls/WallLeftTop" index="8"]
-process_material = SubResource("ParticleProcessMaterial_2skai")
 
 [node name="WallLeftMiddle" parent="InsideWalls" groups=["non_broken_walls"] instance=ExtResource("14")]
 position = Vector2(-940, 748)
 
-[node name="WallLeftBottom" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("14")]
+[node name="WallLeftBottom" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("13")]
 position = Vector2(-1308, 1326)
-rotation = 0.777437
+rotation = 0.785398
 is_special_wall = true
 
-[node name="WallRightTop" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("14")]
+[node name="WallRightTop" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("13")]
 position = Vector2(1324, 164)
-rotation = 0.785399
+rotation = 0.785398
 is_special_wall = true
 
 [node name="WallRightMiddle" parent="InsideWalls" groups=["non_broken_walls"] instance=ExtResource("14")]
 position = Vector2(933, 754)
 
-[node name="WallRightBottom" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("14")]
+[node name="WallRightBottom" parent="InsideWalls" groups=["second_boss_arena"] instance=ExtResource("13")]
 position = Vector2(1300, 1350)
-rotation = -0.785399
+rotation = -0.785398
 is_special_wall = true
 
 [node name="SpecialModeTimer" type="Timer" parent="."]
 wait_time = 10.0
 one_shot = true
-
-[node name="EnemySpawnTimer" type="Timer" parent="."]
-
-[node name="SpecialAmmoTimer" type="Timer" parent="."]
-wait_time = 2.0
 
 [node name="MeshBakerTimer" type="Timer" parent="."]
 
@@ -368,7 +348,7 @@ use_edge_connections = false
 
 [node name="SoundTrack" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11")
-volume_db = -50.0
+volume_db = -80.0
 bus = &"Music"
 
 [node name="IntroTrack" type="AudioStreamPlayer" parent="."]
@@ -425,8 +405,6 @@ polygon = PackedVector2Array(-205, -191, -482, -509, -481, 2613, 4339, 2603, 433
 
 [connection signal="body_exited" from="EdgeWalls/Area2D" to="." method="_entering_arena"]
 [connection signal="timeout" from="SpecialModeTimer" to="." method="mode_timeout"]
-[connection signal="timeout" from="EnemySpawnTimer" to="." method="spawn_enemy"]
-[connection signal="timeout" from="SpecialAmmoTimer" to="." method="generate_special_ammo"]
 [connection signal="timeout" from="MeshBakerTimer" to="." method="_bake_mesh"]
 [connection signal="timeout" from="CheckForSpawning" to="." method="check_for_alive_enemies"]
 [connection signal="player_entered" from="SewageTopLeft" to="SewageBottomRight" method="transport_player"]
@@ -446,4 +424,3 @@ polygon = PackedVector2Array(-205, -191, -482, -509, -481, 2613, 4339, 2603, 433
 [editable path="EdgeWalls/ProtectionPortalS/BottomThird"]
 [editable path="EdgeWalls/ProtectionPortalS/BottomLeftCorner"]
 [editable path="EdgeWalls/ProtectionPortalS/Left"]
-[editable path="InsideWalls/WallLeftTop"]

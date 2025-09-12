@@ -6,7 +6,7 @@ func _init():
 	visible = false
 	should_be_hidden = true
 	
-func _process(delta):
+func _process(_delta):
 
 	if visible == false && ($RayCast2D.is_colliding() || $RayCast2D2.is_colliding()) :
 		should_be_hidden = false
