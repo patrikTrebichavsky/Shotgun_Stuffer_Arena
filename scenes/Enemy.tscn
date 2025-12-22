@@ -15,7 +15,7 @@ height = 90.0
 offsets = PackedFloat32Array(0, 0.518349, 1)
 colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1vja8"]
 gradient = SubResource("Gradient_4hypc")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8bi13"]
@@ -27,7 +27,7 @@ gravity = Vector3(0, 0, 0)
 scale_min = 15.0
 scale_max = 30.0
 color = Color(1, 0.92549, 0.14902, 1)
-color_ramp = SubResource("GradientTexture1D_khebe")
+color_ramp = SubResource("GradientTexture1D_1vja8")
 
 [node name="Enemy" type="RigidBody2D" groups=["enemy"]]
 z_index = 12

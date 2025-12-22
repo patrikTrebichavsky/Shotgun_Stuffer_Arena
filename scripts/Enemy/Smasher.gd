@@ -11,7 +11,7 @@ var dash_speed_current  = 0.0
 @export var dash_speed_min = 400
 @export var dash_speed_max = 1000
 @export var dash_speed_increase = 1.0
-@export var id = 10
+@export var id = 21
 @export var xp = 1
 
 var shadow_prev_position

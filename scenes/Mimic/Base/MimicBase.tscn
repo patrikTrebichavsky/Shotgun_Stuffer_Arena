@@ -1,0 +1,246 @@
+[gd_scene load_steps=32 format=3 uid="uid://h6ilkh2jxo0p"]
+
+[ext_resource type="Texture2D" uid="uid://cxirqq8fxv2vt" path="res://sprites/Enemies/Mimic/Base/Burned.png" id="1_5pjka"]
+[ext_resource type="Script" uid="uid://burgi1ryopio6" path="res://scripts/Enemy/Mimic.gd" id="1_k5cby"]
+[ext_resource type="Texture2D" uid="uid://vwm8muwptrq8" path="res://sprites/Enemies/Mimic/Base/Death.png" id="2_st2vp"]
+[ext_resource type="Texture2D" uid="uid://u4gg17xnkt5u" path="res://sprites/Enemies/Mimic/Base/Base.png" id="3_xf280"]
+[ext_resource type="Texture2D" uid="uid://c4ipuk1t5be47" path="res://sprites/Enemies/Mimic/Base/DeathTongue.png" id="4_k5cby"]
+[ext_resource type="Texture2D" uid="uid://bv8ey45611dde" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt1.png" id="4_tpyhx"]
+[ext_resource type="Texture2D" uid="uid://c7m5ucdars7d5" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt2.png" id="5_x4rxg"]
+[ext_resource type="AudioStream" uid="uid://l8qrx5c5vnjh" path="res://sounds/Enemy/Mimic/Death.wav" id="5_xf280"]
+[ext_resource type="AudioStream" uid="uid://6q8vcc71w41r" path="res://sounds/Enemy/Mimic/Bite.wav" id="6_k5cby"]
+[ext_resource type="Texture2D" uid="uid://cxdhdw6qsxrr6" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt3.png" id="6_ucmwn"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="7_ep4sn"]
+[ext_resource type="Texture2D" uid="uid://djit71grj7kh3" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt4.png" id="7_rgvaj"]
+[ext_resource type="Texture2D" uid="uid://dp75xqhci6o0b" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt5.png" id="8_erin5"]
+[ext_resource type="AudioStream" uid="uid://cle743peyi7yr" path="res://sounds/Enemy/Mimic/Dig.wav" id="9_6iwyy"]
+[ext_resource type="Texture2D" uid="uid://c68mrgbm1x5fo" path="res://sprites/Enemies/Mimic/Base/Digging/Dirt6.png" id="9_8l5ac"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wknw5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_5pjka")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_st2vp")
+}],
+"loop": true,
+"name": &"death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_tpyhx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x4rxg")
+}, {
+"duration": 3.0,
+"texture": ExtResource("6_ucmwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rgvaj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_erin5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_8l5ac")
+}],
+"loop": false,
+"name": &"emerge",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_8l5ac")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_erin5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_rgvaj")
+}, {
+"duration": 3.0,
+"texture": ExtResource("6_ucmwn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x4rxg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tpyhx")
+}],
+"loop": false,
+"name": &"hide",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_xf280")
+}],
+"loop": true,
+"name": &"stationary",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k5cby"]
+radius = 329.00607
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ep4sn"]
+size = Vector2(98, 106)
+
+[sub_resource type="Gradient" id="Gradient_5pjka"]
+offsets = PackedFloat32Array(0, 0.518349, 1)
+colors = PackedColorArray(1, 0.92549, 0.14902, 1, 0.909804, 0.415686, 0.0901961, 1, 0.6, 0.14902, 0.0862745, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_khebe"]
+gradient = SubResource("Gradient_5pjka")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_st2vp"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+gravity = Vector3(0, 0, 0)
+scale_min = 15.0
+scale_max = 30.0
+color = Color(1, 0.92549, 0.14902, 1)
+color_ramp = SubResource("GradientTexture1D_khebe")
+
+[sub_resource type="Gradient" id="Gradient_tpyhx"]
+offsets = PackedFloat32Array(0.12541254, 1)
+colors = PackedColorArray(0.51381207, 0.5138121, 0.5138121, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_x4rxg"]
+gradient = SubResource("Gradient_tpyhx")
+
+[sub_resource type="Gradient" id="Gradient_ucmwn"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.52156866, 0.3529412, 0.1882353, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_rgvaj"]
+gradient = SubResource("Gradient_ucmwn")
+
+[sub_resource type="Curve" id="Curve_8dwsk"]
+_limits = [0.0, 100.0, 0.0, 1.0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8199698, 0), 0.0, 0.0, 0, 0, Vector2(0.90922844, 100), 0.0, 0.0, 0, 0, Vector2(1, 100), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_uscs3"]
+curve = SubResource("Curve_8dwsk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wjdu3"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 175.0
+initial_velocity_max = 220.0
+gravity = Vector3(0, 0, 0)
+damping_min = 57.640003
+damping_max = 100.00001
+damping_curve = SubResource("CurveTexture_uscs3")
+scale_min = 6.21
+scale_max = 12.42
+color_ramp = SubResource("GradientTexture1D_rgvaj")
+color_initial_ramp = SubResource("GradientTexture1D_x4rxg")
+anim_speed_min = 1.0
+anim_speed_max = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ilxoh"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g23lt"]
+gradient = SubResource("Gradient_ilxoh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_xf280"]
+particle_flag_disable_z = true
+spread = 49.19
+initial_velocity_min = 240.0
+initial_velocity_max = 480.0
+gravity = Vector3(0, 0, 0)
+scale_min = 5.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_g23lt")
+
+[node name="MimicBase" type="RigidBody2D"]
+position = Vector2(348, 322)
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_k5cby")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_wknw5")
+animation = &"stationary"
+
+[node name="Tongue" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(67, -9)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_k5cby")
+
+[node name="VissibilityArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2147483648
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VissibilityArea"]
+visible = false
+shape = SubResource("CircleShape2D_k5cby")
+debug_color = Color(1, 1, 1, 0.41960785)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("RectangleShape2D_ep4sn")
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_xf280")
+script = ExtResource("7_ep4sn")
+
+[node name="BiteSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_k5cby")
+script = ExtResource("7_ep4sn")
+
+[node name="DigSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_6iwyy")
+script = ExtResource("7_ep4sn")
+
+[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+position = Vector2(4, 2)
+emitting = false
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_st2vp")
+
+[node name="DigParticles" type="GPUParticles2D" parent="."]
+z_index = -1
+emitting = false
+amount = 30
+lifetime = 0.4
+one_shot = true
+explosiveness = 0.3
+collision_base_size = 0.0
+process_material = SubResource("ParticleProcessMaterial_wjdu3")
+
+[node name="DeathParticles" type="GPUParticles2D" parent="."]
+position = Vector2(9, -2)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 32
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.67
+process_material = SubResource("ParticleProcessMaterial_xf280")
+
+[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="digging_finished"]
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_spawn_krtecek"]
+[connection signal="area_entered" from="VissibilityArea" to="." method="dig_out"]
+[connection signal="area_exited" from="VissibilityArea" to="." method="dig_in"]

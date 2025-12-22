@@ -331,6 +331,7 @@ throw_speed_decrease = 1
 throw_speed_initial = 1000
 boss_is_ready = true
 throw_distance = 1100
+id = 22
 hp = 150
 xp = 56
 player_position = Vector2(500, 500)

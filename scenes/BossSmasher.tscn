@@ -107,8 +107,8 @@ scale_max = 16.15
 color_ramp = SubResource("GradientTexture1D_as3m1")
 
 [sub_resource type="Gradient" id="Gradient_2kbcl"]
-offsets = PackedFloat32Array(0.470455)
-colors = PackedColorArray(0.569326, 0.372464, 0.218124, 1)
+offsets = PackedFloat32Array(0.4820628)
+colors = PackedColorArray(0.5686275, 0.37254903, 0.21960784, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_h80fp"]
 gradient = SubResource("Gradient_2kbcl")
@@ -198,7 +198,6 @@ _data = {
 }
 
 [node name="BossSmasher" type="RigidBody2D" groups=["enemy", "smasher"]]
-visible = false
 z_index = 12
 position = Vector2(1920, 1080)
 scale = Vector2(15, 15)

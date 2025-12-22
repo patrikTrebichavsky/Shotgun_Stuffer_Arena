@@ -29,7 +29,7 @@ var phase_two_centred = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	id = 20
+	id = 22
 	
 	boss_is_ready = false	
 	

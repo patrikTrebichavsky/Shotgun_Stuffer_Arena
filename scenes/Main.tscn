@@ -366,7 +366,7 @@ curve = SubResource("5")
 
 [node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
 position = Vector2(-459, -491)
-rotation = 1.5679
+rotation = 1.5678997
 
 [node name="SewageTopLeft" parent="." instance=ExtResource("15")]
 position = Vector2(258, 230)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://dj6ihybdtf02c"]
+
+[ext_resource type="PackedScene" uid="uid://h6ilkh2jxo0p" path="res://scenes/Mimic/Base/MimicBase.tscn" id="1_lhk6x"]
+[ext_resource type="Script" uid="uid://do5485gdd2f0k" path="res://bah.gd" id="2_v5axd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kbcko"]
+size = Vector2(70, 63)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="MimicBase" parent="." instance=ExtResource("1_lhk6x")]
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2147483648
+collision_mask = 0
+script = ExtResource("2_v5axd")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_kbcko")

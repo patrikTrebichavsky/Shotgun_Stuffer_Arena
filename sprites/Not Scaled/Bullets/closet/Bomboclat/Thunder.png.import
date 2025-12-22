@@ -3,21 +3,23 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clbk8pfufmlaj"
-path="res://.godot/imported/Thunder.png-5d045c1bd4b17d1557a1cb0f6ac7c35d.ctex"
+path="res://.godot/imported/Thunder.png-597b642c4d26733f00822f6eb8a83b3a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Not Scaled/Bullets/Closet/Bomboclat/Thunder.png"
-dest_files=["res://.godot/imported/Thunder.png-5d045c1bd4b17d1557a1cb0f6ac7c35d.ctex"]
+source_file="res://sprites/Not Scaled/Bullets/closet/Bomboclat/Thunder.png"
+dest_files=["res://.godot/imported/Thunder.png-597b642c4d26733f00822f6eb8a83b3a.ctex"]
 
 [params]
 
 compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
+compress/uastc_level=0
+compress/rdo_quality_loss=0.0
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
@@ -25,6 +27,10 @@ mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
+process/channel_remap/red=0
+process/channel_remap/green=1
+process/channel_remap/blue=2
+process/channel_remap/alpha=3
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

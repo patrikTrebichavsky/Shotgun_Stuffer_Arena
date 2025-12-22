@@ -37,7 +37,7 @@ func _on_edge_hit(body):
 				impaled_enemy.animation = "thrower"
 			else:
 				impaled_enemy.animation = "thrower_headless"
-		elif body.id == 20:
+		elif body.id == 22:
 			impaled_enemy.animation = "double_thrower"
 		else:
 			impaled_enemy.animation = "basic"

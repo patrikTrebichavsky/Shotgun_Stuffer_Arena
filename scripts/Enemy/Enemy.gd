@@ -4,7 +4,7 @@ class_name BasicEnemy
 
 signal enemy_killed(xp)
 signal stop_homming()
-
+@export var crit_parts_pth = "res://scenes/CriticalParts.tscn"
 @export var speed_min = 200.0 
 @export var speed_max = 400
 @export var id = 1
@@ -31,6 +31,7 @@ var critical_parts
 
 
 
+
 func _ready():
 	
 	speed = randi_range(speed_min,speed_max)
@@ -38,7 +39,6 @@ func _ready():
 	$NavigationAgent2D.max_speed = speed
 	
 	prev_position = position
-	
 
 	var main_node = get_parent()
 	player = main_node.get_node("Player")
@@ -137,7 +137,7 @@ func got_shot(damage, push_back = Vector2.ZERO, custom_death_sprite=false ,criti
 	if hp <= 0 and !dead:
 		
 		if critical_hit:
-			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			critical_parts = load(crit_parts_pth).instantiate()
 			get_parent().add_child(critical_parts)
 			critical_parts.launch_vector = push_back
 			
@@ -189,7 +189,7 @@ func got_conditioned(damage,push_back = Vector2.ZERO,custom_death_sprite=false, 
 		
 	if hp <= 0 and !dead:
 		if critical_hit:
-			critical_parts = load("res://scenes/CriticalParts.tscn").instantiate()
+			critical_parts = load(crit_parts_pth).instantiate()
 			get_parent().add_child(critical_parts)
 			critical_parts.launch_vector = push_back
 		
