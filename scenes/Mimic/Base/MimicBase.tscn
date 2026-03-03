@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://h6ilkh2jxo0p"]
+[gd_scene format=3 uid="uid://h6ilkh2jxo0p"]
 
 [ext_resource type="Texture2D" uid="uid://cxirqq8fxv2vt" path="res://sprites/Enemies/Mimic/Base/Burned.png" id="1_5pjka"]
 [ext_resource type="Script" uid="uid://burgi1ryopio6" path="res://scripts/Enemy/Mimic.gd" id="1_k5cby"]
@@ -168,55 +168,55 @@ scale_min = 5.0
 scale_max = 15.0
 color_ramp = SubResource("GradientTexture1D_g23lt")
 
-[node name="MimicBase" type="RigidBody2D"]
+[node name="MimicBase" type="RigidBody2D" unique_id=1630215298]
 position = Vector2(348, 322)
 mass = 0.001
 gravity_scale = 0.0
 script = ExtResource("1_k5cby")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=983173433]
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_wknw5")
 animation = &"stationary"
 
-[node name="Tongue" type="Sprite2D" parent="."]
+[node name="Tongue" type="Sprite2D" parent="." unique_id=2037848762]
 visible = false
 position = Vector2(67, -9)
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("4_k5cby")
 
-[node name="VissibilityArea" type="Area2D" parent="."]
+[node name="VissibilityArea" type="Area2D" parent="." unique_id=25418549]
 collision_layer = 0
 collision_mask = 2147483648
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VissibilityArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VissibilityArea" unique_id=957123299]
 visible = false
 shape = SubResource("CircleShape2D_k5cby")
 debug_color = Color(1, 1, 1, 0.41960785)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2017041811]
 visible = false
 shape = SubResource("RectangleShape2D_ep4sn")
 
-[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=1889884464]
 stream = ExtResource("5_xf280")
 script = ExtResource("7_ep4sn")
 
-[node name="BiteSound" type="AudioStreamPlayer2D" parent="."]
+[node name="BiteSound" type="AudioStreamPlayer2D" parent="." unique_id=623678758]
 stream = ExtResource("6_k5cby")
 script = ExtResource("7_ep4sn")
 
-[node name="DigSound" type="AudioStreamPlayer2D" parent="."]
+[node name="DigSound" type="AudioStreamPlayer2D" parent="." unique_id=968662371]
 stream = ExtResource("9_6iwyy")
 script = ExtResource("7_ep4sn")
 
-[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+[node name="ConditionParticles" type="GPUParticles2D" parent="." unique_id=1538229033]
 position = Vector2(4, 2)
 emitting = false
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_st2vp")
 
-[node name="DigParticles" type="GPUParticles2D" parent="."]
+[node name="DigParticles" type="GPUParticles2D" parent="." unique_id=209506083]
 z_index = -1
 emitting = false
 amount = 30
@@ -226,7 +226,7 @@ explosiveness = 0.3
 collision_base_size = 0.0
 process_material = SubResource("ParticleProcessMaterial_wjdu3")
 
-[node name="DeathParticles" type="GPUParticles2D" parent="."]
+[node name="DeathParticles" type="GPUParticles2D" parent="." unique_id=1944493122]
 position = Vector2(9, -2)
 scale = Vector2(1.5, 1.5)
 emitting = false
@@ -236,7 +236,7 @@ one_shot = true
 explosiveness = 0.67
 process_material = SubResource("ParticleProcessMaterial_xf280")
 
-[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+[node name="DeathTimer" type="Timer" parent="." unique_id=1456019066 groups=["enemy"]]
 wait_time = 0.5
 one_shot = true
 

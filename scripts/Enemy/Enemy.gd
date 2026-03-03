@@ -29,7 +29,7 @@ var critical_parts
 
 @export var undertale_mode : bool
 
-
+@export var debug_mode = false
 
 
 func _ready():
@@ -40,6 +40,11 @@ func _ready():
 	
 	prev_position = position
 
+	if debug_mode:
+		falling_down_from_wall()
+		nav.velocity_computed.connect(move)
+		return
+	
 	var main_node = get_parent()
 	player = main_node.get_node("Player")
 	if ! player == null:
@@ -57,6 +62,9 @@ func _physics_process(_delta):
 	
 	if dead:
 		return
+		
+	if debug_mode:
+		update_player_position(get_global_mouse_position())
 	
 	nav.target_position = player_position
 	target_position = (nav.get_next_path_position()-global_position).normalized()
@@ -82,8 +90,29 @@ func _physics_process(_delta):
 	prev_position = position
 	
 func move(velocity: Vector2):
-	linear_velocity = velocity
 	
+	linear_velocity = velocity
+
+func scripted_movement(delete_at_finnish = false, disable_pathing_perm = true, end_point = self.position,
+					 movement_duration = 1.0, trans_type = Tween.TRANS_LINEAR ):
+	
+	nav.velocity_computed.disconnect(move)
+	$CollisionShape2D.set_deferred("disabled",true)
+	var tween = get_tree().create_tween()
+	
+	tween.tween_property(self,"position",end_point,movement_duration).set_trans(trans_type)
+
+	await tween.finished
+	
+	if delete_at_finnish:
+		visible = false
+		_death()
+		return
+
+	if !disable_pathing_perm:
+		nav.velocity_computed.connect(move)
+
+
 func player_is_dead():
 	
 	set_deferred("freeze",true)

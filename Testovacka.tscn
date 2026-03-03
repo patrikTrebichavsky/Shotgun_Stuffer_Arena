@@ -1,19 +1,68 @@
-[gd_scene load_steps=4 format=3 uid="uid://dj6ihybdtf02c"]
+[gd_scene format=3 uid="uid://dj6ihybdtf02c"]
 
 [ext_resource type="PackedScene" uid="uid://h6ilkh2jxo0p" path="res://scenes/Mimic/Base/MimicBase.tscn" id="1_lhk6x"]
+[ext_resource type="PackedScene" uid="uid://nbc6ftvapail" path="res://scenes/Mimic/Base/MimicTrap.tscn" id="1_v5axd"]
 [ext_resource type="Script" uid="uid://do5485gdd2f0k" path="res://bah.gd" id="2_v5axd"]
+[ext_resource type="PackedScene" uid="uid://dir5j135wrl6q" path="res://scenes/Enemy.tscn" id="4_kbcko"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kbcko"]
 size = Vector2(70, 63)
 
-[node name="Node2D" type="Node2D"]
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_kbcko"]
+vertices = PackedVector2Array(2162.9219, 1206.9531, -150.71875, 1196.0391, -113.25, -182.42969, 2152.0703, -285.53125)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-123, -192, -161, 1206, 2173, 1217, 2162, -296)])
 
-[node name="MimicBase" parent="." instance=ExtResource("1_lhk6x")]
+[node name="Node2D" type="Node2D" unique_id=892524817]
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="MimicTrap" parent="." unique_id=845212935 instance=ExtResource("1_v5axd")]
+position = Vector2(718, 278)
+
+[node name="MimicBase" parent="." unique_id=70135903 instance=ExtResource("1_lhk6x")]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1010095459]
 collision_layer = 2147483648
 collision_mask = 0
 script = ExtResource("2_v5axd")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1790342292]
 shape = SubResource("RectangleShape2D_kbcko")
+
+[node name="Enemy" parent="." unique_id=1675156967 instance=ExtResource("4_kbcko")]
+position = Vector2(1303, 384)
+debug_mode = true
+
+[node name="Enemy2" parent="." unique_id=606722327 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy3" parent="." unique_id=1794409178 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy4" parent="." unique_id=122835162 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy5" parent="." unique_id=879780832 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy6" parent="." unique_id=1248856220 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy7" parent="." unique_id=1390553456 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy8" parent="." unique_id=932247531 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="Enemy9" parent="." unique_id=223414227 instance=ExtResource("4_kbcko")]
+position = Vector2(1053, 572)
+debug_mode = true
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="." unique_id=2057415660]
+navigation_polygon = SubResource("NavigationPolygon_kbcko")

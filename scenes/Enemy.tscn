@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dir5j135wrl6q"]
+[gd_scene format=3 uid="uid://dir5j135wrl6q"]
 
 [ext_resource type="Script" uid="uid://c81o8xbrbvg7x" path="res://scripts/Enemy/Enemy.gd" id="1_jfgch"]
 [ext_resource type="SpriteFrames" uid="uid://cl1h3fuaoj8mq" path="res://animations/EnemyAnimations.tres" id="2_onilt"]
@@ -29,7 +29,7 @@ scale_max = 30.0
 color = Color(1, 0.92549, 0.14902, 1)
 color_ramp = SubResource("GradientTexture1D_1vja8")
 
-[node name="Enemy" type="RigidBody2D" groups=["enemy"]]
+[node name="Enemy" type="RigidBody2D" unique_id=1675156967 groups=["enemy"]]
 z_index = 12
 collision_layer = 524800
 collision_mask = 512
@@ -40,15 +40,15 @@ speed_min = 150.0
 speed_max = 275
 hp = 5
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1398032560]
 sprite_frames = ExtResource("2_onilt")
 animation = &"running"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=646742197]
 position = Vector2(0.250031, 0)
 shape = SubResource("CapsuleShape2D_fcclg")
 
-[node name="DeathParticles" type="GPUParticles2D" parent="."]
+[node name="DeathParticles" type="GPUParticles2D" parent="." unique_id=2067362231]
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 32
@@ -57,34 +57,34 @@ one_shot = true
 explosiveness = 0.67
 process_material = ExtResource("4_lx7r7")
 
-[node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
+[node name="DeathTimer" type="Timer" parent="." unique_id=1140898223 groups=["enemy"]]
 wait_time = 0.5
 one_shot = true
 
-[node name="LaserDamageTimer" type="Timer" parent="."]
+[node name="LaserDamageTimer" type="Timer" parent="." unique_id=1635269745]
 wait_time = 0.1
 one_shot = true
 
-[node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
+[node name="GruntSound" type="AudioStreamPlayer2D" parent="." unique_id=74679118]
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("5_0468r")
 volume_db = -5.0
 pitch_scale = 0.5
 
-[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="." unique_id=560879148]
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("6_ppktf")
 volume_db = -10.0
 bus = &"SFX"
 script = ExtResource("6_336ml")
 
-[node name="ConditionParticles" type="GPUParticles2D" parent="."]
+[node name="ConditionParticles" type="GPUParticles2D" parent="." unique_id=1268397761]
 position = Vector2(4, 2)
 emitting = false
 one_shot = true
 process_material = SubResource("ParticleProcessMaterial_8bi13")
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." groups=["enemy", "paths"]]
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1071468887 groups=["enemy", "paths"]]
 path_max_distance = 300.0
 avoidance_enabled = true
 radius = 30.0
@@ -92,7 +92,7 @@ neighbor_distance = 800.0
 max_speed = 200.0
 debug_enabled = true
 
-[node name="StuckTimer" type="Timer" parent="."]
+[node name="StuckTimer" type="Timer" parent="." unique_id=639392177]
 
 [connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]
 [connection signal="timeout" from="StuckTimer" to="." method="stuck_timeout"]
