@@ -40,6 +40,10 @@ window/size/transparent=true
 window/stretch/mode="viewport"
 mouse_cursor/custom_image="uid://cqrch3221qnue"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/ridiculous_coding/plugin.cfg")
+
 [input]
 
 forward={

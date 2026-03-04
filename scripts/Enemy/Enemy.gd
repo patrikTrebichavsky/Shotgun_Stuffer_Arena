@@ -112,7 +112,6 @@ func scripted_movement(delete_at_finnish = false, disable_pathing_perm = true, e
 	if !disable_pathing_perm:
 		nav.velocity_computed.connect(move)
 
-
 func player_is_dead():
 	
 	set_deferred("freeze",true)
