@@ -1,0 +1,142 @@
+[gd_scene load_steps=16 format=3 uid="uid://bbtu2ob5xrteg"]
+
+[ext_resource type="Script" uid="uid://dxs0tp0ve4rji" path="res://scripts/Ui/SpecialButton.gd" id="1_2tays"]
+[ext_resource type="Texture2D" uid="uid://elra3somb30v" path="res://sprites/UI/SpecialUi - Shells/Buttons/Background.png" id="1_a8kqc"]
+[ext_resource type="Texture2D" uid="uid://02611mbjctcj" path="res://sprites/UI/SpecialUi - Shells/Buttons/Car.png" id="2_2tays"]
+[ext_resource type="Texture2D" uid="uid://c4dd6j8rhf4ys" path="res://sprites/UI/SpecialUi - Shells/Buttons/Closet.png" id="3_ckymf"]
+[ext_resource type="Texture2D" uid="uid://bvymuy4aqytwi" path="res://sprites/UI/SpecialUi - Shells/Buttons/Couch.png" id="4_hjtj7"]
+[ext_resource type="Texture2D" uid="uid://d1t6kle010qdd" path="res://sprites/UI/SpecialUi - Shells/Buttons/Doggy.png" id="5_mbgm6"]
+[ext_resource type="Texture2D" uid="uid://dffk8803ceewp" path="res://sprites/UI/SpecialUi - Shells/Buttons/LampPost.png" id="6_gvc1h"]
+[ext_resource type="Texture2D" uid="uid://di0dylf3jli1" path="res://sprites/UI/SpecialUi - Shells/Buttons/Nails.png" id="7_knvx1"]
+[ext_resource type="Texture2D" uid="uid://t6bcppm6c78h" path="res://sprites/UI/SpecialUi - Shells/Buttons/Piano.png" id="8_suhyp"]
+[ext_resource type="Texture2D" uid="uid://dcqb47a6idjeo" path="res://sprites/UI/SpecialUi - Shells/Buttons/Shotgun.png" id="9_8n104"]
+[ext_resource type="Texture2D" uid="uid://bv8i6kq1umnj1" path="res://sprites/UI/SpecialUi - Shells/Buttons/UtilityPole.png" id="10_vqvav"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sv8rr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2tays")
+}],
+"loop": true,
+"name": &"Car",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ckymf")
+}],
+"loop": true,
+"name": &"Closet",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_hjtj7")
+}],
+"loop": true,
+"name": &"Couch",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_mbgm6")
+}],
+"loop": true,
+"name": &"Doggy",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_gvc1h")
+}],
+"loop": true,
+"name": &"Lamppost",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_knvx1")
+}],
+"loop": true,
+"name": &"Nails",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_suhyp")
+}],
+"loop": true,
+"name": &"Piano",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_8n104")
+}],
+"loop": true,
+"name": &"Shotgun",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_vqvav")
+}],
+"loop": true,
+"name": &"UtilityPole",
+"speed": 5.0
+}]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_2tays"]
+color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8kqc"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_a8kqc"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
+[node name="SPButton" type="Control" groups=["slots"]]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 321.0
+offset_top = 246.0
+offset_right = 361.0
+offset_bottom = 286.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+mouse_filter = 2
+script = ExtResource("1_2tays")
+
+[node name="Border" type="Sprite2D" parent="."]
+show_behind_parent = true
+position = Vector2(-0.5, -0.5)
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("1_a8kqc")
+
+[node name="Amunition" type="AnimatedSprite2D" parent="."]
+position = Vector2(-0.5, 40.75)
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_sv8rr")
+animation = &"UtilityPole"
+
+[node name="Button" type="Button" parent="."]
+z_as_relative = false
+custom_minimum_size = Vector2(405, 405)
+layout_mode = 0
+offset_left = -202.5
+offset_top = -202.5
+offset_right = 202.5
+offset_bottom = 202.5
+theme_override_styles/focus = SubResource("StyleBoxLine_2tays")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_a8kqc")
+theme_override_styles/normal = SubResource("StyleBoxLine_a8kqc")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Button" to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Button" to="." method="_on_mouse_exited"]
+[connection signal="pressed" from="Button" to="." method="_button_pressed"]

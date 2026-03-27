@@ -1,0 +1,422 @@
+[gd_scene load_steps=24 format=3 uid="uid://r3ij7lyaw6lm"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://bjv3ojhnmrymb" path="res://scenes/PlayerUi.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://bgsvsvarhpce0" path="res://scenes/Controls.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://ek81wl4oxhi4" path="res://scenes/Start Button.tscn" id="4"]
+[ext_resource type="Texture2D" uid="uid://vfe2gmn1q0y3" path="res://sprites/Arena/BackGround/Base.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://bxn78bgalbogw" path="res://sprites/Arena/BackGround/Wall.png" id="6"]
+[ext_resource type="Texture2D" uid="uid://bq0ot1ppqth34" path="res://sprites/Arena/BackGround/Undertale_Wall.png" id="7"]
+[ext_resource type="PackedScene" uid="uid://rdiauru45hv7" path="res://scenes/CornerProtectionPortal.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://chh7wc88yg6jf" path="res://scenes/ProtectionPortal.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://bdoq30lhabww8" path="res://scenes/EdgeProtectionPortal.tscn" id="10"]
+[ext_resource type="AudioStream" uid="uid://dia38kg2u76e8" path="res://sounds/SoundTrack.wav" id="11"]
+[ext_resource type="AudioStream" uid="uid://duha3vwfktipl" path="res://sounds/GameOver.wav" id="12"]
+[ext_resource type="AudioStream" uid="uid://bxxsfxl4pmeo4" path="res://sounds/Intro.mp3" id="12_kbqin"]
+[ext_resource type="PackedScene" uid="uid://80gyke6i8npv" path="res://scenes/WallBlock3Wide.tscn" id="13"]
+[ext_resource type="PackedScene" uid="uid://bveylkc8yvegg" path="res://scenes/WallBlock5Wide.tscn" id="14"]
+[ext_resource type="PackedScene" uid="uid://djcca17u7fsi1" path="res://scenes/Sewage.tscn" id="15"]
+[ext_resource type="Script" path="res://scripts/EnemiesOffArenaDeleter.gd" id="16_nq5j7"]
+
+[sub_resource type="SpriteFrames" id="1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7")
+}],
+"loop": true,
+"name": &"undertale_wall",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6")
+}],
+"loop": true,
+"name": &"wall",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(4241, 201)
+
+[sub_resource type="RectangleShape2D" id="3"]
+size = Vector2(2159, 201)
+
+[sub_resource type="NavigationPolygon" id="4"]
+vertices = PackedVector2Array(2957, 1150, 2998, 1124, 2453, 1631, 2004, 1776, 2634, 1800, -833, 2848, 2004, 1536, 2190, 1150, 2998, 923, 3178, 754, 4845, -455, 4905, 2815, 3180, 1292, 2957, 907, 2451, 416, 2191, 907, 2004, 547, 2004, 307, 1496, 1536, 1311, 1150, 1310, 907, 1496, 547, 1496, 1776, 1054, 1627, 543, 1150, 509, 1120, 544, 907, 503, 924, 1496, 307, 1048, 416, 867, 248, 873, 1796, 2634, 248, -692, -505, 327, 1289, 322, 754)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 2, 4, 5), PackedInt32Array(6, 7, 0, 2, 3), PackedInt32Array(8, 9, 10, 11, 12, 1), PackedInt32Array(1, 0, 13, 8), PackedInt32Array(14, 8, 13), PackedInt32Array(14, 13, 15, 16, 17), PackedInt32Array(16, 15, 7, 6, 18, 19, 20, 21), PackedInt32Array(19, 18, 22, 23, 24), PackedInt32Array(24, 23, 25), PackedInt32Array(26, 24, 25, 27), PackedInt32Array(28, 21, 29, 30), PackedInt32Array(29, 21, 20, 26), PackedInt32Array(27, 29, 26), PackedInt32Array(4, 12, 11), PackedInt32Array(4, 11, 5), PackedInt32Array(22, 3, 5, 31), PackedInt32Array(10, 9, 32), PackedInt32Array(33, 10, 32), PackedInt32Array(33, 32, 14, 17), PackedInt32Array(33, 17, 28, 30), PackedInt32Array(31, 23, 22), PackedInt32Array(34, 31, 5), PackedInt32Array(34, 5, 33), PackedInt32Array(25, 34, 33, 35), PackedInt32Array(33, 30, 35), PackedInt32Array(25, 35, 27)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-749.986, -566.198, 4903.57, -515.135, 4967.34, 2874.54, -896.108, 2909.09)])
+source_geometry_mode = 2
+source_geometry_group_name = &"paths"
+agent_radius = 60.0
+
+[sub_resource type="Curve2D" id="5"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -459, -491, 0, 0, 0, 0, -450, 2616, 0, 0, 0, 0, -322, 2624, 0, 0, 0, 0, 4353, 2612, 0, 0, 0, 0, 4352, -520, 0, 0, 0, 0, -441, -501)
+}
+point_count = 6
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kq7s3"]
+size = Vector2(6331, 4050)
+
+[node name="Main" type="Node"]
+script = ExtResource("1")
+target_amount_of_basic_enemies_dic = {
+0: 6,
+1: 8,
+2: 8,
+3: 10,
+4: 11,
+5: 12,
+6: 14,
+7: 16,
+8: 16,
+9: 18,
+10: 19,
+11: 19,
+12: 25,
+13: 26,
+14: 27,
+15: 28,
+16: 30,
+17: 33,
+18: 33,
+19: 33,
+20: 35,
+21: 35,
+22: 36,
+23: 36,
+24: 36,
+25: 38,
+26: 40,
+27: 41,
+28: 42,
+29: 43,
+30: 44,
+31: 45,
+32: 46,
+33: 47,
+34: 48,
+35: 49,
+36: 50,
+37: 51,
+38: 52,
+39: 53,
+40: 54,
+41: 55,
+42: 56,
+43: 57,
+44: 58,
+45: 59,
+46: 60,
+47: 70,
+48: 80,
+49: 90,
+50: 100,
+"player level": "amount of enemies"
+}
+initial_special_ammo_time = 3.0
+max_lvl_for_special_generator = 30
+special_ammo_max_decrease = 2.8
+initial_reload_time = 0.5
+max_lvl_for_reload_decrease = 15
+reload_max_decrease = 0.2
+lvls_needed_for_mag_increase = 4
+size_of_enemy_group = 2
+max_size_of_enemy_group = 9
+initial_enemy_spawn_time = 0.3
+max_lvl_for_enemy_spawner = 25
+enemy_spawn_max_decrease = 2.0
+levels_needed_for_special_increase = 3
+second_chance_fail_mark = 3
+second_chance_regen_fail_mark = 8
+
+[node name="PlayerUi" parent="." instance=ExtResource("2")]
+visible = false
+
+[node name="Controls" parent="." instance=ExtResource("3")]
+layer = 2
+visible = false
+
+[node name="StartMenu" parent="." instance=ExtResource("4")]
+
+[node name="BackGround" type="Sprite2D" parent="."]
+z_index = -5
+position = Vector2(1920, 1080)
+texture = ExtResource("5")
+metadata/_edit_lock_ = true
+
+[node name="EdgeWalls2" type="Sprite2D" parent="."]
+z_index = 11
+position = Vector2(1920, 1080)
+texture = ExtResource("6")
+
+[node name="EdgeWalls" type="AnimatedSprite2D" parent="."]
+z_index = 11
+position = Vector2(1920, 1080)
+sprite_frames = SubResource("1")
+animation = &"wall"
+
+[node name="Area2D" type="Area2D" parent="EdgeWalls"]
+visible = false
+position = Vector2(-1920, -1080)
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="EdgeWalls/Area2D"]
+polygon = PackedVector2Array(-201, -201, -201, 2361, 4041, 2361, 4044, -200, -199, -201, -67, -66, 3905, -66, 3908, 2230, -65, 2231, -67, -66)
+
+[node name="OuterWallTop" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(0, -1181)
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallTop"]
+shape = SubResource("2")
+
+[node name="OuterWallBottom" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(0, 1180)
+rotation = 3.14159
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallBottom"]
+shape = SubResource("2")
+
+[node name="OuterWallLeft" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(-2020, 0)
+rotation = 4.71239
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallLeft"]
+shape = SubResource("3")
+
+[node name="OuterWallLeft2" type="RigidBody2D" parent="EdgeWalls"]
+position = Vector2(2020, 0)
+rotation = 1.5708
+collision_layer = 63
+collision_mask = 63
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EdgeWalls/OuterWallLeft2"]
+shape = SubResource("3")
+
+[node name="ProtectionPortalS" type="Node" parent="EdgeWalls"]
+
+[node name="TopLeftCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(-30, -30)
+previous_portal = NodePath("../Left")
+next_portal = NodePath("../TopFirst")
+
+[node name="TopFirst" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1020, -15)
+previous_portal = NodePath("../TopLeftCorner")
+next_portal = NodePath("../TopSecond")
+
+[node name="TopSecond" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1930, -15)
+previous_portal = NodePath("../TopFirst")
+next_portal = NodePath("../TopThird")
+
+[node name="TopThird" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(2840, -15)
+previous_portal = NodePath("../TopSecond")
+next_portal = NodePath("../TopRightCorner")
+
+[node name="TopRightCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(3870, -30)
+rotation = 1.5708
+previous_portal = NodePath("../TopThird")
+next_portal = NodePath("../Right")
+
+[node name="Right" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("10")]
+position = Vector2(3855, 1080)
+rotation = 1.5708
+previous_portal = NodePath("../TopRightCorner")
+next_portal = NodePath("../BottomRightCorner")
+
+[node name="ResetTimer2" type="Timer" parent="EdgeWalls/ProtectionPortalS/Right"]
+wait_time = 0.05
+
+[node name="BottomRightCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+z_index = 11
+position = Vector2(3870, 2190)
+rotation = 3.14159
+previous_portal = NodePath("../Right")
+next_portal = NodePath("../BottomFirst")
+
+[node name="BottomFirst" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(2820, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomRightCorner")
+next_portal = NodePath("../BottomSecond")
+
+[node name="BottomSecond" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1910, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomFirst")
+next_portal = NodePath("../BottomThird")
+
+[node name="BottomThird" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("9")]
+position = Vector2(1000, 2175)
+rotation = 3.14159
+previous_portal = NodePath("../BottomSecond")
+next_portal = NodePath("../BottomLeftCorner")
+
+[node name="BottomLeftCorner" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("8")]
+position = Vector2(-30, 2190)
+rotation = -1.5708
+previous_portal = NodePath("../BottomThird")
+next_portal = NodePath("../Left")
+
+[node name="Left" parent="EdgeWalls/ProtectionPortalS" node_paths=PackedStringArray("previous_portal", "next_portal") instance=ExtResource("10")]
+position = Vector2(-15, 1080)
+rotation = -1.5708
+previous_portal = NodePath("../BottomLeftCorner")
+next_portal = NodePath("../TopLeftCorner")
+
+[node name="ResetTimer2" type="Timer" parent="EdgeWalls/ProtectionPortalS/Left"]
+wait_time = 0.05
+
+[node name="ModeBackgroundEdge" type="ColorRect" parent="."]
+visible = false
+z_index = -5
+custom_minimum_size = Vector2(3840, 2160)
+offset_right = 3840.0
+offset_bottom = 2160.0
+color = Color(0, 0, 0, 1)
+
+[node name="SpecialModeTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="EnemySpawnTimer" type="Timer" parent="."]
+
+[node name="SpecialAmmoTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="MeshBakerTimer" type="Timer" parent="."]
+
+[node name="StartPoint" type="Marker2D" parent="."]
+position = Vector2(1920, 1080)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(-273, -273)
+scale = Vector2(1.23869, 1.33169)
+navigation_polygon = SubResource("4")
+use_edge_connections = false
+constrain_avoidance = true
+
+[node name="SoundTrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11")
+volume_db = -20.0
+bus = &"Music"
+
+[node name="IntroTrack" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_kbqin")
+autoplay = true
+bus = &"Music"
+
+[node name="GameOverSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12")
+bus = &"SFX"
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+position = Vector2(-21, -7)
+curve = SubResource("5")
+
+[node name="EnemySpawnPoint" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(-459, -491)
+rotation = 1.5679
+
+[node name="WallBlock3Wide2" parent="." instance=ExtResource("13")]
+position = Vector2(1893, 295)
+
+[node name="WallBlock3Wide3" parent="." instance=ExtResource("13")]
+position = Vector2(1893, 1931.01)
+
+[node name="WallBlock5Wide" parent="." instance=ExtResource("14")]
+position = Vector2(573, 505)
+rotation = -0.785399
+
+[node name="WallBlock5Wide2" parent="." instance=ExtResource("14")]
+position = Vector2(873, 1095.01)
+
+[node name="WallBlock5Wide3" parent="." instance=ExtResource("14")]
+position = Vector2(581, 1667)
+rotation = 0.785399
+
+[node name="WallBlock5Wide4" parent="." instance=ExtResource("14")]
+position = Vector2(3213, 505)
+rotation = 0.785399
+
+[node name="WallBlock5Wide5" parent="." instance=ExtResource("14")]
+position = Vector2(2913, 1095.01)
+
+[node name="WallBlock5Wide6" parent="." instance=ExtResource("14")]
+position = Vector2(3213, 1672.01)
+rotation = -0.785399
+
+[node name="SewageTopLeft" parent="." instance=ExtResource("15")]
+position = Vector2(258, 230)
+
+[node name="SewageBottomRight" parent="." instance=ExtResource("15")]
+position = Vector2(3698, 1990)
+rotation = 3.14159
+
+[node name="SewageTopRight" parent="." instance=ExtResource("15")]
+position = Vector2(3698, 230)
+rotation = 3.14159
+
+[node name="SewageBottomLeft" parent="." instance=ExtResource("15")]
+position = Vector2(258, 1990)
+
+[node name="EnemiesInArea" type="Area2D" parent="."]
+position = Vector2(1, 0)
+collision_layer = 0
+collision_mask = 524288
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemiesInArea"]
+position = Vector2(1869, 1044)
+shape = SubResource("RectangleShape2D_kq7s3")
+debug_color = Color(0, 0.643137, 0.32549, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("16_nq5j7")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+visible = false
+build_mode = 1
+polygon = PackedVector2Array(-205, -191, -482, -509, -481, 2613, 4339, 2603, 4332, -537, -473, -509, -207, -201, 4043, -202, 4040, 2357, -197, 2361)
+
+[connection signal="body_exited" from="EdgeWalls/Area2D" to="." method="_entering_arena"]
+[connection signal="timeout" from="SpecialModeTimer" to="." method="mode_timeout"]
+[connection signal="timeout" from="EnemySpawnTimer" to="." method="spawn_enemy"]
+[connection signal="timeout" from="SpecialAmmoTimer" to="." method="generate_special_ammo"]
+[connection signal="timeout" from="MeshBakerTimer" to="." method="_bake_mesh"]
+[connection signal="player_entered" from="SewageTopLeft" to="SewageBottomRight" method="transport_player"]
+[connection signal="player_entered" from="SewageBottomRight" to="SewageTopLeft" method="transport_player"]
+[connection signal="player_entered" from="SewageTopRight" to="SewageBottomLeft" method="transport_player"]
+[connection signal="player_entered" from="SewageBottomLeft" to="SewageTopRight" method="transport_player"]
+
+[editable path="EdgeWalls/ProtectionPortalS/TopLeftCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/TopFirst"]
+[editable path="EdgeWalls/ProtectionPortalS/TopSecond"]
+[editable path="EdgeWalls/ProtectionPortalS/TopThird"]
+[editable path="EdgeWalls/ProtectionPortalS/TopRightCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/Right"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomRightCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomFirst"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomSecond"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomThird"]
+[editable path="EdgeWalls/ProtectionPortalS/BottomLeftCorner"]
+[editable path="EdgeWalls/ProtectionPortalS/Left"]

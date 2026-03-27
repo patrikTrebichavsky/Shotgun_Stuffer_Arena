@@ -1,0 +1,114 @@
+[gd_scene load_steps=11 format=3 uid="uid://dpbf2ylqljbje"]
+
+[ext_resource type="Script" path="res://scripts/House.gd" id="1_k1080"]
+[ext_resource type="Texture2D" uid="uid://dul212ilg6w7v" path="res://sprites/Bullets/House.png" id="2_waqes"]
+[ext_resource type="AudioStream" uid="uid://bcs2wcwdbfnjr" path="res://sounds/Bullets/HouseCollision.wav" id="3_l0ogn"]
+[ext_resource type="Script" path="res://scripts/PitchEditor2D.gd" id="4_xfqik"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_waqes")
+}],
+"loop": true,
+"name": &"base",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_v0e5s"]
+offsets = PackedFloat32Array(0.208696)
+colors = PackedColorArray(0.594129, 0.696796, 0.759535, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3nm8y"]
+gradient = SubResource("Gradient_v0e5s")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_coaw0"]
+particle_flag_disable_z = true
+direction = Vector3(-1, 1, 0)
+initial_velocity_min = -150.0
+initial_velocity_max = 150.0
+gravity = Vector3(-98, 0, 0)
+scale_min = 5.0
+scale_max = 25.0
+color_ramp = SubResource("GradientTexture1D_3nm8y")
+
+[sub_resource type="Animation" id="Animation_ps426"]
+resource_name = "house_shake"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(225, 0), Vector2(225, -5), Vector2(225, 5), Vector2(225, -5), Vector2(225, 5), Vector2(225, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o447t"]
+_data = {
+"house_shake": SubResource("Animation_ps426")
+}
+
+[node name="House" type="RigidBody2D" groups=["bullets"]]
+visibility_layer = 2
+z_index = 10
+collision_layer = 4
+collision_mask = 2
+gravity_scale = 0.0
+script = ExtResource("1_k1080")
+damage = 100
+push_back_multiplier = 0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 2
+position = Vector2(225, 0)
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_nh842")
+animation = &"base"
+
+[node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_l0ogn")
+volume_db = 9.576
+bus = &"SFX"
+script = ExtResource("4_xfqik")
+
+[node name="CollisionParticles" type="GPUParticles2D" parent="."]
+visibility_layer = 2
+z_index = 1
+y_sort_enabled = true
+position = Vector2(236, -162)
+rotation = -0.00635898
+emitting = false
+process_material = SubResource("ParticleProcessMaterial_coaw0")
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+
+[node name="DeletionTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="HouseArea" type="Area2D" parent="."]
+collision_layer = 32770
+collision_mask = 22
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HouseArea"]
+position = Vector2(225, 0)
+rotation = 1.5708
+polygon = PackedVector2Array(-170, -14, -168, 226, 147, 226, 175, 195, 178, -14, 178, -23, 184, -23, 185, -29, 192, -29, 194, -58, 56, -197, -51, -194, -93, -158, -93, -175, -177, -175, -192, -154, -192, -125, -178, -125, -178, -47, -198, -43, -198, -14)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o447t")
+}
+
+[connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
+[connection signal="body_entered" from="HouseArea" to="." method="_enemy_hit"]

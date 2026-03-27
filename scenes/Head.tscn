@@ -1,30 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://4shloqflan0l"]
+[gd_scene load_steps=7 format=3 uid="uid://4shloqflan0l"]
 
-[ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/EnemyThrowerHead.png" id="1_7lub3"]
-[ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/UndertaleEnemyThrowerHead.png" id="2_7eop7"]
-[ext_resource type="Script" path="res://scripts/Head.gd" id="3_a5mon"]
-
-[sub_resource type="Animation" id="Animation_xjxls"]
-resource_name = "spin"
-loop_mode = 1
-step = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Head/Sprite:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0, 6.28319]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_jkll0"]
-_data = {
-"spin": SubResource("Animation_xjxls")
-}
+[ext_resource type="Texture2D" uid="uid://dn6rmcumamqne" path="res://sprites/Enemies/Thrower/Head.png" id="1_7lub3"]
+[ext_resource type="Texture2D" uid="uid://jo14wnwav2ph" path="res://sprites/Enemies/Thrower/Undertale_Head.png" id="2_7eop7"]
+[ext_resource type="Script" uid="uid://cmrrnv38bew07" path="res://scripts/Enemy/Head.gd" id="3_a5mon"]
+[ext_resource type="Material" uid="uid://bkxahggaxhx57" path="res://particles/HeadMagicMaterial.tres" id="4_u0hrb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]
 animations = [{
@@ -52,19 +31,23 @@ radius = 41.4367
 collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("3_a5mon")
+num_of_turns_ps = 5.0
 speed_initial = 1000.0
-speed_min = 200.0
-speed_frame_change = 650.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../..")
-libraries = {
-"": SubResource("AnimationLibrary_jkll0")
-}
+speed_min = 300.0
+speed_frame_change = 500.0
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_i5jc3")
 animation = &"head_default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.75, 0.75)
 shape = SubResource("CircleShape2D_xrkcs")
+
+[node name="MagicParticles" type="GPUParticles2D" parent="."]
+show_behind_parent = true
+scale = Vector2(1.5, 1.5)
+amount = 16
+lifetime = 0.5
+process_material = ExtResource("4_u0hrb")

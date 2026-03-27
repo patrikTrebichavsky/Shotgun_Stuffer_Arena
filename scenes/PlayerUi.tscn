@@ -1,32 +1,54 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjv3ojhnmrymb"]
+[gd_scene load_steps=22 format=3 uid="uid://bjv3ojhnmrymb"]
 
-[ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/IngameUIBackgroundBottom.png" id="1_3b84t"]
-[ext_resource type="Texture2D" uid="uid://dqc3vbycloewo" path="res://sprites/UI/SpecialUIBackgroundAsembled.png" id="1_76gam"]
-[ext_resource type="Texture2D" uid="uid://dubf3thf3bym2" path="res://sprites/UI/SpecialUIBackgroundAsembled2.png" id="2_tillq"]
+[ext_resource type="Texture2D" uid="uid://ddx2kng81qu8r" path="res://sprites/UI/ScoreTracker/Background.png" id="1_3b84t"]
 [ext_resource type="FontFile" uid="uid://bc7g15rck2bh7" path="res://fonts/Kenney Mini Square.ttf" id="2_w0dvj"]
-[ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/EnemyKillCount.png" id="3_8wmgf"]
-[ext_resource type="PackedScene" uid="uid://bceh2j3u3e5b3" path="res://scenes/AmmoSpriteContainer.tscn" id="4_bwgcm"]
+[ext_resource type="Texture2D" uid="uid://btqas838dbu3y" path="res://sprites/UI/ScoreTracker/EnemyKillCount.png" id="3_8wmgf"]
+[ext_resource type="Texture2D" uid="uid://cpkfq33abm1ig" path="res://sprites/UI/Dash/DashOne.png" id="6_jprmi"]
+[ext_resource type="Texture2D" uid="uid://iph7fdk1b6cx" path="res://sprites/UI/Boss/HealthBar/Under.png" id="7_76og7"]
+[ext_resource type="Texture2D" uid="uid://bk05fctal6usq" path="res://sprites/UI/Dash/DashTwo.png" id="7_rci13"]
+[ext_resource type="Script" uid="uid://dtt6rhrk2imf0" path="res://scripts/Ui/DashIndicator.gd" id="8_ebmyn"]
+[ext_resource type="Texture2D" uid="uid://bcn0068c0puxj" path="res://sprites/UI/Dash/DashThree.png" id="8_fbpk0"]
+[ext_resource type="Texture2D" uid="uid://cq5otuy00juk5" path="res://sprites/UI/Boss/HealthBar/Progress.png" id="8_usjog"]
+[ext_resource type="Texture2D" uid="uid://cuth715rn674n" path="res://sprites/UI/Dash/DashFour.png" id="9_hbf5l"]
+[ext_resource type="Script" uid="uid://brwanmc2mmlmd" path="res://scripts/Ui/BossHpBar.gd" id="9_uf2sd"]
+[ext_resource type="AudioStream" uid="uid://xqwixpqknyfb" path="res://sounds/Enemy/Smasher'/Anoucement.wav" id="10_quuqq"]
+[ext_resource type="Texture2D" uid="uid://bbhmpy8hctvur" path="res://sprites/UI/Dialog/Shotgun.png" id="11_xi6wi"]
+[ext_resource type="Texture2D" uid="uid://bbg2ncsuctlcc" path="res://sprites/UI/Dialog/Shotgun2.png" id="12_n1mhw"]
+[ext_resource type="PackedScene" uid="uid://lvnfh5dggdmh" path="res://scenes/UI/SpecialButtonControler.tscn" id="17_3kmhj"]
+[ext_resource type="PackedScene" uid="uid://2isv4vvk230y" path="res://scenes/SpecialAmmoShell.tscn" id="18_wuh4h"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_0uphs"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_i33on"]
+animations = [{
+"frames": [{
+"duration": 32.0,
+"texture": ExtResource("6_jprmi")
+}, {
+"duration": 32.0,
+"texture": ExtResource("7_rci13")
+}, {
+"duration": 31.0,
+"texture": ExtResource("8_fbpk0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_hbf5l")
+}],
+"loop": false,
+"name": &"MuscleLoad",
+"speed": 24.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7ix7g"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_76gam")
+"texture": ExtResource("11_xi6wi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_n1mhw")
 }],
 "loop": true,
 "name": &"default",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 3.0,
-"texture": ExtResource("1_76gam")
-}, {
-"duration": 1.0,
-"texture": ExtResource("2_tillq")
-}],
-"loop": false,
-"name": &"reload",
-"speed": 7.0
+"speed": 2.0
 }]
 
 [sub_resource type="GDScript" id="GDScript_4tcm2"]
@@ -38,19 +60,51 @@ func _on_animation_finished():
 	animation = \"default\"
 "
 
+[sub_resource type="Animation" id="Animation_rkmw7"]
+resource_name = "SpawnHealthBar"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioStreamPlayer:playing")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureProgressBar:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.784314)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gufw6"]
+_data = {
+&"SpawnHealthBar": SubResource("Animation_rkmw7")
+}
+
 [node name="PlayerUi" type="CanvasLayer"]
-offset = Vector2(-20, -20)
-transform = Transform2D(1, 0, 0, 1, -20, -20)
 
 [node name="StatsUI" type="TextureRect" parent="."]
 modulate = Color(1, 1, 1, 0.784314)
-offset_left = 1468.0
-offset_top = 873.0
-offset_right = 2468.0
-offset_bottom = 1393.0
+offset_left = 1461.0
+offset_top = 860.0
+offset_right = 2461.0
+offset_bottom = 1380.0
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_3b84t")
 expand_mode = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Kills" type="Label" parent="StatsUI"]
 layout_mode = 0
@@ -62,8 +116,10 @@ theme_override_colors/font_color = Color(1, 0.0627451, 0.121569, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 60
-text = "1000X"
+text = "0
+"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="TextureRect" type="TextureRect" parent="StatsUI/Kills"]
 layout_mode = 0
@@ -95,6 +151,7 @@ theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 80
 text = "Level : 0"
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="StatsUI/Level"]
 show_behind_parent = true
@@ -105,6 +162,7 @@ offset_right = 32.0
 offset_bottom = 56.0
 scale = Vector2(9.05097, 2.00208)
 color = Color(0.2, 0.239216, 0.282353, 0.501961)
+metadata/_edit_use_anchors_ = true
 
 [node name="Experience" type="Label" parent="StatsUI"]
 z_index = 1
@@ -119,6 +177,7 @@ theme_override_fonts/font = ExtResource("2_w0dvj")
 theme_override_font_sizes/font_size = 60
 text = "Exp:"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect3" type="ColorRect" parent="StatsUI/Experience"]
 show_behind_parent = true
@@ -129,67 +188,82 @@ offset_right = 42.0
 offset_bottom = 38.0
 scale = Vector2(9.21241, 2.00208)
 color = Color(0.129412, 0.435294, 0.129412, 0.392157)
+metadata/_edit_use_anchors_ = true
 
-[node name="AmmoInGunUI" type="ColorRect" parent="."]
+[node name="DashIndicator" type="AnimatedSprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.498039)
+position = Vector2(960, 180)
+sprite_frames = SubResource("SpriteFrames_i33on")
+animation = &"MuscleLoad"
+frame = 3
+frame_progress = 1.0
+script = ExtResource("8_ebmyn")
+
+[node name="ShotgunDialog" type="AnimatedSprite2D" parent="."]
+visible = false
 modulate = Color(1, 1, 1, 0.784314)
-z_index = 1
-offset_left = 170.0
-offset_top = 42.0
-offset_right = 206.0
-offset_bottom = 61.0
-scale = Vector2(1.25, 1.25)
-color = Color(0.141176, 0.164706, 0.176471, 1)
-metadata/_edit_group_ = true
-
-[node name="Border" type="ColorRect" parent="AmmoInGunUI"]
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(37, 21)
-color = Color(0.180392, 0.203922, 0.219608, 1)
-
-[node name="ShotgunStorage" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 1, 1, 0.784314)
-position = Vector2(251, 135)
-scale = Vector2(0.5, 0.5)
-sprite_frames = SubResource("SpriteFrames_0uphs")
+position = Vector2(80, 1000)
+rotation = 0.476475
+sprite_frames = SubResource("SpriteFrames_7ix7g")
+autoplay = "default"
+frame_progress = 0.964444
 script = SubResource("GDScript_4tcm2")
 
-[node name="AmmoSpriteContainer" parent="." instance=ExtResource("4_bwgcm")]
-z_index = 2
-offset_left = 179.0
-offset_top = 43.0
-offset_right = 198.0
-offset_bottom = 62.0
-scale = Vector2(1.25, 1.25)
-first_in_row = true
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." groups=["hp_bar"]]
+visible = false
+modulate = Color(1, 1, 1, 0.784314)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 973.0
+offset_top = -364.0
+offset_right = 1593.0
+offset_bottom = -284.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5708
+value = 100.0
+rounded = true
+texture_under = ExtResource("7_76og7")
+texture_progress = ExtResource("8_usjog")
+texture_progress_offset = Vector2(20, 20)
+script = ExtResource("9_uf2sd")
 
-[node name="AmmoSpriteContainer2" parent="." instance=ExtResource("4_bwgcm")]
-offset_left = 198.0
-offset_top = 130.0
-offset_right = 217.0
-offset_bottom = 149.0
-scale = Vector2(1.25, 1.25)
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_quuqq")
+volume_db = -15.0
+bus = &"SFX"
 
-[node name="AmmoSpriteContainer3" parent="." instance=ExtResource("4_bwgcm")]
-offset_left = 107.0
-offset_top = 168.0
-offset_right = 126.0
-offset_bottom = 187.0
-scale = Vector2(1.25, 1.25)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_gufw6")
+}
 
-[connection signal="animation_finished" from="ShotgunStorage" to="ShotgunStorage" method="_on_animation_finished"]
-[connection signal="empty" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="move_ammo_up"]
-[connection signal="send_to_next" from="AmmoSpriteContainer" to="AmmoSpriteContainer2" method="set_ammo"]
-[connection signal="empty" from="AmmoSpriteContainer2" to="AmmoSpriteContainer3" method="move_ammo_up"]
-[connection signal="send_to_next" from="AmmoSpriteContainer2" to="AmmoSpriteContainer3" method="set_ammo"]
-[connection signal="send_to_previous" from="AmmoSpriteContainer2" to="AmmoSpriteContainer" method="set_ammo"]
-[connection signal="send_to_previous" from="AmmoSpriteContainer3" to="AmmoSpriteContainer2" method="set_ammo"]
+[node name="SpecialAmmoContainer" parent="." groups=["slots"] instance=ExtResource("18_wuh4h")]
+visible = false
+offset_left = 682.0
+offset_top = 931.0
+offset_right = 782.0
+offset_bottom = 1081.0
+
+[node name="SpecialAmmoContainer2" parent="." groups=["slots"] instance=ExtResource("18_wuh4h")]
+visible = false
+offset_left = 883.0
+offset_top = 931.0
+offset_right = 983.0
+offset_bottom = 1081.0
+
+[node name="SpecialAmmoContainer3" parent="." groups=["slots"] instance=ExtResource("18_wuh4h")]
+visible = false
+offset_left = 1087.0
+offset_top = 932.0
+offset_right = 1187.0
+offset_bottom = 1082.0
+
+[node name="SPButtonControler" parent="." node_paths=PackedStringArray("slots") instance=ExtResource("17_3kmhj")]
+slots = [NodePath("../SpecialAmmoContainer"), NodePath("../SpecialAmmoContainer2"), NodePath("../SpecialAmmoContainer3")]
+
+[connection signal="animation_finished" from="ShotgunDialog" to="ShotgunDialog" method="_on_animation_finished"]

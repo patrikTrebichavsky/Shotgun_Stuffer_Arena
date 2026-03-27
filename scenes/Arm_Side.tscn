@@ -1,0 +1,71 @@
+[gd_scene load_steps=8 format=3 uid="uid://47hs83icyvwc"]
+
+[ext_resource type="Script" uid="uid://cmrrnv38bew07" path="res://scripts/Enemy/Head.gd" id="1_180rx"]
+[ext_resource type="Texture2D" uid="uid://cor5vg8f4ri3o" path="res://sprites/Enemies/Boss/DoubleThrower/SideArmLeft.png" id="4_0kjqs"]
+[ext_resource type="Texture2D" uid="uid://btfldxo8cq6wu" path="res://sprites/Enemies/Boss/DoubleThrower/SideArmRight.png" id="5_nouwy"]
+
+[sub_resource type="Animation" id="Animation_xjxls"]
+resource_name = "spin"
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Arm_Side/Sprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jkll0"]
+_data = {
+&"spin": SubResource("Animation_xjxls")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_0kjqs")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_nouwy")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_drv35"]
+size = Vector2(50, 40)
+
+[node name="Arm_Side" type="RigidBody2D"]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_180rx")
+speed_initial = 1000.0
+speed_min = 200.0
+speed_frame_change = 650.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_jkll0")
+}
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+rotation = -1.5708
+sprite_frames = SubResource("SpriteFrames_i5jc3")
+animation = &"right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_drv35")

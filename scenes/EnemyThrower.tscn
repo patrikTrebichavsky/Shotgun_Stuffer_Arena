@@ -1,23 +1,42 @@
-[gd_scene load_steps=21 format=3 uid="uid://l7apy6iqnhyi"]
+[gd_scene load_steps=27 format=3 uid="uid://l7apy6iqnhyi"]
 
-[ext_resource type="Script" path="res://scripts/EnemyThrower.gd" id="1_ieumm"]
-[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/EnemyCrushed.png" id="2_3itsn"]
-[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/EnemyThrowerStanding.png" id="3_km6br"]
+[ext_resource type="Script" uid="uid://dvavucse0gvpe" path="res://scripts/Enemy/EnemyThrower.gd" id="1_ieumm"]
+[ext_resource type="Texture2D" uid="uid://cno7dctoyi35c" path="res://sprites/Enemies/Thrower/Chared.png" id="2_0wpru"]
+[ext_resource type="Texture2D" uid="uid://bs4013gtv5ihx" path="res://sprites/Enemies/Basic/Crushed.png" id="2_3itsn"]
+[ext_resource type="Texture2D" uid="uid://cy7g6mqbtai2q" path="res://sprites/Enemies/Thrower/Dying.png" id="3_km6br"]
+[ext_resource type="Texture2D" uid="uid://bc38c14sedq62" path="res://sprites/Enemies/Thrower/CharedHeadless.png" id="3_qdox0"]
 [ext_resource type="Material" uid="uid://p12eibo33461" path="res://particles/Blood.tres" id="3_u6dp4"]
-[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/EnemyGrunt.mp3" id="4_tq8wl"]
-[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/EnemyThrowerStandingHeadless.png" id="4_urvu5"]
-[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/EnemyDeath.mp3" id="5_gksv8"]
-[ext_resource type="Texture2D" uid="uid://d0h4vd8x0ihhk" path="res://sprites/Enemies/Thrower/EnemyThrowerRunning.png" id="5_i0efk"]
-[ext_resource type="Texture2D" uid="uid://dv3201vnrmmum" path="res://sprites/Enemies/Thrower/EnemyThrowerRunningHeadless.png" id="6_2573s"]
-[ext_resource type="Texture2D" uid="uid://pd77ec6lvxo0" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerStanding.png" id="7_nf3c8"]
-[ext_resource type="Texture2D" uid="uid://b6aedfuioy3dp" path="res://sprites/Enemies/Thrower/EnemyThrowerThrowingHead.png" id="7_qq27b"]
-[ext_resource type="Texture2D" uid="uid://c6lkto12o7hsp" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerStandingHeadLess.png" id="8_1y0hp"]
-[ext_resource type="Texture2D" uid="uid://mw8iy8ujpot0" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerRunning.png" id="9_bj8wq"]
-[ext_resource type="Texture2D" uid="uid://25bbqj3wge23" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerRunningHeadLEss.png" id="10_bskgb"]
-[ext_resource type="Texture2D" uid="uid://bbjno580j44i3" path="res://sprites/Enemies/Thrower/UndertaleModeEnemyThrowerThrowingHead.png" id="12_b3152"]
+[ext_resource type="AudioStream" uid="uid://cdpffgyphy1l3" path="res://sounds/Enemy/Grunt.mp3" id="4_tq8wl"]
+[ext_resource type="Texture2D" uid="uid://sennkqdtcnew" path="res://sprites/Enemies/Thrower/DyingHeadless.png" id="4_urvu5"]
+[ext_resource type="AudioStream" uid="uid://ch1ofkvb4jmfi" path="res://sounds/Enemy/Death.mp3" id="5_gksv8"]
+[ext_resource type="Texture2D" uid="uid://d0h4vd8x0ihhk" path="res://sprites/Enemies/Thrower/Running.png" id="5_i0efk"]
+[ext_resource type="Texture2D" uid="uid://dv3201vnrmmum" path="res://sprites/Enemies/Thrower/RunningHeadless.png" id="6_2573s"]
+[ext_resource type="Texture2D" uid="uid://pd77ec6lvxo0" path="res://sprites/Enemies/Thrower/Undertale_Dying.png" id="7_nf3c8"]
+[ext_resource type="Texture2D" uid="uid://b6aedfuioy3dp" path="res://sprites/Enemies/Thrower/Throwing.png" id="7_qq27b"]
+[ext_resource type="Texture2D" uid="uid://c6lkto12o7hsp" path="res://sprites/Enemies/Thrower/Undertale_Headless.png" id="8_1y0hp"]
+[ext_resource type="Texture2D" uid="uid://mw8iy8ujpot0" path="res://sprites/Enemies/Thrower/Undertale_Running.png" id="9_bj8wq"]
+[ext_resource type="Texture2D" uid="uid://25bbqj3wge23" path="res://sprites/Enemies/Thrower/Undertale_RunningHeadless.png" id="10_bskgb"]
+[ext_resource type="Texture2D" uid="uid://bbjno580j44i3" path="res://sprites/Enemies/Thrower/Undertale_Throwing.png" id="12_b3152"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="16_mws08"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_duxj0"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0wpru")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qdox0")
+}],
+"loop": true,
+"name": &"burned_headless",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_3itsn")
@@ -113,8 +132,24 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_tqr5j"]
-size = Vector2(74.5, 90)
+[sub_resource type="Gradient" id="Gradient_he8me"]
+offsets = PackedFloat32Array(0.981132)
+colors = PackedColorArray(0.875743, 0.226894, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_cpplj"]
+gradient = SubResource("Gradient_he8me")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nd8o7"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 40.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 0, 0)
+scale_min = 4.0
+scale_max = 10.0
+color_ramp = SubResource("GradientTexture1D_cpplj")
+hue_variation_min = -0.1
+hue_variation_max = 0.1
 
 [sub_resource type="Gradient" id="Gradient_4hypc"]
 offsets = PackedFloat32Array(0, 0.518349, 1)
@@ -134,9 +169,15 @@ scale_max = 30.0
 color = Color(1, 0.92549, 0.14902, 1)
 color_ramp = SubResource("GradientTexture1D_khebe")
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jgfa6"]
+radius = 39.75
+height = 92.0
+
 [node name="EnemyThrower" type="RigidBody2D" groups=["enemy"]]
-collision_layer = 2
-collision_mask = 14
+z_index = 12
+position = Vector2(-1, -2)
+collision_layer = 524800
+collision_mask = 512
 gravity_scale = 0.0
 lock_rotation = true
 script = ExtResource("1_ieumm")
@@ -144,32 +185,38 @@ throw_distance = 700
 speed_max = 200
 id = 3
 xp = 2
+metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_duxj0")
 animation = &"running"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.250031, 0)
-shape = SubResource("RectangleShape2D_tqr5j")
-
 [node name="DeathParticles" type="GPUParticles2D" parent="."]
 scale = Vector2(1.5, 1.5)
 emitting = false
 amount = 16
-process_material = ExtResource("3_u6dp4")
 lifetime = 0.5
 one_shot = true
 explosiveness = 0.67
+process_material = ExtResource("3_u6dp4")
+
+[node name="MagicParticles" type="GPUParticles2D" parent="." groups=["magic_head"]]
+position = Vector2(-6, -1)
+scale = Vector2(1.5, 1.5)
+emitting = false
+amount = 16
+lifetime = 0.5
+process_material = SubResource("ParticleProcessMaterial_nd8o7")
 
 [node name="DeathTimer" type="Timer" parent="." groups=["enemy"]]
-wait_time = 0.5
 one_shot = true
 
-[node name="GruntTimer" type="Timer" parent="."]
-wait_time = 6.0
-autostart = true
+[node name="LaserDamageTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="StuckTimer" type="Timer" parent="."]
 
 [node name="GruntSound" type="AudioStreamPlayer2D" parent="."]
 scale = Vector2(1.5, 1.5)
@@ -181,16 +228,29 @@ pitch_scale = 0.5
 scale = Vector2(1.5, 1.5)
 stream = ExtResource("5_gksv8")
 volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("16_mws08")
 
 [node name="ConditionParticles" type="GPUParticles2D" parent="."]
 position = Vector2(4, 2)
 emitting = false
-process_material = SubResource("ParticleProcessMaterial_8bi13")
 one_shot = true
+process_material = SubResource("ParticleProcessMaterial_8bi13")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 700.0
 avoidance_enabled = true
-debug_enabled = true
+radius = 30.0
+neighbor_distance = 800.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_jgfa6")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+scale = Vector2(1, 15)
+target_position = Vector2(700, 0)
+collision_mask = 32
+hit_from_inside = true
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="throw"]
-[connection signal="timeout" from="DeathTimer" to="." method="delete_enemy"]
+[connection signal="timeout" from="DeathTimer" to="." method="_delete_enemy"]

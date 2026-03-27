@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://csf4kif2hi56s"]
+
+[ext_resource type="Script" uid="uid://cfms7tyemg6h0" path="res://scripts/Krtecek.gd" id="1_5oydb"]
+[ext_resource type="AudioStream" uid="uid://bwfb8x1xjglfi" path="res://sounds/Enemy/Mimic/Krtek.mp3" id="2_th84t"]
+[ext_resource type="Texture2D" uid="uid://d2v51kjv3c5b1" path="res://sprites/Enemies/Mimic/Krtecek.png" id="3_th84t"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_5oydb")
+speed = 1000
+
+[node name="ScreamSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_th84t")
+volume_db = 5.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("3_th84t")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
+[connection signal="timeout" from="Timer" to="." method="_delete"]

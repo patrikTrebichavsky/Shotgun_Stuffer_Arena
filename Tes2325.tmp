@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bc6wfuss2yqdy"]
+
+[ext_resource type="PackedScene" uid="uid://drphqi8eilyr3" path="res://scenes/Player.tscn" id="1_256fc"]
+[ext_resource type="PackedScene" uid="uid://3g5stnlx8o8p" path="res://scenes/BossDoubleThrower.tscn" id="1_m6xe5"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_we46x"]
+vertices = PackedVector2Array(4849, 13, 4303, 3228, -295, 2780, -168, -105)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-178, -116, -306, 2790, 4312, 3239, 4861, 4)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_256fc")]
+position = Vector2(882, 453)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+position = Vector2(10, -19)
+navigation_polygon = SubResource("NavigationPolygon_we46x")
+
+[node name="BossDoubleThrower" parent="." instance=ExtResource("1_m6xe5")]
+position = Vector2(9, 13)
+throw_speed_decrease = 1
+throw_speed_initial = 2000
+speed_min = 400.0
+speed_max = 500
+hp = 100
+player_position = Vector2(1000, 1000)

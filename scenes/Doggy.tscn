@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://cfc2hgp0kfa7a"]
+
+[ext_resource type="Script" uid="uid://dok3jyio87xtb" path="res://scripts/Ammo/Doggy.gd" id="1_yanm8"]
+[ext_resource type="Texture2D" uid="uid://bl55omu4v6c4u" path="res://sprites/Bullets/Doggy/BekyFirst.png" id="2_ymbks"]
+[ext_resource type="Texture2D" uid="uid://c0xa834cm76gy" path="res://sprites/Bullets/Doggy/BekySecond.png" id="3_fgru3"]
+[ext_resource type="Texture2D" uid="uid://ccato4xmc281r" path="res://sprites/Bullets/Doggy/BekyThird.png" id="4_45pmr"]
+[ext_resource type="Texture2D" uid="uid://brgc2gnkphxdt" path="res://sprites/Bullets/Doggy/Bark.png" id="5_8mqnb"]
+[ext_resource type="AudioStream" uid="uid://8s3m5t5jf8y8" path="res://sounds/Bullets/Doggy/Bark.wav" id="6_6k1fb"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="7_ail02"]
+[ext_resource type="AudioStream" uid="uid://dt5wbcxnqha8a" path="res://sounds/Bullets/Doggy/Bite.wav" id="8_ymbks"]
+[ext_resource type="AudioStream" uid="uid://nh20ik126i1x" path="res://sounds/Bullets/Doggy/Bump.wav" id="9_fgru3"]
+[ext_resource type="Texture2D" uid="uid://ckgh72gfshfim" path="res://sprites/Bullets/Doggy/Poop.png" id="10_45pmr"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="11_8mqnb"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q23el"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ymbks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fgru3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_45pmr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fgru3")
+}],
+"loop": true,
+"name": &"Waging",
+"speed": 5.0
+}]
+
+[node name="Doggy" type="RigidBody2D"]
+gravity_scale = 0.0
+script = ExtResource("1_yanm8")
+bite_damage = 8
+push_back_multiplier = 30
+speed = 700
+
+[node name="PoopSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(94, 3)
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("10_45pmr")
+
+[node name="DoggyAnimSprite" type="AnimatedSprite2D" parent="."]
+rotation = 3.14159
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_q23el")
+animation = &"Waging"
+autoplay = "Waging"
+frame_progress = 0.525801
+
+[node name="BarkSprite" type="Sprite2D" parent="."]
+position = Vector2(119, 3.84262e-11)
+rotation = 3.14159
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("5_8mqnb")
+
+[node name="BarkTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="BarkSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(95, 0)
+stream = ExtResource("6_6k1fb")
+bus = &"SFX"
+script = ExtResource("7_ail02")
+min_pitch = 1.0
+max_pitch = 1.2
+
+[node name="BiteSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(95, 0)
+stream = ExtResource("8_ymbks")
+volume_db = 5.0
+bus = &"SFX"
+script = ExtResource("7_ail02")
+min_pitch = 1.0
+max_pitch = 1.2
+
+[node name="BumpSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(95, 0)
+stream = ExtResource("9_fgru3")
+bus = &"SFX"
+script = ExtResource("7_ail02")
+min_pitch = 1.0
+max_pitch = 1.2
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(95, 0)
+stream = ExtResource("11_8mqnb")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("7_ail02")
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.75, 0.75)
+collision_layer = 0
+collision_mask = 534
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-90, -10, -90, 10, -80, 11, -80, 20, -70, 20, -70, 30, -60, 30, -60, 40, -30, 40, -30, 30, 10, 30, 10, 40, 20, 40, 20, 50, 40, 50, 40, 40, 51, 40, 51, 31, 59, 31, 59, 40, 70, 40, 70, 30, 90, 30, 90, 20, 110, 20, 110, 10, 120, 10, 120, -10, 110, -10, 110, -20, 90, -20, 90, -30, 70, -30, 70, -40, 59, -40, 59, -30, 50, -30, 50, -40, 40, -40, 40, -50, 20, -50, 20, -40, 10, -40, 10, -30, -30, -30, -30, -40, -60, -40, -60, -30, -70, -30, -70, -20, -80, -20, -80, -10)
+
+[connection signal="timeout" from="BarkTimer" to="." method="_on_bark_timer_timeout"]
+[connection signal="finished" from="BarkSound" to="." method="_on_bark_sound_finished"]
+[connection signal="area_entered" from="Area2D" to="." method="_poop_hit"]
+[connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

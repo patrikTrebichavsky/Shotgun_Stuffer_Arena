@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://ctoewuqj8iv0n"]
+
+[ext_resource type="Script" uid="uid://14nkylrlsi3w" path="res://scripts/Ammo/nails/NailsPierced.gd" id="1_2xu5m"]
+[ext_resource type="AudioStream" uid="uid://cwklkyyg7oto" path="res://sounds/Bullets/Nails/Stepped.wav" id="2_24m4s"]
+[ext_resource type="Texture2D" uid="uid://crr0hcpv34jv4" path="res://sprites/Bullets/Nails/Pierced.png" id="2_qxbd3"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="3_ps0x6"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="4_56xkt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m3fle"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qxbd3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="NailsSticked" type="Node2D"]
+z_index = 5
+script = ExtResource("1_2xu5m")
+
+[node name="BleedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_24m4s")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("3_ps0x6")
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_56xkt")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("3_ps0x6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visibility_layer = 2
+rotation = -1.5708
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_m3fle")
+
+[node name="DamageTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="DeleteTimer" type="Timer" parent="."]
+wait_time = 7.0
+autostart = true
+
+[connection signal="timeout" from="DamageTimer" to="." method="bleed_enemy"]
+[connection signal="timeout" from="DeleteTimer" to="." method="delete_bullet"]

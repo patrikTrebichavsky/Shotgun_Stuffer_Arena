@@ -1,0 +1,71 @@
+[gd_scene load_steps=9 format=3 uid="uid://begcjdpsru43o"]
+
+[ext_resource type="Script" uid="uid://b2dmjbe818jx3" path="res://scripts/Enemy/Limb.gd" id="1_6bid5"]
+[ext_resource type="Texture2D" uid="uid://ddp66wa388ebi" path="res://sprites/Enemies/Boss/DoubleThrower/FrontArmLeft.png" id="2_tgcqt"]
+[ext_resource type="Texture2D" uid="uid://be51smbbbcxxj" path="res://sprites/Enemies/Boss/DoubleThrower/FrontArmRight.png" id="3_h777n"]
+[ext_resource type="Material" uid="uid://ddui6mfcd6loh" path="res://particles/MagicMaterial.tres" id="4_b0vsl"]
+[ext_resource type="Texture2D" uid="uid://dssbhb75ar7k" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_FrontArmLeft.png" id="4_g8ipf"]
+[ext_resource type="Texture2D" uid="uid://dhiabqsyxa6eb" path="res://sprites/Enemies/Boss/DoubleThrower/Undertale_FrontArmRight.png" id="5_17nn5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_i5jc3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_tgcqt")
+}],
+"loop": true,
+"name": &"left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_h777n")
+}],
+"loop": true,
+"name": &"right",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_g8ipf")
+}],
+"loop": true,
+"name": &"undertale_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_17nn5")
+}],
+"loop": true,
+"name": &"undertale_right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kq1w3"]
+size = Vector2(50, 40)
+
+[node name="Arms" type="RigidBody2D" groups=["arms", "boss_part", "enemy"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_6bid5")
+is_arm = true
+speed_initial = 1300.0
+speed_min = 700.0
+speed_frame_change = 1100.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_i5jc3")
+animation = &"right"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kq1w3")
+
+[node name="MagicParticles" type="GPUParticles2D" parent="."]
+position = Vector2(-23, 0)
+rotation = 3.14159
+scale = Vector2(1.5, 1.5)
+amount = 16
+process_material = ExtResource("4_b0vsl")
+lifetime = 0.5
+local_coords = true

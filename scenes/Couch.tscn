@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://cuc8yrpfftkqr"]
+[gd_scene load_steps=12 format=3 uid="uid://cuc8yrpfftkqr"]
 
-[ext_resource type="Script" path="res://scripts/Couch.gd" id="1_r2gt5"]
+[ext_resource type="Script" uid="uid://bol4d0mggf3fu" path="res://scripts/Ammo/Couch.gd" id="1_r2gt5"]
 [ext_resource type="Texture2D" uid="uid://bay1cxdokwdhc" path="res://sprites/Bullets/Armchair.png" id="2_aqbxc"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_a40t0"]
+[ext_resource type="Texture2D" uid="uid://etej2jvshkph" path="res://sprites/Bullets/ArmchairTarget.png" id="4_dxse5"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_iq4n1"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="6_utheb"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -42,12 +45,14 @@ collision_mask = 0
 gravity_scale = 0.0
 script = ExtResource("1_r2gt5")
 steer_force = 400.0
-damage = 7
+damage = 100
 tracking = true
+push_back_multiplier = 150
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 visibility_layer = 2
+rotation = 1.5708
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_nh842")
 animation = &"base"
@@ -56,6 +61,17 @@ animation = &"base"
 stream = ExtResource("3_a40t0")
 volume_db = 5.0
 pitch_scale = 2.0
+bus = &"SFX"
+script = ExtResource("4_iq4n1")
+min_pitch = 1.8
+max_pitch = 2.2
+min_pitch_diff = 0.1
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_utheb")
+volume_db = -10.0
+bus = &"SFX"
+script = ExtResource("4_iq4n1")
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -64,10 +80,10 @@ y_sort_enabled = true
 rotation = -0.00635898
 emitting = false
 amount = 32
-process_material = SubResource("ParticleProcessMaterial_m3meo")
 lifetime = 0.3
 one_shot = true
 explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_m3meo")
 
 [node name="DeletionTimer" type="Timer" parent="."]
 wait_time = 3.5
@@ -75,14 +91,17 @@ one_shot = true
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visibility_layer = 7
 position = Vector2(1.886e-06, 0.00954076)
 shape = SubResource("RectangleShape2D_1ma7h")
+
+[node name="MarkerSprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_dxse5")
 
 [connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]
 [connection signal="body_entered" from="Area2D" to="." method="_enemy_hit"]

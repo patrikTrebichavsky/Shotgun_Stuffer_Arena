@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://djck2jqyxiqvu"]
+
+[ext_resource type="Script" path="res://scripts/text_box.gd" id="1_v13ov"]
+[ext_resource type="Texture2D" uid="uid://db3fni3kihkbe" path="res://sprites/UI/Nový priečinok/Bubble.png" id="2_j4fk7"]
+[ext_resource type="FontFile" uid="uid://rludeyyeb5gw" path="res://fonts/Kenney Mini.ttf" id="3_ctvkp"]
+[ext_resource type="AudioStream" uid="uid://c5xbgf7ei3ty5" path="res://sounds/Nice.wav" id="4_ggugw"]
+
+[node name="TextBox" type="MarginContainer"]
+offset_right = 140.0
+offset_bottom = 140.0
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_v13ov")
+text = "Bruuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuh"
+letter_time = 0.03
+space_time = 0.06
+punctuation_time = 0.1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_j4fk7")
+region_rect = Rect2(0, 0, 160, 160)
+patch_margin_left = 70
+patch_margin_top = 70
+patch_margin_right = 70
+patch_margin_bottom = 70
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 21
+theme_override_constants/margin_right = 21
+theme_override_constants/margin_bottom = 21
+
+[node name="DisplayedText" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_ctvkp")
+theme_override_font_sizes/font_size = 40
+
+[node name="LetterDisplayTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="FunnyAudioHaha" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ggugw")
+volume_db = 24.0
+
+[connection signal="timeout" from="LetterDisplayTimer" to="." method="_display_letter"]

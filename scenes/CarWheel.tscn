@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b4d18c7xbv52b"]
+[gd_scene load_steps=11 format=3 uid="uid://b4d18c7xbv52b"]
 
-[ext_resource type="Script" path="res://scripts/BulletBase.gd" id="1_muxg6"]
+[ext_resource type="Script" uid="uid://dl3gc4u4bgy6n" path="res://scripts/Ammo/BulletBase.gd" id="1_muxg6"]
 [ext_resource type="Texture2D" uid="uid://ba6a044pbxn1i" path="res://sprites/Bullets/CarWheel.png" id="2_oesx3"]
 [ext_resource type="AudioStream" uid="uid://ca31vfoltghw1" path="res://sounds/Bullets/ArmchairBreaking.mp3" id="3_4ihfb"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="4_fomex"]
+[ext_resource type="AudioStream" uid="uid://bqyq3xsrncgti" path="res://sounds/Bullets/CriticalHit2.wav" id="5_pwdgw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh842"]
 animations = [{
@@ -54,8 +56,19 @@ animation = &"base"
 
 [node name="CollisionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_4ihfb")
-volume_db = 5.0
+volume_db = -10.0
 pitch_scale = 2.0
+bus = &"SFX"
+script = ExtResource("4_fomex")
+min_pitch = 1.8
+max_pitch = 2.2
+min_pitch_diff = 0.1
+
+[node name="CriticalSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pwdgw")
+volume_db = -5.0
+bus = &"SFX"
+script = ExtResource("4_fomex")
 
 [node name="CollisionParticles" type="GPUParticles2D" parent="."]
 visibility_layer = 2
@@ -76,7 +89,7 @@ autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 6
+collision_mask = 22
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 visibility_layer = 7

@@ -1,0 +1,109 @@
+[gd_scene load_steps=13 format=3 uid="uid://bwiml5ygypgln"]
+
+[ext_resource type="Texture2D" uid="uid://bv7sikamp1fe7" path="res://sprites/Bullets/UtilityPole/FirstFrame.png" id="1_sutwj"]
+[ext_resource type="Script" uid="uid://c6t2qnm13oljh" path="res://scripts/Ammo/UtilityPolePierced.gd" id="1_v62od"]
+[ext_resource type="Texture2D" uid="uid://bo4ahvrjl627n" path="res://sprites/Bullets/UtilityPole/SecondFrame.png" id="2_v62od"]
+[ext_resource type="Texture2D" uid="uid://b8p3w5ayng4gs" path="res://sprites/Bullets/UtilityPole/LastFrame.png" id="3_7i2lo"]
+[ext_resource type="Texture2D" uid="uid://bm8lfnlt3svkm" path="res://sprites/Bullets/UtilityPole/ElectricPulse.png" id="4_ojf85"]
+[ext_resource type="AudioStream" uid="uid://pdilood8jqqy" path="res://sounds/Bullets/Electricity.wav" id="6_ojf85"]
+[ext_resource type="Script" uid="uid://djl05deai2ptk" path="res://scripts/PitchEditor2D.gd" id="7_e5k7w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_12a4b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_sutwj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_v62od")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_7i2lo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_v62od")
+}],
+"loop": true,
+"name": &"Flicker",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_12a4b"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 0.964706, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fqs33"]
+gradient = SubResource("Gradient_12a4b")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rkk2j"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 400.0
+initial_velocity_max = 400.0
+gravity = Vector3(0, 0, 0)
+scale_min = 2.0
+scale_max = 7.5
+color_ramp = SubResource("GradientTexture1D_fqs33")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_snyyg"]
+radius = 288.21
+
+[node name="UtilityPolePierced" type="Node2D" groups=["bullets"]]
+script = ExtResource("1_v62od")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+show_behind_parent = true
+z_index = -1
+rotation = 1.5708
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_12a4b")
+animation = &"Flicker"
+autoplay = "Flicker"
+frame = 2
+frame_progress = 0.55581
+
+[node name="ElectricPulse" type="Sprite2D" parent="AnimatedSprite2D"]
+self_modulate = Color(1, 1, 1, 0)
+texture = ExtResource("4_ojf85")
+
+[node name="CabelParticlesRight" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(-50.6672, 134.666)
+emitting = false
+amount = 32
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_rkk2j")
+
+[node name="CabelParticlesLeft" type="GPUParticles2D" parent="AnimatedSprite2D"]
+position = Vector2(83.9999, 16.0003)
+rotation = -1.5708
+emitting = false
+amount = 32
+lifetime = 0.3
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_rkk2j")
+
+[node name="Electricity" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 22
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Electricity"]
+shape = SubResource("CircleShape2D_snyyg")
+
+[node name="PulseSound" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(134.5, 0)
+stream = ExtResource("6_ojf85")
+volume_db = 5.0
+pitch_scale = 0.5
+bus = &"SFX"
+script = ExtResource("7_e5k7w")
+min_pitch = 0.4
+max_pitch = 0.6
+
+[node name="DeletionTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]
+[connection signal="timeout" from="DeletionTimer" to="." method="delete_bullet"]

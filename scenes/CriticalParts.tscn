@@ -1,0 +1,340 @@
+[gd_scene load_steps=30 format=3 uid="uid://cmouec5jc00ec"]
+
+[ext_resource type="Texture2D" uid="uid://bjris88i3rl20" path="res://sprites/Enemies/Basic/Parts/Body.png" id="1_7tf1t"]
+[ext_resource type="Texture2D" uid="uid://btdt33ttupnl5" path="res://sprites/Enemies/Basic/Parts/LeftArm.png" id="1_gja27"]
+[ext_resource type="Script" uid="uid://cfgu6yyym3va3" path="res://scripts/CriticalPartsControler.gd" id="1_kxdh2"]
+[ext_resource type="Script" uid="uid://drbsko5upahfx" path="res://scripts/CriticalPart.gd" id="1_niriw"]
+[ext_resource type="Texture2D" uid="uid://dtej587ckm37x" path="res://sprites/Enemies/Basic/Parts/RightArm.png" id="3_5xtkf"]
+[ext_resource type="Texture2D" uid="uid://di5754graxwla" path="res://sprites/Enemies/CharredParts/Body.png" id="4_i0oh0"]
+[ext_resource type="Texture2D" uid="uid://cijaawfjlmg6x" path="res://sprites/Enemies/Basic/Parts/Head.png" id="4_kkkc8"]
+[ext_resource type="Texture2D" uid="uid://c7u5doxmv7o1c" path="res://sprites/Enemies/Jumper/Parts/Body.png" id="4_vax7j"]
+[ext_resource type="Texture2D" uid="uid://8egykslptmi0" path="res://sprites/Enemies/Thrower/Parts/Body.png" id="5_lkjhw"]
+[ext_resource type="Texture2D" uid="uid://sjaw1tljj3jc" path="res://sprites/Enemies/Jumper/Parts/LeftArm.png" id="6_p2fub"]
+[ext_resource type="Texture2D" uid="uid://8bepqi1bd4jy" path="res://sprites/Enemies/Boss/Smasher/Parts/Body.png" id="6_rhmc4"]
+[ext_resource type="Texture2D" uid="uid://bnka1upbky5rs" path="res://sprites/Enemies/Jumper/Parts/RightArm.png" id="8_34362"]
+[ext_resource type="Texture2D" uid="uid://c8g5d4s1i87ie" path="res://sprites/Enemies/CharredParts/LeftHand.png" id="8_ber7v"]
+[ext_resource type="Texture2D" uid="uid://bcp1jafd3t3gn" path="res://sprites/Enemies/Thrower/Parts/LeftArm.png" id="8_i5fu7"]
+[ext_resource type="Texture2D" uid="uid://ccj24m7r021bx" path="res://sprites/Enemies/Jumper/Parts/Head.png" id="10_uacic"]
+[ext_resource type="Texture2D" uid="uid://cxnd2f1cbdojo" path="res://sprites/Enemies/Thrower/Parts/RightArm.png" id="11_5j7wh"]
+[ext_resource type="Texture2D" uid="uid://bffatx83476oq" path="res://sprites/Enemies/Boss/Smasher/Parts/LeftArm.png" id="11_6cbbd"]
+[ext_resource type="Texture2D" uid="uid://drjq33xg1ujct" path="res://sprites/Enemies/CharredParts/RightHand.png" id="12_08pyy"]
+[ext_resource type="Texture2D" uid="uid://cenkexoskaw8s" path="res://sprites/Enemies/Thrower/Parts/Head.png" id="14_kc0j7"]
+[ext_resource type="Texture2D" uid="uid://crh5t00o77ux6" path="res://sprites/Enemies/CharredParts/Head.png" id="16_k1loo"]
+[ext_resource type="Texture2D" uid="uid://dw7xdhdu7v6ml" path="res://sprites/Enemies/Boss/Smasher/Parts/RightArm.png" id="16_m7ufb"]
+[ext_resource type="Texture2D" uid="uid://bpre0d56fweqf" path="res://sprites/Enemies/Boss/Smasher/Parts/Head.png" id="21_mtxa2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jtry5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7tf1t")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_i0oh0")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_vax7j")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_rhmc4")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_lkjhw")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_rhmc4"]
+offsets = PackedFloat32Array(0.340102, 0.634518, 1)
+colors = PackedColorArray(0.975664, 4.57242e-06, 1.54018e-06, 1, 0.787542, 4.16331e-06, 5.77569e-07, 1, 1, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6cbbd"]
+gradient = SubResource("Gradient_rhmc4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_m7ufb"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+gravity = Vector3(0, 0, 0)
+damping_max = 100.0
+scale_min = 5.0
+scale_max = 15.0
+color_ramp = SubResource("GradientTexture1D_6cbbd")
+turbulence_noise_strength = 20.0
+turbulence_noise_scale = 2.506
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ljh1t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gja27")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_ber7v")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_p2fub")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_6cbbd")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_i5fu7")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ro7gj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5xtkf")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_08pyy")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_34362")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_m7ufb")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("11_5j7wh")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r1wa0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_kkkc8")
+}],
+"loop": true,
+"name": &"basic",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_k1loo")
+}],
+"loop": true,
+"name": &"burned",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_uacic")
+}],
+"loop": true,
+"name": &"jumper",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_mtxa2")
+}],
+"loop": true,
+"name": &"smasher",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_kc0j7")
+}],
+"loop": true,
+"name": &"thrower",
+"speed": 5.0
+}]
+
+[node name="CriticalParts" type="Node2D" node_paths=PackedStringArray("body_parts") groups=["enemy"]]
+scale = Vector2(0.75, 0.75)
+script = ExtResource("1_kxdh2")
+body_parts = [NodePath("Body"), NodePath("LeftArm"), NodePath("RightArm"), NodePath("Head")]
+
+[node name="Body" type="RigidBody2D" parent="."]
+z_index = 15
+position = Vector2(-15, 6)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_niriw")
+variable_rps_min = -0.5
+variable_rps_max = -0.25
+part_speed_mult = 8.0
+part_speed_mult_var = 3.0
+explosion_boost = 3
+variable_launch_angle = 20.0
+fixed_launch_angle = 10.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
+sprite_frames = SubResource("SpriteFrames_jtry5")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="Body"]
+position = Vector2(1, -7)
+rotation = 1.5708
+emitting = false
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+local_coords = true
+trail_lifetime = 0.08
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
+
+[node name="LeftArm" type="RigidBody2D" parent="."]
+z_index = 15
+position = Vector2(-1, -37)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_rps_min = 1.5
+variable_rps_max = 2.0
+part_speed_mult = 13.5
+part_speed_mult_var = 2.0
+variable_launch_angle = 45.0
+fixed_launch_angle = 45.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="LeftArm"]
+sprite_frames = SubResource("SpriteFrames_ljh1t")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="LeftArm"]
+position = Vector2(-15, 7)
+rotation = 1.5708
+emitting = false
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
+
+[node name="RightArm" type="RigidBody2D" parent="."]
+z_index = 15
+position = Vector2(-1, 33)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_rps_min = 1.5
+variable_rps_max = 2.025
+part_speed_mult = 13.5
+part_speed_mult_var = 2.0
+variable_launch_angle = 45.0
+fixed_launch_angle = -45.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="RightArm"]
+sprite_frames = SubResource("SpriteFrames_ro7gj")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="RightArm"]
+position = Vector2(-21, -11)
+rotation = -1.5708
+emitting = false
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
+
+[node name="Head" type="RigidBody2D" parent="."]
+z_index = 15
+position = Vector2(-16, -2)
+collision_layer = 0
+collision_mask = 0
+gravity_scale = 0.0
+linear_damp = 0.2
+script = ExtResource("1_niriw")
+variable_rps_min = 0.0
+variable_rps_max = 0.25
+part_speed_mult = 11.0
+part_speed_mult_var = 3.5
+variable_launch_angle = 20.0
+fixed_launch_angle = -10.0
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Head"]
+sprite_frames = SubResource("SpriteFrames_r1wa0")
+animation = &"basic"
+
+[node name="BloodParticles" type="GPUParticles2D" parent="Head"]
+show_behind_parent = true
+position = Vector2(-1, 0)
+rotation = 1.5708
+emitting = false
+amount = 120
+lifetime = 5.0
+visibility_rect = Rect2(-540, -960, 1080, 1920)
+process_material = SubResource("ParticleProcessMaterial_m7ufb")
+
+[node name="DeletionTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DeletionTimer" to="." method="_on_deletion_timer_timeout"]
